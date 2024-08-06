@@ -17,6 +17,6 @@ namespace Bibliocanto.Models
         public string CaminhoImagem { get; set; }
         [Required]
         public int IdEditora { get; set; }
-
+        
     }
 }

@@ -10,6 +10,12 @@ namespace Bibliocanto.Context
         }
 
         public DbSet<Livros> Livros { get; set; }
+        public DbSet<Estantes> Estantes { get; set; }
+        public DbSet<Resenhas> Resenhas { get; set; }
+        public DbSet<ComentarioResenha> ComentarioResenhas { get; set; }
+        public DbSet<AvaliacaoResenha> AvaliacaoResenhas { get; set; }
+        public DbSet<AvaliacaoLivro> AvaliacaoLivros { get; set; }
+        public DbSet<AvaliacaoComentario> AvaliacaoComentarios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
