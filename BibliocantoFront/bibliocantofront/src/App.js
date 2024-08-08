@@ -52,6 +52,10 @@ function App() {
               <td>{livro.idGenero}</td>
               <td>{livro.caminhoImagem}</td>
               <td>{livro.idEditora}</td>
+              <td>
+                <button className='btn btn-primary'>Editar Livro</button>
+                <button className='btn btn-danger'>Excluir Livro</button>
+              </td>
             </tr>
           ))}
         </tbody>
