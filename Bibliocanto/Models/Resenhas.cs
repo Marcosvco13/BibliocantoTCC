@@ -6,8 +6,8 @@ namespace Bibliocanto.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required]
-        public Livros IdLivros { get; set; }
+        //[Required]
+        //public Livros IdLivros { get; set; }
         [Required]
         [StringLength(450)]
         public string IdUser { get; set; }
@@ -19,6 +19,6 @@ namespace Bibliocanto.Models
         public string Resenha { get; set; }
         public DateTime DataResenha { get; set; }
 
-        public List<Livros> Livros { get; set; }
+        //public List<Livros> Livros { get; set; }
     }
 }
