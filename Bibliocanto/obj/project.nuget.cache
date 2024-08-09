@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "6VGLI2ArP/SVyjULNFe9U+eGBqJ5d+VMrL55qio84nBvraJ3ZSALioLBCgsc/zWEdJXwXeKfkI6uNkW/tOGvWQ==",
+  "dgSpecHash": "vtuC3tvr27yFQyRwZWV1FfGeunkYmPc1RwJ/b2mXOIS4mNKUPymeaNVhY15hvapenFz16phExOONGsA+0NvVRw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\marco\\Documents\\GitHub\\BibliocantoTCC\\Bibliocanto\\Bibliocanto.csproj",
+  "projectFilePath": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Bibliocanto.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\marco\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\marco\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

@@ -6,17 +6,25 @@ namespace Bibliocanto.Models
     {
         [Key]
         public int Id { get; set; }
+        public string ISBN {  get; set; }
         [Required]
-        [StringLength(150)]
-        public string NomeLivro { get; set;  }
+        [StringLength(255)]
+        public string Titulo { get; set; }
         [Required]
-        public int IdAutor { get; set; }
+        [StringLength(5000)]
+        public string Descricao { get; set; }
         [Required]
-        public int IdGenero { get; set; }
+        [StringLength(255)]
+        public string Editora { get; set; }
+        [Required]
+        [StringLength(255)]
+        public string Genero { get; set; }
+        [Required]
+        [StringLength(255)]
+        public string Autor { get; set; }
+        [Required]
         [StringLength(500)]
-        public string CaminhoImagem { get; set; }
-        [Required]
-        public int IdEditora { get; set; }
-        
+        public string caminhoImagem { get; set; }
+
     }
 }

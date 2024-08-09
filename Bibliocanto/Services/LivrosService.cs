@@ -37,7 +37,7 @@ namespace Bibliocanto.Services
             IEnumerable<Livros> baseLivros;
             if (!string.IsNullOrWhiteSpace(nome))
             {
-                baseLivros = await _context.Livros.Where(n => n.NomeLivro.Contains(nome)).ToListAsync();
+                baseLivros = await _context.Livros.Where(n => n.Titulo.Contains(nome)).ToListAsync();
             }
             else
             {
