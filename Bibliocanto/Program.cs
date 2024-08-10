@@ -2,6 +2,9 @@ using Bibliocanto.Context;
 using Microsoft.EntityFrameworkCore;
 using Bibliocanto.Models;
 using Bibliocanto.Services;
+using Bibliocanto.Repository;
+using Bibliocanto.IServices;
+using Bibliocanto.IRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,10 +17,18 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaulConnection")));
 
+builder.Services.AddAutoMapper(typeof(Program));
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ILivrosService, LivrosService>();
+builder.Services.AddScoped<ILivrosRepository, LivrosRepository>();
+
+builder.Services.AddScoped<IAutoresRepository, AutoresRepository>();
+builder.Services.AddScoped<IAutoresService, AutoresServices>();
+
+builder.Services.AddScoped<IUnitOFWork, UnitOfWork>();
 
 var app = builder.Build();
 

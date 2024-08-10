@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "vtuC3tvr27yFQyRwZWV1FfGeunkYmPc1RwJ/b2mXOIS4mNKUPymeaNVhY15hvapenFz16phExOONGsA+0NvVRw==",
+  "dgSpecHash": "FvXGQz/2fkvBZvz/vVFnh1ZjF2TYlL+BfC7pXpMODJWBvfe9OJai7rxl4r4qo3mKZuOEZ3ec6E15cFzvvtbbgg==",
   "success": true,
   "projectFilePath": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Bibliocanto.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\marco\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\marco\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\marco\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
     "C:\\Users\\marco\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

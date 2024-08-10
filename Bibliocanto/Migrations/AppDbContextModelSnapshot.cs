@@ -21,6 +21,36 @@ namespace Bibliocanto.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Bibliocanto.Models.Autores", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("NomeAutor")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Autores", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 100,
+                            NomeAutor = "Karl Marx"
+                        },
+                        new
+                        {
+                            Id = 101,
+                            NomeAutor = "Fiódor Dostoiévsk"
+                        });
+                });
+
             modelBuilder.Entity("Bibliocanto.Models.Livros", b =>
                 {
                     b.Property<int>("Id")
@@ -29,43 +59,56 @@ namespace Bibliocanto.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Autor")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                    b.Property<int>("AutorId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Descricao")
                         .IsRequired()
-                        .HasMaxLength(5000)
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Editora")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("Genero")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("ISBN")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1555)
+                        .HasColumnType("nvarchar(1555)");
 
                     b.Property<string>("Titulo")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("caminhoImagem")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Livros");
+                    b.HasIndex("AutorId");
+
+                    b.ToTable("Livros", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 100,
+                            AutorId = 100,
+                            Descricao = "Teste1",
+                            Titulo = "O Capital"
+                        },
+                        new
+                        {
+                            Id = 101,
+                            AutorId = 101,
+                            Descricao = "Teste2",
+                            Titulo = "Crime e Castigo"
+                        });
+                });
+
+            modelBuilder.Entity("Bibliocanto.Models.Livros", b =>
+                {
+                    b.HasOne("Bibliocanto.Models.Autores", "Autores")
+                        .WithMany("Livros")
+                        .HasForeignKey("AutorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Autores");
+                });
+
+            modelBuilder.Entity("Bibliocanto.Models.Autores", b =>
+                {
+                    b.Navigation("Livros");
                 });
 #pragma warning restore 612, 618
         }
