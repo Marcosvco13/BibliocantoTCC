@@ -26,19 +26,19 @@ namespace Bibliocanto.Services
         //    return livro;
         //}
 
-        //public async Task<IEnumerable<Livros>> GetLivroByNome(string nome)
-        //{
-        //    IEnumerable<Livros> baseLivros;
-        //    if (!string.IsNullOrWhiteSpace(nome))
-        //    {
-        //        baseLivros = await _context.Livros.Where(n => n.Titulo.Contains(nome)).ToListAsync();
-        //    }
-        //    else
-        //    {
-        //        baseLivros = await GetBaseLivros();
-        //    }
-        //    return baseLivros;
-        //}
+        public async Task<IEnumerable<Livros>> GetLivroByNome(string nome)
+        {
+            IEnumerable<Livros> baseLivros;
+            if (!string.IsNullOrWhiteSpace(nome))
+            {
+                baseLivros = await _livrosRepository.GetLivrosByNome(nome);
+            }
+            else
+            {
+                baseLivros = await GetBaseLivros();
+            }
+            return baseLivros;
+        }
 
         //public async Task CreateLivro(Livros livro)
         //{

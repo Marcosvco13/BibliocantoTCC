@@ -17,10 +17,12 @@ namespace Bibliocanto.Services
             _autoresRepository = autoresRepository;
             _unitOfWork = unitOfWork;
         }
+
         public async Task<IEnumerable<Autores>> ListAsync()
         {
             return await _autoresRepository.ListAsync();
         }
+
         public async Task<IEnumerable<Autores>> GetAutorByName(string nome)
         {
             IEnumerable<Autores> baseAutores;
