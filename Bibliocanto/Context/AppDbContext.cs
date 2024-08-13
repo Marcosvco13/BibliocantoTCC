@@ -34,6 +34,7 @@ namespace Bibliocanto.Context
             builder.Entity<Livros>().Property(p => p.Titulo).IsRequired().HasMaxLength(255);
             builder.Entity<Livros>().Property(p => p.Descricao).IsRequired().HasMaxLength(1555);
 
+
             builder.Entity<Livros>().HasData
             (   
                 new Livros

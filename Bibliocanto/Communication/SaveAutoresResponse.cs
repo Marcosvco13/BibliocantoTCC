@@ -6,9 +6,9 @@ namespace Bibliocanto.Communication
     {
         public Autores Autor { get; private set; }
 
-        private SaveAutoresResponse(bool success, string message, Autores category) : base(success, message)
+        private SaveAutoresResponse(bool success, string message, Autores autor) : base(success, message)
         {
-            Autor = category;
+            Autor = autor;
         }
 
         /// <summary>
@@ -16,7 +16,7 @@ namespace Bibliocanto.Communication
         /// </summary>
         /// <param name="category">Saved category.</param>
         /// <returns>Response.</returns>
-        public SaveAutoresResponse(Autores category) : this(true, string.Empty, category)
+        public SaveAutoresResponse(Autores autor) : this(true, string.Empty, autor)
         { }
 
         /// <summary>

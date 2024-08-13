@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Bibliocanto.Communication;
 using Bibliocanto.Models;
 using Bibliocanto.Resources;
 
@@ -9,6 +10,7 @@ namespace Bibliocanto.Mapping
         public ResourceToModelProfile()
         {
             CreateMap<SaveAutoresResource, Autores>();
+            CreateMap<SaveLivrosResponse, Livros>();
         }
     }
 }

@@ -19,12 +19,22 @@ namespace Bibliocanto.Repository
 
         public async Task<IEnumerable<Livros>> GetLivrosByNome(string nome)
         {
-            return await _context.Livros.Where(n => n.Titulo.Contains(nome)).ToListAsync();
+            return await _context.Livros.Where(l => l.Titulo.Contains(nome)).Include(p => p.Autores).ToListAsync();
+        }
+
+        public async Task<Livros> GetLivroById(int id)
+        {
+            return await _context.Livros.Include(p => p.Autores).FirstOrDefaultAsync(l => l.Id == id); ;
         }
 
         public async Task AddLivro(Livros livro)
         {
             await _context.Livros.AddAsync(livro);
+        }
+
+        public void UpdateLivro(Livros livro)
+        {
+             _context.Livros.Update(livro);
         }
     }
 }

@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using Bibliocanto.Communication;
+using Bibliocanto.Extensions;
 using Bibliocanto.IServices;
 using Bibliocanto.Models;
 using Bibliocanto.Resources;
+using Bibliocanto.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,84 +31,80 @@ namespace Bibliocanto.Controllers
             return recursos;
         }
 
-        //[HttpGet("LivroPorNome")]
-        //public async Task<ActionResult<IAsyncEnumerable<Livros>>> GetLivrosByName([FromQuery] string nome)
-        //{
-        //    try
-        //    {
-        //        var livros = await _livroService.GetLivroByNome(nome);
+        [HttpGet("LivroByName")]
+        public async Task<ActionResult<IEnumerable<LivrosResource>>> GetLivrosByName([FromQuery] string nome)
+        {
+            try
+            {
+                var livros = await _livroService.GetLivroByNome(nome);
+                var recursos = _mapper.Map<IEnumerable<Livros>, IEnumerable<LivrosResource>>(livros);
 
-        //        if (livros.Count() == 0)
-        //        {
-        //            return NotFound($"Não existem livros com o nome de {nome}");
-        //        }
-        //        else
-        //        {
-        //            return Ok(livros);
-        //        }
-        //    }
-        //    catch
-        //    {
-        //        return BadRequest("Request Inválido");
-        //    }
-        //}
+                if (!recursos.Any())
+                {
+                    return NotFound($"Não existem livros com o nome de {nome}");
+                }
 
-        //[HttpGet("{id:int}", Name = "GetLivroById")]
-        //public async Task<ActionResult<Livros>> GetLivroById(int id)
-        //{
-        //    try
-        //    {
-        //        var livros = await _livroService.GetBaseLivro(id);
+                return Ok(recursos);
+            }
+            catch
+            {
+                return BadRequest("Request Inválido");
+            }
+        }
 
-        //        if (livros == null)
-        //        {
-        //            return NotFound($"Não existem livros com o id: {id}");
-        //        }
-        //        else
-        //        {
-        //            return Ok(livros);
-        //        }
-        //    }
-        //    catch
-        //    {
-        //        return BadRequest("Request Inválido");
-        //    }
-        //}
+        [HttpGet("{id:int}", Name = "GetLivroById")]
+        public async Task<ActionResult<LivrosResource>> GetLivroById(int id)
+        {
 
-        //[HttpPost]
-        //public async Task<ActionResult> Create(Livros livro)
-        //{
-        //    try
-        //    {
-        //        await _livroService.CreateLivro(livro);
-        //        return CreatedAtRoute(nameof(GetLivroById), new { id = livro.Id }, livro);
-        //    }
-        //    catch
-        //    {
-        //        return BadRequest("Request Inválido");
-        //    }
-        //}
+            try
+            {
+                var livro = await _livroService.GetLivroById(id);
+                var recurso = _mapper.Map<Livros, LivrosResource>(livro);
 
-        //[HttpPut("{id:int}")]
-        //public async Task<ActionResult> Edit(int id, [FromBody] Livros livro)
-        //{
-        //    try
-        //    {
-        //        if (livro.Id == id)
-        //        {
-        //            await _livroService.UpdateLivro(livro);
-        //            return Ok($"Livro atualizado com sucesso");
-        //        }
-        //        else
-        //        {
-        //            return BadRequest("Dados inconsistentes");
-        //        }
-        //    }
-        //    catch
-        //    {
-        //        return BadRequest("Request Inválido");
-        //    }
-        //}
+                if (livro == null)
+                {
+                    return NotFound("Livro não encontrado");
+                }
+
+                return recurso;
+            }
+            catch
+            {
+                return BadRequest("Request Inválido");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PostAsync([FromBody] SaveLivrosResource resource)
+        {
+
+            var livro = _mapper.Map<SaveLivrosResource, Livros>(resource);
+            var result = await _livroService.AddLivro(livro);
+
+            var livroResource = _mapper.Map<Livros, LivrosResource>(result.Livros);
+            return Ok(livroResource);
+        }
+
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> Edit(int id, [FromBody] Livros livro)
+        {
+            try
+            {
+                if (livro.Id == id)
+                {
+                    await _livroService.UpdateLivro(id, livro);
+                    return Ok($"Livro atualizado com sucesso");
+                }
+                else
+                {
+                    return BadRequest("Dados inconsistentes");
+                }
+            }
+            catch
+            {
+                return BadRequest("Request Inválido");
+            }
+        }
 
         //[HttpDelete("{id:int}")]
         //public async Task<ActionResult> Delete(int id)

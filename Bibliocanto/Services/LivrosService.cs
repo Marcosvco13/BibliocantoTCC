@@ -1,7 +1,9 @@
-﻿using Bibliocanto.Context;
+﻿using Bibliocanto.Communication;
+using Bibliocanto.Context;
 using Bibliocanto.IRepository;
 using Bibliocanto.IServices;
 using Bibliocanto.Models;
+using Bibliocanto.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bibliocanto.Services
@@ -9,10 +11,12 @@ namespace Bibliocanto.Services
     public class LivrosService : ILivrosService
     {
         private readonly ILivrosRepository _livrosRepository;
+        private readonly IUnitOFWork _unitOfWork;
 
-        public LivrosService(ILivrosRepository livrosRepository)
+        public LivrosService(ILivrosRepository livrosRepository, IUnitOFWork unitOfWork)
         {
-            _livrosRepository = livrosRepository;
+            this._livrosRepository = livrosRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<IEnumerable<Livros>> GetBaseLivros()
@@ -20,11 +24,10 @@ namespace Bibliocanto.Services
             return await _livrosRepository.GetBaseLivros(); 
         }
 
-        //public async Task<Livros> GetBaseLivro(int id)
-        //{
-        //    var livro = await _context.Livros.FindAsync(id);
-        //    return livro;
-        //}
+        public async Task<Livros> GetLivroById(int id)
+        {
+            return await _livrosRepository.GetLivroById(id);
+        }
 
         public async Task<IEnumerable<Livros>> GetLivroByNome(string nome)
         {
@@ -40,17 +43,42 @@ namespace Bibliocanto.Services
             return baseLivros;
         }
 
-        //public async Task CreateLivro(Livros livro)
-        //{
-        //    _context.Livros.Add(livro);
-        //    await _context.SaveChangesAsync();
-        //}
+        public async Task<SaveLivrosResponse> AddLivro(Livros livro)
+        {
+            try
+            {
+                await _livrosRepository.AddLivro(livro);
+                await _unitOfWork.CompleteAsync();
 
-        //public async Task UpdateLivro(Livros livro)
-        //{
-        //    _context.Entry(livro).State = EntityState.Modified;
-        //    await _context.SaveChangesAsync();
-        //}
+                return new SaveLivrosResponse(livro);
+            }
+            catch (Exception ex)
+            {
+                return new SaveLivrosResponse($"An error occurred when saving the category: {ex.Message}");
+            }
+        }
+
+        public async Task<SaveLivrosResponse> UpdateLivro(int id, Livros livro)
+        {
+            var exibirLivro = await _livrosRepository.GetLivroById(id);
+
+            if (exibirLivro == null)
+                return new SaveLivrosResponse("Category not found.");
+
+            exibirLivro.Titulo = livro.Titulo;
+
+            try
+            {
+                _livrosRepository.UpdateLivro(exibirLivro);
+                await _unitOfWork.CompleteAsync();
+
+                return new SaveLivrosResponse(exibirLivro);
+            }
+            catch (Exception ex)
+            {
+                return new SaveLivrosResponse($"An error occurred when updating the category: {ex.Message}");
+            }
+        }
 
         //public async Task DeleteLivro(Livros livro)
         //{
