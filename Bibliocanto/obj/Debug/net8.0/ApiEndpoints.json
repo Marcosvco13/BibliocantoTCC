@@ -37,6 +37,69 @@
   },
   {
     "ContainingType": "Bibliocanto.Controllers.AutoresController",
+    "Method": "GetAutorById",
+    "RelativePath": "api/Autores/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Bibliocanto.Resources.AutoresResource",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Bibliocanto.Controllers.AutoresController",
+    "Method": "PutAsync",
+    "RelativePath": "api/Autores/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "recurso",
+        "Type": "Bibliocanto.Resources.SaveAutoresResource",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Bibliocanto.Controllers.AutoresController",
+    "Method": "DeleteAsync",
+    "RelativePath": "api/Autores/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Bibliocanto.Controllers.AutoresController",
     "Method": "GetByName",
     "RelativePath": "api/Autores/AutorByName",
     "HttpMethod": "GET",
@@ -91,7 +154,7 @@
     "Parameters": [
       {
         "Name": "resource",
-        "Type": "Bibliocanto.Communication.SaveLivrosResponse",
+        "Type": "Bibliocanto.Resources.SaveLivrosResource",
         "IsRequired": true
       }
     ],

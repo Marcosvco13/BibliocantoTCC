@@ -77,14 +77,20 @@ namespace Bibliocanto.Controllers
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody] SaveLivrosResource resource)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.GetErrorMessages());
 
             var livro = _mapper.Map<SaveLivrosResource, Livros>(resource);
             var result = await _livroService.AddLivro(livro);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
 
             var livroResource = _mapper.Map<Livros, LivrosResource>(result.Livros);
             return Ok(livroResource);
         }
 
+        //Refatorar, está errado
         [HttpPut("{id:int}")]
         public async Task<ActionResult> Edit(int id, [FromBody] Livros livro)
         {

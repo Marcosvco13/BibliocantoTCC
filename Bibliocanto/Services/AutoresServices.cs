@@ -3,6 +3,7 @@ using Bibliocanto.Communication;
 using Bibliocanto.IRepository;
 using Bibliocanto.IServices;
 using Bibliocanto.Models;
+using Bibliocanto.Resources;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bibliocanto.Services
@@ -36,19 +37,67 @@ namespace Bibliocanto.Services
             }
             return baseAutores;
         }
+        public async Task<Autores> GetById(int id)
+        {
+            return await _autoresRepository.GetById(id);
+        }
 
-        public async Task<SaveAutoresResponse> CreateAutor(Autores autor)
+        public async Task<AutoresResponse> CreateAutor(Autores autor)
         {
             try
             {
                 await _autoresRepository.CreateAutor(autor);
                 await _unitOfWork.CompleteAsync();
 
-                return new SaveAutoresResponse(autor);
+                return new AutoresResponse(autor);
             }
             catch (Exception ex)
             {
-                return new SaveAutoresResponse($"An error occurred when saving the category: {ex.Message}");
+                return new AutoresResponse($"An error occurred when saving the category: {ex.Message}");
+            }
+        }
+
+        public async Task<AutoresResponse> Update(int id, Autores autor)
+        {
+            var autorExistente = await _autoresRepository.GetById(id);
+
+            if (autorExistente == null)
+                return new AutoresResponse("Category not found.");
+
+            autorExistente.NomeAutor = autor.NomeAutor;
+
+            try
+            {
+                _autoresRepository.Update(autorExistente);
+                await _unitOfWork.CompleteAsync();
+
+                return new AutoresResponse(autorExistente);
+            }
+            catch (Exception ex)
+            {
+                // Do some logging stuff
+                return new AutoresResponse($"An error occurred when updating the category: {ex.Message}");
+            }
+        }
+
+        public async Task<AutoresResponse> Delete(int id)
+        {
+            var existingCategory = await _autoresRepository.GetById(id);
+
+            if (existingCategory == null)
+                return new AutoresResponse("Category not found.");
+
+            try
+            {
+                _autoresRepository.Delete(existingCategory);
+                await _unitOfWork.CompleteAsync();
+
+                return new AutoresResponse(existingCategory);
+            }
+            catch (Exception ex)
+            {
+                // Do some logging stuff
+                return new AutoresResponse($"An error occurred when deleting the category: {ex.Message}");
             }
         }
     }

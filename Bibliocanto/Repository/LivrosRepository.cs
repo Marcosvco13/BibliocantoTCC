@@ -24,7 +24,7 @@ namespace Bibliocanto.Repository
 
         public async Task<Livros> GetLivroById(int id)
         {
-            return await _context.Livros.Include(p => p.Autores).FirstOrDefaultAsync(l => l.Id == id); ;
+            return await _context.Livros.Include(p => p.Autores).FirstOrDefaultAsync(l => l.Id == id);
         }
 
         public async Task AddLivro(Livros livro)

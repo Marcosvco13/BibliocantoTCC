@@ -8,6 +8,9 @@ namespace Bibliocanto.IServices
     {
         Task<IEnumerable<Autores>> ListAsync();
         Task<IEnumerable<Autores>> GetAutorByName(string nome);
-        Task<SaveAutoresResponse> CreateAutor(Autores autor);
+        Task<Autores> GetById(int id);
+        Task<AutoresResponse> CreateAutor(Autores autor);
+        Task<AutoresResponse> Update(int id, Autores autor);
+        Task<AutoresResponse> Delete(int id);
     }
 }
