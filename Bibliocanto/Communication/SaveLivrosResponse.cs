@@ -2,11 +2,11 @@
 
 namespace Bibliocanto.Communication
 {
-    public class SaveLivrosResponse : BaseResponse
+    public class LivrosResponse : BaseResponse
     {
         public Livros Livros { get; private set; }
 
-        private SaveLivrosResponse(bool success, string message, Livros livros) : base(success, message)
+        private LivrosResponse(bool success, string message, Livros livros) : base(success, message)
         {
             Livros = livros;
         }
@@ -16,7 +16,7 @@ namespace Bibliocanto.Communication
         /// </summary>
         /// <param name="livros">Saved category.</param>
         /// <returns>Response.</returns>
-        public SaveLivrosResponse(Livros livros) : this(true, string.Empty, livros)
+        public LivrosResponse(Livros livros) : this(true, string.Empty, livros)
         { }
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace Bibliocanto.Communication
         /// </summary>
         /// <param name="message">Error message.</param>
         /// <returns>Response.</returns>
-        public SaveLivrosResponse(string message) : this(false, message, null)
+        public LivrosResponse(string message) : this(false, message, null)
         { }
     }
 }

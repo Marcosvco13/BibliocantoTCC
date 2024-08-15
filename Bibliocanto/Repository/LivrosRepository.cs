@@ -36,5 +36,10 @@ namespace Bibliocanto.Repository
         {
              _context.Livros.Update(livro);
         }
+
+        public void Delete(Livros livro)
+        {
+            _context.Livros.Remove(livro);
+        }
     }
 }

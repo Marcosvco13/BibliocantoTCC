@@ -9,5 +9,6 @@ namespace Bibliocanto.IRepository
         Task<Livros> GetLivroById (int id);
         Task AddLivro(Livros livro);
         void UpdateLivro(Livros livro);
+        void Delete(Livros livro);
     }
 }

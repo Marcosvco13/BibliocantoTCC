@@ -90,48 +90,32 @@ namespace Bibliocanto.Controllers
             return Ok(livroResource);
         }
 
-        //Refatorar, está errado
-        [HttpPut("{id:int}")]
-        public async Task<ActionResult> Edit(int id, [FromBody] Livros livro)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutAsync(int id, [FromBody] SaveLivrosResource recurso)
         {
-            try
-            {
-                if (livro.Id == id)
-                {
-                    await _livroService.UpdateLivro(id, livro);
-                    return Ok($"Livro atualizado com sucesso");
-                }
-                else
-                {
-                    return BadRequest("Dados inconsistentes");
-                }
-            }
-            catch
-            {
-                return BadRequest("Request Inválido");
-            }
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.GetErrorMessages());
+
+            var livro = _mapper.Map<SaveLivrosResource, Livros>(recurso);
+            var result = await _livroService.UpdateLivro(id, livro);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            var livroResource = _mapper.Map<Livros, SaveLivrosResource>(result.Livros);
+            return Ok(livroResource);
         }
 
-        //[HttpDelete("{id:int}")]
-        //public async Task<ActionResult> Delete(int id)
-        //{
-        //    try
-        //    {
-        //        var livro = await _livroService.GetBaseLivro(id);
-        //        if(livro != null)
-        //        {
-        //            await _livroService.DeleteLivro(livro);
-        //            return Ok($"Livro de id: {id} foi excluido com sucesso");
-        //        }
-        //        else
-        //        {
-        //            return NotFound($"Não foi encontrado livro com o id: {id}");
-        //        }
-        //    }
-        //    catch
-        //    {
-        //        return BadRequest("Request Inválido");
-        //    }
-        //}
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync(int id)
+        {
+            var result = await _livroService.Delete(id);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            var livroResource = _mapper.Map<Livros, LivrosResource>(result.Livros);
+            return Ok(livroResource);
+        }
     }
 }

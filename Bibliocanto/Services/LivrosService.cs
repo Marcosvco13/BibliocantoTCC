@@ -43,27 +43,27 @@ namespace Bibliocanto.Services
             return baseLivros;
         }
 
-        public async Task<SaveLivrosResponse> AddLivro(Livros livro)
+        public async Task<LivrosResponse> AddLivro(Livros livro)
         {
             try
             {
                 await _livrosRepository.AddLivro(livro);
                 await _unitOfWork.CompleteAsync();
 
-                return new SaveLivrosResponse(livro);
+                return new LivrosResponse(livro);
             }
             catch (Exception ex)
             {
-                return new SaveLivrosResponse($"An error occurred when saving the category: {ex.Message}");
+                return new LivrosResponse($"An error occurred when saving the category: {ex.Message}");
             }
         }
 
-        public async Task<SaveLivrosResponse> UpdateLivro(int id, Livros livro)
+        public async Task<LivrosResponse> UpdateLivro(int id, Livros livro)
         {
             var exibirLivro = await _livrosRepository.GetLivroById(id);
 
             if (exibirLivro == null)
-                return new SaveLivrosResponse("Category not found.");
+                return new LivrosResponse("Category not found.");
 
             exibirLivro.Titulo = livro.Titulo;
 
@@ -72,18 +72,32 @@ namespace Bibliocanto.Services
                 _livrosRepository.UpdateLivro(exibirLivro);
                 await _unitOfWork.CompleteAsync();
 
-                return new SaveLivrosResponse(exibirLivro);
+                return new LivrosResponse(exibirLivro);
             }
             catch (Exception ex)
             {
-                return new SaveLivrosResponse($"An error occurred when updating the category: {ex.Message}");
+                return new LivrosResponse($"An error occurred when updating the category: {ex.Message}");
             }
         }
 
-        //public async Task DeleteLivro(Livros livro)
-        //{
-        //    _context.Livros.Remove(livro);
-        //    await _context.SaveChangesAsync();
-        //}
+        public async Task<LivrosResponse> Delete(int id)
+        {
+            var existingCategory = await _livrosRepository.GetLivroById(id);
+
+            if (existingCategory == null)
+                return new LivrosResponse("book not found.");
+
+            try
+            {
+                _livrosRepository.Delete(existingCategory);
+                await _unitOfWork.CompleteAsync();
+
+                return new LivrosResponse(existingCategory);
+            }
+            catch (Exception ex)
+            {
+                return new LivrosResponse($"An error occurred when deleting the category: {ex.Message}");
+            }
+        }
     }
 }
