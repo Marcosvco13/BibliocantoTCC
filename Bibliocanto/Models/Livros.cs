@@ -13,8 +13,8 @@ namespace Bibliocanto.Models
 
         public int AutorId { get; set; }
         public Autores? Autores { get; set; }
-        //public int generoid { get; set; }
-        //public Generos? Generos { get; set; }
+        public int generoid { get; set; }
+        public Generos? Generos { get; set; }
 
     }
 }

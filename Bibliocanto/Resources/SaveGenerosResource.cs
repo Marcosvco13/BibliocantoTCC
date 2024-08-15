@@ -2,10 +2,10 @@
 
 namespace Bibliocanto.Resources
 {
-    public class SaveAutoresResource
+    public class SaveGenerosResource
     {
         [Required]
         [MaxLength(150)]
-        public string NomeAutor { get; set; }
+        public string nomegenero { get; set; }
     }
 }

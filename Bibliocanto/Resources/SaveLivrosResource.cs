@@ -18,6 +18,8 @@ namespace Bibliocanto.Resources
         public string isbn { get; set; }
         [Required]
         public int AutorId { get; set; }
+        [Required]
+        public int generoid { get; set; }
 
     }
 }

@@ -11,7 +11,7 @@ namespace Bibliocanto.Context
 
         public DbSet<Livros> Livros { get; set; }
         public DbSet<Autores> Autores { get; set; }
-        //public DbSet<Generos> Generos { get; set; }
+        public DbSet<Generos> Generos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -29,17 +29,17 @@ namespace Bibliocanto.Context
                 new Autores { Id = 101, NomeAutor = "Fiódor Dostoiévsk" }
             );
 
-            //builder.Entity<Generos>().ToTable("Autores");
-            //builder.Entity<Generos>().HasKey(p => p.id);
-            //builder.Entity<Generos>().Property(p => p.id).IsRequired().ValueGeneratedOnAdd();
-            //builder.Entity<Generos>().Property(p => p.nomegenero).IsRequired().HasMaxLength(150);
-            //builder.Entity<Generos>().HasMany(p => p.Livros).WithOne(p => p.Generos).HasForeignKey(p => p.generoid);
+            builder.Entity<Generos>().ToTable("Generos");
+            builder.Entity<Generos>().HasKey(p => p.id);
+            builder.Entity<Generos>().Property(p => p.id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<Generos>().Property(p => p.nomegenero).IsRequired().HasMaxLength(150);
+            builder.Entity<Generos>().HasMany(p => p.Livros).WithOne(p => p.Generos).HasForeignKey(p => p.generoid);
 
-            //builder.Entity<Generos>().HasData
-            //(
-            //    new Generos { id = 100, nomegenero = "Ficção" },
-            //    new Generos { id = 101, nomegenero = "Politica" }
-            //);
+            builder.Entity<Generos>().HasData
+            (
+                new Generos { id = 100, nomegenero = "Ficção" },
+                new Generos { id = 101, nomegenero = "Economia" }
+            );
 
             builder.Entity<Livros>().ToTable("Livros");
             builder.Entity<Livros>().HasKey(p => p.Id);

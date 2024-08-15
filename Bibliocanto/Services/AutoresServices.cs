@@ -75,7 +75,6 @@ namespace Bibliocanto.Services
             }
             catch (Exception ex)
             {
-                // Do some logging stuff
                 return new AutoresResponse($"An error occurred when updating the category: {ex.Message}");
             }
         }
@@ -96,7 +95,6 @@ namespace Bibliocanto.Services
             }
             catch (Exception ex)
             {
-                // Do some logging stuff
                 return new AutoresResponse($"An error occurred when deleting the category: {ex.Message}");
             }
         }

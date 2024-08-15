@@ -275,3 +275,4 @@ C:\Users\marco\Documents\GitHub\BibliocantoTCC\Bibliocanto\obj\Debug\net8.0\Bibl
 C:\Users\marco\Documents\GitHub\BibliocantoTCC\Bibliocanto\obj\Debug\net8.0\Bibliocanto.genruntimeconfig.cache
 C:\Users\marco\Documents\GitHub\BibliocantoTCC\Bibliocanto\obj\Debug\net8.0\ref\Bibliocanto.dll
 D:\Projetos\BibliocantoTCC\Bibliocanto\bin\Debug\net8.0\AutoMapper.dll
+C:\Users\marco\Documents\GitHub\BibliocantoTCC\Bibliocanto\bin\Debug\net8.0\AutoMapper.dll
