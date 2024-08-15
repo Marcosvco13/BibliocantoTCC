@@ -6,6 +6,7 @@ using Bibliocanto.Resources;
 using Bibliocanto.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Bibliocanto.Services;
 
 namespace Bibliocanto.Controllers
 {
@@ -54,6 +55,28 @@ namespace Bibliocanto.Controllers
             }
         }
 
+        [HttpGet("{id:int}", Name = "GetAutoresById")]
+        public async Task<ActionResult<AutoresResource>> GetAutorById(int id)
+        {
+
+            try
+            {
+                var autor = await _autoresService.GetById(id);
+                var recurso = _mapper.Map<Autores, AutoresResource>(autor);
+
+                if (autor == null)
+                {
+                    return NotFound("Autor não encontrado");
+                }
+
+                return recurso;
+            }
+            catch
+            {
+                return BadRequest("Request Inválido");
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody] SaveAutoresResource resource)
         {
@@ -62,6 +85,34 @@ namespace Bibliocanto.Controllers
 
             var autor = _mapper.Map<SaveAutoresResource, Autores>(resource);
             var result = await _autoresService.CreateAutor(autor);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            var autorResource = _mapper.Map<Autores, AutoresResource>(result.Autor);
+            return Ok(autorResource);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutAsync(int id, [FromBody] SaveAutoresResource recurso)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.GetErrorMessages());
+
+            var autor = _mapper.Map<SaveAutoresResource, Autores>(recurso);
+            var result = await _autoresService.Update(id, autor);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            var autorResource = _mapper.Map<Autores, AutoresResource>(result.Autor);
+            return Ok(autorResource);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync(int id)
+        {
+            var result = await _autoresService.Delete(id);
 
             if (!result.Success)
                 return BadRequest(result.Message);

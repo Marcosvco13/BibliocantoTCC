@@ -22,9 +22,24 @@ namespace Bibliocanto.Repository
             return await _context.Autores.Where(n => n.NomeAutor.Contains(nome)).ToListAsync();
         }
 
+        public async Task<Autores> GetById(int id)
+        {
+            return await _context.Autores.FirstOrDefaultAsync(l => l.Id == id); ;
+        }
+
         public async Task CreateAutor(Autores autor)
         {
             await _context.Autores.AddAsync(autor);
+        }
+
+        public void Update(Autores autor)
+        {
+            _context.Autores.Update(autor);
+        }
+
+        public void Delete(Autores autor)
+        {
+            _context.Autores.Remove(autor);
         }
     }
 }

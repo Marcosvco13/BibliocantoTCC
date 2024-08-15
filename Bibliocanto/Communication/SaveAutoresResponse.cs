@@ -2,13 +2,13 @@
 
 namespace Bibliocanto.Communication
 {
-    public class SaveAutoresResponse : BaseResponse
+    public class AutoresResponse : BaseResponse
     {
         public Autores Autor { get; private set; }
 
-        private SaveAutoresResponse(bool success, string message, Autores category) : base(success, message)
+        private AutoresResponse(bool success, string message, Autores autor) : base(success, message)
         {
-            Autor = category;
+            Autor = autor;
         }
 
         /// <summary>
@@ -16,7 +16,7 @@ namespace Bibliocanto.Communication
         /// </summary>
         /// <param name="category">Saved category.</param>
         /// <returns>Response.</returns>
-        public SaveAutoresResponse(Autores category) : this(true, string.Empty, category)
+        public AutoresResponse(Autores autor) : this(true, string.Empty, autor)
         { }
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace Bibliocanto.Communication
         /// </summary>
         /// <param name="message">Error message.</param>
         /// <returns>Response.</returns>
-        public SaveAutoresResponse(string message) : this(false, message, null)
+        public AutoresResponse(string message) : this(false, message, null)
         { }
     }
 }

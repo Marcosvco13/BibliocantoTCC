@@ -28,6 +28,9 @@ builder.Services.AddScoped<ILivrosRepository, LivrosRepository>();
 builder.Services.AddScoped<IAutoresRepository, AutoresRepository>();
 builder.Services.AddScoped<IAutoresService, AutoresServices>();
 
+builder.Services.AddScoped<IGenerosRepository, GenerosRepository>();
+builder.Services.AddScoped<IGenerosService, GenerosServices>();
+
 builder.Services.AddScoped<IUnitOFWork, UnitOfWork>();
 
 var app = builder.Build();

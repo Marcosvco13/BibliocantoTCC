@@ -3,6 +3,7 @@ using Bibliocanto.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bibliocanto.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240812233151_ajusteForange")]
+    partial class ajusteForange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,11 +65,6 @@ namespace Bibliocanto.Migrations
                     b.Property<int>("AutorId")
                         .HasColumnType("int");
 
-                    b.Property<string>("CaminhoImagem")
-                        .IsRequired()
-                        .HasMaxLength(555)
-                        .HasColumnType("nvarchar(555)");
-
                     b.Property<string>("Descricao")
                         .IsRequired()
                         .HasMaxLength(1555)
@@ -76,11 +74,6 @@ namespace Bibliocanto.Migrations
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("isbn")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -93,19 +86,15 @@ namespace Bibliocanto.Migrations
                         {
                             Id = 100,
                             AutorId = 100,
-                            CaminhoImagem = "https://m.media-amazon.com/images/I/81M-QDE-7zL._SY425_.jpg",
                             Descricao = "Teste1",
-                            Titulo = "O Capital",
-                            isbn = "978-6557172292"
+                            Titulo = "O Capital"
                         },
                         new
                         {
                             Id = 101,
                             AutorId = 101,
-                            CaminhoImagem = "https://m.media-amazon.com/images/I/916WkSH4cGL._SY425_.jpg",
                             Descricao = "Teste2",
-                            Titulo = "Crime e Castigo",
-                            isbn = "978-8573266467"
+                            Titulo = "Crime e Castigo"
                         });
                 });
 
