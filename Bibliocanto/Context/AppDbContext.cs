@@ -59,8 +59,8 @@ namespace Bibliocanto.Context
                     Descricao = "Teste1",
                     CaminhoImagem = "https://m.media-amazon.com/images/I/81M-QDE-7zL._SY425_.jpg",
                     isbn = "978-6557172292",
-                    AutorId = 100
-                    //generoid = 101
+                    AutorId = 100,
+                    generoid = 101
                 },
                 new Livros
                 {
@@ -69,8 +69,8 @@ namespace Bibliocanto.Context
                     Descricao = "Teste2",
                     CaminhoImagem = "https://m.media-amazon.com/images/I/916WkSH4cGL._SY425_.jpg",
                     isbn = "978-8573266467",
-                    AutorId = 101
-                    //generoid = 100
+                    AutorId = 101,
+                    generoid = 100
                 }
             );
 
