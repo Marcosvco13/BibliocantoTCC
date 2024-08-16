@@ -20,6 +20,8 @@ namespace Bibliocanto.Resources
         public int AutorId { get; set; }
         [Required]
         public int GeneroId { get; set; }
+        [Required]
+        public int EditoraId { get; set; }
 
     }
 }

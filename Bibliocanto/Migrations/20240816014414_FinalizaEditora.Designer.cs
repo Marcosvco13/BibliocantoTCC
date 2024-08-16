@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bibliocanto.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240815020108_NovosCamposNaTabelaLivros")]
-    partial class NovosCamposNaTabelaLivros
+    [Migration("20240816014414_FinalizaEditora")]
+    partial class FinalizaEditora
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,6 +54,66 @@ namespace Bibliocanto.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Bibliocanto.Models.Editoras", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("NomeEditora")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Editoras", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 100,
+                            NomeEditora = "Boitempo Editorial"
+                        },
+                        new
+                        {
+                            Id = 101,
+                            NomeEditora = "Editora 34"
+                        });
+                });
+
+            modelBuilder.Entity("Bibliocanto.Models.Generos", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("NomeGenero")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Generos", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 100,
+                            NomeGenero = "Ficção"
+                        },
+                        new
+                        {
+                            Id = 101,
+                            NomeGenero = "Economia"
+                        });
+                });
+
             modelBuilder.Entity("Bibliocanto.Models.Livros", b =>
                 {
                     b.Property<int>("Id")
@@ -75,19 +135,29 @@ namespace Bibliocanto.Migrations
                         .HasMaxLength(1555)
                         .HasColumnType("nvarchar(1555)");
 
+                    b.Property<int>("EditoraId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GeneroId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Isbn")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<string>("Titulo")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("isbn")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AutorId");
+
+                    b.HasIndex("EditoraId");
+
+                    b.HasIndex("GeneroId");
 
                     b.ToTable("Livros", (string)null);
 
@@ -98,8 +168,10 @@ namespace Bibliocanto.Migrations
                             AutorId = 100,
                             CaminhoImagem = "https://m.media-amazon.com/images/I/81M-QDE-7zL._SY425_.jpg",
                             Descricao = "Teste1",
-                            Titulo = "O Capital",
-                            isbn = "978-6557172292"
+                            EditoraId = 100,
+                            GeneroId = 101,
+                            Isbn = "978-6557172292",
+                            Titulo = "O Capital"
                         },
                         new
                         {
@@ -107,8 +179,10 @@ namespace Bibliocanto.Migrations
                             AutorId = 101,
                             CaminhoImagem = "https://m.media-amazon.com/images/I/916WkSH4cGL._SY425_.jpg",
                             Descricao = "Teste2",
-                            Titulo = "Crime e Castigo",
-                            isbn = "978-8573266467"
+                            EditoraId = 101,
+                            GeneroId = 100,
+                            Isbn = "978-8573266467",
+                            Titulo = "Crime e Castigo"
                         });
                 });
 
@@ -120,10 +194,36 @@ namespace Bibliocanto.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Bibliocanto.Models.Editoras", "Editoras")
+                        .WithMany("Livros")
+                        .HasForeignKey("EditoraId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Bibliocanto.Models.Generos", "Generos")
+                        .WithMany("Livros")
+                        .HasForeignKey("GeneroId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Autores");
+
+                    b.Navigation("Editoras");
+
+                    b.Navigation("Generos");
                 });
 
             modelBuilder.Entity("Bibliocanto.Models.Autores", b =>
+                {
+                    b.Navigation("Livros");
+                });
+
+            modelBuilder.Entity("Bibliocanto.Models.Editoras", b =>
+                {
+                    b.Navigation("Livros");
+                });
+
+            modelBuilder.Entity("Bibliocanto.Models.Generos", b =>
                 {
                     b.Navigation("Livros");
                 });

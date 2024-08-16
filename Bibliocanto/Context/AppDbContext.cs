@@ -22,7 +22,7 @@ namespace Bibliocanto.Context
             builder.Entity<Autores>().HasKey(p => p.Id);
             builder.Entity<Autores>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<Autores>().Property(p => p.NomeAutor).IsRequired().HasMaxLength(150);
-            builder.Entity<Autores>().HasMany(p => p.Livros).WithOne(p => p.Autores).HasForeignKey(p => p.AutorId);
+            //builder.Entity<Autores>().HasMany(p => p.Livros).WithOne(p => p.Autores).HasForeignKey(p => p.AutorId);
 
             builder.Entity<Autores>().HasData
             (
@@ -34,7 +34,7 @@ namespace Bibliocanto.Context
             builder.Entity<Generos>().HasKey(p => p.Id);
             builder.Entity<Generos>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<Generos>().Property(p => p.NomeGenero).IsRequired().HasMaxLength(150);
-            builder.Entity<Generos>().HasMany(p => p.Livros).WithOne(p => p.Generos).HasForeignKey(p => p.GeneroId);
+            //builder.Entity<Generos>().HasMany(p => p.Livros).WithOne(p => p.Generos).HasForeignKey(p => p.GeneroId);
 
             builder.Entity<Generos>().HasData
             (
@@ -46,7 +46,7 @@ namespace Bibliocanto.Context
             builder.Entity<Editoras>().HasKey(p => p.Id);
             builder.Entity<Editoras>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<Editoras>().Property(p => p.NomeEditora).IsRequired().HasMaxLength(150);
-            builder.Entity<Editoras>().HasMany(p => p.Livros).WithOne(p => p.Editoras).HasForeignKey(p => p.EditoraId);
+            //builder.Entity<Editoras>().HasMany(p => p.Livros).WithOne(p => p.Editoras).HasForeignKey(p => p.EditoraId);
 
             builder.Entity<Editoras>().HasData
             (
@@ -61,6 +61,9 @@ namespace Bibliocanto.Context
             builder.Entity<Livros>().Property(p => p.CaminhoImagem).IsRequired().HasMaxLength(555);
             builder.Entity<Livros>().Property(p => p.Isbn).IsRequired().HasMaxLength(50);
             builder.Entity<Livros>().Property(p => p.Descricao).IsRequired().HasMaxLength(1555);
+            builder.Entity<Livros>().HasOne(p => p.Generos).WithMany(p => p.Livros).HasForeignKey(p => p.GeneroId);
+            builder.Entity<Livros>().HasOne(p => p.Autores).WithMany(p => p.Livros).HasForeignKey(p => p.AutorId);
+            builder.Entity<Livros>().HasOne(p => p.Editoras).WithMany(p => p.Livros).HasForeignKey(p => p.EditoraId);
 
 
             builder.Entity<Livros>().HasData

@@ -9,5 +9,6 @@
         public string Isbn { get; set; }
         public AutoresResource Autores { get; set; }
         public GenerosResource Generos { get; set; }
+        public EditorasResource Editoras { get; set; }
     }
 }
