@@ -66,6 +66,12 @@ namespace Bibliocanto.Services
                 return new LivrosResponse("Category not found.");
 
             exibirLivro.Titulo = livro.Titulo;
+            exibirLivro.Descricao = livro.Descricao;
+            exibirLivro.CaminhoImagem = livro.CaminhoImagem;
+            exibirLivro.Isbn = livro.Isbn;
+            exibirLivro.AutorId = livro.AutorId;
+            exibirLivro.GeneroId = livro.GeneroId;
+
 
             try
             {

@@ -10,10 +10,9 @@ namespace Bibliocanto.Mapping
         public ResourceToModelProfile()
         {
             CreateMap<SaveAutoresResource, Autores>();
-
             CreateMap<SaveLivrosResource, Livros>();
-
             CreateMap<SaveGenerosResource, Generos>();
+            CreateMap<SaveEditorasResource, Editoras>();
         }
     }
 }

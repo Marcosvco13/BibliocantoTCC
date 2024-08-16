@@ -3,6 +3,7 @@ using Bibliocanto.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bibliocanto.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240815220520_Genero")]
+    partial class Genero
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,31 +56,31 @@ namespace Bibliocanto.Migrations
 
             modelBuilder.Entity("Bibliocanto.Models.Generos", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<string>("NomeGenero")
+                    b.Property<string>("nomegenero")
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
                     b.ToTable("Generos", (string)null);
 
                     b.HasData(
                         new
                         {
-                            Id = 100,
-                            NomeGenero = "Ficção"
+                            id = 100,
+                            nomegenero = "Ficção"
                         },
                         new
                         {
-                            Id = 101,
-                            NomeGenero = "Economia"
+                            id = 101,
+                            nomegenero = "Economia"
                         });
                 });
 
@@ -102,24 +105,24 @@ namespace Bibliocanto.Migrations
                         .HasMaxLength(1555)
                         .HasColumnType("nvarchar(1555)");
 
-                    b.Property<int>("GeneroId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Isbn")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<string>("Titulo")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<int>("generoid")
+                        .HasColumnType("int");
+
+                    b.Property<string>("isbn")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AutorId");
 
-                    b.HasIndex("GeneroId");
+                    b.HasIndex("generoid");
 
                     b.ToTable("Livros", (string)null);
 
@@ -130,9 +133,9 @@ namespace Bibliocanto.Migrations
                             AutorId = 100,
                             CaminhoImagem = "https://m.media-amazon.com/images/I/81M-QDE-7zL._SY425_.jpg",
                             Descricao = "Teste1",
-                            GeneroId = 101,
-                            Isbn = "978-6557172292",
-                            Titulo = "O Capital"
+                            Titulo = "O Capital",
+                            generoid = 101,
+                            isbn = "978-6557172292"
                         },
                         new
                         {
@@ -140,9 +143,9 @@ namespace Bibliocanto.Migrations
                             AutorId = 101,
                             CaminhoImagem = "https://m.media-amazon.com/images/I/916WkSH4cGL._SY425_.jpg",
                             Descricao = "Teste2",
-                            GeneroId = 100,
-                            Isbn = "978-8573266467",
-                            Titulo = "Crime e Castigo"
+                            Titulo = "Crime e Castigo",
+                            generoid = 100,
+                            isbn = "978-8573266467"
                         });
                 });
 
@@ -156,7 +159,7 @@ namespace Bibliocanto.Migrations
 
                     b.HasOne("Bibliocanto.Models.Generos", "Generos")
                         .WithMany("Livros")
-                        .HasForeignKey("GeneroId")
+                        .HasForeignKey("generoid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

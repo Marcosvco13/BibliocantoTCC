@@ -81,17 +81,17 @@ namespace Bibliocanto.Services
 
         public async Task<AutoresResponse> Delete(int id)
         {
-            var existingCategory = await _autoresRepository.GetById(id);
+            var existingAutor = await _autoresRepository.GetById(id);
 
-            if (existingCategory == null)
+            if (existingAutor == null)
                 return new AutoresResponse("Category not found.");
 
             try
             {
-                _autoresRepository.Delete(existingCategory);
+                _autoresRepository.Delete(existingAutor);
                 await _unitOfWork.CompleteAsync();
 
-                return new AutoresResponse(existingCategory);
+                return new AutoresResponse(existingAutor);
             }
             catch (Exception ex)
             {

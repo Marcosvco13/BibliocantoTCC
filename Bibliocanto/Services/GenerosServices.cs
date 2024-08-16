@@ -61,7 +61,7 @@ namespace Bibliocanto.Services
 
             if (generoExistente == null)
                 return new GenerosResponse("Category not found.");
-            generoExistente.nomegenero = genero.nomegenero;
+            generoExistente.NomeGenero = genero.NomeGenero;
 
             try
             {

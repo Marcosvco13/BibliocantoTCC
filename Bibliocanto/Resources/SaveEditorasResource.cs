@@ -2,10 +2,10 @@
 
 namespace Bibliocanto.Resources
 {
-    public class SaveAutoresResource
+    public class SaveEditorasResource
     {
         [Required]
         [MaxLength(150)]
-        public string? NomeAutor { get; set; }
+        public string? NomeEditora { get; set; }
     }
 }

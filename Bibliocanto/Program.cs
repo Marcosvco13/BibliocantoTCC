@@ -31,6 +31,9 @@ builder.Services.AddScoped<IAutoresService, AutoresServices>();
 builder.Services.AddScoped<IGenerosRepository, GenerosRepository>();
 builder.Services.AddScoped<IGenerosService, GenerosServices>();
 
+builder.Services.AddScoped<IEditorasRepository, EditorasRepository>();
+builder.Services.AddScoped<IEditorasService, EditorasServices>();
+
 builder.Services.AddScoped<IUnitOFWork, UnitOfWork>();
 
 var app = builder.Build();

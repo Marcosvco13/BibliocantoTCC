@@ -15,11 +15,11 @@ namespace Bibliocanto.Resources
         public string CaminhoImagem { get; set; }
         [Required]
         [StringLength(50)]
-        public string isbn { get; set; }
+        public string Isbn { get; set; }
         [Required]
         public int AutorId { get; set; }
         [Required]
-        public int generoid { get; set; }
+        public int GeneroId { get; set; }
 
     }
 }
