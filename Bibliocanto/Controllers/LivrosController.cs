@@ -102,7 +102,7 @@ namespace Bibliocanto.Controllers
             if (!result.Success)
                 return BadRequest(result.Message);
 
-            var livroResource = _mapper.Map<Livros, SaveLivrosResource>(result.Livros);
+            var livroResource = _mapper.Map<Livros, LivrosResource>(result.Livros);
             return Ok(livroResource);
         }
 

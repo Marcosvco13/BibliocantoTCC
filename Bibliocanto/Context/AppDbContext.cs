@@ -12,6 +12,7 @@ namespace Bibliocanto.Context
         public DbSet<Livros> Livros { get; set; }
         public DbSet<Autores> Autores { get; set; }
         public DbSet<Generos> Generos { get; set; }
+        public DbSet<Editoras> Editoras { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -30,15 +31,27 @@ namespace Bibliocanto.Context
             );
 
             builder.Entity<Generos>().ToTable("Generos");
-            builder.Entity<Generos>().HasKey(p => p.id);
-            builder.Entity<Generos>().Property(p => p.id).IsRequired().ValueGeneratedOnAdd();
-            builder.Entity<Generos>().Property(p => p.nomegenero).IsRequired().HasMaxLength(150);
-            builder.Entity<Generos>().HasMany(p => p.Livros).WithOne(p => p.Generos).HasForeignKey(p => p.generoid);
+            builder.Entity<Generos>().HasKey(p => p.Id);
+            builder.Entity<Generos>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<Generos>().Property(p => p.NomeGenero).IsRequired().HasMaxLength(150);
+            builder.Entity<Generos>().HasMany(p => p.Livros).WithOne(p => p.Generos).HasForeignKey(p => p.GeneroId);
 
             builder.Entity<Generos>().HasData
             (
-                new Generos { id = 100, nomegenero = "Ficção" },
-                new Generos { id = 101, nomegenero = "Economia" }
+                new Generos { Id = 100, NomeGenero = "Ficção" },
+                new Generos { Id = 101, NomeGenero = "Economia" }
+            );
+
+            builder.Entity<Editoras>().ToTable("Editoras");
+            builder.Entity<Editoras>().HasKey(p => p.Id);
+            builder.Entity<Editoras>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<Editoras>().Property(p => p.NomeEditora).IsRequired().HasMaxLength(150);
+            builder.Entity<Editoras>().HasMany(p => p.Livros).WithOne(p => p.Editoras).HasForeignKey(p => p.EditoraId);
+
+            builder.Entity<Editoras>().HasData
+            (
+                new Editoras { Id = 100, NomeEditora = "Boitempo Editorial" },
+                new Editoras { Id = 101, NomeEditora = "Editora 34" }
             );
 
             builder.Entity<Livros>().ToTable("Livros");
@@ -46,7 +59,7 @@ namespace Bibliocanto.Context
             builder.Entity<Livros>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<Livros>().Property(p => p.Titulo).IsRequired().HasMaxLength(255);
             builder.Entity<Livros>().Property(p => p.CaminhoImagem).IsRequired().HasMaxLength(555);
-            builder.Entity<Livros>().Property(p => p.isbn).IsRequired().HasMaxLength(50);
+            builder.Entity<Livros>().Property(p => p.Isbn).IsRequired().HasMaxLength(50);
             builder.Entity<Livros>().Property(p => p.Descricao).IsRequired().HasMaxLength(1555);
 
 
@@ -58,9 +71,10 @@ namespace Bibliocanto.Context
                     Titulo = "O Capital",
                     Descricao = "Teste1",
                     CaminhoImagem = "https://m.media-amazon.com/images/I/81M-QDE-7zL._SY425_.jpg",
-                    isbn = "978-6557172292",
-                    AutorId = 100
-                    //generoid = 101
+                    Isbn = "978-6557172292",
+                    AutorId = 100,
+                    GeneroId = 101,
+                    EditoraId = 100
                 },
                 new Livros
                 {
@@ -68,9 +82,10 @@ namespace Bibliocanto.Context
                     Titulo = "Crime e Castigo",
                     Descricao = "Teste2",
                     CaminhoImagem = "https://m.media-amazon.com/images/I/916WkSH4cGL._SY425_.jpg",
-                    isbn = "978-8573266467",
-                    AutorId = 101
-                    //generoid = 100
+                    Isbn = "978-8573266467",
+                    AutorId = 101,
+                    GeneroId = 100,
+                    EditoraId = 101
                 }
             );
 

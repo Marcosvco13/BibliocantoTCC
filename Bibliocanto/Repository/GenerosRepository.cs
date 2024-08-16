@@ -19,12 +19,12 @@ namespace Bibliocanto.Repository
 
         public async Task<IEnumerable<Generos>> GetGeneroByName(string nome)
         {
-            return await _context.Generos.Where(n => n.nomegenero.Contains(nome)).ToListAsync();
+            return await _context.Generos.Where(n => n.NomeGenero.Contains(nome)).ToListAsync();
         }
 
         public async Task<Generos> GetById(int id)
         {
-            return await _context.Generos.FirstOrDefaultAsync(l => l.id == id); ;
+            return await _context.Generos.FirstOrDefaultAsync(l => l.Id == id); ;
         }
 
         public async Task CreateGenero(Generos generos)

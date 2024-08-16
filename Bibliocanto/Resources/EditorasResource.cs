@@ -1,8 +1,8 @@
 ﻿namespace Bibliocanto.Resources
 {
-    public class AutoresResource
+    public class EditorasResource
     {
         public int Id { get; set; }
-        public string? NomeAutor {  get; set; }
+        public string? NomeEditora { get; set; }
     }
 }
