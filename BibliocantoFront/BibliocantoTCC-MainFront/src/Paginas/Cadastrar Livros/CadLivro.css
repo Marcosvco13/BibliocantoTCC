@@ -1,0 +1,35 @@
+.jumbotron-custom {
+    background-color: #47211c;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    color: white;
+  }
+  
+h2 {
+    color: white;
+}
+
+.Container{
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.table-custom{
+  background-color: #47211c;
+}
+
+.btn-success {
+  background-color: #0e3523 !important;
+  border-color: #0e3523 !important;
+}
+
+.btn-success:hover {
+  background-color: #1d2a1f  !important; /* Verde escuro no hover */
+  border-color: #1d2a1f !important;
+}
+
+.btn-success:focus, .btn-success:active {
+  background-color: #0e3523  !important; /* Verde ainda mais escuro ao clicar */
+  border-color: #0e3523  !important;
+}
+
