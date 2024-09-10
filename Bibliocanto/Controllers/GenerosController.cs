@@ -4,6 +4,8 @@ using Bibliocanto.IRepository;
 using Bibliocanto.IServices;
 using Bibliocanto.Models;
 using Bibliocanto.Resources;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +13,7 @@ namespace Bibliocanto.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class GenerosController : ControllerBase
     {
         private readonly IGenerosService _generosService;

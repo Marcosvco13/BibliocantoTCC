@@ -1,9 +1,11 @@
 ﻿using Bibliocanto.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bibliocanto.Context
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<IdentityUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) 
         { 
@@ -22,7 +24,6 @@ namespace Bibliocanto.Context
             builder.Entity<Autores>().HasKey(p => p.Id);
             builder.Entity<Autores>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<Autores>().Property(p => p.NomeAutor).IsRequired().HasMaxLength(150);
-            //builder.Entity<Autores>().HasMany(p => p.Livros).WithOne(p => p.Autores).HasForeignKey(p => p.AutorId);
 
             builder.Entity<Autores>().HasData
             (
@@ -34,7 +35,6 @@ namespace Bibliocanto.Context
             builder.Entity<Generos>().HasKey(p => p.Id);
             builder.Entity<Generos>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<Generos>().Property(p => p.NomeGenero).IsRequired().HasMaxLength(150);
-            //builder.Entity<Generos>().HasMany(p => p.Livros).WithOne(p => p.Generos).HasForeignKey(p => p.GeneroId);
 
             builder.Entity<Generos>().HasData
             (
@@ -46,7 +46,6 @@ namespace Bibliocanto.Context
             builder.Entity<Editoras>().HasKey(p => p.Id);
             builder.Entity<Editoras>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<Editoras>().Property(p => p.NomeEditora).IsRequired().HasMaxLength(150);
-            //builder.Entity<Editoras>().HasMany(p => p.Livros).WithOne(p => p.Editoras).HasForeignKey(p => p.EditoraId);
 
             builder.Entity<Editoras>().HasData
             (

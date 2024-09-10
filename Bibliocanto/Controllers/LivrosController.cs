@@ -5,6 +5,8 @@ using Bibliocanto.IServices;
 using Bibliocanto.Models;
 using Bibliocanto.Resources;
 using Bibliocanto.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +14,8 @@ namespace Bibliocanto.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
     public class LivrosController : ControllerBase
     {
         private ILivrosService _livroService;
