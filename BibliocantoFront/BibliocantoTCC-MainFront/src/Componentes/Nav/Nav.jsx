@@ -27,9 +27,16 @@ function Nav() {
         <Link to="/CadastrarLivro">Cadastrar Livro</Link>
       </div>
       <div className="nav-options-right">
-        <a href="/">Minha Bilioteca</a>
+        <a href="/">Minha Biblioteca</a>
       </div>
-      <img className="nav-avatar" src="src\assets\leitor.png" alt="Leitor" />
+      {/* <img className="nav-avatar" src="src\assets\leitor.png" alt="Leitor" Link="./Cadastrar Livros/Login" /> */}
+      <Link to="/login">
+        <img
+          className="nav-avatar"
+          src="src/assets/leitor.png"
+          alt="Leitor"
+        />
+      </Link>
     </div>
   );
 }

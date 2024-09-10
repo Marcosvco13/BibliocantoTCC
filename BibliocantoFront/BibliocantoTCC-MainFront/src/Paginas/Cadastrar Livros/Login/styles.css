@@ -1,0 +1,56 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Centraliza verticalmente ocupando a tela toda */
+    background-color: #E6D9C8; /* Cor de fundo suave */
+  }
+  
+  .form {
+    background-color: #47211c;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    max-width: 400px;
+    width: 100%;
+    text-align: center; /* Centraliza o conteúdo */
+  }
+  
+  #imgLogo {
+    width: 100px;
+    margin-bottom: 20px;
+  }
+  
+  form h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: white; /* Cor do texto */
+  }
+  
+  form input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  form .button {
+    width: 100%;
+    padding: 15px;
+    background-color: #007BFF; /* Cor do botão */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    text-align: center; /* Alinha o texto horizontalmente */
+    display: inline-block; /* Garante que seja tratado como bloco */
+    line-height: 1.2; /* Ajusta a altura da linha para centralização vertical */
+    cursor: pointer;
+  }
+  
+  form .button:hover {
+    background-color: #0056b3; /* Cor ao passar o mouse */
+  }
+  

@@ -6,7 +6,8 @@
   }
   
 h2 {
-    color: white;
+    color: whitesmoke;
+    text-align: center;
 }
 
 .Container{
@@ -19,17 +20,17 @@ h2 {
 }
 
 .btn-success {
-  background-color: #0e3523 !important;
-  border-color: #0e3523 !important;
+  background-color: #007BFF !important;
+  border-color: #007BFF !important;
 }
 
 .btn-success:hover {
-  background-color: #1d2a1f  !important; /* Verde escuro no hover */
-  border-color: #1d2a1f !important;
+  background-color: #0056b3  !important; /* Verde escuro no hover */
+  border-color: #0056b3 !important;
 }
 
 .btn-success:focus, .btn-success:active {
-  background-color: #0e3523  !important; /* Verde ainda mais escuro ao clicar */
-  border-color: #0e3523  !important;
+  background-color: #0056b3 !important; /* Verde ainda mais escuro ao clicar */
+  border-color: #0056b3  !important;
 }
 
