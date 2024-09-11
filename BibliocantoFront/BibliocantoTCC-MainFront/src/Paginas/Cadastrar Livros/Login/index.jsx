@@ -29,6 +29,7 @@ export default function Login(){
             localStorage.setItem('expiration', response.data.expiration);
     
             history('/');
+            window.location.reload();
     
         }catch(error){
             alert('O login falhou ' + error)

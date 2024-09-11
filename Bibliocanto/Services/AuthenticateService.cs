@@ -23,6 +23,7 @@ namespace Bibliocanto.Services
         {
             var appUser = new IdentityUser
             {
+                //Arrumar a parte do UserName para salvar o nome do usuário, salvar os dados ocrretos.
                 UserName = email,
                 Email = email,
             };
