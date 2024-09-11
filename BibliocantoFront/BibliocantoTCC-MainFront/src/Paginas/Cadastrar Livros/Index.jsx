@@ -1,7 +1,7 @@
 import './CadLivro.css';
 import api from '../../services/api';
 import { useEffect, useState} from 'react';
-import Livro from '../../Componentes/Livro/index'
+import Livro from '../../Componentes/Livro/index';
 
 function CadastrarLivro() {
 

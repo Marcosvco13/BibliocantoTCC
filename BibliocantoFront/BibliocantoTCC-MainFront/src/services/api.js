@@ -4,11 +4,19 @@ const api = axios.create({
     baseURL: 'http://localhost:5162'
 });
 
+const token = localStorage.getItem('token');
+
+const authorization = {
+    headers : {
+        Authorization : `Bearer ${token}`
+    }
+};
+
 //metodo get
 
 api.getLivros = async function(setLivros) {
     try {
-        const livrosFromApi = await api.get('/api/Livros');
+        const livrosFromApi = await api.get('/api/Livros', authorization).then(response => {setLivros(response.data)}, token);
         setLivros(livrosFromApi.data);
         console.log(livrosFromApi);
     } catch (error) {
@@ -18,7 +26,7 @@ api.getLivros = async function(setLivros) {
 
 api.getGeneros = async function(setGeneros) {
     try {
-        const generosFromApi = await api.get('/api/Generos');
+        const generosFromApi = await api.get('/api/Generos', authorization).then(response => {setGeneros(response.data)}, token);
         setGeneros(generosFromApi.data);
         //console.log(generosFromApi);
     } catch (error) {
@@ -28,7 +36,7 @@ api.getGeneros = async function(setGeneros) {
 
 api.getAutores = async function(setAutores) {
     try {
-        const autoresFromApi = await api.get('/api/Autores');
+        const autoresFromApi = await api.get('/api/Autores', authorization).then(response => {setAutores(response.data)}, token);
         setAutores(autoresFromApi.data);
         //console.log(autoresFromApi);
     } catch (error) {
@@ -40,7 +48,7 @@ api.getAutores = async function(setAutores) {
 
 api.cadastrarLivro = async function(livroData) {
     try {
-        const response = await api.post('/api/Livros', livroData);
+        const response = await api.post('/api/Livros', livroData, authorization).then(response => {livroData(response.data)}, token);
         console.log('Livro cadastrado com sucesso:', response.data);
         return response.data;
     } catch (error) {
