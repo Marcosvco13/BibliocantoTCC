@@ -283,3 +283,10 @@ D:\Projetos\BibliocantoTCC\Bibliocanto\bin\Debug\net8.0\Microsoft.Extensions.Ide
 D:\Projetos\BibliocantoTCC\Bibliocanto\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll
 D:\Projetos\BibliocantoTCC\Bibliocanto\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
 D:\Projetos\BibliocantoTCC\Bibliocanto\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\marco\Documents\GitHub\BibliocantoTCC\Bibliocanto\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\marco\Documents\GitHub\BibliocantoTCC\Bibliocanto\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\marco\Documents\GitHub\BibliocantoTCC\Bibliocanto\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\marco\Documents\GitHub\BibliocantoTCC\Bibliocanto\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\marco\Documents\GitHub\BibliocantoTCC\Bibliocanto\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
+C:\Users\marco\Documents\GitHub\BibliocantoTCC\Bibliocanto\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\marco\Documents\GitHub\BibliocantoTCC\Bibliocanto\bin\Debug\net8.0\Microsoft.Extensions.Options.dll

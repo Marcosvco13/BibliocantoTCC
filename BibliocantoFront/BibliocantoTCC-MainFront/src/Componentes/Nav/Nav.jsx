@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserCircle } from '@fortawesome/free-regular-svg-icons';
+import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 import "./Nav.css";
 
 export default function Nav() {
@@ -34,12 +34,15 @@ export default function Nav() {
         <a href="/">Minha Biblioteca</a>
         {/* Verifica se o usuário está logado */}
         {email ? (
-          <span>{email}</span>
+          <span>
+            {email}
+            {/* Ícone de logout */}
+            <FontAwesomeIcon icon={faArrowRightFromBracket} style={{ marginLeft: '10px', cursor: 'pointer' }} />
+          </span>
         ) : (
           <a href="/login">Entrar</a>
         )}
       </div>
-      <FontAwesomeIcon icon={faUserCircle} size="3x" className="nav-avatar" />
     </div>
   );
 }

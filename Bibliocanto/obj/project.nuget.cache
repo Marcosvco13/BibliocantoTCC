@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "j/9XRG1BsZBwUxK/r1Xi2+zguMIc4My41ZYCs0ikS7yIZ4yNdnnAylYKyKlfMUjPIzsjWLcciRh4YdOcIRtfPw==",
+  "dgSpecHash": "21en/C3L/L9II9vywSkIViCAGbZVYgIg/m1qqalIwNkwYrW1wYWkJnvf9Pf3HeOtFk6dQqi+q9pUdV0SGDAbiw==",
   "success": true,
-  "projectFilePath": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Bibliocanto.csproj",
+  "projectFilePath": "C:\\Users\\marco\\Documents\\GitHub\\BibliocantoTCC\\Bibliocanto\\Bibliocanto.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\marco\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\marco\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
