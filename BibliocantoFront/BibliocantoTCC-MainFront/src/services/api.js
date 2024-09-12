@@ -36,6 +36,16 @@ api.getAutores = async function(setAutores) {
     }
 };
 
+api.getEditoras = async function(setEditoras) {
+    try {
+        const editorasFromApi = await api.get('/api/Editoras');
+        setEditoras(editorasFromApi.data);
+        console.log(editorasFromApi);
+    } catch (error) {
+        console.error("Erro ao buscar as editoras:", error);
+    }
+};
+
 //metodo post
 
 api.cadastrarLivro = async function(livroData) {
