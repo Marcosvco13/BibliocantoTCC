@@ -6,7 +6,7 @@ function Livro({ livros, onDelete, onEdit }) {
                     <td>{livro.id}</td>
                     <td>{livro.titulo}</td>
                     <td>{livro.autores?.nomeAutor}</td>
-                    <td>{livro.generos?.nomeGenero}</td>
+                    <td>{livro.generos?.nomegenero}</td>
                     <td>{livro.isbn}</td>
                     <td>{livro.descricao}</td>
                     <td>{livro.editoras?.nomeEditora}</td>
@@ -14,7 +14,7 @@ function Livro({ livros, onDelete, onEdit }) {
                     <td>
                         <button 
                             className="btn btn-primary btn-sm" 
-                            onClick={() => onEdit(livro)}
+                            onClick={() => onEdit(livro.id)}
                         >
                             Editar
                         </button>

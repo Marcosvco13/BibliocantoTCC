@@ -56,7 +56,7 @@ function CadastrarLivro() {
 
         try {
             // Chamar api para cadastrar o livro
-            const livroCadastrado = await api.cadastrarLivro(novoLivro);
+            const livroCadastrado = await api.cadastrarLivro(LivroData);
             console.log('Livro cadastrado com sucesso:', livroCadastrado);
             // Atualiza a lista depois do cadastro
             api.getLivros(setLivros);
@@ -73,10 +73,18 @@ function CadastrarLivro() {
         }
     };
 
+    const token = localStorage.getItem('token');
+
+    const authorization = {
+        headers : {
+            Authorization : `Bearer ${token}`
+        }
+    };
+
     // Função para deletar um livro
     const handleDelete = async (id) => {
         try {
-            await api.delete(`/api/Livros/${id}`);
+            await api.delete(`/api/Livros/${id}`, authorization);
             setLivros(livros.filter(livro => livro.id !== id)); // Remove o livro da lista localmente
             console.log('Livro deletado com sucesso!');
         } catch (error) {
