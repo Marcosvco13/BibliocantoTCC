@@ -19,13 +19,13 @@ namespace Bibliocanto.Services
 
             return result.Succeeded;
         }
-        public async Task<bool> RegisterUser(string email, string password)
+        public async Task<bool> RegisterUser(string userName, string email, string password)
         {
             var appUser = new IdentityUser
             {
                 //Arrumar a parte do UserName para salvar o nome do usuário, salvar os dados ocrretos.
-                UserName = email,
-                Email = email,
+                UserName = userName,
+                Email = email
             };
 
             var result = await _userManager.CreateAsync(appUser, password);
@@ -36,6 +36,18 @@ namespace Bibliocanto.Services
             }
 
             return result.Succeeded;
+        }
+
+        public async Task<bool> FindByEmail(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            return user != null; // Retorna true se o usuário foi encontrado, false caso contrário
+        }
+
+        public async Task<IdentityUser> FindUserByEmail(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            return user;
         }
 
         public async Task Logout()

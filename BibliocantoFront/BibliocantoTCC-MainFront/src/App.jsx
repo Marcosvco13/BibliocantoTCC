@@ -9,7 +9,8 @@ import Nav from "./Componentes/Nav/Nav";
 
 //paginas
 import CadastrarLivro from "./Paginas/Cadastrar Livros/Index";
-import Login from "./Paginas/Cadastrar Livros/Login";
+import Login from "./Paginas/Login";
+import NewUser from "./Paginas/NewUser";
 
 export default function App() {
   const [generos, setGeneros] = useState([]);
@@ -28,6 +29,7 @@ export default function App() {
           <Route path="/" element={<Linha key={generos.id} />} />
           <Route path="/CadastrarLivro" element={<CadastrarLivro />} />
           <Route path="/Login" element={<Login/>}/>
+          <Route path="/NewUser" element={<NewUser/>}/>
         </Routes>
       </BrowserRouter>
       

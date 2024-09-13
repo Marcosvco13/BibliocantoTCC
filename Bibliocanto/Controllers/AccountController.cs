@@ -2,8 +2,12 @@
 using System.Security.Claims;
 using System.Text;
 using Bibliocanto.IServices;
+using Bibliocanto.Models;
+using Bibliocanto.Resources;
+using Bibliocanto.Services;
 using Bibliocanto.ViewModels;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 
@@ -60,18 +64,38 @@ namespace Bibliocanto.Controllers
                 return BadRequest(ModelState);
             }
 
-            var result = await _authentication.RegisterUser(model.Email, model.Password);
+            var result = await _authentication.RegisterUser(model.UserName, model.Email, model.Password);
 
             if (result)
             {
-                return Ok($"Usuário {model.Email} criado com sucesso");
+                return Ok($"Usuário {model.UserName} criado com sucesso");
             }
             else
             {
-                ModelState.AddModelError("CreateUser", "Registro inválido");
+                ModelState.AddModelError("CreateUser", "Registro inválido " + result);
                 return BadRequest(ModelState);
             }
 
+        }
+
+        [HttpGet("UserByEmail")]
+        public async Task<ActionResult<IdentityUser>> GetByEmail([FromQuery] string email)
+        {
+            try
+            {
+                var result = await _authentication.FindByEmail(email);
+
+                if (result == null)
+                {
+                    return NotFound("Usuário não encontrado.");
+                }
+
+                return Ok(result);
+            }
+            catch
+            {
+                return BadRequest("Request inválido");
+            }
         }
 
         [HttpPost("LoginUser")]
