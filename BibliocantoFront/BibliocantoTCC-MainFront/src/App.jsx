@@ -11,6 +11,7 @@ import Nav from "./Componentes/Nav/Nav";
 import CadastrarLivro from "./Paginas/Cadastrar Livros/Index";
 import Login from "./Paginas/Login";
 import NewUser from "./Paginas/NewUser";
+import CadAutor from './Paginas/Cad Autores/index';
 
 export default function App() {
   const [generos, setGeneros] = useState([]);
@@ -30,6 +31,7 @@ export default function App() {
           <Route path="/CadastrarLivro" element={<CadastrarLivro />} />
           <Route path="/Login" element={<Login/>}/>
           <Route path="/NewUser" element={<NewUser/>}/>
+          <Route path="/CadAutores" element={<CadAutor />} />
         </Routes>
       </BrowserRouter>
       

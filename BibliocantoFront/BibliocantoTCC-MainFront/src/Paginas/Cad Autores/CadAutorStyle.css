@@ -1,0 +1,47 @@
+.jumbotron-custom {
+  background-color: #47211c;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  color: #E6D9C8;
+}
+
+h2 {
+  color: #47211c;
+  text-align: center;
+}
+
+.Container{
+margin-left: 20px;
+margin-right: 20px;
+}
+
+.btn-success {
+background-color: #007BFF !important;
+border-color: #007BFF !important;
+}
+
+.btn-success:hover {
+background-color: #0056b3  !important; /* Verde escuro no hover */
+border-color: #0056b3 !important;
+}
+
+.btn-success:focus, .btn-success:active {
+background-color: #0056b3 !important; /* Verde ainda mais escuro ao clicar */
+border-color: #0056b3  !important;
+}
+
+.btn-secondary {
+  background-color: transparent; /* Cor de fundo do botão */
+  color: #fff; /* Cor do texto do botão */
+  border: none; /* Remove a borda padrão */
+  border-radius: 0.25rem; /* Borda arredondada */
+  padding: 0.5rem 1rem; /* Padding interno do botão */
+  margin-bottom: 1rem; /* Espaço abaixo do botão */
+  cursor: pointer; /* Cursor de pointer para indicar interatividade */
+  display: inline-flex; /* Permite o alinhamento do conteúdo do botão */
+  align-items: center; /* Centraliza verticalmente o conteúdo do botão */
+}
+
+.btn-secondary:hover {
+  background-color: rgba(108, 117, 125, 0.1); /* Fundo levemente colorido ao passar o mouse */
+}

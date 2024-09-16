@@ -64,11 +64,11 @@ namespace Bibliocanto.Controllers
                 return BadRequest(ModelState);
             }
 
-            var result = await _authentication.RegisterUser(model.UserName, model.Email, model.Password);
+            var result = await _authentication.RegisterUser( model.Email, model.Password);
 
             if (result)
             {
-                return Ok($"Usuário {model.UserName} criado com sucesso");
+                return Ok($"Usuário {model.Email} criado com sucesso");
             }
             else
             {
@@ -101,15 +101,25 @@ namespace Bibliocanto.Controllers
         [HttpPost("LoginUser")]
         public async Task<ActionResult<UserToken>> Login([FromBody] LoginModel userInfo)
         {
+            // Validate the user info
+            if (userInfo == null || string.IsNullOrEmpty(userInfo.Email) || string.IsNullOrEmpty(userInfo.Password))
+            {
+                ModelState.AddModelError("LoginUser", "Email e senha são obrigatórios.");
+                return BadRequest(ModelState);
+            }
+
+            // Authenticate user
             var result = await _authentication.Authenticate(userInfo.Email, userInfo.Password);
 
             if (result)
             {
+                // If authentication is successful, generate and return a token
                 return GenerateToken(userInfo);
             }
             else
             {
-                ModelState.AddModelError("LoginUser", "Login inválido");
+                // Add an error to the ModelState and return BadRequest in case of failure
+                ModelState.AddModelError("LoginUser", "Login inválido. Verifique suas credenciais.");
                 return BadRequest(ModelState);
             }
         }

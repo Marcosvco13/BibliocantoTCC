@@ -16,19 +16,29 @@ const authorization = {
 
 api.getLivros = async function(setLivros) {
     try {
-        const livrosFromApi = await api.get('/api/Livros', authorization).then(response => {setLivros(response.data)}, token);
-        setLivros(livrosFromApi.data);
-        console.log(livrosFromApi);
+        const response = await api.get('/api/Livros', authorization);
+        console.log(response);
+        if (response && response.data) {
+            setLivros(response.data);
+            console.log(response.data);
+        } else {
+            console.error("No data in response");
+        }
     } catch (error) {
         console.error("Erro ao buscar os livros:", error);
     }
-}
+};
 
 api.getGeneros = async function(setGeneros) {
     try {
-        const generosFromApi = await api.get('/api/Generos', authorization).then(response => {setGeneros(response.data)}, token);
-        setGeneros(generosFromApi.data);
-        //console.log(generosFromApi);
+        const response = await api.get('/api/Generos', authorization);
+        console.log(response);
+        if (response && response.data) {
+            setGeneros(response.data);
+            console.log(response.data);
+        } else {
+            console.error("No data in response");
+        }
     } catch (error) {
         console.error("Erro ao buscar os generos:", error);
     }
@@ -36,9 +46,14 @@ api.getGeneros = async function(setGeneros) {
 
 api.getAutores = async function(setAutores) {
     try {
-        const autoresFromApi = await api.get('/api/Autores', authorization).then(response => {setAutores(response.data)}, token);
-        setAutores(autoresFromApi.data);
-        //console.log(autoresFromApi);
+        const response = await api.get('/api/Autores', authorization);
+        console.log(response);
+        if (response && response.data) {
+            setAutores(response.data);
+            console.log(response.data);
+        } else {
+            console.error("No data in response");
+        }
     } catch (error) {
         console.error("Erro ao buscar os autores:", error);
     }
@@ -46,11 +61,16 @@ api.getAutores = async function(setAutores) {
 
 api.getEditoras = async function(setEditoras) {
     try {
-        const editorasFromApi = await api.get('/api/Editoras', authorization).then(response => {setEditoras(response.data)}, token);
-        setEditoras(editorasFromApi.data);
-        console.log(editorasFromApi);
+        const response = await api.get('/api/Editoras', authorization);
+        console.log(response);
+        if (response && response.data) {
+            setEditoras(response.data);
+            console.log(response.data);
+        } else {
+            console.error("No data in response");
+        }
     } catch (error) {
-        console.error("Erro ao buscar as editoras:", error);
+        console.error("Erro ao buscar os editoras:", error);
     }
 };
 
@@ -58,11 +78,22 @@ api.getEditoras = async function(setEditoras) {
 
 api.cadastrarLivro = async function(livroData) {
     try {
-        const response = await api.post('/api/Livros', livroData, authorization).then(response => {livroData(response.data)}, token);
+        const response = await api.post('/api/Livros', livroData, authorization);
         console.log('Livro cadastrado com sucesso:', response.data);
         return response.data;
     } catch (error) {
         console.error("Erro ao cadastrar o livro:", error);
+        throw error;
+    }
+};
+
+api.cadastrarAutor = async function(autorData) {
+    try {
+        const response = await api.post('/api/Autores', autorData, authorization);
+        console.log('Autor cadastrado com sucesso:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao cadastrar o autor:", error);
         throw error;
     }
 };

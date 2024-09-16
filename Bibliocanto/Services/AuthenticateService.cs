@@ -19,12 +19,12 @@ namespace Bibliocanto.Services
 
             return result.Succeeded;
         }
-        public async Task<bool> RegisterUser(string userName, string email, string password)
+
+        public async Task<bool> RegisterUser(string email, string password)
         {
             var appUser = new IdentityUser
             {
-                //Arrumar a parte do UserName para salvar o nome do usuário, salvar os dados ocrretos.
-                UserName = userName,
+                UserName = email,
                 Email = email
             };
 

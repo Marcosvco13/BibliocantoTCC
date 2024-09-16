@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Sistemas de informação\\TCC\\BibliocantoTCC\\Bibliocanto\\Bibliocanto.csproj": {}
+    "C:\\Users\\marco\\Documents\\GitHub\\BibliocantoTCC\\Bibliocanto\\Bibliocanto.csproj": {}
   },
   "projects": {
-    "D:\\Sistemas de informação\\TCC\\BibliocantoTCC\\Bibliocanto\\Bibliocanto.csproj": {
+    "C:\\Users\\marco\\Documents\\GitHub\\BibliocantoTCC\\Bibliocanto\\Bibliocanto.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Sistemas de informação\\TCC\\BibliocantoTCC\\Bibliocanto\\Bibliocanto.csproj",
+        "projectUniqueName": "C:\\Users\\marco\\Documents\\GitHub\\BibliocantoTCC\\Bibliocanto\\Bibliocanto.csproj",
         "projectName": "Bibliocanto",
-        "projectPath": "D:\\Sistemas de informação\\TCC\\BibliocantoTCC\\Bibliocanto\\Bibliocanto.csproj",
-        "packagesPath": "C:\\Users\\OTÁVIOAUGUSTOSOUZADA\\.nuget\\packages\\",
-        "outputPath": "D:\\Sistemas de informação\\TCC\\BibliocantoTCC\\Bibliocanto\\obj\\",
+        "projectPath": "C:\\Users\\marco\\Documents\\GitHub\\BibliocantoTCC\\Bibliocanto\\Bibliocanto.csproj",
+        "packagesPath": "C:\\Users\\marco\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\marco\\Documents\\GitHub\\BibliocantoTCC\\Bibliocanto\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\OTÁVIOAUGUSTOSOUZADA\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\marco\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,7 +22,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -35,11 +34,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -92,7 +86,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

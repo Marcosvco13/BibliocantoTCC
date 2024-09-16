@@ -4,6 +4,10 @@
     flex: 1;
 }
 
+.linha-crear{
+    font-size: 15px;
+}
+
 .linha-titulo{
     padding-top: 10px;
     margin-left: 20px;

@@ -4,9 +4,6 @@ namespace Bibliocanto.ViewModels
 {
     public class RegisterModel
     {
-        [Required]
-        [MaxLength (256)]
-        public string UserName { get; set; }
 
         [Required]
         [EmailAddress]

@@ -59,10 +59,16 @@ export default function Login() {
                     
                     <button className="button" type='submit'>Login</button>
                 </form>
+                
+                <br/>
 
-                <div>
-                    <button type="button" onClick={handleCreateUser}>Criar Usuário</button> {/* Função de callback */}
+                <h4>Ou</h4>
+                <hr color='white'></hr>
+
+                <div className='NewUser-container'>
+                    <button className="button" type="button" onClick={handleCreateUser}>Criar Usuário</button> {/* Função de callback */}
                 </div>
+
             </section>
         </div>
     );

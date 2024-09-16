@@ -2,6 +2,7 @@ import './CadLivro.css';
 import api from '../../services/api';
 import { useEffect, useState} from 'react';
 import Livro from '../../Componentes/Livro/index';
+import { Link } from "react-router-dom";
 
 function CadastrarLivro() {
 
@@ -15,6 +16,7 @@ function CadastrarLivro() {
     const [editoraId, setEditoraId] = useState('');
 
     const [livroEditando, setLivroEditando] = useState(null); // Estado para o livro em edição
+    
     const [formData, setFormData] = useState({ // Estado para o formulário
         titulo: '',
         descricao: '',
@@ -44,7 +46,7 @@ function CadastrarLivro() {
         e.preventDefault();
 
         // Criar objeto com os dados do livro
-        const novoLivro = {
+        const livroData = {
             titulo,
             descricao,
             isbn,
@@ -56,10 +58,12 @@ function CadastrarLivro() {
 
         try {
             // Chamar api para cadastrar o livro
-            const livroCadastrado = await api.cadastrarLivro(LivroData);
+            const livroCadastrado = await api.cadastrarLivro(livroData);
             console.log('Livro cadastrado com sucesso:', livroCadastrado);
+            
             // Atualiza a lista depois do cadastro
             api.getLivros(setLivros);
+            
             // Limpar o formulário
             setTitulo('');
             setDescricao('');
@@ -68,6 +72,8 @@ function CadastrarLivro() {
             setAutorId('');
             setGeneroId('');
             setEditoraId('');
+
+            window.location.reload();
         } catch (error) {
             console.error('Erro ao cadastrar o livro:', error);
         }
@@ -94,12 +100,25 @@ function CadastrarLivro() {
 
     return (
         <div className="Container">
+            
+            <div className="linha-crear">
+                <span>
+                    <Link to="/CadAutores">Cadastrar Autor</Link>
+                </span>
+                <span>
+                    <Link to="/CadAutores">Cadastrar Editora</Link>
+                </span>
+                <hr color='white'></hr>
+            </div>
+
             <br />
             <h2>Cadastrar Livro</h2>
             <br />
+
             <div className="jumbotron jumbotron-custom">
                 <form onSubmit={handleCadastrarLivro}>
                     <div className='row'>
+                        
                         <div className='col-4'>
                             <label>Título</label>
                             <input 
@@ -111,6 +130,7 @@ function CadastrarLivro() {
                                 required
                             />
                         </div>
+
                         <div className='col-4'>
                             <label>Descrição</label>
                             <input 
@@ -122,6 +142,7 @@ function CadastrarLivro() {
                                 required
                             />
                         </div>
+
                         <div className='col-4'>
                             <label>ISBN</label>
                             <input 
@@ -134,6 +155,7 @@ function CadastrarLivro() {
                             />
                             <br />
                         </div>
+
                         <div className='col-4'>
                             <label>Autor</label>
                             <select 
@@ -150,6 +172,7 @@ function CadastrarLivro() {
                                 ))}
                             </select>
                         </div>
+
                         <div className='col-4'>
                             <label>Gênero</label>
                             <select 
@@ -166,6 +189,7 @@ function CadastrarLivro() {
                                 ))}
                             </select>
                         </div>
+
                         <div className='col-4'>
                             <label>Editora</label>
                             <select 
@@ -182,6 +206,7 @@ function CadastrarLivro() {
                                 ))}
                             </select>
                         </div>
+
                         <div className='col-4'>
                             <label>Link da Capa</label>
                             <input 
@@ -189,9 +214,11 @@ function CadastrarLivro() {
                                 className='form-control' 
                                 placeholder='Link da Capa do livro'
                                 value={caminhoImagem}
-                                onChange={(e) => setCaminhoImagem(e.target.value)} 
+                                onChange={(e) => setCaminhoImagem(e.target.value)}
+                                required 
                             />
                         </div>
+
                     </div>
                     <br />
                     <button type="submit" className='btn btn-success btn-lg btn-block'>
