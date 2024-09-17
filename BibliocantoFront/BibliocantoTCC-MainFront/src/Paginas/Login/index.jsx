@@ -18,13 +18,26 @@ export default function Login() {
         try {
             const response = await api.post('/api/Account/LoginUser', data);
 
-            console.log(response);
+            //console.log(response);
 
             localStorage.setItem('email', email);
-            localStorage.setItem('Id', response.data.id);
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('expiration', response.data.expiration);
-
+            
+            try{
+                
+                const responseId = await api.get('/api/Account/IdUserByEmail', {
+                    params: {
+                      email: email,
+                    },
+                });
+                
+                localStorage.setItem('Id', responseId.data.id);
+                
+            }catch (erroe){
+                alert('O login falhou ' + error);
+            }
+            
             navigate('/');
             window.location.reload();
 

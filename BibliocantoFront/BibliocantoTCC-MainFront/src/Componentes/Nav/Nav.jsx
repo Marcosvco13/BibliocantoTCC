@@ -15,6 +15,7 @@ export default function Nav() {
     localStorage.removeItem('token');
     localStorage.removeItem('email');
     localStorage.removeItem('expiration');
+    localStorage.removeItem('Id');
 
     // Redireciona o usuário para a página de login ou inicial
     history('/login');

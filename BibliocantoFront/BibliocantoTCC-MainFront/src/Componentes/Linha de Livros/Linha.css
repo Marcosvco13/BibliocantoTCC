@@ -28,8 +28,8 @@
 
 .livro-card{
     transition: transform 450ms;
-    width: 144px;
-    height: auto;
+    width: 150px;
+    height: 220px;
     object-fit: cover;
 }
 
