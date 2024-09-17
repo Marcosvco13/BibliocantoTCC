@@ -1,36 +1,36 @@
 import api from '../../services/api';
-import Autor from '../../Componentes/Tabela Autores/index';
+import Editora from '../../Componentes/Tabela Editoras/index';
 import { useState, useEffect } from 'react';
-import './CadAutorStyle.css';
+import './CadEditoraStyle.css';
 import { useNavigate } from 'react-router-dom';
 
-export default function CadAutor() {
+export default function CadEditora() {
 
-    const [nomeAutor, setNomeAutor] = useState('');
+    const [nomeEditora, setNomeEditora] = useState('');
 
-    const [autores, setAutores] = useState([]);
+    const [editoras, setEditoras] = useState([]);
 
     useEffect(() => {
-        api.getAutores(setAutores);
+        api.getEditoras(setEditoras);
     }, []);
 
     const navigate = useNavigate();
 
-    const handleCadAutor = async (e) => {
+    const handleCadEditora = async (e) => {
         e.preventDefault();
     
-        const autorData = { nomeAutor };
+        const editoraData = { nomeEditora };
     
         try {
-            const response = await api.cadastrarAutor(autorData);
-            console.log('Autor cadastrado com sucesso:', response);
+            const response = await api.cadastrarEditora(editoraData);
+            console.log('Editora cadastrada com sucesso:', response);
     
-            setNomeAutor(''); // Limpa o campo nome após o cadastro
+            setNomeEditora(''); // Limpa o campo nome após o cadastro
 
             window.location.reload();
     
         } catch (error) {
-            console.error('Erro ao cadastrar o autor:', error);
+            console.error('Erro ao cadastrar a editora:', error);
         }
     };
 
@@ -38,7 +38,7 @@ export default function CadAutor() {
         <div className="container">
             
             <div className='divTitulo'>
-                <h2 className='titulo'>Cadastrar Autor</h2>
+                <h2 className='titulo'>Cadastrar Editora</h2>
             </div>
             
             <div className="formulario">
@@ -49,23 +49,21 @@ export default function CadAutor() {
                     </button>
                 </div>
 
-               
-
-                <form onSubmit={handleCadAutor}>
+                <form onSubmit={handleCadEditora}>
                     
                     <div className='linha'>                      
                         <div className='coluna'>
 
                             <div className='tituloAutor'>
-                                <label>Nome do Autor</label>
+                                <label>Nome da Editora</label>
                             </div>
 
                             <input 
                                 type="text" 
                                 className='inputNome' 
-                                placeholder='Nome do Autor'
-                                value={nomeAutor}
-                                onChange={(e) => setNomeAutor(e.target.value)} 
+                                placeholder='Nome da Editora'
+                                value={nomeEditora}
+                                onChange={(e) => setNomeEditora(e.target.value)} 
                                 required
                             />
                         </div>
@@ -82,12 +80,12 @@ export default function CadAutor() {
                         <thead>
                             <tr>
                                 <th scope="col">ID</th>
-                                <th scope="col">Nome do Autor</th>
+                                <th scope="col">Nome da Editora</th>
                                 <th scope="col">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <Autor autores={autores}/>
+                            <Editora editoras={editoras}/>
                         </tbody>
                     </table>
                 </div>

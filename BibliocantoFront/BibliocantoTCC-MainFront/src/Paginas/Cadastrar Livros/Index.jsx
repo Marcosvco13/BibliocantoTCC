@@ -99,14 +99,14 @@ function CadastrarLivro() {
     };
 
     return (
-        <div className="Container">
+        <div className="Container-CadLivro">
             
             <div className="linha-crear">
                 <span>
                     <Link to="/CadAutores">Cadastrar Autor</Link>
                 </span>
                 <span>
-                    <Link to="/CadAutores">Cadastrar Editora</Link>
+                    <Link to="/CadEditoras">Cadastrar Editora</Link>
                 </span>
                 <hr color='white'></hr>
             </div>
@@ -116,7 +116,7 @@ function CadastrarLivro() {
             <br />
 
             <div className="jumbotron jumbotron-custom">
-                <form onSubmit={handleCadastrarLivro}>
+                <form onSubmit={handleCadastrarLivro} className='formCad'>
                     <div className='row'>
                         
                         <div className='col-4'>
@@ -225,25 +225,28 @@ function CadastrarLivro() {
                         Cadastrar
                     </button>
                 </form>
+                
+                <div className='tabelaLivros'>
+                    <table className="table table-hover table-dark table-custom">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Título</th>
+                                <th scope="col">Autor</th>
+                                <th scope="col">Gênero</th>
+                                <th scope="col">ISBN</th>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Editora</th>
+                                <th scope="col">Caminho da Imagem</th>
+                                <th scope="col">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <Livro livros={livros} onDelete={handleDelete}/>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <table className="table table-hover table-dark table-custom">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Título</th>
-                        <th scope="col">Autor</th>
-                        <th scope="col">Gênero</th>
-                        <th scope="col">ISBN</th>
-                        <th scope="col">Descrição</th>
-                        <th scope="col">Editora</th>
-                        <th scope="col">Caminho da Imagem</th>
-                        <th scope="col">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <Livro livros={livros} onDelete={handleDelete}/>
-                </tbody>
-            </table>
         </div>
     );
 }

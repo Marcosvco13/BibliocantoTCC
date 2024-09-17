@@ -13,7 +13,6 @@ namespace Bibliocanto.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class GenerosController : ControllerBase
     {
         private readonly IGenerosService _generosService;
@@ -80,6 +79,7 @@ namespace Bibliocanto.Controllers
         }
 
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> PostAsync([FromBody] SaveGenerosResource resource)
         {
             if (!ModelState.IsValid)
@@ -96,6 +96,7 @@ namespace Bibliocanto.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> PutAsync(int id, [FromBody] SaveGenerosResource recurso)
         {
             if (!ModelState.IsValid)
@@ -112,6 +113,7 @@ namespace Bibliocanto.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> DeleteAsync(int id)
         {
             var result = await _generosService.Delete(id);

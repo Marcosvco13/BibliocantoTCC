@@ -27,6 +27,32 @@
   },
   {
     "ContainingType": "Bibliocanto.Controllers.AccountController",
+    "Method": "GetIdByEmail",
+    "RelativePath": "api/Account/IdUserByEmail",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Microsoft.AspNetCore.Identity.IdentityUser",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Bibliocanto.Controllers.AccountController",
     "Method": "Login",
     "RelativePath": "api/Account/LoginUser",
     "HttpMethod": "POST",

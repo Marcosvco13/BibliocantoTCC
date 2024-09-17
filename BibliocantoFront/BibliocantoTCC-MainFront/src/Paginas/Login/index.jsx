@@ -21,6 +21,7 @@ export default function Login() {
             console.log(response);
 
             localStorage.setItem('email', email);
+            localStorage.setItem('Id', response.data.id);
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('expiration', response.data.expiration);
 
@@ -66,7 +67,7 @@ export default function Login() {
                 <hr color='white'></hr>
 
                 <div className='NewUser-container'>
-                    <button className="button" type="button" onClick={handleCreateUser}>Criar Usuário</button> {/* Função de callback */}
+                    <button className="button" type="button" onClick={handleCreateUser}>Criar Usuário</button>
                 </div>
 
             </section>

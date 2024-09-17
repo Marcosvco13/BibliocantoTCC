@@ -8,6 +8,9 @@ function Linha() {
   const [generos, setGeneros] = useState([]);
   const [error, setError] = useState(null);
 
+  const [email] = useState(localStorage.getItem('email') || null);
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -35,10 +38,16 @@ function Linha() {
   return (
     <div className="linha-container">
       <div className="linha-crear">
-        <span>
-          <Link to="/CadastrarLivro">Cadastrar Livro</Link>
-        </span>
-        <hr color='white'></hr>
+      
+      {email && (
+        <>
+          <span>
+            <Link to="/CadastrarLivro">Cadastrar Livro</Link>
+          </span>
+          <hr style={{ color: 'white' }} />
+        </>
+      )}
+
       </div>
       {error && <p className="error">{error}</p>}
       {livrosPorGenero.length > 0 ? (

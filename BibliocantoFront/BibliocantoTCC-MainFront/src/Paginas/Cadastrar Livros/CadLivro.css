@@ -1,16 +1,22 @@
 .jumbotron-custom {
     background-color: #47211c;
     padding: 2rem;
-    border-radius: 0.5rem;
+    border-radius: 1rem;
     color: #E6D9C8;
-  }
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.formCad{
+  padding-bottom: 20px;
+}
   
 h2 {
     color: #47211c;
     text-align: center;
 }
 
-.Container{
+.Container-CadLivro{
   margin-left: 20px;
   margin-right: 20px;
 }
@@ -36,4 +42,10 @@ h2 {
 
 .linha-crear span {
   margin-right:10px; /* Adiciona espaçamento entre os links */
+}
+
+.tabelaLivros{
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: auto; 
 }

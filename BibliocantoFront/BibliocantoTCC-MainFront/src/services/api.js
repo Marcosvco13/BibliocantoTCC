@@ -16,7 +16,7 @@ const authorization = {
 
 api.getLivros = async function(setLivros) {
     try {
-        const response = await api.get('/api/Livros', authorization);
+        const response = await api.get('/api/Livros');
         console.log(response);
         if (response && response.data) {
             setLivros(response.data);
@@ -31,7 +31,7 @@ api.getLivros = async function(setLivros) {
 
 api.getGeneros = async function(setGeneros) {
     try {
-        const response = await api.get('/api/Generos', authorization);
+        const response = await api.get('/api/Generos');
         console.log(response);
         if (response && response.data) {
             setGeneros(response.data);
@@ -98,4 +98,14 @@ api.cadastrarAutor = async function(autorData) {
     }
 };
 
+api.cadastrarEditora = async function(editoraData) {
+    try {
+        const response = await api.post('/api/Editoras', editoraData, authorization);
+        console.log('Editora cadastrado com sucesso:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao cadastrar a editora:", error);
+        throw error;
+    }
+};
 export default api;

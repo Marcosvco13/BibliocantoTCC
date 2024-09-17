@@ -12,6 +12,7 @@ import CadastrarLivro from "./Paginas/Cadastrar Livros/Index";
 import Login from "./Paginas/Login";
 import NewUser from "./Paginas/NewUser";
 import CadAutor from './Paginas/Cad Autores/index';
+import CadEditora from "./Paginas/Cad Editoras";
 
 export default function App() {
   const [generos, setGeneros] = useState([]);
@@ -32,6 +33,7 @@ export default function App() {
           <Route path="/Login" element={<Login/>}/>
           <Route path="/NewUser" element={<NewUser/>}/>
           <Route path="/CadAutores" element={<CadAutor />} />
+          <Route path="/CadEditoras" element={<CadEditora />} />
         </Routes>
       </BrowserRouter>
       
