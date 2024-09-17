@@ -2,8 +2,12 @@
 using System.Security.Claims;
 using System.Text;
 using Bibliocanto.IServices;
+using Bibliocanto.Models;
+using Bibliocanto.Resources;
+using Bibliocanto.Services;
 using Bibliocanto.ViewModels;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 
@@ -60,7 +64,7 @@ namespace Bibliocanto.Controllers
                 return BadRequest(ModelState);
             }
 
-            var result = await _authentication.RegisterUser(model.Email, model.Password);
+            var result = await _authentication.RegisterUser( model.Email, model.Password);
 
             if (result)
             {
@@ -68,24 +72,82 @@ namespace Bibliocanto.Controllers
             }
             else
             {
-                ModelState.AddModelError("CreateUser", "Registro inválido");
+                ModelState.AddModelError("CreateUser", "Registro inválido " + result);
                 return BadRequest(ModelState);
             }
 
         }
 
+        [HttpGet("UserByEmail")]
+        public async Task<ActionResult<IdentityUser>> GetByEmail([FromQuery] string email)
+        {
+            try
+            {
+                var result = await _authentication.FindByEmail(email);
+
+                if (result == null)
+                {
+                    return NotFound("Usuário não encontrado.");
+                }
+
+                return Ok(result);
+            }
+            catch
+            {
+                return BadRequest("Request inválido");
+            }
+        }
+
+        [HttpGet("IdUserByEmail")]
+        public async Task<ActionResult<IdentityUser>> GetIdByEmail([FromQuery] string email)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(email))
+                {
+                    return BadRequest("Email não pode estar vazio.");
+                }
+
+                var result = await _authentication.FindUserByEmail(email);
+
+                if (result == null)
+                {
+                    return NotFound("Usuário não encontrado.");
+                }
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                // Log da exceção (você pode usar qualquer mecanismo de logging aqui)
+                Console.WriteLine(ex.Message); // Melhor usar um logger como ILogger no lugar de Console.
+
+                return StatusCode(500, "Ocorreu um erro interno.");
+            }
+        }
+
         [HttpPost("LoginUser")]
         public async Task<ActionResult<UserToken>> Login([FromBody] LoginModel userInfo)
         {
+            // Validate the user info
+            if (userInfo == null || string.IsNullOrEmpty(userInfo.Email) || string.IsNullOrEmpty(userInfo.Password))
+            {
+                ModelState.AddModelError("LoginUser", "Email e senha são obrigatórios.");
+                return BadRequest(ModelState);
+            }
+
+            // Authenticate user
             var result = await _authentication.Authenticate(userInfo.Email, userInfo.Password);
 
             if (result)
             {
+                // If authentication is successful, generate and return a token
                 return GenerateToken(userInfo);
             }
             else
             {
-                ModelState.AddModelError("LoginUser", "Login inválido");
+                // Add an error to the ModelState and return BadRequest in case of failure
+                ModelState.AddModelError("LoginUser", "Login inválido. Verifique suas credenciais.");
                 return BadRequest(ModelState);
             }
         }

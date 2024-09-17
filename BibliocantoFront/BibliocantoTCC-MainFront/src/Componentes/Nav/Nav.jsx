@@ -11,7 +11,7 @@ export default function Nav() {
   const history = useNavigate();
 
   const handleLogout = () => {
-    // Remove o token de autenticação do localStorage (ou de onde estiver armazenado)
+    // Remove o token de autenticação do localStorage
     localStorage.removeItem('token');
     localStorage.removeItem('email');
     localStorage.removeItem('expiration');
@@ -44,14 +44,9 @@ export default function Nav() {
       />
       
       <div className="nav-options-left">
-        <a href="/">Início</a>
-        {email ? (
-          <span>
-            <Link to="/CadastrarLivro">Cadastrar Livro</Link>
-          </span>
-        ) : ('')}
+        <a href="/">Acervo de Livros</a>
       </div>
-      
+
       <div className="nav-options-right">
         
         {email ? (
@@ -60,11 +55,9 @@ export default function Nav() {
           </span>
         ) : ('')}
 
-        {/* Verifica se o usuário está logado */}
         {email ? (
           <span>
             {email}
-            {/* Ícone de logout */}
             <FontAwesomeIcon icon={faArrowRightFromBracket} style={{ marginLeft: '10px', cursor: 'pointer' }} onClick={handleLogout} />
           </span>
         ) : (

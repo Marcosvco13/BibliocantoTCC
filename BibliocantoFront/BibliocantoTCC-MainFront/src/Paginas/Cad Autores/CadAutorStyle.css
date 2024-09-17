@@ -1,0 +1,110 @@
+.formulario {
+  background-color: #47211c;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  max-width: 400px;
+  width: 100%;
+  text-align: center; /* Centraliza o conteúdo */
+}
+
+.titulo {
+  color: #47211c;
+  text-align: center;
+  padding-bottom: 15px;
+}
+
+.linha{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.coluna{
+  display: block;
+  width: 100%;
+  color: white;
+  justify-content: left;
+}
+
+.inputNome {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.container{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  height: 90vh; /* Centraliza verticalmente ocupando a tela toda */
+  background-color: #E6D9C8; /* Cor de fundo suave */
+}
+
+.btnCadAutor {
+background-color: #007BFF !important;
+border-color: #007BFF !important;
+margin-bottom: 10px;
+}
+
+.btnCadAutor:hover {
+background-color: #0056b3  !important; /* Verde escuro no hover */
+border-color: #0056b3 !important;
+}
+
+.btnCadAutor:focus, .btnCadAutor:active {
+background-color: #0056b3 !important; /* Verde ainda mais escuro ao clicar */
+border-color: #0056b3  !important;
+}
+
+.btnVoltarAutor {
+  background-color: transparent; /* Cor de fundo do botão */
+  color: #fff; /* Cor do texto do botão */
+  border: none; /* Remove a borda padrão */
+  border-radius: 0.25rem; /* Borda arredondada */
+  padding: 0.5rem 1rem; /* Padding interno do botão */
+  margin-bottom: 1rem; /* Espaço abaixo do botão */
+  cursor: pointer; /* Cursor de pointer para indicar interatividade */
+  display: inline-flex; /* Permite o alinhamento do conteúdo do botão */
+  align-items: left; /* Centraliza verticalmente o conteúdo do botão */
+}
+
+.divBtnVoltarAutor{
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.tituloAutor{
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.divTitulo{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btnVoltarAutor:hover {
+  background-color: rgba(108, 117, 125, 0.1); /* Fundo levemente colorido ao passar o mouse */
+}
+
+.divTabAutor{
+  max-height: 200px; /* Defina a altura máxima que você deseja */
+  overflow-y: auto; /* Adiciona uma barra de rolagem vertical */
+  overflow-x: auto; 
+}
+
+body {
+  overflow: hidden; /* Remove a barra de rolagem */
+}
