@@ -14,6 +14,21 @@ const authorization = {
 
 //metodo get
 
+// Métodos GET para detalhes do livro
+api.getLivroById = async function(id) {
+    try {
+        const response = await api.get(`/api/Livros/${id}`, authorization);
+        if (response && response.data) {
+            return response.data;
+        } else {
+            console.error("No data in response");
+        }
+    } catch (error) {
+        console.error("Erro ao buscar o livro:", error);
+        throw error;
+    }
+};
+
 api.getLivros = async function(setLivros) {
     try {
         const response = await api.get('/api/Livros');
@@ -108,4 +123,39 @@ api.cadastrarEditora = async function(editoraData) {
         throw error;
     }
 };
+
+// Métodos PUT
+api.putLivro = async function(id, livroData) {
+    try {
+        const response = await api.put(`/api/Livros/${id}`, livroData, authorization);
+        console.log('Livro atualizado com sucesso:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao atualizar o livro:", error);
+        throw error;
+    }
+};
+
+api.putAutor = async function(id, autorData) {
+    try {
+        const response = await api.put(`/api/Autores/${id}`, autorData, authorization);
+        console.log('Autor atualizado com sucesso:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao atualizar o autor:", error);
+        throw error;
+    }
+};
+
+api.putEditora = async function(id, editoraData) {
+    try {
+        const response = await api.put(`/api/Editoras/${id}`, editoraData, authorization);
+        console.log('Editora atualizada com sucesso:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Erro ao atualizar a editora:', error);
+        throw error;
+    }
+};
+
 export default api;
