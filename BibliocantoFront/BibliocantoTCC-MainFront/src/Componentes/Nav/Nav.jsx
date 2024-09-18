@@ -52,7 +52,7 @@ export default function Nav() {
         
         {email ? (
           <span>
-            <a href="/">Minha Biblioteca</a>
+            <a href="/TodosLivros">Minha Biblioteca</a>
           </span>
         ) : ('')}
 

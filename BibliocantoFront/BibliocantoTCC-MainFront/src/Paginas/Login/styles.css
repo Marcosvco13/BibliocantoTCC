@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh; /* Centraliza verticalmente ocupando a tela toda */
-    background-color: #E6D9C8; /* Cor de fundo suave */
+    background-color: #f9f9f9; /* Cor de fundo suave */
   }
   
   .form {

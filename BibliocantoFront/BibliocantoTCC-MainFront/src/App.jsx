@@ -6,6 +6,8 @@ import api from "./services/api";
 //componentes
 import Linha from "./Componentes/Linha de Livros/Linha";
 import Nav from "./Componentes/Nav/Nav";
+import TodosLivros from './Componentes/Todos Livros/index'
+import Footer from './Componentes/Footer/index'
 
 //paginas
 import CadastrarLivro from "./Paginas/Cadastrar Livros/Index";
@@ -34,7 +36,9 @@ export default function App() {
           <Route path="/NewUser" element={<NewUser/>}/>
           <Route path="/CadAutores" element={<CadAutor />} />
           <Route path="/CadEditoras" element={<CadEditora />} />
+          <Route path="/TodosLivros" element={<TodosLivros />} />
         </Routes>
+        <Footer/>
       </BrowserRouter>
       
     </div>

@@ -1,5 +1,24 @@
-.App{
-    background-color: #E6D9C8;
-    height: 100vh;
-    padding-top: 100px;
-}
+.App {
+    background-color: #f9f9f9;
+    min-height: 100vh; /* Garante que o fundo cubra toda a altura da tela */
+    padding-top: 100px; /* Espaço no topo para o conteúdo não colidir com o Nav */
+    display: flex; /* Permite o uso de flexbox para alinhamento */
+    flex-direction: column; /* Organiza os filhos em coluna (vertical) */
+  }
+  
+  footer {
+    margin-top: auto; /* Garante que o rodapé fique no final da página */
+  }
+  
+  body, html {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Oculta a barra de rolagem horizontal em todo o corpo da página */
+  }
+  
+  /* Estilo para um contêiner específico que pode ter rolagem */
+  .main-container {
+    overflow-x: hidden; /* Garante que não haja rolagem horizontal */
+    overflow-y: auto;   /* Permite rolagem vertical se o conteúdo exceder a altura */
+    max-height: 100vh;  /* Impede que o contêiner ultrapasse a altura da tela */
+  }

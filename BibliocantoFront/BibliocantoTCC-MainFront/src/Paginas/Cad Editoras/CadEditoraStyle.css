@@ -1,110 +1,138 @@
+.container {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.divTitulo {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.titulo {
+  color: #5a251d; /* Cor mais saturada */
+  font-family: Arial, sans-serif;
+  font-size: 24px;
+}
+
 .formulario {
-    background-color: #47211c;
-    padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    max-width: 400px;
-    width: 100%;
-    text-align: center; /* Centraliza o conteúdo */
-  }
-  
-  .titulo {
-    color: #47211c;
-    text-align: center;
-    padding-bottom: 15px;
-  }
-  
-  .linha{
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .coluna{
-    display: block;
-    width: 100%;
-    color: white;
-    justify-content: left;
-  }
-  
-  .inputNome {
-    width: 100%;
-    padding: 15px;
-    margin-bottom: 5px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
-  }
-  
-  .container{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    height: 90vh; /* Centraliza verticalmente ocupando a tela toda */
-    background-color: #E6D9C8; /* Cor de fundo suave */
-  }
-  
-  .btnCadAutor {
-  background-color: #007BFF !important;
-  border-color: #007BFF !important;
-  margin-bottom: 10px;
-  }
-  
-  .btnCadAutor:hover {
-  background-color: #0056b3  !important; /* Verde escuro no hover */
-  border-color: #0056b3 !important;
-  }
-  
-  .btnCadAutor:focus, .btnCadAutor:active {
-  background-color: #0056b3 !important; /* Verde ainda mais escuro ao clicar */
-  border-color: #0056b3  !important;
-  }
-  
-  .btnVoltarAutor {
-    background-color: transparent; /* Cor de fundo do botão */
-    color: #fff; /* Cor do texto do botão */
-    border: none; /* Remove a borda padrão */
-    border-radius: 0.25rem; /* Borda arredondada */
-    padding: 0.5rem 1rem; /* Padding interno do botão */
-    margin-bottom: 1rem; /* Espaço abaixo do botão */
-    cursor: pointer; /* Cursor de pointer para indicar interatividade */
-    display: inline-flex; /* Permite o alinhamento do conteúdo do botão */
-    align-items: left; /* Centraliza verticalmente o conteúdo do botão */
-  }
-  
-  .divBtnVoltarAutor{
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-  }
-  
-  .tituloAutor{
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-  }
-  
-  .divTitulo{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .btnVoltarAutor:hover {
-    background-color: rgba(108, 117, 125, 0.1); /* Fundo levemente colorido ao passar o mouse */
-  }
-  
-  .divTabAutor{
-    max-height: 200px; /* Defina a altura máxima que você deseja */
-    overflow-y: auto; /* Adiciona uma barra de rolagem vertical */
-    overflow-x: auto; 
-  }
-  
-  body {
-    overflow: hidden; /* Remove a barra de rolagem */
-  }
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.divBtnVoltarAutor {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+}
+
+.btnVoltarAutor {
+  background-color: #5a251d; /* Cor mais saturada */
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btnVoltarAutor:hover {
+  background-color: #47211c;
+}
+
+.btnVoltarAutor:active {
+  background-color: #3d1c18;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.linha {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 15px;
+}
+
+.coluna {
+  flex: 0 0 75%;
+  display: flex;
+  flex-direction: column;
+}
+
+.tituloAutor label {
+  color: #5a251d; /* Cor mais saturada */
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.inputNome {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.inputNome:focus {
+  border-color: #5a251d; /* Cor mais saturada */
+  box-shadow: 0 0 8px rgba(90, 37, 29, 0.25);
+}
+
+button.btnCadAutor {
+  background-color: #5a251d; /* Cor mais saturada */
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  flex: 0 0 20%; /* Para posicionar ao lado do input */
+}
+
+button.btnCadAutor:hover {
+  background-color: #47211c;
+}
+
+button.btnCadAutor:active {
+  background-color: #3d1c18;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.divTabAutor {
+  margin-top: 20px;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.table-custom {
+  background-color: #cccccc;
+  color: white;
+  border-radius: 5px;
+  width: 100%;
+  margin-bottom: 0; /* Remove espaço extra da tabela */
+}
+
+.table-custom th,
+.table-custom td {
+  padding: 10px;
+  text-align: left;
+}
+
+.table-custom th {
+  background-color: #5a251d; /* Cor mais saturada */
+}
+
+.table-custom tr:nth-child(even) {
+  background-color: #cccccc;
+}
+
+.table-custom tr:hover {
+  background-color: #5a251d; /* Cor mais saturada */
+  color: black;
+}

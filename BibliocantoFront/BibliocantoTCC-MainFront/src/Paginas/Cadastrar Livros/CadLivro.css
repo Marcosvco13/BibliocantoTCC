@@ -1,51 +1,86 @@
-.jumbotron-custom {
-    background-color: #47211c;
-    padding: 2rem;
-    border-radius: 1rem;
-    color: #E6D9C8;
-    margin-left: 100px;
-    margin-right: 100px;
+.Container-CadLivro {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.formCad{
-  padding-bottom: 20px;
+.linha-crear {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-  
+
+.linha-crear span a {
+  color: #5a251d; /* Cor mais saturada */
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.linha-crear span a:hover {
+  color: #47211c;
+  text-decoration: underline;
+}
+
+.linha-crear hr {
+  margin-top: 10px;
+  border: 0;
+  border-top: 1px solid white;
+  width: 100%;
+}
+
 h2 {
-    color: #47211c;
-    text-align: center;
+  text-align: center;
+  color: #5a251d; /* Cor mais saturada */
+  font-family: Arial, sans-serif;
 }
 
-.Container-CadLivro{
-  margin-left: 20px;
-  margin-right: 20px;
+.jumbotron-custom {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.table-custom{
+.formCad .row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.formCad .col-4 {
+  flex: 0 0 30%;
+  margin-bottom: 15px;
+}
+
+.form-control {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-control:focus {
+  border-color: #5a251d; /* Cor mais saturada */
+  box-shadow: 0 0 8px rgba(90, 37, 29, 0.25);
+}
+
+button.btn {
+  background-color: #5a251d; /* Cor mais saturada */
+  color: white;
+  font-size: 18px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+
+button.btn:hover {
   background-color: #47211c;
 }
 
-.btn-success {
-  background-color: #007BFF !important;
-  border-color: #007BFF !important;
-}
-
-.btn-success:hover {
-  background-color: #0056b3  !important; /* Verde escuro no hover */
-  border-color: #0056b3 !important;
-}
-
-.btn-success:focus, .btn-success:active {
-  background-color: #0056b3 !important; /* Verde ainda mais escuro ao clicar */
-  border-color: #0056b3  !important;
-}
-
-.linha-crear span {
-  margin-right:10px; /* Adiciona espaçamento entre os links */
-}
-
-.tabelaLivros{
-  max-height: 200px;
-  overflow-y: auto;
-  overflow-x: auto; 
+button.btn:active {
+  background-color: #3d1c18;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
 }

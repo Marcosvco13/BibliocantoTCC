@@ -2,7 +2,7 @@ import './CadLivro.css';
 import api from '../../services/api';
 import { useEffect, useState} from 'react';
 import Livro from '../../Componentes/Livro/index';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function CadastrarLivro() {
 
@@ -16,6 +16,8 @@ function CadastrarLivro() {
     const [editoraId, setEditoraId] = useState('');
 
     const [livroEditando, setLivroEditando] = useState(null); // Estado para o livro em edição
+
+    const navigate = useNavigate();
     
     const [formData, setFormData] = useState({ // Estado para o formulário
         titulo: '',
@@ -72,6 +74,10 @@ function CadastrarLivro() {
             setAutorId('');
             setGeneroId('');
             setEditoraId('');
+
+            alert('livro cadastrado com sucesso')
+
+            navigate('/');
 
             window.location.reload();
         } catch (error) {
@@ -226,7 +232,7 @@ function CadastrarLivro() {
                     </button>
                 </form>
                 
-                <div className='tabelaLivros'>
+                {/* <div className='tabelaLivros'>
                     <table className="table table-hover table-dark table-custom">
                         <thead>
                             <tr>
@@ -245,7 +251,7 @@ function CadastrarLivro() {
                             <Livro livros={livros} onDelete={handleDelete}/>
                         </tbody>
                     </table>
-                </div>
+                </div> */}
             </div>
         </div>
     );
