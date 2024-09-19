@@ -92,11 +92,13 @@ export default function NewUser() {
     }
 
     return (
-        <div className='login-container'>
-            <section className='form'>
-                <img src={logo} alt="login" id='imgLogo' />
+        <div className='Criar-container'>
+            <section className='formCriarUser'>
+
+                <h1 className='h1TituloCriar'>Bibliocanto</h1>
+
                 <form onSubmit={createLogin}>
-                    <h1>Criar Usuário</h1>
+                    <h2>Criar Usuário</h2>
 
                     <input
                         placeholder='E-mail'
@@ -118,7 +120,7 @@ export default function NewUser() {
                         onChange={e => setConfirmPassword(e.target.value)}
                     />
 
-                    <button className="button" type='submit'>Criar</button>
+                    <button className="buttonCriarUser" type='submit'>Criar</button>
                 </form>
             </section>
         </div>

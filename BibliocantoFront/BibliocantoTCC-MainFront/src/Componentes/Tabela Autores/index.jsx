@@ -1,3 +1,8 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import './style.css'
+
+
 export default function Autores({ autores, onEdit }) {
     return (
         <>
@@ -7,10 +12,10 @@ export default function Autores({ autores, onEdit }) {
                     <td>{autor.nomeAutor}</td>
                     <td>
                         <button 
-                            className="btn btn-primary btn-sm" 
+                            className="btnEditaTabAutor" 
                             onClick={() => onEdit(autor.id)}
                         >
-                            Editar
+                            <FontAwesomeIcon icon={faEdit} />
                         </button>
                     </td>
                 </tr>

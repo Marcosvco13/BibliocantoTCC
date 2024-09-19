@@ -4,7 +4,7 @@ import { useEffect, useState} from 'react';
 import Livro from '../../Componentes/Livro/index';
 import { Link, useNavigate } from "react-router-dom";
 
-function CadastrarLivro() {
+export default function CadastrarLivro() {
 
     // input formulario
     const [titulo, setTitulo] = useState('');
@@ -93,11 +93,10 @@ function CadastrarLivro() {
         }
     };
 
-    // Função para deletar um livro
     const handleDelete = async (id) => {
         try {
             await api.delete(`/api/Livros/${id}`, authorization);
-            setLivros(livros.filter(livro => livro.id !== id)); // Remove o livro da lista localmente
+            setLivros(livros.filter(livro => livro.id !== id)); 
             console.log('Livro deletado com sucesso!');
         } catch (error) {
             console.error('Erro ao deletar o livro:', error);
@@ -114,7 +113,7 @@ function CadastrarLivro() {
                 <span>
                     <Link to="/CadEditoras">Cadastrar Editora</Link>
                 </span>
-                <hr color='white'></hr>
+                <hr className='hrCriarLivro'></hr>
             </div>
 
             <br />
@@ -231,30 +230,7 @@ function CadastrarLivro() {
                         Cadastrar
                     </button>
                 </form>
-                
-                {/* <div className='tabelaLivros'>
-                    <table className="table table-hover table-dark table-custom">
-                        <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Título</th>
-                                <th scope="col">Autor</th>
-                                <th scope="col">Gênero</th>
-                                <th scope="col">ISBN</th>
-                                <th scope="col">Descrição</th>
-                                <th scope="col">Editora</th>
-                                <th scope="col">Caminho da Imagem</th>
-                                <th scope="col">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <Livro livros={livros} onDelete={handleDelete}/>
-                        </tbody>
-                    </table>
-                </div> */}
             </div>
         </div>
     );
 }
-
-export default CadastrarLivro;

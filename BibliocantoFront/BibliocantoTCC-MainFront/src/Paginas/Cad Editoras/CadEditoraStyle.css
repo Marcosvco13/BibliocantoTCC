@@ -1,37 +1,35 @@
-.container {
-  padding: 20px;
+.containerCadEditora {
+  padding: 100px;
   background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.divTitulo {
+.divTituloCadEditora {
   text-align: center;
   margin-bottom: 20px;
 }
 
-.titulo {
+.tituloCadEditora {
   color: #5a251d; /* Cor mais saturada */
-  font-family: Arial, sans-serif;
-  font-size: 24px;
+  font-family: 'Merriweather', serif;
+  font-size: 30px;
 }
 
-.formulario {
+.formularioCadEditora {
   background-color: #fff;
   padding: 30px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.divBtnVoltarAutor {
+.divBtnVoltarCadEditora {
   display: flex;
   justify-content: flex-start;
   margin-bottom: 20px;
 }
 
-.btnVoltarAutor {
-  background-color: #5a251d; /* Cor mais saturada */
-  color: white;
+.btnVoltarCadEditora {
+  background-color: transparent;
+  color: #5a251d;
   font-size: 16px;
   padding: 10px 20px;
   border: none;
@@ -39,49 +37,49 @@
   cursor: pointer;
 }
 
-.btnVoltarAutor:hover {
-  background-color: #47211c;
+.btnVoltarCadEditora:hover {
+  border-radius: 5px;
+  border-color: #5a251d;
 }
 
-.btnVoltarAutor:active {
-  background-color: #3d1c18;
+.btnVoltarCadEditora:active {
   box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
 
-.linha {
+.linhaCadEditora {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   margin-bottom: 15px;
 }
 
-.coluna {
+.colunaCadEditora {
   flex: 0 0 75%;
   display: flex;
   flex-direction: column;
 }
 
-.tituloAutor label {
+.tituloCadEditora label {
   color: #5a251d; /* Cor mais saturada */
   font-weight: bold;
   margin-bottom: 8px;
 }
 
-.inputNome {
+.inputNomeCadEditora {
   padding: 10px;
-  font-size: 16px;
+  font-size: 20px;
   border: 1px solid #ccc;
   border-radius: 4px;
   width: 100%;
 }
 
-.inputNome:focus {
+.inputNomeCadEditora:focus {
   border-color: #5a251d; /* Cor mais saturada */
   box-shadow: 0 0 8px rgba(90, 37, 29, 0.25);
 }
 
-button.btnCadAutor {
+button.btnCadEditora {
   background-color: #5a251d; /* Cor mais saturada */
   color: white;
   font-size: 16px;
@@ -89,20 +87,45 @@ button.btnCadAutor {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  flex: 0 0 20%; /* Para posicionar ao lado do input */
+  margin-left: 10px;
+  margin-bottom: 15px;
+  width: 20%;
 }
 
-button.btnCadAutor:hover {
+button.btnCadEditora:hover {
   background-color: #47211c;
 }
 
-button.btnCadAutor:active {
+button.btnCadEditora:active {
   background-color: #3d1c18;
   box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
 
-.divTabAutor {
+/* button.btnCadAutorCancela {
+  background-color: #5a251d;
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+  margin-bottom: 15px;
+  width: 20%;
+}
+
+button.btnCadAutorCancela:hover {
+  background-color: #47211c;
+}
+
+button.btnCadAutorCancela:active {
+  background-color: #3d1c18;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+} */
+
+.divTabCadEditora {
   margin-top: 20px;
   max-height: 200px;
   overflow-y: auto;
@@ -110,29 +133,31 @@ button.btnCadAutor:active {
   border-radius: 5px;
 }
 
-.table-custom {
+.tableCadEditora {
   background-color: #cccccc;
-  color: white;
+  font-size: 20px;
+  color: #5a251d;
   border-radius: 5px;
   width: 100%;
   margin-bottom: 0; /* Remove espaço extra da tabela */
 }
 
-.table-custom th,
-.table-custom td {
+.tableCadEditora th,
+.tableCadEditora td {
   padding: 10px;
   text-align: left;
 }
 
-.table-custom th {
-  background-color: #5a251d; /* Cor mais saturada */
+.tableCadEditora th {
+  background-color: white; /* Cor mais saturada */
 }
 
-.table-custom tr:nth-child(even) {
-  background-color: #cccccc;
+.tableCadEditora tr:hover {
+  background-color: #cccccc; /* Cor mais saturada */
+  color: white;
 }
 
-.table-custom tr:hover {
-  background-color: #5a251d; /* Cor mais saturada */
-  color: black;
+.inputBtnCadEditora{
+  display: flex;
+  align-items: center;
 }

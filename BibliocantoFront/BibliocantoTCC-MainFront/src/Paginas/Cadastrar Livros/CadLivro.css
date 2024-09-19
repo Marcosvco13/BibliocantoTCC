@@ -1,8 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+
 .Container-CadLivro {
   padding: 20px;
   background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .linha-crear {
@@ -31,8 +31,8 @@
 
 h2 {
   text-align: center;
+  font-family: 'Merriweather', serif;
   color: #5a251d; /* Cor mais saturada */
-  font-family: Arial, sans-serif;
 }
 
 .jumbotron-custom {
@@ -83,4 +83,8 @@ button.btn:active {
   background-color: #3d1c18;
   box-shadow: 0 5px #666;
   transform: translateY(4px);
+}
+
+.hrCriarLivro{
+  color: #47211c;
 }

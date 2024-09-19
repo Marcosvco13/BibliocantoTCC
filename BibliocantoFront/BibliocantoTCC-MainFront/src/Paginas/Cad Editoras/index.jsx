@@ -7,8 +7,8 @@ import { useNavigate } from 'react-router-dom';
 export default function CadEditora() {
 
     const [nomeEditora, setNomeEditora] = useState('');
-
     const [editoras, setEditoras] = useState([]);
+    const [editoraEditando, setEditoraEditando] = useState(null);
 
     useEffect(() => {
         api.getEditoras(setEditoras);
@@ -22,61 +22,96 @@ export default function CadEditora() {
         const editoraData = { nomeEditora };
     
         try {
-            const response = await api.cadastrarEditora(editoraData);
-            console.log('Editora cadastrada com sucesso:', response);
+            if(editoraEditando){
+                await api.putEditora(editoraEditando.id, editoraData);
+                console.log('Editora atualizada com sucesso!');
+            }else{
+                const response = await api.cadastrarEditora(editoraData);
+                console.log('Editora cadastrada com sucesso:', response);
+            }
     
-            setNomeEditora(''); // Limpa o campo nome após o cadastro
-
-            window.location.reload();
+            resetForm();
+            api.getEditoras(setEditoras);
     
         } catch (error) {
             console.error('Erro ao cadastrar a editora:', error);
         }
     };
 
+    const handleEdit = (id) => {
+        const editoraSelecionada = editoras.find((editora) => editora.id === id);
+        
+        if (!editoraSelecionada) {
+            console.error("Editora não encontrado!");
+            return;
+        }
+
+        setEditoraEditando(editoraSelecionada);
+        setNomeEditora(editoraSelecionada.nomeEditora);
+    };
+
+    const resetForm = () => {
+        setNomeEditora('');
+        setEditoraEditando(null);
+    };
+
     return (
-        <div className="container">
+        <div className="containerCadEditora">
             
-            <div className='divTitulo'>
-                <h2 className='titulo'>Cadastrar Editora</h2>
+            <div className='divTituloCadEditora'>
+                <h2 className='tituloCadEditora'>Cadastrar Editora</h2>
             </div>
             
-            <div className="formulario">
+            <div className="formularioCadEditora">
                 
-                <div className='divBtnVoltarAutor'>
-                    <button className="btnVoltarAutor" onClick={() => navigate('/CadastrarLivro')}>
+                <div className='divBtnVoltarCadEditora'>
+                    <button className="btnVoltarCadEditora" onClick={() => navigate('/CadastrarLivro')}>
                         ← Voltar
                     </button>
                 </div>
 
                 <form onSubmit={handleCadEditora}>
                     
-                    <div className='linha'>                      
-                        <div className='coluna'>
+                    <div className='linhaCadEditora'>                      
+                        <div className='colunaCadEditora'>
 
-                            <div className='tituloAutor'>
+                            <div className='tituloCadEditora'>
                                 <label>Nome da Editora</label>
                             </div>
 
-                            <input 
-                                type="text" 
-                                className='inputNome' 
-                                placeholder='Nome da Editora'
-                                value={nomeEditora}
-                                onChange={(e) => setNomeEditora(e.target.value)} 
-                                required
-                            />
+                            <div className='inputBtnCadEditora'>
+
+                                <input 
+                                    type="text" 
+                                    className='inputNomeCadEditora' 
+                                    placeholder='Nome da Editora'
+                                    value={nomeEditora}
+                                    onChange={(e) => setNomeEditora(e.target.value)} 
+                                    required
+                                />
+
+                                <button type="submit" className='btnCadEditora'>
+                                    {editoraEditando ? "Salvar Alterações" : "Cadastrar"}
+                                </button>
+
+                                {editoraEditando && (
+                                    <button
+                                        type="button"
+                                        className="btnCadAutorCancela"
+                                        onClick={resetForm}
+                                    >
+                                        Cancelar Edição
+                                    </button>
+                                )}
+
+                            </div>
+
                         </div>
                     </div>
 
-                    <br />
-
-                    <button type="submit" className='btnCadAutor btn-lg btn-block'>
-                        Cadastrar
-                    </button>
                 </form>
-                <div className='divTabAutor'>
-                    <table className="table table-hover table-dark table-custom">
+                <div className='divTabCadEditora'>
+                    <table className="tableCadEditora">
                         <thead>
                             <tr>
                                 <th scope="col">ID</th>
@@ -85,7 +120,7 @@ export default function CadEditora() {
                             </tr>
                         </thead>
                         <tbody>
-                            <Editora editoras={editoras}/>
+                            <Editora editoras={editoras} onEdit={handleEdit}/>
                         </tbody>
                     </table>
                 </div>

@@ -1,3 +1,7 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import './style.css'
+
 export default function Editoras({ editoras, onEdit }) {
     return (
         <>
@@ -7,10 +11,10 @@ export default function Editoras({ editoras, onEdit }) {
                     <td>{editora.nomeEditora}</td>
                     <td>
                         <button 
-                            className="btn btn-primary btn-sm" 
+                            className="btnEditaTabEditoras" 
                             onClick={() => onEdit(editora.id)}
                         >
-                            Editar
+                            <FontAwesomeIcon icon={faEdit} />
                         </button>
                     </td>
                 </tr>

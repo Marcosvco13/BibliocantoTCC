@@ -60,7 +60,7 @@ function Linha() {
             <span>
               <Link to="/CadastrarLivro">Cadastrar Livro</Link>
             </span>
-            <hr className="hrLinha" style={{ color: "white" }} />
+            <hr className="hrLinha"></hr>
           </>
         )}
       </div>

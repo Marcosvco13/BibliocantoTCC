@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+.Criar-container {
+    display: flex;
+    justify-content: center;
+    background-color: #f9f9f9;
+  }
+  
+  .formCriarUser {
+    background-color: white;
+    margin-top: 110px;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 4px 60px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    height: 65%;
+    text-align: center;
+  }
+  
+  .h1TituloCriar{
+    font-family: 'Merriweather', serif;
+    font-size: 40px;
+    margin-bottom: 20px;
+    color: #47211c;
+  }
+
+  .formCriarUser h2 {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #47211c;
+  }
+
+  .buttonCriarUser{
+    width: 100%;
+    padding: 15px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .formCriarUser .buttonCriarUser:hover {
+    background-color: #0056b3;
+  }

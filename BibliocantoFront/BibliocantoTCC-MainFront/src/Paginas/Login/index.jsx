@@ -18,29 +18,23 @@ export default function Login() {
         try {
             const response = await api.post('/api/Account/LoginUser', data);
 
-            //console.log(response);
-
             localStorage.setItem('email', email);
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('expiration', response.data.expiration);
             
-            try{
-                
+            try {
                 const responseId = await api.get('/api/Account/IdUserByEmail', {
-                    params: {
-                      email: email,
-                    },
+                    params: { email: email },
                 });
                 
                 localStorage.setItem('Id', responseId.data.id);
                 
-            }catch (erroe){
+            } catch (error) {
                 alert('O login falhou ' + error);
             }
             
             navigate('/');
             window.location.reload();
-
         } catch (error) {
             alert('O login falhou ' + error);
         }
@@ -51,12 +45,26 @@ export default function Login() {
         navigate('/NewUser');
     };
 
+    // Função para redirecionar para a página de recuperação de senha
+    const handleForgotPassword = () => {
+        alert("Função de redefinir senha ainda não implementado!");
+    };
+
+    // Simulação de login com o Google
+    const handleGoogleLogin = () => {
+        alert("Login com o Google ainda não implementado!");
+    };
+
     return (
         <div className='login-container'>
             <section className='form'>
-                <img src={logo} alt="login" id='imgLogo' />
+                {/* <img src={logo} alt="login" id='imgLogo' /> */}
+                
+                <h1 className='h1NomeProjeto'>Bibliocanto</h1>
+
                 <form onSubmit={login}>
-                    <h1>Login do Usuário</h1>
+                    
+                    <h2>Login do Usuário</h2>
 
                     <input 
                         placeholder='Email' 
@@ -66,21 +74,33 @@ export default function Login() {
                     
                     <input 
                         type="password" 
-                        placeholder='Password' 
+                        placeholder='Senha' 
                         value={password} 
                         onChange={e => setPassword(e.target.value)} 
                     />
-                    
-                    <button className="button" type='submit'>Login</button>
+
+                    <button className="buttonLogin" type='submit'>Entrar</button>
+
+                </form>
+
+                <form>
+                <button className="google-button" onClick={handleGoogleLogin}>
+                        Entrar com Google
+                    </button>
+
+                    <a href="#" onClick={handleForgotPassword} className="forgot-password">
+                        Esqueceu a senha?
+                    </a>
                 </form>
                 
                 <br/>
-
-                <h4>Ou</h4>
-                <hr color='white'></hr>
+                <h4 className='h4Login'>Ou</h4>
+                <hr className='hrLogin'></hr>
 
                 <div className='NewUser-container'>
-                    <button className="button" type="button" onClick={handleCreateUser}>Criar Usuário</button>
+                    <button className="buttonCriar" onClick={handleCreateUser}>
+                        Criar Usuário
+                    </button>
                 </div>
 
             </section>
