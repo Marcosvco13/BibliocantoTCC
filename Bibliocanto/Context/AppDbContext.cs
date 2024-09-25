@@ -15,6 +15,7 @@ namespace Bibliocanto.Context
         public DbSet<Autores> Autores { get; set; }
         public DbSet<Generos> Generos { get; set; }
         public DbSet<Editoras> Editoras { get; set; }
+        public DbSet<MeusLivros> MeusLivros { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -90,6 +91,15 @@ namespace Bibliocanto.Context
                     EditoraId = 101
                 }
             );
+
+
+            builder.Entity<MeusLivros>().ToTable("MeusLivros");
+            builder.Entity<MeusLivros>().HasKey(p => p.Id);
+            builder.Entity<MeusLivros>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<MeusLivros>().Property(p => p.IdUser).IsRequired().HasMaxLength(450);
+            builder.Entity<MeusLivros>().Property(p => p.Lido);
+            builder.Entity<MeusLivros>().Property(p => p.Relido);
+            builder.Entity<MeusLivros>().HasOne(p => p.Livros).WithMany(p => p.MeusLivros).HasForeignKey(p => p.IdLivro);
 
         }
     }

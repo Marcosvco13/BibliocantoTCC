@@ -12,6 +12,7 @@ namespace Bibliocanto.Mapping
             CreateMap<Livros,  LivrosResource>();
             CreateMap<Generos, GenerosResource>();
             CreateMap<Editoras, EditorasResource>();
+            CreateMap<MeusLivros, MeusLivrosResource>();
         }
     }
 }

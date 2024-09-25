@@ -18,5 +18,7 @@ namespace Bibliocanto.Models
         public int EditoraId { get; set; }
         public Editoras? Editoras { get; set; }
 
+        public IList<MeusLivros> MeusLivros { get; set; } = new List<MeusLivros>();
+
     }
 }

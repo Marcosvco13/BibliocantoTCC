@@ -158,4 +158,41 @@ api.putEditora = async function(id, editoraData) {
     }
 };
 
+// Método DELETE para Editoras
+api.deleteEditora = async function(id) {
+    try {
+        const response = await api.delete(`/api/Editoras/${id}`, authorization);
+        console.log('Editora excluída com sucesso:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Erro ao excluir a editora:', error);
+        throw error;
+    }
+};
+
+// Método DELETE para Livros
+api.deleteLivro = async function(id) {
+    try {
+        const response = await api.delete(`/api/Livros/${id}`, authorization);
+        console.log('Livro excluído com sucesso:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Erro ao excluir o livro:', error);
+        throw error;
+    }
+};
+
+// Método DELETE para Autores
+api.deleteAutor = async function(id) {
+    try {
+        const response = await api.delete(`/api/Autores/${id}`, authorization);
+        console.log('Autor excluído com sucesso:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Erro ao excluir o autor:', error);
+        throw error;
+    }
+};
+
+
 export default api;

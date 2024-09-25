@@ -5,6 +5,7 @@ import './CadAutorStyle.css';
 import { useNavigate } from 'react-router-dom';
 
 export default function CadAutor() {
+    
     const [nomeAutor, setNomeAutor] = useState('');
     const [autores, setAutores] = useState([]);
     const [autorEditando, setAutorEditando] = useState(null);
@@ -49,6 +50,15 @@ export default function CadAutor() {
         setNomeAutor(autorSelecionado.nomeAutor);
     };
 
+    const handleDelete = async (id) => {
+        try {
+            await api.deleteAutor(id);
+            console.log('Autor excluído com sucesso!');
+            api.getAutores(setAutores); // Atualiza a lista após exclusão
+        } catch (error) {
+            console.error('Erro ao excluir o autor:', error);
+        }
+    }; 
 
     const resetForm = () => {
         setNomeAutor('');
@@ -117,7 +127,7 @@ export default function CadAutor() {
                             </tr>
                         </thead>
                         <tbody>
-                            <Autor autores={autores} onEdit={handleEdit} />
+                            <Autor autores={autores} onEdit={handleEdit} onDelete={handleDelete}/>
                         </tbody>
                     </table>
                 </div>

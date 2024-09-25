@@ -1,8 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
-import './style.css'
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import './style.css';
 
-export default function Editoras({ editoras, onEdit }) {
+export default function Editoras({ editoras, onEdit, onDelete }) {
     return (
         <>
             {editoras.map((editora) => (
@@ -15,6 +15,13 @@ export default function Editoras({ editoras, onEdit }) {
                             onClick={() => onEdit(editora.id)}
                         >
                             <FontAwesomeIcon icon={faEdit} />
+                        </button>
+
+                        <button 
+                            className="btnExcluiTabEditoras" 
+                            onClick={() => onDelete(editora.id)}
+                        >
+                            <FontAwesomeIcon icon={faTrash} />
                         </button>
                     </td>
                 </tr>

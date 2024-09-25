@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\Controllers",
-    "\\Models"
+    "\\Models",
+    "\\Repository"
   ],
-  "SelectedNode": "\\Bibliocanto.sln",
+  "SelectedNode": "\\Repository\\MeusLivrosRepository.cs",
   "PreviewInSolutionExplorer": false
 }
