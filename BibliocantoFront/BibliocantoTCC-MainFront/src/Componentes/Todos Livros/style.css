@@ -25,7 +25,7 @@
   
   .livro-card {
     width: 150px;
-    height: 200px;
+    height: 220px;
     object-fit: cover;
     border: 1px solid rgba(0, 0, 0, 0.1); /* Borda discreta */
     border-radius: 5px; /* Bordas levemente arredondadas */
