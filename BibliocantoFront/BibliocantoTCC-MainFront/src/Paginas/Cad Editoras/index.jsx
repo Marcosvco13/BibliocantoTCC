@@ -85,7 +85,7 @@ export default function CadEditora() {
                     <div className='linhaCadEditora'>                      
                         <div className='colunaCadEditora'>
 
-                            <div className='tituloCadEditora'>
+                            <div className='tituloEditora'>
                                 <label>Nome da Editora</label>
                             </div>
 

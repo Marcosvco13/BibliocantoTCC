@@ -60,7 +60,7 @@
   flex-direction: column;
 }
 
-.tituloCadEditora label {
+.tituloEditora label {
   color: #5a251d; /* Cor mais saturada */
   font-weight: bold;
   margin-bottom: 8px;
