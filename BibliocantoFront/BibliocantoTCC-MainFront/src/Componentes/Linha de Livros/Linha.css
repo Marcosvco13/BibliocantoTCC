@@ -48,3 +48,19 @@
  .modal-text {
   margin-bottom: 10px;
 }
+
+.btnIcon {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.btnIcon:hover {
+  color: #491b13;
+}
+
+.btnIcon {
+  color: #5a251d;
+}

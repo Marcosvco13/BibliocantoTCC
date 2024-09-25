@@ -50,6 +50,16 @@ export default function CadEditora() {
         setNomeEditora(editoraSelecionada.nomeEditora);
     };
 
+    const handleDelete = async (id) => {
+        try {
+            await api.deleteEditora(id);
+            console.log('Editora excluída com sucesso!');
+            api.getEditoras(setEditoras); // Atualiza a lista após exclusão
+        } catch (error) {
+            console.error('Erro ao excluir a editora:', error);
+        }
+    };    
+
     const resetForm = () => {
         setNomeEditora('');
         setEditoraEditando(null);
@@ -120,7 +130,7 @@ export default function CadEditora() {
                             </tr>
                         </thead>
                         <tbody>
-                            <Editora editoras={editoras} onEdit={handleEdit}/>
+                            <Editora editoras={editoras} onEdit={handleEdit} onDelete={handleDelete}/>
                         </tbody>
                     </table>
                 </div>

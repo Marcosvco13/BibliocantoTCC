@@ -5,8 +5,11 @@ import "./Linha.css";
 import { Modal } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 function Linha() {
+
   const [livros, setLivros] = useState([]);
   const [generos, setGeneros] = useState([]);
   const [error, setError] = useState(null);
@@ -49,6 +52,20 @@ function Linha() {
   const handleEditClick = () => {
     if (selectedLivro) {
       navigate(`/EditarLivro/${selectedLivro.id}`); // Redireciona para a página de edição do livro selecionado
+    }
+  };
+
+  const handleDeleteClick = async () => {
+    if (selectedLivro) {
+      try {
+        await api.deleteLivro(selectedLivro.id); // Chama a função de exclusão da API
+        setLivros((prevLivros) =>
+          prevLivros.filter((livro) => livro.id !== selectedLivro.id)
+        );
+        setModalVisible(false); // Fecha o modal após a exclusão
+      } catch (err) {
+        console.error("Erro ao deletar o livro:", err);
+      }
     }
   };
 
@@ -139,13 +156,23 @@ function Linha() {
 
         {email && (
           <Modal.Footer>
-            <Button
-              variant="secondary"
-              onClick={handleEditClick} // Usa a função para navegação
-            >
-              Editar
-            </Button>
-          </Modal.Footer>
+          {email && (
+            <>
+              <button
+                className="btnIcon"
+                onClick={handleEditClick} // Função para editar
+              >
+                <FontAwesomeIcon icon={faEdit} />
+              </button>
+              <button
+                className="btnIcon"
+                onClick={() => handleDeleteClick(selectedLivro?.id)} // Função para deletar
+              >
+                <FontAwesomeIcon icon={faTrash} />
+              </button>
+            </>
+          )}
+        </Modal.Footer>
         )}
       </Modal>
     </div>
