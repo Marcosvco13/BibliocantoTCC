@@ -579,6 +579,37 @@
   },
   {
     "ContainingType": "Bibliocanto.Controllers.LivrosController",
+    "Method": "GetLivroByIsbn",
+    "RelativePath": "api/Livros/{isbn}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "isbn",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "isbn",
+        "Type": "",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Bibliocanto.Resources.LivrosResource",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Bibliocanto.Controllers.LivrosController",
     "Method": "GetLivrosByName",
     "RelativePath": "api/Livros/LivroByName",
     "HttpMethod": "GET",
