@@ -77,6 +77,9 @@ function Linha() {
             <span>
               <Link to="/CadastrarLivro">Cadastrar Livro</Link>
             </span>
+            <span>
+              <Link to="/TodosLivros">Todos os Livros</Link>
+            </span>
             <hr className="hrLinha"></hr>
           </>
         )}

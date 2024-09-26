@@ -37,24 +37,24 @@ export default function Nav() {
 
   return (
     <div className={`nav-container ${show && "nav-container-black"}`}>
-      
+
       <img
         className="nav-logo"
         src="src/assets/BibliocantoTCC-mainlogo.png"
         alt="Bibliocanto"
       />
-      
+
       <div className="nav-options-left">
         <a href="/">Acervo de Livros</a>
       </div>
 
       <div className="nav-options-right">
-        
-        {email ? (
+
+        {/* {email ? (
           <span>
             <a href="/TodosLivros">Minha Biblioteca</a>
           </span>
-        ) : ('')}
+        ) : ('')} */}
 
         {email ? (
           <span>

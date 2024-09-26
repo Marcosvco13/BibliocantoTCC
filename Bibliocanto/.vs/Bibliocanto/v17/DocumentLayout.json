@@ -59,8 +59,7 @@
               "RelativeToolTip": "Controllers\\AccountController.cs",
               "ViewState": "AQIAAIwAAAAAAAAAAAAkwHsAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-13T01:40:48.612Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-13T01:40:48.612Z"
             },
             {
               "$type": "Document",
@@ -72,8 +71,7 @@
               "RelativeToolTip": "IServices\\IAuthenticate.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAuwA0AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-13T01:38:17.408Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-13T01:38:17.408Z"
             },
             {
               "$type": "Document",
@@ -85,8 +83,7 @@
               "RelativeToolTip": "Services\\AuthenticateService.cs",
               "ViewState": "AQIAABQAAAAAAAAAAAAYwDcAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-13T01:37:18.657Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-13T01:37:18.657Z"
             }
           ]
         }
