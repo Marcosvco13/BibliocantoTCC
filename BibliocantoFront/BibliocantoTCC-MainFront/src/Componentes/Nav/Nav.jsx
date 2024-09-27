@@ -48,6 +48,10 @@ export default function Nav() {
         <a href="/">Acervo de Livros</a>
       </div>
 
+      <div className="nav-options">
+        <a href="/BuscaIsbn">Busca Teste</a>
+      </div>
+
       <div className="nav-options-right">
 
         {/* {email ? (

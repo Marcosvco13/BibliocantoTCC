@@ -580,7 +580,7 @@
   {
     "ContainingType": "Bibliocanto.Controllers.LivrosController",
     "Method": "GetLivroByIsbn",
-    "RelativePath": "api/Livros/{isbn}",
+    "RelativePath": "api/Livros/GetLivroByIsbn",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -589,11 +589,6 @@
         "Name": "isbn",
         "Type": "System.String",
         "IsRequired": false
-      },
-      {
-        "Name": "isbn",
-        "Type": "",
-        "IsRequired": true
       }
     ],
     "ReturnTypes": [

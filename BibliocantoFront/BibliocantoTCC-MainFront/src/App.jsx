@@ -16,6 +16,7 @@ import NewUser from "./Paginas/NewUser";
 import CadAutor from './Paginas/Cad Autores/index';
 import CadEditora from "./Paginas/Cad Editoras";
 import EditarLivro from "./Paginas/Edit Livro";
+import BuscaIsbn from "./Paginas/BuscaLivroIsbn";
 
 export default function App() {
   const [generos, setGeneros] = useState([]);
@@ -35,6 +36,7 @@ export default function App() {
           <Route path="/CadastrarLivro" element={<CadastrarLivro />} />
           <Route path="/Login" element={<Login/>}/>
           <Route path="/NewUser" element={<NewUser/>}/>
+          <Route path="/BuscaIsbn" element={<BuscaIsbn/>}/>
           <Route path="/CadAutores" element={<CadAutor />} />
           <Route path="/CadEditoras" element={<CadEditora />} />
           <Route path="/TodosLivros" element={<TodosLivros />} />
