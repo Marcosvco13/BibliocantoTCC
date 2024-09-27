@@ -75,7 +75,7 @@ function Linha() {
         {email && (
           <>
             <span>
-              <Link to="/CadastrarLivro">Cadastrar Livro</Link>
+              <Link to="/BuscaIsbn">Cadastrar Livro</Link>
             </span>
             <span>
               <Link to="/TodosLivros">Todos os Livros</Link>

@@ -15,24 +15,25 @@ export default function BuscaLivroIsbn () {
 
         const isbnData = { isbn };
 
+        const verificaIsbn = /^\d{3}-\d{10}$/; 
+
+        if (!verificaIsbn.test(isbn)) {  // Se não tiver 14 dígitos
+            alert("ISBN inválido");  // Exibe o alerta
+            return;  // Sai da função se o ISBN for inválido
+        }
+
         try {
             
             const response = await api.get('/api/Livros/GetLivroByIsbn', {params:  isbnData });
 
             if(response != null){
                 alert("Livro já existe no sistema!");
-                
-
-                
-            }else {
-                //tela de cadastro buscando as informações da api com o isbn informado
-                navigate()
+                return;
             }
             
-        } catch (error) {
-
-            console.error('Erro ao buscar o livro:', error);
-
+        } catch {
+            alert("Livro não encontrado no sistema!");
+            navigate("/CadastrarLivro")
         }
     };
 
@@ -60,7 +61,7 @@ export default function BuscaLivroIsbn () {
                     <input 
                         className='isbnBusca'
                         type="text" 
-                        placeholder='ISBN-13'
+                        placeholder='ISBN'
                         value={isbn}
                         onChange={(e) => handleInputChange(e)} 
                         maxLength={14}
