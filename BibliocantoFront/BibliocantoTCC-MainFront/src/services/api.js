@@ -29,10 +29,24 @@ api.getLivroById = async function(id) {
     }
 };
 
+// api.getLivroByIsbn = async function(isbn) {
+//     try{
+//         const response = await api.get(`/api/Livros/GetLivroByIsbn` params: { isbn });
+
+//         if(response && response.data){
+//             return response.data;
+//         } else {
+//             return null;
+//         }
+//     } catch (error) {
+//         console.error("Erro ao buscar livro por isbn: ", error);
+//     }
+// };
+
 api.getLivros = async function(setLivros) {
     try {
         const response = await api.get('/api/Livros');
-        console.log(response);
+        //console.log(response);
         if (response && response.data) {
             setLivros(response.data);
             console.log(response.data);

@@ -57,12 +57,35 @@ namespace Bibliocanto.Controllers
         }
 
         [HttpGet("{id:int}", Name = "GetLivroById")]
-        public async Task<ActionResult<LivrosResource>> GetLivroById(int id)
+        public async Task<ActionResult<LivrosResource>> GetLivroById( int id)
         {
 
             try
             {
                 var livro = await _livroService.GetLivroById(id);
+                var recurso = _mapper.Map<Livros, LivrosResource>(livro);
+
+                if (livro == null)
+                {
+                    return NotFound("Livro não encontrado");
+                }
+
+                return recurso;
+            }
+            catch
+            {
+                return BadRequest("Request Inválido");
+            }
+        }
+
+
+        [HttpGet("GetLivroByIsbn")]
+        public async Task<ActionResult<LivrosResource>> GetLivroByIsbn([FromQuery] string isbn)
+        {
+
+            try
+            {
+                var livro = await _livroService.GetLivroByIsbn(isbn);
                 var recurso = _mapper.Map<Livros, LivrosResource>(livro);
 
                 if (livro == null)

@@ -28,6 +28,10 @@ namespace Bibliocanto.Services
         {
             return await _livrosRepository.GetLivroById(id);
         }
+        public async Task<Livros> GetLivroByIsbn(string isbn)
+        {
+            return await _livrosRepository.GetLivroByIsbn(isbn);
+        }
 
         public async Task<IEnumerable<Livros>> GetLivroByNome(string nome)
         {
