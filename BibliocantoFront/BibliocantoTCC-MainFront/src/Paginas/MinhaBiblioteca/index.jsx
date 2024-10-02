@@ -1,27 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate  } from "react-router-dom";
 import api from "../../services/api";
-import "./Linha.css";
+import "./style.css";
 import { Modal } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrash, faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
-function Linha() {
 
+export default function Linha() {
   const [livros, setLivros] = useState([]);
-  const [generos, setGeneros] = useState([]);
   const [error, setError] = useState(null);
   const [modalVisible, setModalVisible] = useState(false); // visibilidade do modal
-  const [selectedLivro, setSelectedLivro] = useState(null); // armazenar o livro selecionado
-  const [email] = useState(localStorage.getItem("email") || null);
+  const [selectedLivro, setSelectedLivro] = useState(null);
+  const [email] = useState(localStorage.getItem('email') || null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await api.getLivros(setLivros);
-        await api.getGeneros(setGeneros);
+        await api.get('api/MeusLivros/BibliotecaByUser', param );
       } catch (err) {
         setError("Erro ao carregar os dados.");
         console.error(err);
@@ -31,17 +29,6 @@ function Linha() {
     fetchData();
   }, []);
 
-  // Função para agrupar livros por gênero
-  const livrosPorGenero = generos.map((genero) => {
-    return {
-      ...genero,
-      livros: livros.filter(
-        (livro) => livro.generos.nomegenero === genero.nomegenero
-      ),
-    };
-  });
-
-  // função para clicar na imagem e abrir o modal
   const handleImageClick = (livro) => {
     setSelectedLivro(livro); // armazena qual livro clicou
     setModalVisible(true); // abre o modal
@@ -55,86 +42,26 @@ function Linha() {
     }
   };
 
-  const handleDeleteClick = async () => {
-    if (selectedLivro) {
-      try {
-        await api.deleteLivro(selectedLivro.id); // Chama a função de exclusão da API
-        setLivros((prevLivros) =>
-          prevLivros.filter((livro) => livro.id !== selectedLivro.id)
-        );
-        setModalVisible(false); // Fecha o modal após a exclusão
-      } catch (err) {
-        console.error("Erro ao deletar o livro:", err);
-      }
-    }
-  };
-
-  const handleAddMeuLivro = async () => {
-    const idUser = localStorage.getItem("Id");
-  
-    if (!idUser) {
-      alert('Usuário não encontrado');
-      return;
-    }
-  
-    if (selectedLivro) {
-      const idLivro = selectedLivro.id;
-  
-      const data = { idUser, idLivro };
-      
-      try {
-        const response = await api.post('/api/MeusLivros', data);
-        console.log(response);
-        alert('Livro adicionado com sucesso!');
-      } catch (error) {
-        console.error(error);
-        alert('Falha ao salvar livro na biblioteca!: ' + error.message);
-      }
-    } else {
-      alert('Nenhum livro selecionado');
-    }
-  };
-
   return (
     <div className="linha-container">
-      <div className="linha-crear">
-        {email && (
-          <>
-            <span>
-              <Link to="/BuscaIsbn">Cadastrar Livro</Link>
-            </span>
-            <span>
-              <Link to="/TodosLivros">Todos os Livros</Link>
-            </span>
-            <hr className="hrLinha"></hr>
-          </>
-        )}
-      </div>
+
       {error && <p className="error">{error}</p>}
-      {livrosPorGenero.length > 0 ? (
-        livrosPorGenero.map((genero) => (
-          <div key={genero.id} className="genero">
-            <h3 className="linha-titulo">{genero.nomegenero}</h3>
-            <div className="linha-card">
-              {genero.livros.length > 0 ? (
-                genero.livros.map((livro) => (
-                  <img
-                    className="livro-card"
-                    key={livro.id}
-                    src={livro.caminhoImagem}
-                    alt={livro.titulo}
-                    onClick={() => handleImageClick(livro)} // abrir o popup modal
-                  />
-                ))
-              ) : (
-                <p>Nenhum livro disponível neste gênero.</p>
-              )}
-            </div>
-          </div>
-        ))
+      {livros.length > 0 ? (
+        <div className="livros-container">
+          {livros.map((livro) => (
+            <img
+              className="livro-card"
+              key={livro.id}
+              src={livro.caminhoImagem}
+              alt={livro.titulo}
+              onClick={() => handleImageClick(livro)}
+            />
+          ))}
+        </div>
       ) : (
         <p>Carregando livros...</p>
       )}
+
 
       {/* Popup Modal */}
       <Modal
@@ -199,19 +126,12 @@ function Linha() {
               >
                 <FontAwesomeIcon icon={faTrash} />
               </button>
-              <button
-                className="btnIcon"
-                onClick={() => handleAddMeuLivro(selectedLivro?.id)} // Função para adicionar
-              >
-                <FontAwesomeIcon icon={faFloppyDisk} />
-              </button>
             </>
           )}
         </Modal.Footer>
         )}
       </Modal>
+
     </div>
   );
 }
-
-export default Linha;
