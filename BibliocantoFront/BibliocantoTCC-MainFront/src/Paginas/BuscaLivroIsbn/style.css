@@ -59,3 +59,26 @@ button.btnBuscaIsbn:active {
     box-shadow: 0 5px #666;
     transform: translateY(4px);
 }
+
+
+button.btnRetornar {
+    background-color: #5a251d; /* Cor mais saturada */
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+    width: 40%;  /* Ajusta a largura do botão para se alinhar melhor com o input */
+}
+
+button.btnRetornar:hover {
+    background-color: #47211c;
+}
+
+button.btnRetornar:active {
+    background-color: #3d1c18;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
