@@ -9,34 +9,37 @@ export default function BuscaLivroIsbn() {
   const navigate = useNavigate();
 
   const handleGetLivro = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const isbnData = { isbn };
+  const isbnData = { isbn };
 
-    const verificaIsbn = /^\d{3}-\d{10}$/;
+  const verificaIsbn = /^\d{3}-\d{10}$/;
 
-    if (!verificaIsbn.test(isbn)) {
-      // Se não tiver 14 dígitos
-      alert("ISBN inválido");
-      return;
+  if (!verificaIsbn.test(isbn)) {
+    // Se não tiver 14 dígitos
+    alert("ISBN inválido");
+    return;
+  }
+
+  try {
+    const response = await api.get("/api/Livros/GetLivroByIsbn", {
+      params: isbnData,
+    });
+
+    if (response.data && Object.keys(response.data).length > 0) {
+      // Verifica se o livro foi encontrado
+      setSelectedLivro(response.data); // Armazena o livro no estado
+    } else {
+      // Livro não encontrado, redirecionar para cadastro
+      alert("Livro não encontrado no sistema!");
+      navigate("/CadastrarLivro");
     }
-
-    try {
-      const response = await api.get("/api/Livros/GetLivroByIsbn", {
-        params: isbnData,
-      });
-
-      if (response.data) {
-        setSelectedLivro(response.data); // Armazena o livro no estado
-      } else {
-        alert("Livro não encontrado no sistema!");
-        navigate("/CadastrarLivro");
-      }
-    } catch (error) {
-      console.error(error);
-      alert("Erro ao buscar livro!");
-    }
-  };
+  } catch (error) {
+    console.error(error);
+    alert("Erro ao buscar livro!");
+    navigate("/CadastrarLivro");
+  }
+};
 
   const handleInputChange = (e) => {
     let valor = e.target.value.replace(/\D/g, "");
@@ -121,9 +124,15 @@ export default function BuscaLivroIsbn() {
             </button>
 
             {/* Botão para voltar à página inicial */}
-            <a href="/" className="btnVoltarInicio">
+            <button
+              type="button"
+              className="btnVoltarInicio"
+              onClick={() => {
+                navigate("/"); // Redireciona para a página inicial
+              }}
+            >
               Voltar ao acervo
-            </a>
+            </button>
           </div>
         )}
       </div>

@@ -71,6 +71,7 @@ button.btnRetornar {
     margin-top: 20px;
     cursor: pointer;
     width: 40%;  /* Ajusta a largura do botão para se alinhar melhor com o input */
+    margin-right: 10px;
 }
 
 button.btnRetornar:hover {
@@ -78,6 +79,40 @@ button.btnRetornar:hover {
 }
 
 button.btnRetornar:active {
+    background-color: #3d1c18;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+button.btnBuscaIsbn:hover {
+    background-color: #47211c;
+}
+
+button.btnBuscaIsbn:active {
+    background-color: #3d1c18;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+
+button.btnVoltarInicio {
+    background-color: #5a251d; /* Cor mais saturada */
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+    width: 40%;  /* Ajusta a largura do botão para se alinhar melhor com o input */
+    margin-left: 10px;
+}
+
+button.btnVoltarInicio:hover {
+    background-color: #47211c;
+}
+
+button.btnVoltarInicio:active {
     background-color: #3d1c18;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
