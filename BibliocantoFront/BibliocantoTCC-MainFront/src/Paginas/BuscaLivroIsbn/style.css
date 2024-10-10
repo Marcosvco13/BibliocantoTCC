@@ -117,3 +117,33 @@ button.btnVoltarInicio:active {
     box-shadow: 0 5px #666;
     transform: translateY(4px);
 }
+
+button.btnCadastrarLivro {
+    background-color: #5a251d; /* Cor mais saturada */
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+    width: 40%;  /* Ajusta a largura do botão para se alinhar melhor com o input */
+    margin-left: 10px;
+}
+
+button.btnCadastrarLivro:hover {
+    background-color: #47211c;
+}
+
+button.btnCadastrarLivro:active {
+    background-color: #3d1c18;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+.divBotoes {
+    display: flex;
+    justify-content: center;  /* Centraliza os botões horizontalmente */
+    gap: 10px;                /* Espaço entre os botões */
+    margin-top: 20px;         /* Espaço acima dos botões */
+}
