@@ -61,9 +61,10 @@ namespace Bibliocanto.Context
             builder.Entity<Livros>().Property(p => p.CaminhoImagem).IsRequired().HasMaxLength(555);
             builder.Entity<Livros>().Property(p => p.Isbn).IsRequired().HasMaxLength(50);
             builder.Entity<Livros>().Property(p => p.Descricao).IsRequired().HasMaxLength(1555);
-            builder.Entity<Livros>().HasOne(p => p.Generos).WithMany(p => p.Livros).HasForeignKey(p => p.GeneroId);
-            builder.Entity<Livros>().HasOne(p => p.Autores).WithMany(p => p.Livros).HasForeignKey(p => p.AutorId);
-            builder.Entity<Livros>().HasOne(p => p.Editoras).WithMany(p => p.Livros).HasForeignKey(p => p.EditoraId);
+            builder.Entity<Livros>().Property(p => p.LinkCompra).HasMaxLength(255);
+            //builder.Entity<Livros>().HasOne(p => p.Generos).WithMany(p => p.Livros).HasForeignKey(p => p.GeneroId);
+            //builder.Entity<Livros>().HasOne(p => p.Autores).WithMany(p => p.Livros).HasForeignKey(p => p.AutorId);
+            //builder.Entity<Livros>().HasOne(p => p.Editoras).WithMany(p => p.Livros).HasForeignKey(p => p.EditoraId);
 
 
             builder.Entity<Livros>().HasData
@@ -75,9 +76,9 @@ namespace Bibliocanto.Context
                     Descricao = "Teste1",
                     CaminhoImagem = "https://m.media-amazon.com/images/I/81M-QDE-7zL._SY425_.jpg",
                     Isbn = "978-6557172292",
-                    AutorId = 100,
-                    GeneroId = 101,
-                    EditoraId = 100
+                    //Autores = "teste",
+                    //GeneroId = 101,
+                    //Editora = "100"
                 },
                 new Livros
                 {
@@ -86,9 +87,9 @@ namespace Bibliocanto.Context
                     Descricao = "Teste2",
                     CaminhoImagem = "https://m.media-amazon.com/images/I/916WkSH4cGL._SY425_.jpg",
                     Isbn = "978-8573266467",
-                    AutorId = 101,
-                    GeneroId = 100,
-                    EditoraId = 101
+                    //Autores = "teste",
+                    //GeneroId = 100,
+                    //Editora = "100"
                 }
             );
 
