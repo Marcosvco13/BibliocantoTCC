@@ -17,6 +17,8 @@ import CadAutor from './Paginas/Cad Autores/index';
 import CadEditora from "./Paginas/Cad Editoras";
 import EditarLivro from "./Paginas/Edit Livro";
 import BuscaIsbn from "./Paginas/BuscaLivroIsbn";
+import SobreSite from "./Paginas/Sobre o Site";
+import PoliticaPrivacidade from "./Paginas/Politica de Privacidade";
 
 export default function App() {
   const [generos, setGeneros] = useState([]);
@@ -41,6 +43,8 @@ export default function App() {
           <Route path="/CadEditoras" element={<CadEditora />} />
           <Route path="/TodosLivros" element={<TodosLivros />} />
           <Route path="/EditarLivro/:id" element={<EditarLivro />} />
+          <Route path="/about" element={<SobreSite />} />
+          <Route path="/privacy-policy" element={<PoliticaPrivacidade />} />
         </Routes>
         <Footer/>
       </BrowserRouter>
