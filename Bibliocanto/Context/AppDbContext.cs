@@ -16,6 +16,8 @@ namespace Bibliocanto.Context
         public DbSet<Generos> Generos { get; set; }
         public DbSet<Editoras> Editoras { get; set; }
         public DbSet<MeusLivros> MeusLivros { get; set; }
+        public DbSet<AutoresLivros> AutoresLivros { get; set; }
+        public DbSet<GeneroLivro> GeneroLivro { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -64,7 +66,7 @@ namespace Bibliocanto.Context
             builder.Entity<Livros>().Property(p => p.LinkCompra).HasMaxLength(255);
             //builder.Entity<Livros>().HasOne(p => p.Generos).WithMany(p => p.Livros).HasForeignKey(p => p.GeneroId);
             //builder.Entity<Livros>().HasOne(p => p.Autores).WithMany(p => p.Livros).HasForeignKey(p => p.AutorId);
-            //builder.Entity<Livros>().HasOne(p => p.Editoras).WithMany(p => p.Livros).HasForeignKey(p => p.EditoraId);
+            builder.Entity<Livros>().HasOne(p => p.Editoras).WithMany(p => p.Livros).HasForeignKey(p => p.EditoraId);
 
 
             builder.Entity<Livros>().HasData
@@ -101,6 +103,18 @@ namespace Bibliocanto.Context
             builder.Entity<MeusLivros>().Property(p => p.Lido);
             builder.Entity<MeusLivros>().Property(p => p.Relido);
             builder.Entity<MeusLivros>().HasOne(p => p.Livros).WithMany(p => p.MeusLivros).HasForeignKey(p => p.IdLivro);
+
+            builder.Entity<AutoresLivros>().ToTable("AutoresLivro");
+            builder.Entity<AutoresLivros>().HasKey(p => p.Id);
+            builder.Entity<AutoresLivros>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<AutoresLivros>().Property(p => p.IdLivro);
+            builder.Entity<AutoresLivros>().Property(p => p.IdAutor);
+
+            builder.Entity<GeneroLivro>().ToTable("AutoresLivro");
+            builder.Entity<GeneroLivro>().HasKey(p => p.Id);
+            builder.Entity<GeneroLivro>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<GeneroLivro>().Property(p => p.IdLivro);
+            builder.Entity<GeneroLivro>().Property(p => p.IdGenero);
 
         }
     }

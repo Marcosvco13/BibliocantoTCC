@@ -73,8 +73,9 @@ namespace Bibliocanto.Services
             exibirLivro.Descricao = livro.Descricao;
             exibirLivro.CaminhoImagem = livro.CaminhoImagem;
             exibirLivro.Isbn = livro.Isbn;
-            exibirLivro.AutorId = livro.AutorId;
-            exibirLivro.GeneroId = livro.GeneroId;
+            exibirLivro.EditoraId = livro.EditoraId;
+            exibirLivro.LinkCompra = livro.LinkCompra;
+
 
 
             try
