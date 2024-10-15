@@ -1,10 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Controllers",
-    "\\Models",
-    "\\Repository"
+    "\\Controllers"
   ],
-  "SelectedNode": "\\Repository\\MeusLivrosRepository.cs",
+  "SelectedNode": "\\Controllers\\LivrosController.cs",
   "PreviewInSolutionExplorer": false
 }

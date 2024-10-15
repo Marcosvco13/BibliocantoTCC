@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+
+.sobre-site-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9;
+    height: 100vh;
+}
+
+.sobre-site-section {
+    background-color: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 4px 60px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    width: 100%;
+    text-align: center;
+}
+
+.logoSobreSite {
+    width: 120px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.tituloSobreSite {
+    font-family: 'Merriweather', serif;
+    font-size: 36px;
+    color: #47211c;
+    margin-bottom: 20px;
+}
+
+.conteudoSobreSite {
+    font-family: 'Merriweather', serif;
+    font-size: 18px;
+    color: #333;
+    line-height: 1.6;
+}
+
+.conteudoSobreSite p {
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .sobre-site-section {
+        padding: 20px;
+        max-width: 90%;
+    }
+
+    .tituloSobreSite {
+        font-size: 28px;
+    }
+
+    .conteudoSobreSite {
+        font-size: 16px;
+    }
+}

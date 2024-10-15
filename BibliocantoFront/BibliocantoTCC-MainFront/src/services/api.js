@@ -7,8 +7,8 @@ const api = axios.create({
 const token = localStorage.getItem('token');
 
 const authorization = {
-    headers : {
-        Authorization : `Bearer ${token}`
+    headers: {
+        Authorization: `Bearer ${token}`
     }
 };
 
@@ -29,27 +29,13 @@ api.getLivroById = async function(id) {
     }
 };
 
-// api.getLivroByIsbn = async function(isbn) {
-//     try{
-//         const response = await api.get(`/api/Livros/GetLivroByIsbn` params: { isbn });
-
-//         if(response && response.data){
-//             return response.data;
-//         } else {
-//             return null;
-//         }
-//     } catch (error) {
-//         console.error("Erro ao buscar livro por isbn: ", error);
-//     }
-// };
-
 api.getLivros = async function(setLivros) {
     try {
         const response = await api.get('/api/Livros');
         //console.log(response);
         if (response && response.data) {
             setLivros(response.data);
-            console.log(response.data);
+            //console.log(response.data);
         } else {
             console.error("No data in response");
         }
@@ -61,10 +47,10 @@ api.getLivros = async function(setLivros) {
 api.getGeneros = async function(setGeneros) {
     try {
         const response = await api.get('/api/Generos');
-        console.log(response);
+        //console.log(response);
         if (response && response.data) {
             setGeneros(response.data);
-            console.log(response.data);
+            //console.log(response.data);
         } else {
             console.error("No data in response");
         }
@@ -76,7 +62,7 @@ api.getGeneros = async function(setGeneros) {
 api.getAutores = async function(setAutores) {
     try {
         const response = await api.get('/api/Autores', authorization);
-        console.log(response);
+        //console.log(response);
         if (response && response.data) {
             setAutores(response.data);
             console.log(response.data);
@@ -91,7 +77,7 @@ api.getAutores = async function(setAutores) {
 api.getEditoras = async function(setEditoras) {
     try {
         const response = await api.get('/api/Editoras', authorization);
-        console.log(response);
+        //console.log(response);
         if (response && response.data) {
             setEditoras(response.data);
             console.log(response.data);
