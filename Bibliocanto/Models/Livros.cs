@@ -11,12 +11,6 @@ namespace Bibliocanto.Models
         public string? Isbn { get; set; }
         public string? LinkCompra {  get; set; }
 
-        //public string? Autores { get; set; }
-        //public string? Editora { get; set; }
-        //public int AutorId { get; set; }
-        //public Autores? Autores { get; set; }
-        //public int GeneroId { get; set; }
-        //public Generos? Generos { get; set; }
         public int EditoraId { get; set; }
         public Editoras? Editoras { get; set; }
 

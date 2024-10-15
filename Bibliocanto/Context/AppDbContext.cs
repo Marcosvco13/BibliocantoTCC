@@ -63,9 +63,7 @@ namespace Bibliocanto.Context
             builder.Entity<Livros>().Property(p => p.CaminhoImagem).IsRequired().HasMaxLength(555);
             builder.Entity<Livros>().Property(p => p.Isbn).IsRequired().HasMaxLength(50);
             builder.Entity<Livros>().Property(p => p.Descricao).IsRequired().HasMaxLength(1555);
-            builder.Entity<Livros>().Property(p => p.LinkCompra).HasMaxLength(255);
-            //builder.Entity<Livros>().HasOne(p => p.Generos).WithMany(p => p.Livros).HasForeignKey(p => p.GeneroId);
-            //builder.Entity<Livros>().HasOne(p => p.Autores).WithMany(p => p.Livros).HasForeignKey(p => p.AutorId);
+            builder.Entity<Livros>().Property(p => p.LinkCompra).HasMaxLength(1555);
             builder.Entity<Livros>().HasOne(p => p.Editoras).WithMany(p => p.Livros).HasForeignKey(p => p.EditoraId);
 
 
@@ -78,9 +76,8 @@ namespace Bibliocanto.Context
                     Descricao = "Teste1",
                     CaminhoImagem = "https://m.media-amazon.com/images/I/81M-QDE-7zL._SY425_.jpg",
                     Isbn = "978-6557172292",
-                    //Autores = "teste",
-                    //GeneroId = 101,
-                    //Editora = "100"
+                    LinkCompra = "https://www.amazon.com.br/Capital-Livro-Nova-Edi%C3%A7%C3%A3o-Economia/dp/6557172298/ref=asc_df_6557172298/?tag=googleshopp00-20&linkCode=df0&hvadid=709857900213&hvpos=&hvnetw=g&hvrand=12565139690516924554&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9074297&hvtargid=pla-2257126917247&psc=1&mcid=bcf17339abcb345caf390142900d9cf0&gad_source=1",
+                    EditoraId = 100
                 },
                 new Livros
                 {
@@ -89,9 +86,8 @@ namespace Bibliocanto.Context
                     Descricao = "Teste2",
                     CaminhoImagem = "https://m.media-amazon.com/images/I/916WkSH4cGL._SY425_.jpg",
                     Isbn = "978-8573266467",
-                    //Autores = "teste",
-                    //GeneroId = 100,
-                    //Editora = "100"
+                    LinkCompra = "https://www.amazon.com.br/Crime-castigo-Fi%C3%B3dor-Dostoi%C3%A9vski/dp/8573266465/ref=sr_1_2?crid=13FKB6RQ2CU9P&dib=eyJ2IjoiMSJ9.xRK2CPz6wHADW2bbeza12iXIdYTE1b8laAl1mo7pe6T7F-75rihUORLzkzKFN0bxuWi4BXvXTYgwScAnidBALK2ADtJPH1uNo88fLuIodrkqVeP7tlRceQXaJwor4yGr2PCF1B5wA_iswX0OecSE_sc-RZUxW4RFbeImc3efHZTSVDSP_DPtrtnRe4p1-Aa3HjIg19etqBliVEClU29DCnDJhT8UuPj_194tpXNv1Ik.S27CmhJuVLJHDjYE6QQ_97plH5mIIt0FvUvfVGQC__M&dib_tag=se&keywords=crime+e+castigo&qid=1728956605&s=books&sprefix=crime+e+%2Cstripbooks%2C220&sr=1-2",
+                    EditoraId = 100
                 }
             );
 
@@ -110,11 +106,23 @@ namespace Bibliocanto.Context
             builder.Entity<AutoresLivros>().Property(p => p.IdLivro);
             builder.Entity<AutoresLivros>().Property(p => p.IdAutor);
 
-            builder.Entity<GeneroLivro>().ToTable("AutoresLivro");
+            builder.Entity<AutoresLivros>().HasData
+            (
+                new AutoresLivros { Id = 1, IdLivro = 100, IdAutor = 101 },
+                new AutoresLivros { Id = 2, IdLivro = 101, IdAutor = 100 }
+            );
+
+            builder.Entity<GeneroLivro>().ToTable("GenerosLivro");
             builder.Entity<GeneroLivro>().HasKey(p => p.Id);
             builder.Entity<GeneroLivro>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<GeneroLivro>().Property(p => p.IdLivro);
             builder.Entity<GeneroLivro>().Property(p => p.IdGenero);
+
+            builder.Entity<GeneroLivro>().HasData
+            (
+                new GeneroLivro { Id = 1, IdLivro = 100, IdGenero = 100 },
+                new GeneroLivro { Id = 2, IdLivro = 101, IdGenero = 101 }
+            );
 
         }
     }

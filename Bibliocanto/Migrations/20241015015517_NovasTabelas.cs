@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Bibliocanto.Migrations
 {
     /// <inheritdoc />
-    public partial class IdentityInicial : Migration
+    public partial class NovasTabelas : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -66,6 +66,20 @@ namespace Bibliocanto.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AutoresLivro",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdLivro = table.Column<int>(type: "int", nullable: false),
+                    IdAutor = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AutoresLivro", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Editoras",
                 columns: table => new
                 {
@@ -89,6 +103,20 @@ namespace Bibliocanto.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Generos", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GenerosLivro",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdLivro = table.Column<int>(type: "int", nullable: false),
+                    IdGenero = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GenerosLivro", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -207,29 +235,38 @@ namespace Bibliocanto.Migrations
                     Descricao = table.Column<string>(type: "nvarchar(1555)", maxLength: 1555, nullable: false),
                     CaminhoImagem = table.Column<string>(type: "nvarchar(555)", maxLength: 555, nullable: false),
                     Isbn = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    AutorId = table.Column<int>(type: "int", nullable: false),
-                    GeneroId = table.Column<int>(type: "int", nullable: false),
+                    LinkCompra = table.Column<string>(type: "nvarchar(1555)", maxLength: 1555, nullable: true),
                     EditoraId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Livros", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Livros_Autores_AutorId",
-                        column: x => x.AutorId,
-                        principalTable: "Autores",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Livros_Editoras_EditoraId",
                         column: x => x.EditoraId,
                         principalTable: "Editoras",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MeusLivros",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdUser = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    Lido = table.Column<int>(type: "int", nullable: false),
+                    Relido = table.Column<int>(type: "int", nullable: false),
+                    IdLivro = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MeusLivros", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Livros_Generos_GeneroId",
-                        column: x => x.GeneroId,
-                        principalTable: "Generos",
+                        name: "FK_MeusLivros_Livros_IdLivro",
+                        column: x => x.IdLivro,
+                        principalTable: "Livros",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -241,6 +278,15 @@ namespace Bibliocanto.Migrations
                 {
                     { 100, "Karl Marx" },
                     { 101, "Fiódor Dostoiévsk" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AutoresLivro",
+                columns: new[] { "Id", "IdAutor", "IdLivro" },
+                values: new object[,]
+                {
+                    { 1, 101, 100 },
+                    { 2, 100, 101 }
                 });
 
             migrationBuilder.InsertData(
@@ -262,12 +308,21 @@ namespace Bibliocanto.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Livros",
-                columns: new[] { "Id", "AutorId", "CaminhoImagem", "Descricao", "EditoraId", "GeneroId", "Isbn", "Titulo" },
+                table: "GenerosLivro",
+                columns: new[] { "Id", "IdGenero", "IdLivro" },
                 values: new object[,]
                 {
-                    { 100, 100, "https://m.media-amazon.com/images/I/81M-QDE-7zL._SY425_.jpg", "Teste1", 100, 101, "978-6557172292", "O Capital" },
-                    { 101, 101, "https://m.media-amazon.com/images/I/916WkSH4cGL._SY425_.jpg", "Teste2", 101, 100, "978-8573266467", "Crime e Castigo" }
+                    { 1, 100, 100 },
+                    { 2, 101, 101 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Livros",
+                columns: new[] { "Id", "CaminhoImagem", "Descricao", "EditoraId", "Isbn", "LinkCompra", "Titulo" },
+                values: new object[,]
+                {
+                    { 100, "https://m.media-amazon.com/images/I/81M-QDE-7zL._SY425_.jpg", "Teste1", 100, "978-6557172292", "https://www.amazon.com.br/Capital-Livro-Nova-Edi%C3%A7%C3%A3o-Economia/dp/6557172298/ref=asc_df_6557172298/?tag=googleshopp00-20&linkCode=df0&hvadid=709857900213&hvpos=&hvnetw=g&hvrand=12565139690516924554&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9074297&hvtargid=pla-2257126917247&psc=1&mcid=bcf17339abcb345caf390142900d9cf0&gad_source=1", "O Capital" },
+                    { 101, "https://m.media-amazon.com/images/I/916WkSH4cGL._SY425_.jpg", "Teste2", 100, "978-8573266467", "https://www.amazon.com.br/Crime-castigo-Fi%C3%B3dor-Dostoi%C3%A9vski/dp/8573266465/ref=sr_1_2?crid=13FKB6RQ2CU9P&dib=eyJ2IjoiMSJ9.xRK2CPz6wHADW2bbeza12iXIdYTE1b8laAl1mo7pe6T7F-75rihUORLzkzKFN0bxuWi4BXvXTYgwScAnidBALK2ADtJPH1uNo88fLuIodrkqVeP7tlRceQXaJwor4yGr2PCF1B5wA_iswX0OecSE_sc-RZUxW4RFbeImc3efHZTSVDSP_DPtrtnRe4p1-Aa3HjIg19etqBliVEClU29DCnDJhT8UuPj_194tpXNv1Ik.S27CmhJuVLJHDjYE6QQ_97plH5mIIt0FvUvfVGQC__M&dib_tag=se&keywords=crime+e+castigo&qid=1728956605&s=books&sprefix=crime+e+%2Cstripbooks%2C220&sr=1-2", "Crime e Castigo" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -310,19 +365,14 @@ namespace Bibliocanto.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Livros_AutorId",
-                table: "Livros",
-                column: "AutorId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Livros_EditoraId",
                 table: "Livros",
                 column: "EditoraId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Livros_GeneroId",
-                table: "Livros",
-                column: "GeneroId");
+                name: "IX_MeusLivros_IdLivro",
+                table: "MeusLivros",
+                column: "IdLivro");
         }
 
         /// <inheritdoc />
@@ -344,7 +394,19 @@ namespace Bibliocanto.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Livros");
+                name: "Autores");
+
+            migrationBuilder.DropTable(
+                name: "AutoresLivro");
+
+            migrationBuilder.DropTable(
+                name: "Generos");
+
+            migrationBuilder.DropTable(
+                name: "GenerosLivro");
+
+            migrationBuilder.DropTable(
+                name: "MeusLivros");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -353,13 +415,10 @@ namespace Bibliocanto.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Autores");
+                name: "Livros");
 
             migrationBuilder.DropTable(
                 name: "Editoras");
-
-            migrationBuilder.DropTable(
-                name: "Generos");
         }
     }
 }
