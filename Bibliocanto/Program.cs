@@ -88,6 +88,12 @@ builder.Services.AddScoped<IEditorasService, EditorasServices>();
 builder.Services.AddScoped<IMeusLivrosRepository, MeusLivrosRepository>();
 builder.Services.AddScoped<IMeusLivrosService, MeusLivrosService>();
 
+builder.Services.AddScoped<IGenerosLivrosRepository, GeneroLivroRepository>();
+builder.Services.AddScoped<IGeneroLivroService, GeneroLivroService>();
+
+builder.Services.AddScoped<IAutoresLivrosRepository, AutoresLivroRepository>();
+builder.Services.AddScoped<IAutoresLivroService, AutoresLivroService>();
+
 builder.Services.AddScoped<IUnitOFWork, UnitOfWork>();
 
 var app = builder.Build();
