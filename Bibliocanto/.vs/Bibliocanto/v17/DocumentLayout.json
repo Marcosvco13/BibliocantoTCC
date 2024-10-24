@@ -3,28 +3,28 @@
   "WorkspaceRootPath": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\projetos\\bibliocantotcc\\bibliocanto\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\projetos\\bibliocantotcc\\bibliocanto\\models\\meuslivros.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:models\\meuslivros.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\projetos\\bibliocantotcc\\bibliocanto\\controllers\\generoslivrocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:controllers\\generoslivrocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\projetos\\bibliocantotcc\\bibliocanto\\models\\likecomentario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:models\\likecomentario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\projetos\\bibliocantotcc\\bibliocanto\\repository\\generolivrorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:repository\\generolivrorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\projetos\\bibliocantotcc\\bibliocanto\\models\\likeresenha.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:models\\likeresenha.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\projetos\\bibliocantotcc\\bibliocanto\\services\\generolivroservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:services\\generolivroservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\projetos\\bibliocantotcc\\bibliocanto\\models\\comentarios.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:models\\comentarios.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\projetos\\bibliocantotcc\\bibliocanto\\context\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:context\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\projetos\\bibliocantotcc\\bibliocanto\\models\\resenha.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:models\\resenha.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\projetos\\bibliocantotcc\\bibliocanto\\migrations\\20241015015517_novastabelas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:migrations\\20241015015517_novastabelas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\projetos\\bibliocantotcc\\bibliocanto\\models\\avaliacao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:models\\avaliacao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Bookmark",
@@ -46,79 +46,80 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AQIAADYAAAAAAAAAAAAAAFwAAAAAAAAA",
+              "DocumentIndex": 1,
+              "Title": "LikeComentario.cs",
+              "DocumentMoniker": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Models\\LikeComentario.cs",
+              "RelativeDocumentMoniker": "Models\\LikeComentario.cs",
+              "ToolTip": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Models\\LikeComentario.cs",
+              "RelativeToolTip": "Models\\LikeComentario.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-17T00:19:42.524Z",
+              "WhenOpened": "2024-10-21T23:29:26.886Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "GeneroLivroRepository.cs",
-              "DocumentMoniker": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Repository\\GeneroLivroRepository.cs",
-              "RelativeDocumentMoniker": "Repository\\GeneroLivroRepository.cs",
-              "ToolTip": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Repository\\GeneroLivroRepository.cs",
-              "RelativeToolTip": "Repository\\GeneroLivroRepository.cs",
-              "ViewState": "AQIAAAoAAAAAAAAAAAAzwBkAAAA2AAAA",
+              "Title": "LikeResenha.cs",
+              "DocumentMoniker": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Models\\LikeResenha.cs",
+              "RelativeDocumentMoniker": "Models\\LikeResenha.cs",
+              "ToolTip": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Models\\LikeResenha.cs",
+              "RelativeToolTip": "Models\\LikeResenha.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-17T00:18:26.547Z",
+              "WhenOpened": "2024-10-21T23:28:14.323Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "GeneroLivroService.cs",
-              "DocumentMoniker": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Services\\GeneroLivroService.cs",
-              "RelativeDocumentMoniker": "Services\\GeneroLivroService.cs",
-              "ToolTip": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Services\\GeneroLivroService.cs",
-              "RelativeToolTip": "Services\\GeneroLivroService.cs",
-              "ViewState": "AQIAABMAAAAAAAAAAAAQwCAAAAAAAAAA",
+              "Title": "Comentarios.cs",
+              "DocumentMoniker": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Models\\Comentarios.cs",
+              "RelativeDocumentMoniker": "Models\\Comentarios.cs",
+              "ToolTip": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Models\\Comentarios.cs",
+              "RelativeToolTip": "Models\\Comentarios.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-17T00:18:13.401Z",
+              "WhenOpened": "2024-10-21T23:26:59.488Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "GenerosLivroController.cs",
-              "DocumentMoniker": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Controllers\\GenerosLivroController.cs",
-              "RelativeDocumentMoniker": "Controllers\\GenerosLivroController.cs",
-              "ToolTip": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Controllers\\GenerosLivroController.cs",
-              "RelativeToolTip": "Controllers\\GenerosLivroController.cs",
-              "ViewState": "AQIAAFoAAAAAAAAAAAAUwHMAAAAAAAAA",
+              "DocumentIndex": 4,
+              "Title": "Resenha.cs",
+              "DocumentMoniker": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Models\\Resenha.cs",
+              "RelativeDocumentMoniker": "Models\\Resenha.cs",
+              "ToolTip": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Models\\Resenha.cs",
+              "RelativeToolTip": "Models\\Resenha.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-17T00:17:38.811Z",
+              "WhenOpened": "2024-10-21T23:26:04.214Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "20241015015517_NovasTabelas.cs",
-              "DocumentMoniker": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Migrations\\20241015015517_NovasTabelas.cs",
-              "RelativeDocumentMoniker": "Migrations\\20241015015517_NovasTabelas.cs",
-              "ToolTip": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Migrations\\20241015015517_NovasTabelas.cs",
-              "RelativeToolTip": "Migrations\\20241015015517_NovasTabelas.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAABFAAAA",
+              "Title": "Avaliacao.cs",
+              "DocumentMoniker": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Models\\Avaliacao.cs",
+              "RelativeDocumentMoniker": "Models\\Avaliacao.cs",
+              "ToolTip": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Models\\Avaliacao.cs",
+              "RelativeToolTip": "Models\\Avaliacao.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T01:55:17.297Z"
+              "WhenOpened": "2024-10-21T23:24:32.099Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "AppDbContext.cs",
-              "DocumentMoniker": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Context\\AppDbContext.cs",
-              "RelativeDocumentMoniker": "Context\\AppDbContext.cs",
-              "ToolTip": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Context\\AppDbContext.cs",
-              "RelativeToolTip": "Context\\AppDbContext.cs",
-              "ViewState": "AQIAAGwAAAAAAAAAAAAIwFwAAAAAAAAA",
+              "DocumentIndex": 0,
+              "Title": "MeusLivros.cs",
+              "DocumentMoniker": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Models\\MeusLivros.cs",
+              "RelativeDocumentMoniker": "Models\\MeusLivros.cs",
+              "ToolTip": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Models\\MeusLivros.cs",
+              "RelativeToolTip": "Models\\MeusLivros.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T01:54:52.461Z",
+              "WhenOpened": "2024-10-21T23:23:20.897Z",
               "EditorCaption": ""
             }
           ]
