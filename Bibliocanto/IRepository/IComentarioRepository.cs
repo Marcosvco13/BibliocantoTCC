@@ -7,7 +7,7 @@ namespace Bibliocanto.IRepository
         Task<IEnumerable<Comentarios>> GetByResenha(int idResenha);
         Task<IEnumerable<Comentarios>> GetByUser(string idUser);
         Task<Comentarios> GetById(int id);
-        Task CreateMyLibrary(Comentarios comentarios);
+        Task Create(Comentarios comentarios);
         void Update(Comentarios comentarios);
         void Delete(Comentarios comentarios);
     }

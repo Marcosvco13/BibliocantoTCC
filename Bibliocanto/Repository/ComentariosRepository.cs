@@ -27,7 +27,7 @@ namespace Bibliocanto.Repository
             return await _context.Comentarios.FirstOrDefaultAsync(l => l.Id == id); ;
         }
 
-        public async Task CreateMyLibrary(Comentarios comentarios)
+        public async Task Create(Comentarios comentarios)
         {
             await _context.Comentarios.AddAsync(comentarios);
         }

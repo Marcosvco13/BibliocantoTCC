@@ -28,7 +28,7 @@ namespace Bibliocanto.Repository
             return await _context.Avaliacao.FirstOrDefaultAsync(l => l.Id == id); ;
         }
 
-        public async Task CreateMyLibrary(Avaliacao avaliacao)
+        public async Task Create(Avaliacao avaliacao)
         {
             await _context.Avaliacao.AddAsync(avaliacao);
         }
