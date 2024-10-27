@@ -20,7 +20,7 @@ namespace Bibliocanto.Repository
 
         public async Task<GeneroLivro> GetById(int id)
         {
-            return await _context.GeneroLivro.FirstOrDefaultAsync(l => l.Id == id);
+            return await _context.GeneroLivro.FirstOrDefaultAsync(l => l.IdGenero == id);
         }
 
         public async Task Add(GeneroLivro generoLivro)

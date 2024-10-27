@@ -5,11 +5,10 @@ import "./Linha.css";
 import { Modal } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 function Linha() {
-
   const [livros, setLivros] = useState([]);
   const [generos, setGeneros] = useState([]);
   const [error, setError] = useState(null);
@@ -36,7 +35,7 @@ function Linha() {
     return {
       ...genero,
       livros: livros.filter(
-        (livro) => livro.generos.nomegenero === genero.nomegenero
+        (livro) => livro.generos && livro.generos.includes(genero.id)
       ),
     };
   });
@@ -143,8 +142,15 @@ function Linha() {
                 </div>
                 <div className="modal-text">
                   Gênero:{" "}
-                  {selectedLivro?.generos?.nomegenero || "Gênero do livro"}
+                  {selectedLivro?.generos
+                    ?.map(
+                      (generoId) =>
+                        generos.find((genero) => genero.id === generoId)
+                          ?.nomegenero || "Gênero do livro"
+                    )
+                    .join(", ") || "Gênero do livro"}
                 </div>
+
                 <div className="modal-text">
                   Editora:{" "}
                   {selectedLivro?.editoras?.nomeEditora || "Editora do livro"}
@@ -159,23 +165,23 @@ function Linha() {
 
         {email && (
           <Modal.Footer>
-          {email && (
-            <>
-              <button
-                className="btnIcon"
-                onClick={handleEditClick} // Função para editar
-              >
-                <FontAwesomeIcon icon={faEdit} />
-              </button>
-              <button
-                className="btnIcon"
-                onClick={() => handleDeleteClick(selectedLivro?.id)} // Função para deletar
-              >
-                <FontAwesomeIcon icon={faTrash} />
-              </button>
-            </>
-          )}
-        </Modal.Footer>
+            {email && (
+              <>
+                <button
+                  className="btnIcon"
+                  onClick={handleEditClick} // Função para editar
+                >
+                  <FontAwesomeIcon icon={faEdit} />
+                </button>
+                <button
+                  className="btnIcon"
+                  onClick={() => handleDeleteClick(selectedLivro?.id)} // Função para deletar
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </button>
+              </>
+            )}
+          </Modal.Footer>
         )}
       </Modal>
     </div>

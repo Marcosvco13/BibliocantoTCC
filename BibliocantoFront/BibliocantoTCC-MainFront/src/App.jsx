@@ -19,6 +19,7 @@ import EditarLivro from "./Paginas/Edit Livro";
 import BuscaIsbn from "./Paginas/BuscaLivroIsbn";
 import SobreSite from "./Paginas/Sobre o Site";
 import PoliticaPrivacidade from "./Paginas/Politica de Privacidade";
+import Inicio from "./Paginas/Inicio/inicio";
 
 export default function App() {
   const [generos, setGeneros] = useState([]);
@@ -45,6 +46,7 @@ export default function App() {
           <Route path="/EditarLivro/:id" element={<EditarLivro />} />
           <Route path="/about" element={<SobreSite />} />
           <Route path="/privacy-policy" element={<PoliticaPrivacidade />} />
+          <Route path="/inicio" element={<Inicio />} />
         </Routes>
         <Footer/>
       </BrowserRouter>

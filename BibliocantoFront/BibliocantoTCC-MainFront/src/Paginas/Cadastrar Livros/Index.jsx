@@ -1,41 +1,30 @@
 import './CadLivro.css';
 import api from '../../services/api';
-import { useEffect, useState} from 'react';
-import Livro from '../../Componentes/Livro/index';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export default function CadastrarLivro() {
+    const location = useLocation();
+    const livroPreCarregado = location.state;
 
-    // input formulario
-    const [titulo, setTitulo] = useState('');
-    const [descricao, setDescricao] = useState('');
-    const [isbn, setIsbn] = useState('');
-    const [caminhoImagem, setCaminhoImagem] = useState('');
-    const [autorId, setAutorId] = useState('');
-    const [generoId, setGeneroId] = useState('');
+    // Estados para o formulário
+    const [titulo, setTitulo] = useState(livroPreCarregado?.titulo || '');
+    const [descricao, setDescricao] = useState(livroPreCarregado?.descricao || '');
+    const [isbn, setIsbn] = useState(livroPreCarregado?.isbn || '');
+    const [caminhoImagem, setCaminhoImagem] = useState(livroPreCarregado?.caminhoImagem || livroPreCarregado?.cover_url || '');
+    const [autorId, setAutorId] = useState([]);
+    const [generoId, setGeneroId] = useState([]);
     const [editoraId, setEditoraId] = useState('');
-
-    const [livroEditando, setLivroEditando] = useState(null); // Estado para o livro em edição
+    const [linkCompra, setLinkCompra] = useState('');
 
     const navigate = useNavigate();
     
-    const [formData, setFormData] = useState({ // Estado para o formulário
-        titulo: '',
-        descricao: '',
-        isbn: '',
-        autorId: '',
-        generoId: '',
-        editoraId: '',
-        caminhoImagem: ''
-    });
-
-    //armazenar os dados
     const [livros, setLivros] = useState([]);
     const [generos, setGeneros] = useState([]);
     const [autores, setAutores] = useState([]);
     const [editoras, setEditoras] = useState([]);
 
-    //carregar os dados
     useEffect(() => {
         api.getLivros(setLivros);
         api.getGeneros(setGeneros);
@@ -43,42 +32,38 @@ export default function CadastrarLivro() {
         api.getEditoras(setEditoras);
     }, []);
     
-    // Função para oenvio do formulário
     const handleCadastrarLivro = async (e) => {
         e.preventDefault();
 
-        // Criar objeto com os dados do livro
+        // Cria objeto com os dados do livro para envio
         const livroData = {
             titulo,
             descricao,
             isbn,
             caminhoImagem,
-            autorId: parseInt(autorId),
-            generoId: parseInt(generoId),
+            linkCompra,
+            autorId: autorId.map(id => parseInt(id)), // converte cada ID para inteiro
+            generoId: generoId.map(id => parseInt(id)),
             editoraId: parseInt(editoraId),
         };
 
         try {
-            // Chamar api para cadastrar o livro
             const livroCadastrado = await api.cadastrarLivro(livroData);
             console.log('Livro cadastrado com sucesso:', livroCadastrado);
             
-            // Atualiza a lista depois do cadastro
+            // Atualiza a lista de livros e limpa o formulário
             api.getLivros(setLivros);
-            
-            // Limpar o formulário
             setTitulo('');
             setDescricao('');
             setIsbn('');
             setCaminhoImagem('');
-            setAutorId('');
-            setGeneroId('');
+            setAutorId([]);
+            setGeneroId([]);
             setEditoraId('');
+            setLinkCompra('');
 
-            alert('livro cadastrado com sucesso')
-
+            alert('Livro cadastrado com sucesso');
             navigate('/');
-
             window.location.reload();
         } catch (error) {
             console.error('Erro ao cadastrar o livro:', error);
@@ -86,17 +71,14 @@ export default function CadastrarLivro() {
     };
 
     const token = localStorage.getItem('token');
-
     const authorization = {
-        headers : {
-            Authorization : `Bearer ${token}`
-        }
+        headers: { Authorization: `Bearer ${token}` }
     };
 
     const handleDelete = async (id) => {
         try {
             await api.delete(`/api/Livros/${id}`, authorization);
-            setLivros(livros.filter(livro => livro.id !== id)); 
+            setLivros(livros.filter(livro => livro.id !== id));
             console.log('Livro deletado com sucesso!');
         } catch (error) {
             console.error('Erro ao deletar o livro:', error);
@@ -105,25 +87,17 @@ export default function CadastrarLivro() {
 
     return (
         <div className="Container-CadLivro">
-            
             <div className="linha-crear">
-                <span>
-                    <Link to="/CadAutores">Cadastrar Autor</Link>
-                </span>
-                <span>
-                    <Link to="/CadEditoras">Cadastrar Editora</Link>
-                </span>
+                <span><Link to="/CadAutores">Cadastrar Autor</Link></span>
+                <span><Link to="/CadEditoras">Cadastrar Editora</Link></span>
                 <hr className='hrCriarLivro'></hr>
             </div>
-
             <br />
             <h2>Cadastrar Livro</h2>
             <br />
-
             <div className="jumbotron jumbotron-custom">
                 <form onSubmit={handleCadastrarLivro} className='formCad'>
                     <div className='row'>
-                        
                         <div className='col-4'>
                             <label>Título</label>
                             <input 
@@ -166,10 +140,11 @@ export default function CadastrarLivro() {
                             <select 
                                 className="form-control"
                                 value={autorId}
-                                onChange={(e) => setAutorId(e.target.value)} 
+                                onChange={(e) => setAutorId([...e.target.selectedOptions].map(option => option.value))} 
+                                multiple
                                 required
                             >
-                                <option value="">Selecione um autor</option>
+                                <option value="">Selecione um ou mais autores</option>
                                 {autores.map((autor) => (
                                     <option key={autor.id} value={autor.id}>
                                         {autor.nomeAutor}
@@ -183,10 +158,11 @@ export default function CadastrarLivro() {
                             <select 
                                 className="form-control"
                                 value={generoId}
-                                onChange={(e) => setGeneroId(e.target.value)} 
+                                onChange={(e) => setGeneroId([...e.target.selectedOptions].map(option => option.value))} 
+                                multiple
                                 required
                             >
-                                <option value="">Selecione um gênero</option>
+                                <option value="">Selecione um ou mais gêneros</option>
                                 {generos.map((genero) => (
                                     <option key={genero.id} value={genero.id}>
                                         {genero.nomegenero}
@@ -224,6 +200,17 @@ export default function CadastrarLivro() {
                             />
                         </div>
 
+                        <div className='col-4'>
+                            <label>Link de Compra</label>
+                            <input 
+                                type="text" 
+                                className='form-control' 
+                                placeholder='Link de compra do livro'
+                                value={linkCompra}
+                                onChange={(e) => setLinkCompra(e.target.value)}
+                                required 
+                            />
+                        </div>
                     </div>
                     <br />
                     <button type="submit" className='btn btn-success btn-lg btn-block'>
