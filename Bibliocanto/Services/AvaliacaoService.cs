@@ -20,6 +20,12 @@ namespace Bibliocanto.Services
         {
             return await _avaliacaoRepository.GetById(id);
         }
+
+        public async Task<Avaliacao> GetByLivroUser(string idUser, int idLivro)
+        {
+            return await _avaliacaoRepository.GetByLivroUser(idUser, idLivro);
+        }
+
         public async Task<IEnumerable<Avaliacao>> GetByLivro(int idLivro)
         {
             IEnumerable<Avaliacao> baseAvaliacao;

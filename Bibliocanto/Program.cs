@@ -94,6 +94,21 @@ builder.Services.AddScoped<IGeneroLivroService, GeneroLivroService>();
 builder.Services.AddScoped<IAutoresLivrosRepository, AutoresLivroRepository>();
 builder.Services.AddScoped<IAutoresLivroService, AutoresLivroService>();
 
+builder.Services.AddScoped<IAvaliacaoRepository, AvaliacaoRepository>();
+builder.Services.AddScoped<IAvaliacaoService, AvaliacaoService>();
+
+builder.Services.AddScoped<IResenhaRepository, ResenhaRepository>();
+builder.Services.AddScoped<IResenhaService, ResenhaService>();
+
+builder.Services.AddScoped<IComentarioRepository, ComentariosRepository>();
+builder.Services.AddScoped<IComentarioService, ComentarioService>();
+
+builder.Services.AddScoped<ILikeResenhaRepository, LikeResenhaRespository>();
+builder.Services.AddScoped<ILikeResenhaService, LikeResenhaService>();
+
+builder.Services.AddScoped<ILikeComentarioRepository, LikeComentarioRepository>();
+builder.Services.AddScoped<ILikeComentarioService, LikeComentarioService>();
+
 builder.Services.AddScoped<IUnitOFWork, UnitOfWork>();
 
 var app = builder.Build();

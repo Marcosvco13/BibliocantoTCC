@@ -23,6 +23,11 @@ namespace Bibliocanto.Repository
             return await _context.Avaliacao.Where(n => n.IdLivro.Equals(idLivro)).ToListAsync();
         }
 
+        public async Task<Avaliacao> GetByLivroUser(string idUser, int idLivro)
+        {
+            return await _context.Avaliacao.FirstOrDefaultAsync(l => l.IdLivro == idLivro && l.IdUser == idUser);
+        }
+
         public async Task<Avaliacao> GetById(int id)
         {
             return await _context.Avaliacao.FirstOrDefaultAsync(l => l.Id == id); ;

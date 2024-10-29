@@ -142,9 +142,9 @@ namespace Bibliocanto.Context
             builder.Entity<Resenha>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<Resenha>().Property(p => p.IdLivro).IsRequired();
             builder.Entity<Resenha>().Property(p => p.IdUser).IsRequired().HasMaxLength(450);
-            builder.Entity<Resenha>().Property(p => p.TextoResenha);
+            builder.Entity<Resenha>().Property(p => p.TextoResenha).HasMaxLength(2000);
 
-            builder.Entity<LikeResenha>().ToTable("Resenha");
+            builder.Entity<LikeResenha>().ToTable("LikeResenha");
             builder.Entity<LikeResenha>().HasKey(p => p.Id);
             builder.Entity<LikeResenha>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<LikeResenha>().Property(p => p.IdResenha).IsRequired();
@@ -156,9 +156,9 @@ namespace Bibliocanto.Context
             builder.Entity<Comentarios>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<Comentarios>().Property(p => p.IdResenha).IsRequired();
             builder.Entity<Comentarios>().Property(p => p.IdUser).IsRequired().HasMaxLength(450);
-            builder.Entity<Comentarios>().Property(p => p.TextoComent);
+            builder.Entity<Comentarios>().Property(p => p.TextoComent).HasMaxLength(450);
 
-            builder.Entity<LikeComentario>().ToTable("Resenha");
+            builder.Entity<LikeComentario>().ToTable("LikeComentarios");
             builder.Entity<LikeComentario>().HasKey(p => p.Id);
             builder.Entity<LikeComentario>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<LikeComentario>().Property(p => p.IdComentario).IsRequired();
