@@ -121,52 +121,54 @@ export default function BuscaLivroIsbn() {
     setISBN(valor);
   };
 
+  // Modificado para garantir que as informações corretas de autores e gêneros são passadas para `livroData`
   const handleCarregarLivroApi = async (e) => {
     e.preventDefault();
   
     console.log('Livro pré-carregado:', selectedLivro);
   
-    // Cria objeto com os dados do livro
     const livroData = {
       titulo: selectedLivro.title,
       descricao: selectedLivro.synopsis || "",
       isbn: selectedLivro.isbn,
       caminhoImagem: selectedLivro.cover_url || "",
-      autorId: [],
-      generoId: [],
-      editora: selectedLivro.publisher,
+      autorId: autores, // passa autores
+      generoId: generos, // passa gêneros
+      editoraId: selectedLivro.publisher,
     };
   
-    // Busca IDs de autores
     try {
       const autoresIds = await Promise.all(
         selectedLivro.authors.map(async (nome) => {
           const id = await api.getAutorByName(nome);
-          return id ? id : null; // Retorna null se não encontrar
+          return id ? id : null;
         })
       );
-      livroData.autorId = autoresIds.filter(id => id); // Filtra IDs válidos
+      livroData.autorId = autoresIds.filter(id => id);
     } catch (error) {
       console.error("Erro ao buscar IDs de autores:", error);
     }
   
-    // Busca IDs de gêneros
     try {
       const generosIds = await Promise.all(
         selectedLivro.subjects.map(async (subject) => {
           const id = await api.getGeneroByName(subject);
-          return id ? id : null; // Retorna null se não encontrar
+          return id ? id : null;
         })
       );
-      livroData.generoId = generosIds.filter(id => id); // Filtra IDs válidos
+      livroData.generoId = generosIds.filter(id => id);
     } catch (error) {
       console.error("Erro ao buscar IDs de gêneros:", error);
     }
   
+    // Extrair apenas os nomes dos autores e dos gêneros
+    livroData.autorId = livroData.autorId.flat().map(autor => autor.nomeAutor);
+    livroData.generoId = livroData.generoId.flat().map(genero => genero.nomegenero);
+  
     // Passa os dados do livro para a página de cadastro
-    //navigate('/CadastrarLivro', { state: { livroData } });
-    //window.location.reload();
-
+     navigate('/CadastrarLivro', { state: { livroData, autores, generos } });
+     window.location.reload();
+  
     console.log(livroData);
   };
   
