@@ -22,6 +22,11 @@ namespace Bibliocanto.Repository
             return await _context.LikeResenha.Where(n => n.IdResenha.Equals(idResenha)).ToListAsync();
         }
 
+        public async Task<LikeResenha> GetByResenhaUser(string idUser, int idResenha)
+        {
+            return await _context.LikeResenha.FirstOrDefaultAsync(l => l.IdResenha == idResenha && l.IdUser == idUser);
+        }
+
         public async Task<LikeResenha> GetById(int id)
         {
             return await _context.LikeResenha.FirstOrDefaultAsync(l => l.Id == id); ;

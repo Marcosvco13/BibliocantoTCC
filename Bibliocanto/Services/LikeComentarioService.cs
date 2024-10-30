@@ -2,6 +2,7 @@
 using Bibliocanto.IRepository;
 using Bibliocanto.IServices;
 using Bibliocanto.Models;
+using Bibliocanto.Repository;
 
 namespace Bibliocanto.Services
 {
@@ -21,12 +22,17 @@ namespace Bibliocanto.Services
             return await _likeComentarioRepository.GetById(id);
         }
 
-        public async Task<IEnumerable<LikeComentario>> GetByComentario(int idResenha)
+        public async Task<LikeComentario> GetByComentarioUser(string idUser, int idComentario)
+        {
+            return await _likeComentarioRepository.GetByComentarioUser(idUser, idComentario);
+        }
+
+        public async Task<IEnumerable<LikeComentario>> GetByComentario(int idComentario)
         {
             IEnumerable<LikeComentario> baseLikeComentario;
-            if (idResenha == null)
+            if (idComentario == null)
             {
-                baseLikeComentario = await _likeComentarioRepository.GetByComentario(idResenha);
+                baseLikeComentario = await _likeComentarioRepository.GetByComentario(idComentario);
             }
             else
             {

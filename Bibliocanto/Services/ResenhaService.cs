@@ -21,6 +21,7 @@ namespace Bibliocanto.Services
         {
             return await _resenhaRepository.GetById(id);
         }
+
         public async Task<Resenha> GetByLivroUser(string idUser, int idLivro)
         {
             return await _resenhaRepository.GetByLivroUser(idUser, idLivro);

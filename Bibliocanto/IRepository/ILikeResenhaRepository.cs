@@ -6,6 +6,7 @@ namespace Bibliocanto.IRepository
     {
         Task<IEnumerable<LikeResenha>> GetByResenha(int idResenha);
         Task<IEnumerable<LikeResenha>> GetByUser(string idUser);
+        Task<LikeResenha> GetByResenhaUser(string idUser, int idResenha);
         Task<LikeResenha> GetById(int id);
         Task Create(LikeResenha likeResenha);
         void Update(LikeResenha likeResenha);
