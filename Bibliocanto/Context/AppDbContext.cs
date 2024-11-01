@@ -59,10 +59,10 @@ namespace Bibliocanto.Context
             builder.Entity<Livros>().ToTable("Livros");
             builder.Entity<Livros>().HasKey(p => p.Id);
             builder.Entity<Livros>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
-            builder.Entity<Livros>().Property(p => p.Titulo).IsRequired().HasMaxLength(255);
-            builder.Entity<Livros>().Property(p => p.CaminhoImagem).IsRequired().HasMaxLength(555);
-            builder.Entity<Livros>().Property(p => p.Isbn).IsRequired().HasMaxLength(50);
-            builder.Entity<Livros>().Property(p => p.Descricao).IsRequired().HasMaxLength(1555);
+            builder.Entity<Livros>().Property(p => p.Titulo).HasMaxLength(255);
+            builder.Entity<Livros>().Property(p => p.CaminhoImagem).HasMaxLength(555);
+            builder.Entity<Livros>().Property(p => p.Isbn).HasMaxLength(50);
+            builder.Entity<Livros>().Property(p => p.Descricao).HasMaxLength(1555);
             builder.Entity<Livros>().Property(p => p.LinkCompra).HasMaxLength(1555);
             builder.Entity<Livros>().HasOne(p => p.Editoras).WithMany(p => p.Livros).HasForeignKey(p => p.EditoraId);
 
