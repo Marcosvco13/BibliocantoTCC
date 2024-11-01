@@ -2,13 +2,11 @@
 
 namespace Bibliocanto.Resources
 {
-    public class SaveLikeResenhaResource
+    public class SaveDeslikeLivrosResource
     {
-        [Required]
-        public int IdResenha { get; set; }
-        [Required]
+        public int IdLivro { get; set; }
         [StringLength(450)]
         public string IdUser { get; set; }
-        public int Like { get; set; }
+        public int Deslike { get; set; }
     }
 }

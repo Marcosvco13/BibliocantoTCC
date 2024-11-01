@@ -23,6 +23,8 @@ namespace Bibliocanto.Context
         public DbSet<LikeResenha> LikeResenha { get; set; }
         public DbSet<Comentarios> Comentarios { get; set; }
         public DbSet<LikeComentario> LikeComentario { get; set; }
+        public DbSet<LikeLivros> LikeLivros { get; set; }
+        public DbSet<DeslikeLivros> DeslikeLivros { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -164,6 +166,20 @@ namespace Bibliocanto.Context
             builder.Entity<LikeComentario>().Property(p => p.IdComentario).IsRequired();
             builder.Entity<LikeComentario>().Property(p => p.IdUser).IsRequired().HasMaxLength(450);
             builder.Entity<LikeComentario>().Property(p => p.Like);
+
+            builder.Entity<LikeLivros>().ToTable("LikeLivros");
+            builder.Entity<LikeLivros>().HasKey(p => p.Id);
+            builder.Entity<LikeLivros>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<LikeLivros>().Property(p => p.IdLivro).IsRequired();
+            builder.Entity<LikeLivros>().Property(p => p.IdUser).IsRequired().HasMaxLength(450);
+            builder.Entity<LikeLivros>().Property(p => p.Like);
+
+            builder.Entity<DeslikeLivros>().ToTable("DeslikeLivros");
+            builder.Entity<DeslikeLivros>().HasKey(p => p.Id);
+            builder.Entity<DeslikeLivros>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<DeslikeLivros>().Property(p => p.IdLivro).IsRequired();
+            builder.Entity<DeslikeLivros>().Property(p => p.IdUser).IsRequired().HasMaxLength(450);
+            builder.Entity<DeslikeLivros>().Property(p => p.Deslike);
         }
     }
 }

@@ -5,8 +5,6 @@ namespace Bibliocanto.Resources
     public class SaveComentariosResource
     {
         [Required]
-        public int Id { get; set; }
-        [Required]
         public int IdResenha { get; set; }
         [Required]
         [StringLength(450)]

@@ -20,6 +20,8 @@ namespace Bibliocanto.Mapping
             CreateMap<Comentarios, ComentariosResource>();
             CreateMap<LikeResenha, LikeResenhaResource>();
             CreateMap<LikeComentario, LikeComentarioResource>();
+            CreateMap<LikeLivros, LikeLivrosResource>();
+            CreateMap<DeslikeLivros, DeslikeLivrosResource>();
         }
     }
 }

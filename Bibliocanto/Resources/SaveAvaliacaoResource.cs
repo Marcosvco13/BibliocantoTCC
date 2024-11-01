@@ -4,8 +4,7 @@ namespace Bibliocanto.Resources
 {
     public class SaveAvaliacaoResource
     {
-        [Required]
-        public int Id { get; set; }
+
         [Required]
         public int IdLivro { get; set; }
         [Required]

@@ -109,6 +109,12 @@ builder.Services.AddScoped<ILikeResenhaService, LikeResenhaService>();
 builder.Services.AddScoped<ILikeComentarioRepository, LikeComentarioRepository>();
 builder.Services.AddScoped<ILikeComentarioService, LikeComentarioService>();
 
+builder.Services.AddScoped<ILikeLivroRepository, LikeLivroRepository>();
+builder.Services.AddScoped<ILikeLivrosService, LikeLivrosService>();
+
+builder.Services.AddScoped<IDeslikeLivrosRepository, DeslikeLivrosRepository>();
+builder.Services.AddScoped<IDeslikeLivrosService, DeslikeLivrosService>();
+
 builder.Services.AddScoped<IUnitOFWork, UnitOfWork>();
 
 var app = builder.Build();
