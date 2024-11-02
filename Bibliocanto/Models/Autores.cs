@@ -6,7 +6,7 @@ namespace Bibliocanto.Models
     {
         public int Id { get; set; }
         public string? NomeAutor { get; set; }
-        public IList<Livros> Livros { get; set; } = new List<Livros>();
+        //public IList<Livros> Livros { get; set; } = new List<Livros>();
 
     }
 }

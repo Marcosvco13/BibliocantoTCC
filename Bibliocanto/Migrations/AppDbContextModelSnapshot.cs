@@ -52,6 +52,39 @@ namespace Bibliocanto.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Bibliocanto.Models.AutoresLivros", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("IdAutor")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdLivro")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AutoresLivro", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            IdAutor = 101,
+                            IdLivro = 100
+                        },
+                        new
+                        {
+                            Id = 2,
+                            IdAutor = 100,
+                            IdLivro = 101
+                        });
+                });
+
             modelBuilder.Entity("Bibliocanto.Models.Editoras", b =>
                 {
                     b.Property<int>("Id")
@@ -79,6 +112,39 @@ namespace Bibliocanto.Migrations
                         {
                             Id = 101,
                             NomeEditora = "Editora 34"
+                        });
+                });
+
+            modelBuilder.Entity("Bibliocanto.Models.GeneroLivro", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("IdGenero")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdLivro")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GenerosLivro", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            IdGenero = 100,
+                            IdLivro = 100
+                        },
+                        new
+                        {
+                            Id = 2,
+                            IdGenero = 101,
+                            IdLivro = 101
                         });
                 });
 
@@ -120,9 +186,6 @@ namespace Bibliocanto.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AutorId")
-                        .HasColumnType("int");
-
                     b.Property<string>("CaminhoImagem")
                         .IsRequired()
                         .HasMaxLength(555)
@@ -136,13 +199,14 @@ namespace Bibliocanto.Migrations
                     b.Property<int>("EditoraId")
                         .HasColumnType("int");
 
-                    b.Property<int>("GeneroId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Isbn")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("LinkCompra")
+                        .HasMaxLength(1555)
+                        .HasColumnType("nvarchar(1555)");
 
                     b.Property<string>("Titulo")
                         .IsRequired()
@@ -151,11 +215,7 @@ namespace Bibliocanto.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AutorId");
-
                     b.HasIndex("EditoraId");
-
-                    b.HasIndex("GeneroId");
 
                     b.ToTable("Livros", (string)null);
 
@@ -163,23 +223,21 @@ namespace Bibliocanto.Migrations
                         new
                         {
                             Id = 100,
-                            AutorId = 100,
                             CaminhoImagem = "https://m.media-amazon.com/images/I/81M-QDE-7zL._SY425_.jpg",
                             Descricao = "Teste1",
                             EditoraId = 100,
-                            GeneroId = 101,
                             Isbn = "978-6557172292",
+                            LinkCompra = "https://www.amazon.com.br/Capital-Livro-Nova-Edi%C3%A7%C3%A3o-Economia/dp/6557172298/ref=asc_df_6557172298/?tag=googleshopp00-20&linkCode=df0&hvadid=709857900213&hvpos=&hvnetw=g&hvrand=12565139690516924554&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9074297&hvtargid=pla-2257126917247&psc=1&mcid=bcf17339abcb345caf390142900d9cf0&gad_source=1",
                             Titulo = "O Capital"
                         },
                         new
                         {
                             Id = 101,
-                            AutorId = 101,
                             CaminhoImagem = "https://m.media-amazon.com/images/I/916WkSH4cGL._SY425_.jpg",
                             Descricao = "Teste2",
-                            EditoraId = 101,
-                            GeneroId = 100,
+                            EditoraId = 100,
                             Isbn = "978-8573266467",
+                            LinkCompra = "https://www.amazon.com.br/Crime-castigo-Fi%C3%B3dor-Dostoi%C3%A9vski/dp/8573266465/ref=sr_1_2?crid=13FKB6RQ2CU9P&dib=eyJ2IjoiMSJ9.xRK2CPz6wHADW2bbeza12iXIdYTE1b8laAl1mo7pe6T7F-75rihUORLzkzKFN0bxuWi4BXvXTYgwScAnidBALK2ADtJPH1uNo88fLuIodrkqVeP7tlRceQXaJwor4yGr2PCF1B5wA_iswX0OecSE_sc-RZUxW4RFbeImc3efHZTSVDSP_DPtrtnRe4p1-Aa3HjIg19etqBliVEClU29DCnDJhT8UuPj_194tpXNv1Ik.S27CmhJuVLJHDjYE6QQ_97plH5mIIt0FvUvfVGQC__M&dib_tag=se&keywords=crime+e+castigo&qid=1728956605&s=books&sprefix=crime+e+%2Cstripbooks%2C220&sr=1-2",
                             Titulo = "Crime e Castigo"
                         });
                 });
@@ -413,29 +471,13 @@ namespace Bibliocanto.Migrations
 
             modelBuilder.Entity("Bibliocanto.Models.Livros", b =>
                 {
-                    b.HasOne("Bibliocanto.Models.Autores", "Autores")
-                        .WithMany("Livros")
-                        .HasForeignKey("AutorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Bibliocanto.Models.Editoras", "Editoras")
                         .WithMany("Livros")
                         .HasForeignKey("EditoraId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Bibliocanto.Models.Generos", "Generos")
-                        .WithMany("Livros")
-                        .HasForeignKey("GeneroId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Autores");
-
                     b.Navigation("Editoras");
-
-                    b.Navigation("Generos");
                 });
 
             modelBuilder.Entity("Bibliocanto.Models.MeusLivros", b =>
@@ -500,17 +542,7 @@ namespace Bibliocanto.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Bibliocanto.Models.Autores", b =>
-                {
-                    b.Navigation("Livros");
-                });
-
             modelBuilder.Entity("Bibliocanto.Models.Editoras", b =>
-                {
-                    b.Navigation("Livros");
-                });
-
-            modelBuilder.Entity("Bibliocanto.Models.Generos", b =>
                 {
                     b.Navigation("Livros");
                 });

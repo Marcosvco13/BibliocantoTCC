@@ -16,11 +16,8 @@ namespace Bibliocanto.Resources
         [Required]
         [StringLength(50)]
         public string Isbn { get; set; }
-        [Required]
-        public int AutorId { get; set; }
-        [Required]
-        public int GeneroId { get; set; }
-        [Required]
+        [StringLength(255)]
+        public string LinkCompra {  get; set; }
         public int EditoraId { get; set; }
 
     }
