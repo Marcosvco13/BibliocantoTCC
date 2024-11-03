@@ -22,64 +22,28 @@ api.buscarLivroPorISBN = async function(isbn) {
     }
 };
 
-
-// Função para cadastrar um único autor
-api.cadastrarAutor = async (autor) => {
-    const response = await api.post("/Autores", autor);
-    return response.data; // Retorna o autor cadastrado com o ID
-  };
-  
-  // Função para cadastrar um único gênero
-  api.cadastrarGenero = async (genero) => {
-    const response = await api.post("/Generos", genero);
-    return response.data; // Retorna o gênero cadastrado com o ID
-  };
-  
-  // Função para cadastrar múltiplos autores e gêneros armazenados
-  api.cadastrarAutoresEGêneros = async function(autoresArmazenados, generosArmazenados) {
+// Função para cadastrar autores e gêneros armazenados
+api.cadastrarAutoresEGêneros = async function(autoresArmazenados, generosArmazenados) {
     try {
-      const autorIds = await Promise.all(autoresArmazenados.map(async (autor) => {
-        console.log(`Cadastrando autor: ${autor.nome}`);
-        const novoAutor = await api.cadastrarAutor({ NomeAutor: autor.nome });
-        return novoAutor.id; // Retorna o ID do novo autor
-      }));
-  
-      const generoIds = await Promise.all(generosArmazenados.map(async (genero) => {
-        console.log(`Cadastrando gênero: ${genero.nome}`);
-        const novoGenero = await api.cadastrarGenero({ NomeGenero: genero.nome });
-        return novoGenero.id; // Retorna o ID do novo gênero
-      }));
-  
-      console.log('Autores e gêneros cadastrados com sucesso:', { autorIds, generoIds });
-      return { autorIds, generoIds };
-  
-    } catch (error) {
-      console.error('Erro ao cadastrar autores e gêneros:', error);
-      throw error; // Lança o erro para ser tratado externamente, se necessário
-    }
-  };
+        const autorIds = await Promise.all(autoresArmazenados.map(async (autor) => {
+            console.log(`Cadastrando autor: ${autor.nome}`); // Log para o cadastro
+            const novoAutor = await api.cadastrarAutor({ NomeAutor: autor.nome });
+            return novoAutor.id; // Retornar ID do novo autor
+        }));
 
-  // cadastrar na tabela LivroAutor
-  api.cadastrarLivroAutor = async function (idLivro, idAutor) {
-    try {
-      const autorLivroData = {
-        idLivro: idLivro,
-        idAutor: idAutor,
-      };
-  
-      const response = await axios.post('http://localhost:5162/api/AutorLivro', autorLivroData, {
-        headers: {
-          Authorization: `Bearer ${getToken()}` // Inclui o token de autorização
-        }
-      });
-  
-      console.log('Livro / Autor cadastrada com sucesso:', response.data);
-      return response.data.id; // Retorna o ID da associação, se necessário
+        const generoIds = await Promise.all(generosArmazenados.map(async (genero) => {
+            console.log(`Cadastrando gênero: ${genero.nome}`); // Log para o cadastro
+            // Modificado para usar 'NomeGenero' ou o que sua API espera
+            const novoGenero = await api.cadastrarGenero({ NomeGenero: genero.nome });
+            return novoGenero.id; // Retornar ID do novo gênero
+        }));
+
+        console.log('Autores e gêneros cadastrados com sucesso:', { autorIds, generoIds });
+
     } catch (error) {
-      console.error('Erro ao cadastrar Livro / Autor:', error);
-      throw error; // Relança o erro para ser tratado em outro lugar, se necessário
+        console.error('Erro ao cadastrar autores e gêneros:', error);
     }
-  };
+};
 
 api.cadastrarEditora = async function (nomeEditora) {
     try {
@@ -299,7 +263,7 @@ api.getAutores = async function(setAutores) {
         });
         if (response && response.data) {
             setAutores(response.data);
-            //console.log(response.data);
+            console.log(response.data);
         } else {
             console.error("No data in response");
         }
@@ -317,7 +281,7 @@ api.getEditoras = async function(setEditoras) {
         });
         if (response && response.data) {
             setEditoras(response.data);
-            //console.log(response.data);
+            console.log(response.data);
         } else {
             console.error("No data in response");
         }

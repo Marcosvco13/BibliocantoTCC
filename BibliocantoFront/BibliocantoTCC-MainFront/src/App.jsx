@@ -36,7 +36,7 @@ export default function App() {
         <Nav />
         <Routes>
           <Route path="/" element={<Linha key={generos.id} />} />
-          <Route path="/CadastrarLivro" element={<CadastrarLivro />} />
+          <Route path="/CadastrarLivro/:id" element={<CadastrarLivro />} />
           <Route path="/Login" element={<Login/>}/>
           <Route path="/NewUser" element={<NewUser/>}/>
           <Route path="/BuscaIsbn" element={<BuscaIsbn/>}/>

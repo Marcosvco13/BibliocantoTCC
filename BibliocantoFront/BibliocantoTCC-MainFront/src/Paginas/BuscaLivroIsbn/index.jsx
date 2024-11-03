@@ -24,12 +24,13 @@ apiBrasil.isbn = {
 };
 
 export default function BuscaLivroIsbn() {
-
   const [isbn, setISBN] = useState("");
   const [selectedLivro, setSelectedLivro] = useState(null);
   const [isFromBrasilAPI, setIsFromBrasilAPI] = useState(false);
   const [autores, setAutores] = useState([]);
   const [generos, setGeneros] = useState([]);
+  const [livroData, setLivroData] = useState(null);
+
   const navigate = useNavigate();
 
   const handleGetLivro = async (e) => {
@@ -51,19 +52,29 @@ export default function BuscaLivroIsbn() {
       });
 
       if (response.data && Object.keys(response.data).length > 0) {
+        // Armazenando os dados do livro na variável
+        const livroDataLocal = {
+          isbn: response.data.isbn,
+          title: response.data.titulo || response.data.title,
+          authors: response.data.autores?.map((autor) => autor.nomeAutor) || [],
+          publisher:
+            response.data.editoras?.nomeEditora || response.data.publisher,
+          synopsis: response.data.sinopse || response.data.synopsis,
+          subjects:
+            response.data.generos?.map((genero) => genero.nomeGenero) || [],
+          cover_url: response.data.caminhoImagem || response.data.cover_url,
+          provider: "local",
+        };
+
         setSelectedLivro(response.data);
         setIsFromBrasilAPI(false);
         localBookFound = true;
-        const autoresList =
-          response.data.autores?.map((autor) => autor.nomeAutor) || [];
-        const generosList =
-          response.data.generos?.map((genero) => genero.nomeGenero) || [];
-        setAutores(autoresList);
-        setGeneros(generosList);
+        setAutores(livroDataLocal.authors);
+        setGeneros(livroDataLocal.subjects);
+        setLivroData(livroDataLocal); // Atualiza o estado com os dados do livro
 
-        // Log autores e gêneros
-        console.log("Autores do livro:", autoresList);
-        console.log("Gêneros do livro:", generosList);
+        // Adicionando console log para visualizar os dados do livro
+        console.log("Dados do livro local:", livroDataLocal);
       }
     } catch (error) {
       if (!(error.response && error.response.status === 404)) {
@@ -76,16 +87,25 @@ export default function BuscaLivroIsbn() {
       try {
         const livroBrasilAPI = await apiBrasil.isbn.getBy(isbn);
         if (livroBrasilAPI) {
+          // Armazenando os dados do livro na variável
+          const livroData = {
+            isbn: livroBrasilAPI.isbn,
+            title: livroBrasilAPI.title,
+            authors: livroBrasilAPI.authors || [],
+            publisher: livroBrasilAPI.publisher,
+            synopsis: livroBrasilAPI.synopsis || null,
+            subjects: livroBrasilAPI.subjects || [],
+            cover_url: livroBrasilAPI.cover_url || null,
+            provider: "brasilapi",
+          };
+
           setSelectedLivro(livroBrasilAPI);
           setIsFromBrasilAPI(true);
-          const autoresList = livroBrasilAPI.authors || [];
-          const generosList = livroBrasilAPI.subjects || [];
-          setAutores(autoresList);
-          setGeneros(generosList);
+          setAutores(livroData.authors);
+          setGeneros(livroData.subjects);
 
-          // Log autores e gêneros
-          console.log("Autores do livro BrasilAPI:", autoresList);
-          console.log("Gêneros do livro BrasilAPI:", generosList);
+          // Log dos dados do livro da BrasilAPI
+          console.log("Dados do livro BrasilAPI:", livroData);
         } else {
           alert("Livro não encontrado na BrasilAPI!");
           navigate("/CadastrarLivro");
@@ -99,20 +119,6 @@ export default function BuscaLivroIsbn() {
     }
   };
 
-  // Função para cadastrar autores e gêneros usando a API
-  const handleCadastrarAutoresEGêneros = async () => {
-    try {
-      await api.cadastrarAutoresEGêneros(
-        autores.map((nome) => ({ nome })),
-        generos.map((nome) => ({ nome }))
-      );
-      alert("Autores e Gêneros cadastrados com sucesso!");
-    } catch (error) {
-      console.error("Erro ao cadastrar autores e gêneros:", error);
-      alert("Erro ao cadastrar autores e gêneros.");
-    }
-  };
-
   const handleInputChange = (e) => {
     let valor = e.target.value.replace(/\D/g, "");
     if (valor.length > 3) {
@@ -121,57 +127,38 @@ export default function BuscaLivroIsbn() {
     setISBN(valor);
   };
 
-  // Modificado para garantir que as informações corretas de autores e gêneros são passadas para `livroData`
-  const handleCarregarLivroApi = async (e) => {
-    e.preventDefault();
-  
-    console.log('Livro pré-carregado:', selectedLivro);
-  
-    const livroData = {
-      titulo: selectedLivro.title,
-      descricao: selectedLivro.synopsis || "",
-      isbn: selectedLivro.isbn,
-      caminhoImagem: selectedLivro.cover_url || "",
-      autorId: autores, // passa autores
-      generoId: generos, // passa gêneros
-      editoraId: selectedLivro.publisher,
-    };
-  
+  // Estados para armazenar os IDs dos autores e gêneros cadastrados
+  const [autorIdsCadastrados, setAutorIdsCadastrados] = useState([]);
+  const [generoIdsCadastrados, setGeneroIdsCadastrados] = useState([]);
+
+  // Função para cadastrar autores e gêneros usando a API
+  const handleCadastrarAutoresEGêneros = async () => {
     try {
-      const autoresIds = await Promise.all(
-        selectedLivro.authors.map(async (nome) => {
-          const id = await api.getAutorByName(nome);
-          return id ? id : null;
-        })
+      const { autorIds, generoIds } = await api.cadastrarAutoresEGêneros(
+        autores.map((nome) => ({ nome })),
+        generos.map((nome) => ({ nome }))
       );
-      livroData.autorId = autoresIds.filter(id => id);
+
+      // Armazena os IDs dos autores e gêneros cadastrados nos estados
+      setAutorIdsCadastrados(autorIds);
+      setGeneroIdsCadastrados(generoIds);
+
+      alert("Autores e Gêneros cadastrados com sucesso!");
     } catch (error) {
-      console.error("Erro ao buscar IDs de autores:", error);
+      console.error("Erro ao cadastrar autores e gêneros:", error);
+      alert("Erro ao cadastrar autores e gêneros.");
     }
-  
-    try {
-      const generosIds = await Promise.all(
-        selectedLivro.subjects.map(async (subject) => {
-          const id = await api.getGeneroByName(subject);
-          return id ? id : null;
-        })
-      );
-      livroData.generoId = generosIds.filter(id => id);
-    } catch (error) {
-      console.error("Erro ao buscar IDs de gêneros:", error);
-    }
-  
-    // Extrair apenas os nomes dos autores e dos gêneros
-    livroData.autorId = livroData.autorId.flat().map(autor => autor.nomeAutor);
-    livroData.generoId = livroData.generoId.flat().map(genero => genero.nomegenero);
-  
-    // Passa os dados do livro para a página de cadastro
-     navigate('/CadastrarLivro', { state: { livroData, autores, generos } });
-     window.location.reload();
-  
-    console.log(livroData);
   };
+
+const handleSalvarAutoresEGeneros = async () => {
+  const resultado = await api.cadastrarAutoresEGêneros(autores, generos);
   
+  // Salve os IDs dos autores e gêneros no localStorage
+  localStorage.setItem("autoresCriados", JSON.stringify(resultado.autorIds));
+  localStorage.setItem("generosCriados", JSON.stringify(resultado.generoIds));
+  
+  alert("Autores e Gêneros cadastrados com sucesso!");
+}
 
   return (
     <div className="divBuscaIsbn">
@@ -275,19 +262,37 @@ export default function BuscaLivroIsbn() {
 
               {isFromBrasilAPI && (
                 <>
-                  <button
-                    type="button"
-                    className="btnCadastrarLivro"
-                    onClick={handleCarregarLivroApi}
-                  >
+                  <button type="button" className="btnCadastrarLivro">
                     Ir para pagina de cadastro de livro
                   </button>
                   <button
                     type="button"
-                    className="btnCriarAutoresGeneros"
-                    onClick={handleCadastrarAutoresEGêneros}
+                    className="btnCadastrarEditoraELivro"
+                    onClick={async () => {
+                      try {
+                        const editoraId = await api.cadastrarEditora(
+                          selectedLivro.publisher
+                        );
+
+                        const titulo =
+                          selectedLivro.title || selectedLivro.titulo;
+                        const livroId = await api.PreCadastroLivro(
+                          titulo,
+                          isbn,
+                          editoraId
+                        );
+
+                        navigate(`/CadastrarLivro/${livroId}`, {
+                          state: { livroData },
+                        });
+                        console.log("Editora e livro cadastrados com sucesso!");
+                        await handleCadastrarAutoresEGêneros();
+                      } catch (error) {
+                        console.error("Erro ao pre-cadastrar os dados:", error);
+                      }
+                    }}
                   >
-                    Criar Autores e Gêneros
+                    Pre-Cadastros
                   </button>
                 </>
               )}
