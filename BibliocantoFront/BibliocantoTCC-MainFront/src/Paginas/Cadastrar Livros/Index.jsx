@@ -100,16 +100,25 @@ export default function CadastrarLivro() {
   }, [isbn]); // Executa quando o ISBN está disponível
 
   useEffect(() => {
-    // Carregar dados do localStorage
-    const autoresCriados = JSON.parse(localStorage.getItem("autoresCriados")) || [];
-    const generosCriados = JSON.parse(localStorage.getItem("generosCriados")) || [];
-
-    //console.log("Autores Criados:", autoresCriados);
-    //console.log("Gêneros Criados:", generosCriados);
-    
-    setAutorId(autoresCriados);
-    setGeneroId(generosCriados);
+    const autoresCadastrados = JSON.parse(localStorage.getItem("autoresCriados")) || [];
+    const generosCadastrados = JSON.parse(localStorage.getItem("generosCriados")) || [];
+  
+    console.log("Autores carregados do localStorage em CadastrarLivro:", autoresCadastrados);
+    console.log("Gêneros carregados do localStorage em CadastrarLivro:", generosCadastrados);
+  
+    if (autoresCadastrados.length > 0) {
+      setAutorId(autoresCadastrados);
+    } else {
+      console.log("Nenhum autor selecionado para cadastrar.");
+    }
+  
+    if (generosCadastrados.length > 0) {
+      setGeneroId(generosCadastrados);
+    } else {
+      console.log("Nenhum gênero selecionado para cadastrar.");
+    }
   }, []);
+  
 
   // Função para buscar o ID da editora pelo nome
   const RequisicaoEditora = async (editoraNome) => {
@@ -160,23 +169,49 @@ export default function CadastrarLivro() {
 
   const cadastrarAutoresLivro = async () => {
     try {
-      const idLivro = id;
+      const idLivro = id; // ID do livro que você está associando aos autores
   
-      // Assegura que autorId é um array de IDs de autores
       if (Array.isArray(autorId) && autorId.length > 0) {
-        for (const autor of autorId) {
-          await api.cadastrarLivroAutor(idLivro, autor); // Usa 'autor' em vez de 'autorId'
+        for (const autorIdSingle of autorId) {
+          console.log("Enviando ID do autor:", autorIdSingle);
+          await api.cadastrarLivroAutor(idLivro, autorIdSingle);
         }
-        alert("Todos os autores foram cadastrados com sucesso!");
+        alert("Todos os autores foram associados ao livro com sucesso!");
       } else {
-        alert("Nenhum autor selecionado para cadastrar.");
+        alert("Nenhum autor selecionado para associar ao livro.");
       }
     } catch (error) {
-      console.error("Erro ao cadastrar autores:", error);
-      alert("Ocorreu um erro ao cadastrar os autores.");
+      console.error("Erro ao associar autores aos livros:", error.response ? error.response.data : error.message);
+      alert("Ocorreu um erro ao associar os autores ao livro.");
     }
   };
   
+  const cadastrarGenerosLivro = async () => {
+    try {
+      const idLivro = id; // ID do livro que você está associando aos generos
+  
+      if (Array.isArray(generoId) && generoId.length > 0) {
+        for (const generoIdSingle of generoId) {
+          console.log("Enviando ID do genero:", generoIdSingle);
+          await api.cadastrarLivroGenero(idLivro, generoIdSingle);
+        }
+        alert("Todos os generos foram associados ao livro com sucesso!");
+      } else {
+        alert("Nenhum genero selecionado para associar ao livro.");
+      }
+    } catch (error) {
+      console.error("Erro ao associar generos aos livros:", error.response ? error.response.data : error.message);
+      alert("Ocorreu um erro ao associar os generos ao livro.");
+    }
+  };
+
+  const handleClick = async (event) => {
+    event.preventDefault();
+
+    await atualizarLivro();
+    await cadastrarAutoresLivro();
+    await cadastrarGenerosLivro();
+};
 
   return (
     <div className="Container-CadLivro">
@@ -288,13 +323,14 @@ export default function CadastrarLivro() {
           </div>
 
           <br />
-          <button type="submit" className="btn btn-success btnCadastro" onClick={atualizarLivro}>
+          
+          <button 
+          type="submit" 
+          className="btn btn-success btnCadastro" 
+          onClick={handleClick}>
             Cadastrar Livro
           </button>
 
-          <button type="submit" className="btn btn-success btnCadastro" onClick={cadastrarAutoresLivro}>
-            Cadastrar Livro/Autor
-          </button>
         </form>
       </div>
     </div>

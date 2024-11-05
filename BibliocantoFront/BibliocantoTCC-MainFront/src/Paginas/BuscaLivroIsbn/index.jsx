@@ -134,31 +134,26 @@ export default function BuscaLivroIsbn() {
   // Função para cadastrar autores e gêneros usando a API
   const handleCadastrarAutoresEGêneros = async () => {
     try {
+      // Chama a API para cadastrar os autores e gêneros
       const { autorIds, generoIds } = await api.cadastrarAutoresEGêneros(
         autores.map((nome) => ({ nome })),
         generos.map((nome) => ({ nome }))
       );
-
-      // Armazena os IDs dos autores e gêneros cadastrados nos estados
+  
+      // Armazena os IDs dos autores e gêneros no estado e no localStorage
       setAutorIdsCadastrados(autorIds);
       setGeneroIdsCadastrados(generoIds);
-
+  
+      // Salva no localStorage
+      localStorage.setItem("autoresCriados", JSON.stringify(autorIds));
+      localStorage.setItem("generosCriados", JSON.stringify(generoIds));
+  
       alert("Autores e Gêneros cadastrados com sucesso!");
     } catch (error) {
       console.error("Erro ao cadastrar autores e gêneros:", error);
       alert("Erro ao cadastrar autores e gêneros.");
     }
   };
-
-const handleSalvarAutoresEGeneros = async () => {
-  const resultado = await api.cadastrarAutoresEGêneros(autores, generos);
-  
-  // Salve os IDs dos autores e gêneros no localStorage
-  localStorage.setItem("autoresCriados", JSON.stringify(resultado.autorIds));
-  localStorage.setItem("generosCriados", JSON.stringify(resultado.generoIds));
-  
-  alert("Autores e Gêneros cadastrados com sucesso!");
-}
 
   return (
     <div className="divBuscaIsbn">
@@ -262,12 +257,9 @@ const handleSalvarAutoresEGeneros = async () => {
 
               {isFromBrasilAPI && (
                 <>
-                  <button type="button" className="btnCadastrarLivro">
-                    Ir para pagina de cadastro de livro
-                  </button>
                   <button
                     type="button"
-                    className="btnCadastrarEditoraELivro"
+                    className="btnCadastrarLivro"
                     onClick={async () => {
                       try {
                         const editoraId = await api.cadastrarEditora(
@@ -282,17 +274,19 @@ const handleSalvarAutoresEGeneros = async () => {
                           editoraId
                         );
 
+                        
+                        console.log("Editora e livro cadastrados com sucesso!");
+                        await handleCadastrarAutoresEGêneros();
+
                         navigate(`/CadastrarLivro/${livroId}`, {
                           state: { livroData },
                         });
-                        console.log("Editora e livro cadastrados com sucesso!");
-                        await handleCadastrarAutoresEGêneros();
                       } catch (error) {
                         console.error("Erro ao pre-cadastrar os dados:", error);
                       }
                     }}
                   >
-                    Pre-Cadastros
+                    Cadastrar Livro
                   </button>
                 </>
               )}

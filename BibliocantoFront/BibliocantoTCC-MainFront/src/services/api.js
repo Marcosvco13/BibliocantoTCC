@@ -60,26 +60,53 @@ api.cadastrarAutor = async (autor) => {
   };
 
   // cadastrar na tabela LivroAutor
-  api.cadastrarLivroAutor = async function (idLivro, idAutor) {
+  api.cadastrarLivroAutor = async function (idLivro, autorIdSingle) {
     try {
-      const autorLivroData = {
-        idLivro: idLivro,
-        idAutor: idAutor,
-      };
-  
-      const response = await axios.post('http://localhost:5162/api/AutorLivro', autorLivroData, {
-        headers: {
-          Authorization: `Bearer ${getToken()}` // Inclui o token de autorização
-        }
-      });
-  
-      console.log('Livro / Autor cadastrada com sucesso:', response.data);
-      return response.data.id; // Retorna o ID da associação, se necessário
+        const autorLivroData = {
+            idLivro: Number(idLivro),
+            idAutor: Number(autorIdSingle),
+        };
+
+        console.log('Dados enviados para a API:', autorLivroData); // Log para verificar os dados
+
+        const response = await axios.post('http://localhost:5162/api/AutorLivro', autorLivroData, {
+            headers: {
+                Authorization: `Bearer ${getToken()}` // Inclui o token de autorização
+            }
+        });
+
+        console.log('Livro / Autor cadastrada com sucesso:', response.data);
+        return response.data.id; // Retorna o ID da associação, se necessário
     } catch (error) {
-      console.error('Erro ao cadastrar Livro / Autor:', error);
-      throw error; // Relança o erro para ser tratado em outro lugar, se necessário
+        console.error('Erro ao cadastrar Livro / Autor:', error);
+        throw error; // Relança o erro para ser tratado em outro lugar, se necessário
     }
-  };
+};
+
+// cadastrar na tabela LivroGenero
+api.cadastrarLivroGenero = async function (idLivro, generoIdSingle) {
+    try {
+        const generoLivroData = {
+            idLivro: Number(idLivro),
+            idGenero: Number(generoIdSingle),
+        };
+
+        console.log('Dados enviados para a API:', generoLivroData); // Log para verificar os dados
+
+        const response = await axios.post('http://localhost:5162/api/GenerosLivro', generoLivroData, {
+            headers: {
+                Authorization: `Bearer ${getToken()}` // Inclui o token de autorização
+            }
+        });
+
+        console.log('Livro / Genero associado com sucesso:', response.data);
+        return response.data.id; // Retorna o ID da associação, se necessário
+    } catch (error) {
+        console.error('Erro ao associar Livro / Genero:', error);
+        throw error; // Relança o erro para ser tratado em outro lugar, se necessário
+    }
+};
+
 
 api.cadastrarEditora = async function (nomeEditora) {
     try {
