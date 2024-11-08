@@ -215,15 +215,6 @@ export default function CadastrarLivro() {
 
   return (
     <div className="Container-CadLivro">
-      <div className="linha-crear">
-        <span>
-          <Link to="/CadAutores">Cadastrar Autor</Link>
-        </span>
-        <span>
-          <Link to="/CadEditoras">Cadastrar Editora</Link>
-        </span>
-        <hr className="hrCriarLivro"></hr>
-      </div>
       <br />
       <h2>Cadastrar Livro</h2>
       <br />

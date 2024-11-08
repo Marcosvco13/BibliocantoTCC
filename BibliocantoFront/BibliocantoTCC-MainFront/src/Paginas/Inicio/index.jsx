@@ -6,9 +6,9 @@ import { Modal } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
-function Linha() {
+function Inicio() {
   const [livros, setLivros] = useState([]);
   const [error, setError] = useState(null);
   const [modalVisible, setModalVisible] = useState(false); // visibilidade do modal
@@ -43,19 +43,6 @@ function Linha() {
 
   return (
     <div className="linha-container">
-      <div className="linha-crear">
-        {email && (
-          <>
-            <span>
-              <Link to="/BuscaIsbn">Cadastrar Livro</Link>
-            </span>
-            <span>
-              <Link to="/">Livros por Gênero</Link>
-            </span>
-            <hr style={{ color: 'white' }} />
-          </>
-        )}
-      </div>
 
       {error && <p className="error">{error}</p>}
       {livros.length > 0 ? (
@@ -81,7 +68,7 @@ function Linha() {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title>
+          <Modal.Title className="modal-title">
             {selectedLivro ? selectedLivro.titulo : "Livro"}
           </Modal.Title>
         </Modal.Header>
@@ -96,23 +83,21 @@ function Linha() {
                 />
               </div>
               <div className="col-md">
-                <div className="modal-text">
-                  {selectedLivro
-                    ? selectedLivro.descricao
-                    : "Descrição do livro"}
+                <div className="modal-text-1">
+                  {selectedLivro? selectedLivro.descricao: "Descrição do livro"}
                 </div>
-                <div className="modal-text">
-                  Autor: {selectedLivro?.autores?.nomeAutor || "Autor do livro"}
+                <div className="modal-text-2">
+                  Autor(es): {selectedLivro?.autores?.nomeAutor || "Autor do livro"}
                 </div>
-                <div className="modal-text">
-                  Gênero:{" "}
+                <div className="modal-text-3">
+                  Gênero(s):{" "}
                   {selectedLivro?.generos?.nomegenero || "Gênero do livro"}
                 </div>
-                <div className="modal-text">
+                <div className="modal-text-4">
                   Editora:{" "}
                   {selectedLivro?.editoras?.nomeEditora || "Editora do livro"}
                 </div>
-                <div className="modal-text">
+                <div className="modal-text-5">
                   ISBN: {selectedLivro ? selectedLivro.isbn : "ISBN"}
                 </div>
               </div>
@@ -130,12 +115,6 @@ function Linha() {
               >
                 <FontAwesomeIcon icon={faEdit} />
               </button>
-              <button
-                className="btnIcon"
-                onClick={() => handleDeleteClick(selectedLivro?.id)} // Função para deletar
-              >
-                <FontAwesomeIcon icon={faTrash} />
-              </button>
             </>
           )}
         </Modal.Footer>
@@ -145,4 +124,4 @@ function Linha() {
   );
 }
 
-export default Linha;
+export default Inicio;

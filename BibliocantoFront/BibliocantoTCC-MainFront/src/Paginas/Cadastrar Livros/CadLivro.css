@@ -5,30 +5,6 @@
   background-color: #f9f9f9;
 }
 
-.linha-crear {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.linha-crear span a {
-  color: #5a251d; /* Cor mais saturada */
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.linha-crear span a:hover {
-  color: #47211c;
-  text-decoration: underline;
-}
-
-.linha-crear hr {
-  margin-top: 10px;
-  border: 0;
-  border-top: 1px solid white;
-  width: 100%;
-}
-
 h2 {
   text-align: center;
   font-family: 'Merriweather', serif;
@@ -83,8 +59,4 @@ button.btn:active {
   background-color: #3d1c18;
   box-shadow: 0 5px #666;
   transform: translateY(4px);
-}
-
-.hrCriarLivro{
-  color: #47211c;
 }
