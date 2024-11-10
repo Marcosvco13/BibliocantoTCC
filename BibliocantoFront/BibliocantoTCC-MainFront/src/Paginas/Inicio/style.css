@@ -82,3 +82,9 @@
   text-align: center !important;
   width: 100%; /* Garante largura total */
 }
+
+.spinner-border {
+  margin-right: 8px; /* Espaço entre o spinner e o texto */
+  border-width: 2px; /* Largura da borda do spinner */
+  color: black; /* Cor do spinner */
+}

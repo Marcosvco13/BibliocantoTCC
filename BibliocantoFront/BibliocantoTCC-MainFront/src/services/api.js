@@ -110,10 +110,26 @@ api.cadastrarLivroGenero = async function (idLivro, generoIdSingle) {
 
 api.cadastrarEditora = async function (nomeEditora) {
     try {
-        const response = await axios.post('http://localhost:5162/api/Editoras',
-            {
-                nomeEditora: nomeEditora
-            },
+        // Verifica se a editora já existe
+        const verificaExistenciaResponse = await axios.get(`http://localhost:5162/api/Editoras/EditoraByName?name=${nomeEditora}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+
+        // Filtra as editoras retornadas para encontrar uma correspondência exata
+        const editoraExistente = verificaExistenciaResponse.data.find(editora => editora.nomeEditora.toLowerCase() === nomeEditora.toLowerCase());
+
+        // Se a editora já existe com o mesmo nome exato, retorna o id
+        if (editoraExistente) {
+            console.log('Editora já existente:', editoraExistente);
+            return editoraExistente.id;
+        }
+
+        // Se não existe uma correspondência exata, cadastra uma nova editora
+        const response = await axios.post(
+            'http://localhost:5162/api/Editoras',
+            { nomeEditora },
             {
                 headers: {
                     Authorization: `Bearer ${getToken()}`
@@ -122,8 +138,9 @@ api.cadastrarEditora = async function (nomeEditora) {
         );
         console.log('Editora cadastrada com sucesso:', response.data);
         return response.data.id;
+
     } catch (error) {
-        console.error('Erro ao cadastrar editora:', error);
+        console.error('Erro ao verificar ou cadastrar editora:', error);
         throw error;
     }
 };

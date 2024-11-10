@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate  } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../../services/api";
 import "./style.css";
 import { Modal } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
 
 function Inicio() {
   const [livros, setLivros] = useState([]);
   const [error, setError] = useState(null);
   const [modalVisible, setModalVisible] = useState(false); // visibilidade do modal
   const [selectedLivro, setSelectedLivro] = useState(null);
-  const [email] = useState(localStorage.getItem('email') || null);
+  const [email] = useState(localStorage.getItem("email") || null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,7 +43,6 @@ function Inicio() {
 
   return (
     <div className="linha-container">
-
       {error && <p className="error">{error}</p>}
       {livros.length > 0 ? (
         <div className="livros-container">
@@ -58,7 +57,12 @@ function Inicio() {
           ))}
         </div>
       ) : (
-        <p>Carregando livros...</p>
+        <button className="btn btn-load" type="button" disabled>
+          <span
+            className="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+          ></span>
+          Carregando os livros...
+        </button>
       )}
       {/* Popup Modal */}
       <Modal
@@ -84,10 +88,13 @@ function Inicio() {
               </div>
               <div className="col-md">
                 <div className="modal-text-1">
-                  {selectedLivro? selectedLivro.descricao: "Descrição do livro"}
+                  {selectedLivro
+                    ? selectedLivro.descricao
+                    : "Descrição do livro"}
                 </div>
                 <div className="modal-text-2">
-                  Autor(es): {selectedLivro?.autores?.nomeAutor || "Autor do livro"}
+                  Autor(es):{" "}
+                  {selectedLivro?.autores?.nomeAutor || "Autor do livro"}
                 </div>
                 <div className="modal-text-3">
                   Gênero(s):{" "}
@@ -107,17 +114,17 @@ function Inicio() {
 
         {email && (
           <Modal.Footer>
-          {email && (
-            <>
-              <button
-                className="btnIcon"
-                onClick={handleEditClick} // Função para editar
-              >
-                <FontAwesomeIcon icon={faEdit} />
-              </button>
-            </>
-          )}
-        </Modal.Footer>
+            {email && (
+              <>
+                <button
+                  className="btnIcon"
+                  onClick={handleEditClick} // Função para editar
+                >
+                  <FontAwesomeIcon icon={faEdit} />
+                </button>
+              </>
+            )}
+          </Modal.Footer>
         )}
       </Modal>
     </div>

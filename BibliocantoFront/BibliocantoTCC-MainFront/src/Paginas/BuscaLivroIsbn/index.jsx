@@ -139,15 +139,15 @@ export default function BuscaLivroIsbn() {
         autores.map((nome) => ({ nome })),
         generos.map((nome) => ({ nome }))
       );
-  
+
       // Armazena os IDs dos autores e gêneros no estado e no localStorage
       setAutorIdsCadastrados(autorIds);
       setGeneroIdsCadastrados(generoIds);
-  
+
       // Salva no localStorage
       localStorage.setItem("autoresCriados", JSON.stringify(autorIds));
       localStorage.setItem("generosCriados", JSON.stringify(generoIds));
-  
+
       alert("Autores e Gêneros cadastrados com sucesso!");
     } catch (error) {
       console.error("Erro ao cadastrar autores e gêneros:", error);
@@ -209,7 +209,11 @@ export default function BuscaLivroIsbn() {
                     style={{ width: "100%" }}
                   />
                 ) : (
-                  <div>Sem imagem disponível</div>
+                  <img
+                    src={"src/assets/No Image.png"}
+                    alt="Sem imagem disponível"
+                    style={{ width: "100%" }}
+                  />
                 )}
               </div>
               <div className="col-md">
@@ -274,7 +278,6 @@ export default function BuscaLivroIsbn() {
                           editoraId
                         );
 
-                        
                         console.log("Editora e livro cadastrados com sucesso!");
                         await handleCadastrarAutoresEGêneros();
 
