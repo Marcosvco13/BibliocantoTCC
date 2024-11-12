@@ -89,7 +89,7 @@ namespace Bibliocanto.Controllers
             }
         }
 
-        [HttpGet("{id:int}", Name = "GetlikeoById")]
+        [HttpGet("{id:int}", Name = "GetResenhaById")]
         public async Task<ActionResult<LikeResenhaResource>> GetById(int id)
         {
 

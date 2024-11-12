@@ -21,10 +21,6 @@ namespace Bibliocanto.Repository
         {
             return await _context.MeusLivros
                 .Include(p => p.Livros)
-                    .ThenInclude(l => l.Autores)
-                .Include(p => p.Livros)
-                    .ThenInclude(l => l.Generos)
-                .Include(p => p.Livros)
                     .ThenInclude(l => l.Editoras)
                 .FirstOrDefaultAsync(l => l.Id == id);
         }

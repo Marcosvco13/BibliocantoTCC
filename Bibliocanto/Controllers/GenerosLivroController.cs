@@ -67,12 +67,12 @@ namespace Bibliocanto.Controllers
 
         [HttpPost]
         //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> PostAsync([FromBody] GeneroLivroResource resource)
+        public async Task<IActionResult> PostAsync([FromBody] SaveGeneroLivroResource resource)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
 
-            var generolivro = _mapper.Map<GeneroLivroResource, GeneroLivro>(resource);
+            var generolivro = _mapper.Map<SaveGeneroLivroResource, GeneroLivro>(resource);
             var result = await _generoLivroService.Add(generolivro);
 
             if (!result.Success)
