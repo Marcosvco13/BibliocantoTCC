@@ -1,10 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\Controllers",
-    "\\Models",
-    "\\Repository"
+    ""
   ],
-  "SelectedNode": "\\Repository\\MeusLivrosRepository.cs",
+  "SelectedNode": "\\Bibliocanto.sln",
   "PreviewInSolutionExplorer": false
 }

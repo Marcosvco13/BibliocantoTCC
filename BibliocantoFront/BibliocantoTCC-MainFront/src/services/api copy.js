@@ -35,52 +35,13 @@ api.cadastrarAutor = async (autor) => {
     return response.data; // Retorna o gênero cadastrado com o ID
   };
   
-// Função para normalizar o nome do autor
-function normalizarNome(nome) {
-    return nome
-      .normalize("NFD") // Separa os acentos das letras
-      .replace(/[\u0300-\u036f]/g, "") // Remove os acentos
-      .toLowerCase(); // Converte para minúsculas
-  }
-  
-  // Função para buscar autor existente com verificação robusta e token de autenticação
-api.buscarAutorPorNomeAjustado = async (nomeAutor) => {
-  try {
-    const response = await api.get("/api/Autores", {
-      headers: {
-        Authorization: `Bearer ${getToken()}` // Inclui o token de autorização
-      }
-    });
-    const autores = response.data;
-    const nomeNormalizado = normalizarNome(nomeAutor);
-
-    // Verifica se já existe um autor com o nome normalizado
-    const autorExistente = autores.find(autor => 
-      normalizarNome(autor.nomeAutor) === nomeNormalizado
-    );
-
-    return autorExistente || null; // Retorna o autor encontrado ou null
-  } catch (error) {
-    console.error("Erro ao buscar autor:", error);
-    throw error;
-  }
-};
-  
-  // Função para cadastrar múltiplos autores e gêneros armazenados com verificação de duplicidade robusta
+  // Função para cadastrar múltiplos autores e gêneros armazenados
   api.cadastrarAutoresEGêneros = async function(autoresArmazenados, generosArmazenados) {
     try {
       const autorIds = await Promise.all(autoresArmazenados.map(async (autor) => {
-        // Verifica se o autor já existe
-        const autorExistente = await api.buscarAutorPorNomeAjustado(autor.nome);
-        if (autorExistente) {
-          console.log(`Autor já existe: ${autor.nome} com ID ${autorExistente.id}`);
-          return autorExistente.id; // Retorna o ID do autor existente
-        } else {
-          // Cadastra o novo autor se não existir
-          console.log(`Cadastrando novo autor: ${autor.nome}`);
-          const novoAutor = await api.cadastrarAutor({ NomeAutor: autor.nome });
-          return novoAutor.id; // Retorna o ID do novo autor
-        }
+        console.log(`Cadastrando autor: ${autor.nome}`);
+        const novoAutor = await api.cadastrarAutor({ NomeAutor: autor.nome });
+        return novoAutor.id; // Retorna o ID do novo autor
       }));
   
       const generoIds = await Promise.all(generosArmazenados.map(async (genero) => {
@@ -97,8 +58,6 @@ api.buscarAutorPorNomeAjustado = async (nomeAutor) => {
       throw error; // Lança o erro para ser tratado externamente, se necessário
     }
   };
-  
-  
 
   // cadastrar na tabela LivroAutor
   api.cadastrarLivroAutor = async function (idLivro, autorIdSingle) {

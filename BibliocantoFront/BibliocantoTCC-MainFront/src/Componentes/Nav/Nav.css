@@ -31,6 +31,24 @@
     color: #ccc;
 }
 
+.nav-options-left-2 {
+    font-size: medium;
+    position: fixed;
+    padding: 10px;
+    left: 240px;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-options-left-2 a {
+    color: white;
+    text-decoration: none;
+}
+
+.nav-options-left-2 a:hover {
+    color: #ccc;
+}
+
 .nav-options-right{
     font-size: medium;
     color: white;
