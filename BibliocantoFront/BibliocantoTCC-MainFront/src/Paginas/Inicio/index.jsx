@@ -6,7 +6,7 @@ import { Modal } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faCheck } from "@fortawesome/free-solid-svg-icons";
 
 function Inicio() {
   const [livros, setLivros] = useState([]);
@@ -14,6 +14,7 @@ function Inicio() {
   const [modalVisible, setModalVisible] = useState(false); // visibilidade do modal
   const [selectedLivro, setSelectedLivro] = useState(null);
   const [email] = useState(localStorage.getItem("email") || null);
+  const [idUser] = useState(localStorage.getItem("Id") || null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,6 +39,18 @@ function Inicio() {
   const handleEditClick = () => {
     if (selectedLivro) {
       navigate(`/EditarLivro/${selectedLivro.id}`); // Redireciona para a página de edição do livro selecionado
+    }
+  };
+
+  const handleCheck = async (IdUser, idLivro) => {
+    try {
+      const response = await api.post('/api/MeusLivros', {
+        IdUser: IdUser,
+        idLivro: selectedLivro.id
+      });
+      console.log('Livro adicionado com sucesso:', response.data);
+    } catch (error) {
+      console.error('Erro ao adicionar o livro:', error);
     }
   };
 
@@ -121,6 +134,12 @@ function Inicio() {
                   onClick={handleEditClick} // Função para editar
                 >
                   <FontAwesomeIcon icon={faEdit} />
+                </button>
+                <button
+                  className="btnIcon"
+                  onClick={handleCheck} // Função para editar
+                >
+                  <FontAwesomeIcon icon={faCheck} />
                 </button>
               </>
             )}

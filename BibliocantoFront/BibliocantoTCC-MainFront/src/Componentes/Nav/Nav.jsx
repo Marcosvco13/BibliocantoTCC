@@ -62,11 +62,11 @@ export default function Nav() {
 
       <div className="nav-options-right">
 
-        {/* {email ? (
+        {email ? (
           <span>
             <a href="/TodosLivros">Minha Biblioteca</a>
           </span>
-        ) : ('')} */}
+        ) : ('')}
 
         {email ? (
           <span>
