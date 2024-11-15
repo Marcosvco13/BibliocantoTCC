@@ -13,6 +13,8 @@ function Inicio() {
   const [error, setError] = useState(null);
   const [modalVisible, setModalVisible] = useState(false); // visibilidade do modal
   const [selectedLivro, setSelectedLivro] = useState(null);
+  const [autores, setAutores] = useState([]); // Armazena os autores
+  const [generos, setGeneros] = useState([]); // Armazena os gêneros
   const [email] = useState(localStorage.getItem("email") || null);
 
   useEffect(() => {
@@ -28,9 +30,34 @@ function Inicio() {
     fetchData();
   }, []);
 
-  const handleImageClick = (livro) => {
+  const handleImageClick = async (livro) => {
     setSelectedLivro(livro); // armazena qual livro clicou
     setModalVisible(true); // abre o modal
+
+    try {
+      // Busca os autores relacionados ao livro
+      const autorLivros = await api.buscarAutoresPorLivro(livro.id);
+      const autoresDetalhados = await Promise.all(
+        autorLivros.map(async (autorLivro) => {
+          const autor = await api.buscarAutorPorId(autorLivro.idAutor);
+          return autor.nomeAutor; // Retorna apenas o nome do autor
+        })
+      );
+      setAutores(autoresDetalhados); // Armazena os nomes dos autores
+
+      // Busca os gêneros relacionados ao livro
+      const generoLivros = await api.buscarGenerosPorLivro(livro.id);
+      const generosDetalhados = await Promise.all(
+        generoLivros.map(async (generoLivro) => {
+          const genero = await api.buscarGeneroPorId(generoLivro.idGenero);
+          return genero.nomegenero; // Retorna o nome do gênero
+        })
+      );
+      setGeneros(generosDetalhados); // Armazena os nomes dos gêneros
+    } catch (err) {
+      setError("Erro ao carregar autores ou gêneros.");
+      console.error(err);
+    }
   };
 
   const navigate = useNavigate(); // Hook para navegação
@@ -59,7 +86,9 @@ function Inicio() {
       ) : (
         <button className="btn btn-load" type="button" disabled>
           <span
-            className="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+            className="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
           ></span>
           Carregando os livros...
         </button>
@@ -81,11 +110,16 @@ function Inicio() {
             <div className="row">
               <div className="col-md-4">
                 <img
-                  src={selectedLivro ? selectedLivro.caminhoImagem : ""}
+                  src={
+                    selectedLivro && selectedLivro.caminhoImagem
+                      ? selectedLivro.caminhoImagem
+                      : "src/assets/No Image.png"
+                  }
                   alt={selectedLivro ? selectedLivro.titulo : "Imagem do livro"}
                   style={{ width: "100%" }}
                 />
               </div>
+
               <div className="col-md">
                 <div className="modal-text-1">
                   {selectedLivro
@@ -94,11 +128,11 @@ function Inicio() {
                 </div>
                 <div className="modal-text-2">
                   Autor(es):{" "}
-                  {selectedLivro?.autores?.nomeAutor || "Autor do livro"}
+                  {autores.length > 0 ? autores.join(", ") : "Autor do livro"}
                 </div>
                 <div className="modal-text-3">
                   Gênero(s):{" "}
-                  {selectedLivro?.generos?.nomegenero || "Gênero do livro"}
+                  {generos.length > 0 ? generos.join(", ") : "Gênero do livro"}
                 </div>
                 <div className="modal-text-4">
                   Editora:{" "}
