@@ -30,6 +30,7 @@ export default function BuscaLivroIsbn() {
   const [autores, setAutores] = useState([]);
   const [generos, setGeneros] = useState([]);
   const [livroData, setLivroData] = useState(null);
+  const [livroIdLocal, setLivroIdLocal] = useState(null);
 
   const navigate = useNavigate();
 
@@ -52,29 +53,33 @@ export default function BuscaLivroIsbn() {
       });
 
       if (response.data && Object.keys(response.data).length > 0) {
+        setLivroIdLocal(response.data.id); // Armazena o ID do livro local
+        const livroDetalhes = await api.getLivroById(response.data.id); // Busca detalhes do livro pelo ID
+
         // Armazenando os dados do livro na variável
         const livroDataLocal = {
-          isbn: response.data.isbn,
-          title: response.data.titulo || response.data.title,
-          authors: response.data.autores?.map((autor) => autor.nomeAutor) || [],
-          publisher:
-            response.data.editoras?.nomeEditora || response.data.publisher,
-          synopsis: response.data.sinopse || response.data.synopsis,
-          subjects:
-            response.data.generos?.map((genero) => genero.nomeGenero) || [],
-          cover_url: response.data.caminhoImagem || response.data.cover_url,
+          isbn: livroDetalhes.isbn,
+          title: livroDetalhes.titulo,
+          publisher: livroDetalhes.editoras?.nomeEditora,
+          synopsis: livroDetalhes.descricao || "",
+          cover_url: livroDetalhes.caminhoImagem || null,
           provider: "local",
         };
 
-        setSelectedLivro(response.data);
+        setSelectedLivro(livroDetalhes);
         setIsFromBrasilAPI(false);
-        localBookFound = true;
-        setAutores(livroDataLocal.authors);
-        setGeneros(livroDataLocal.subjects);
         setLivroData(livroDataLocal); // Atualiza o estado com os dados do livro
+
+        // Busca os autores relacionados ao livro
+        await fetchAutoresDoLivro(response.data.id); 
+
+        // Busca os gêneros relacionados ao livro
+        await fetchGenerosDoLivro(response.data.id); 
 
         // Adicionando console log para visualizar os dados do livro
         console.log("Dados do livro local:", livroDataLocal);
+
+        localBookFound = true;
       }
     } catch (error) {
       if (!(error.response && error.response.status === 404)) {
@@ -119,6 +124,44 @@ export default function BuscaLivroIsbn() {
     }
   };
 
+  const fetchGenerosDoLivro = async (idLivro) => {
+    try {
+      // Busca os IDs dos gêneros relacionados ao livro
+      const generosRelacionados = await api.buscarGenerosPorLivro(idLivro);
+      const nomesGeneros = [];
+  
+      // Para cada gênero relacionado, busca o nome do gênero
+      for (const genero of generosRelacionados) {
+        const generoDetalhes = await api.buscarGeneroPorId(genero.idGenero);
+        nomesGeneros.push(generoDetalhes.nomegenero);
+      }
+  
+      setGeneros(nomesGeneros); // Armazena os nomes dos gêneros no estado
+      console.log("Gêneros do livro:", nomesGeneros); // Log dos gêneros para depuração
+    } catch (error) {
+      console.error("Erro ao processar os gêneros do livro:", error);
+    }
+  };
+
+  const fetchAutoresDoLivro = async (idLivro) => {
+    try {
+      // Busca os IDs dos autores relacionados ao livro
+      const autoresRelacionados = await api.buscarAutoresPorLivro(idLivro);
+      const nomesAutores = [];
+  
+      // Para cada autor relacionado, busca o nome do autor
+      for (const autor of autoresRelacionados) {
+        const autorDetalhes = await api.buscarAutorPorId(autor.idAutor);
+        nomesAutores.push(autorDetalhes.nomeAutor);
+      }
+  
+      setAutores(nomesAutores); // Armazena os nomes dos autores no estado
+      console.log("Autores do livro:", nomesAutores); // Log dos autores para depuração
+    } catch (error) {
+      console.error("Erro ao processar os autores do livro:", error);
+    }
+  };
+
   const handleInputChange = (e) => {
     let valor = e.target.value.replace(/\D/g, "");
     if (valor.length > 3) {
@@ -136,24 +179,35 @@ export default function BuscaLivroIsbn() {
     try {
       // Chama a API para cadastrar os autores e gêneros
       const { autorIds, generoIds } = await api.cadastrarAutoresEGêneros(
-        autores.map((nome) => ({ nome })),
-        generos.map((nome) => ({ nome }))
+        autores.map((nome) => ({ nome })), // Cadastra os autores
+        generos.map((nome) => ({ nome }))  // Cadastra os gêneros
       );
-
-      // Armazena os IDs dos autores e gêneros no estado e no localStorage
-      setAutorIdsCadastrados(autorIds);
-      setGeneroIdsCadastrados(generoIds);
-
-      // Salva no localStorage
-      localStorage.setItem("autoresCriados", JSON.stringify(autorIds));
-      localStorage.setItem("generosCriados", JSON.stringify(generoIds));
-
+  
+      // Criar objetos com id e nome para autores e gêneros
+      const autoresCompletos = autorIds.map((id, index) => ({
+        id,
+        nome: autores[index],
+      }));
+      const generosCompletos = generoIds.map((id, index) => ({
+        id,
+        nome: generos[index],
+      }));
+  
+      // Armazena os dados completos no estado e no localStorage
+      setAutorIdsCadastrados(autoresCompletos);
+      setGeneroIdsCadastrados(generosCompletos);
+  
+      // Salva os dados completos no localStorage
+      localStorage.setItem("autoresCriados", JSON.stringify(autoresCompletos));
+      localStorage.setItem("generosCriados", JSON.stringify(generosCompletos));
+  
       alert("Autores e Gêneros cadastrados com sucesso!");
     } catch (error) {
       console.error("Erro ao cadastrar autores e gêneros:", error);
       alert("Erro ao cadastrar autores e gêneros.");
     }
   };
+  
 
   return (
     <div className="divBuscaIsbn">
