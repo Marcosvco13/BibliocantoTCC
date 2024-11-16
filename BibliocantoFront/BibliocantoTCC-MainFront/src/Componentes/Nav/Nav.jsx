@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import api from "../../services/api";
 import "./Nav.css";
 
 export default function Nav() {
@@ -24,7 +25,7 @@ export default function Nav() {
     // Redireciona o usuário para a página de login ou inicial
     history('/login');
 
-    // Atualiza a tela após o redirecionamento (opcional)
+    // Atualiza a tela após o redirecionamento
     window.location.reload();
   };
 

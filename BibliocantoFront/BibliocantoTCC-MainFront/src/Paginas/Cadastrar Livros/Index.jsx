@@ -180,9 +180,10 @@ export default function CadastrarLivro() {
   const cadastrarAutoresLivro = async () => {
     try {
       const idLivro = id; // ID do livro que você está associando aos autores
-  
+
       if (Array.isArray(autorId) && autorId.length > 0) {
-        for (const autor of autorId) { // Alteração aqui: iterar sobre o array de objetos de autores
+        for (const autor of autorId) {
+          // Alteração aqui: iterar sobre o array de objetos de autores
           const autorIdSingle = autor.id; // Pegando o ID do autor
           console.log("Enviando ID do autor:", autorIdSingle);
           await api.cadastrarLivroAutor(idLivro, autorIdSingle); // Usando autorIdSingle (id do autor)
@@ -199,13 +200,14 @@ export default function CadastrarLivro() {
       alert("Ocorreu um erro ao associar os autores ao livro.");
     }
   };
-  
+
   const cadastrarGenerosLivro = async () => {
     try {
       const idLivro = id; // ID do livro que você está associando aos generos
-  
+
       if (Array.isArray(generoId) && generoId.length > 0) {
-        for (const genero of generoId) { // Alteração aqui: iterar sobre o array de objetos de gêneros
+        for (const genero of generoId) {
+          // Alteração aqui: iterar sobre o array de objetos de gêneros
           const generoIdSingle = genero.id; // Pegando o ID do gênero
           console.log("Enviando ID do genero:", generoIdSingle);
           await api.cadastrarLivroGenero(idLivro, generoIdSingle); // Usando generoIdSingle (id do gênero)
@@ -221,7 +223,7 @@ export default function CadastrarLivro() {
       );
       alert("Ocorreu um erro ao associar os generos ao livro.");
     }
-  };  
+  };
 
   const handleClick = async (event) => {
     event.preventDefault();
@@ -238,13 +240,13 @@ export default function CadastrarLivro() {
       <br />
       <div className="jumbotron jumbotron-custom">
         <form
-          className="formCad"
+          className="form-row"
           onSubmit={(e) => {
             e.preventDefault();
             atualizarLivro();
           }}
         >
-          <div className="col-4">
+          <div className="form-group col-md-8">
             <label>Título</label>
             <input
               type="text"
@@ -256,38 +258,32 @@ export default function CadastrarLivro() {
             />
           </div>
 
-          <div className="col-4">
+          <div className="form-group col-md-4">
+            <label>ISBN</label>
+            <ul className="list-group">
+              <li className="list-group-item">{isbn}</li>
+            </ul>
+          </div>
+
+          <div className="form-group col-md-12">
             <label>Descrição</label>
-            <input
-              type="text"
+            <textarea
               className="form-control"
               placeholder="Descrição do livro"
               value={descricao}
               onChange={(e) => setDescricao(e.target.value)}
+              rows="2"
             />
           </div>
 
-          <div className="col-4">
-            <label>ISBN</label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="ISBN do livro"
-              value={isbn}
-              onChange={(e) => setIsbn(e.target.value)}
-              required
-            />
-            <br />
-          </div>
-
-          <div className="col-4">
+          <div className="form-group col-md-4">
             <label>Editora</label>
             <ul className="list-group">
               <li className="list-group-item">{editoraId}</li>
             </ul>
           </div>
 
-          <div className="col-4">
+          <div className="form-group col-md-4">
             <label>Link da Capa</label>
             <input
               type="text"
@@ -298,7 +294,7 @@ export default function CadastrarLivro() {
             />
           </div>
 
-          <div className="col-4">
+          <div className="form-group col-md-4">
             <label>Link de Compra</label>
             <input
               type="text"
@@ -309,7 +305,7 @@ export default function CadastrarLivro() {
             />
           </div>
 
-          <div className="col-4">
+          <div className="form-group col-md-4">
             <label>Autores</label>
             <ul className="list-group">
               {autorId.map((autor) => (
@@ -320,16 +316,15 @@ export default function CadastrarLivro() {
             </ul>
           </div>
 
-          <div className="col-4">
+          <div className="form-group col-md-3">
             <label>Gêneros</label>
             <ul className="list-group">
-              {generoId.map((genero) => (
-                <li key={genero.id} className="list-group-item">
-                  {genero.nome}
-                </li>
-              ))}
+              <li className="list-group-item">
+                {generoId.map((genero) => genero.nome).join("; ")}
+              </li>
             </ul>
           </div>
+
           <br />
 
           <button

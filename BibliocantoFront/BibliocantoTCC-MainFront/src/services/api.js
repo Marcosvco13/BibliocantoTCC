@@ -4,6 +4,14 @@ const api = axios.create({
     baseURL: 'http://localhost:5162'
 });
 
+api.validarToken = async () => {
+    return await api.get("/auth/validar-token", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+  };
+
 // Método para obter o token
 const getToken = () => localStorage.getItem('token');
 
