@@ -170,8 +170,7 @@ export default function CadastrarLivro() {
       const updatedBook = await api.putLivro(id, livroData);
       console.log("Livro atualizado com sucesso:", updatedBook);
 
-      // Redireciona ou faz outra ação após a atualização
-      //navigate("/sua-rota-de-destino"); // Altere para a rota que você deseja redirecionar
+      //navigate("/sua-rota-de-destino");
     } catch (error) {
       console.error("Erro ao atualizar o livro:", error);
     }
