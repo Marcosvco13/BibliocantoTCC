@@ -7,8 +7,6 @@ export default function PoliticaPrivacidade() {
             <section className='formPrivacidade'>
                 <h1 className='h1TituloPrivacidade'>Política de Privacidade</h1>
 
-                <p><strong>Data de Vigência:</strong> [Inserir Data]</p>
-
                 <p>
                     A sua privacidade é importante para nós. Esta Política de Privacidade descreve como coletamos,
                     usamos, armazenamos e protegemos suas informações pessoais quando você utiliza nosso site 
@@ -27,7 +25,6 @@ export default function PoliticaPrivacidade() {
                     <li>Nome completo</li>
                     <li>Endereço de e-mail</li>
                     <li>Informações de login (nome de usuário, senha)</li>
-                    <li>Preferências de leitura e resenhas</li>
                 </ul>
 
                 <h3>1.2 Informações Coletadas Automaticamente</h3>
@@ -45,8 +42,6 @@ export default function PoliticaPrivacidade() {
                 <p>As informações que coletamos são utilizadas para:</p>
                 <ul>
                     <li>Gerenciar e personalizar sua conta e perfil</li>
-                    <li>Oferecer suporte técnico e melhorar a experiência do usuário</li>
-                    <li>Enviar comunicações sobre atualizações, novas funcionalidades ou promoções</li>
                     <li>Analisar o uso do site e melhorar nossos serviços</li>
                     <li>Cumprir com obrigações legais</li>
                 </ul>
@@ -57,7 +52,6 @@ export default function PoliticaPrivacidade() {
                     circunstâncias:
                 </p>
                 <ul>
-                    <li><strong>Provedores de Serviços:</strong> Podemos compartilhar suas informações com terceiros que prestam serviços em nosso nome.</li>
                     <li><strong>Requisitos Legais:</strong> Podemos divulgar suas informações se formos obrigados por lei ou em resposta a processos judiciais.</li>
                     <li><strong>Proteção de Direitos:</strong> Podemos compartilhar suas informações para proteger nossos direitos, segurança e propriedade.</li>
                 </ul>
@@ -92,17 +86,13 @@ export default function PoliticaPrivacidade() {
                     <li>Solicitar a restrição ou objeção ao processamento de seus dados pessoais</li>
                 </ul>
 
-                <p>
-                    Para exercer seus direitos, entre em contato conosco pelo e-mail **[inserir e-mail de suporte]**.
-                </p>
-
                 <h2>8. Alterações na Política de Privacidade</h2>
                 <p>
                     Esta Política de Privacidade pode ser atualizada periodicamente. Recomendamos que você reveja esta 
                     página regularmente para estar informado sobre nossas práticas de privacidade. Quaisquer alterações 
                     entrarão em vigor imediatamente após a publicação da política revisada.
                 </p>
-
+                {/*
                 <h2>9. Contato</h2>
                 <p>
                     Se você tiver dúvidas ou preocupações sobre esta Política de Privacidade ou sobre o tratamento de suas 
@@ -113,6 +103,7 @@ export default function PoliticaPrivacidade() {
                     E-mail: **[inserir e-mail de contato]**  
                     Endereço: **[inserir endereço físico, se aplicável]**
                 </p>
+                */}
             </section>
         </div>
     );

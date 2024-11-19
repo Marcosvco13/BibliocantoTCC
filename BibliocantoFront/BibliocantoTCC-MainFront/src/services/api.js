@@ -4,6 +4,14 @@ const api = axios.create({
     baseURL: 'http://localhost:5162'
 });
 
+api.validarToken = async () => {
+    return await api.get("/auth/validar-token", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+  };
+
 // Método para obter o token
 const getToken = () => localStorage.getItem('token');
 
@@ -35,8 +43,9 @@ api.cadastrarAutor = async (autor) => {
     return response.data; // Retorna o gênero cadastrado com o ID
   };
   
-// Função para normalizar o nome do autor
+// Função para normalizar o nome (para autores e gêneros)
 function normalizarNome(nome) {
+    if (!nome) return ""; // Retorna uma string vazia se o nome for undefined ou null
     return nome
       .normalize("NFD") // Separa os acentos das letras
       .replace(/[\u0300-\u036f]/g, "") // Remove os acentos
@@ -65,28 +74,58 @@ api.buscarAutorPorNomeAjustado = async (nomeAutor) => {
     throw error;
   }
 };
+
+// Função para buscar gênero existente com verificação robusta e token de autenticação
+api.buscarGeneroPorNomeAjustado = async (nomeGenero) => {
+    try {
+      const response = await api.get("/api/Generos", {
+        headers: {
+          Authorization: `Bearer ${getToken()}` // Inclui o token de autorização
+        }
+      });
+      const generos = response.data;
+      const nomeNormalizado = normalizarNome(nomeGenero);
+  
+      // Verifica se já existe um gênero com o nome normalizado
+      const generoExistente = generos.find(genero => 
+        normalizarNome(genero.nomegenero) === nomeNormalizado
+      );
+  
+      return generoExistente || null; // Retorna o gênero encontrado ou null
+    } catch (error) {
+      console.error("Erro ao buscar gênero:", error);
+      throw error;
+    }
+  };
   
   // Função para cadastrar múltiplos autores e gêneros armazenados com verificação de duplicidade robusta
-  api.cadastrarAutoresEGêneros = async function(autoresArmazenados, generosArmazenados) {
+api.cadastrarAutoresEGêneros = async function(autoresArmazenados, generosArmazenados) {
     try {
       const autorIds = await Promise.all(autoresArmazenados.map(async (autor) => {
-        // Verifica se o autor já existe
         const autorExistente = await api.buscarAutorPorNomeAjustado(autor.nome);
         if (autorExistente) {
           console.log(`Autor já existe: ${autor.nome} com ID ${autorExistente.id}`);
           return autorExistente.id; // Retorna o ID do autor existente
         } else {
-          // Cadastra o novo autor se não existir
           console.log(`Cadastrando novo autor: ${autor.nome}`);
           const novoAutor = await api.cadastrarAutor({ NomeAutor: autor.nome });
           return novoAutor.id; // Retorna o ID do novo autor
         }
       }));
   
+      // Cadastro de gêneros com verificação de duplicidade
       const generoIds = await Promise.all(generosArmazenados.map(async (genero) => {
-        console.log(`Cadastrando gênero: ${genero.nome}`);
-        const novoGenero = await api.cadastrarGenero({ NomeGenero: genero.nome });
-        return novoGenero.id; // Retorna o ID do novo gênero
+        const nomeNormalizado = normalizarNome(genero.nome);
+        const generoExistente = await api.buscarGeneroPorNomeAjustado(genero.nome);
+        
+        if (generoExistente) {
+          console.log(`Gênero já existe: ${genero.nome} com ID ${generoExistente.id}`);
+          return generoExistente.id; // Retorna o ID do gênero existente
+        } else {
+          console.log(`Cadastrando novo gênero: ${genero.nome}`);
+          const novoGenero = await api.cadastrarGenero({ NomeGenero: genero.nome });
+          return novoGenero.id; // Retorna o ID do novo gênero
+        }
       }));
   
       console.log('Autores e gêneros cadastrados com sucesso:', { autorIds, generoIds });
@@ -94,12 +133,9 @@ api.buscarAutorPorNomeAjustado = async (nomeAutor) => {
   
     } catch (error) {
       console.error('Erro ao cadastrar autores e gêneros:', error);
-      throw error; // Lança o erro para ser tratado externamente, se necessário
+      throw error;
     }
   };
-  
-  
-
   // cadastrar na tabela LivroAutor
   api.cadastrarLivroAutor = async function (idLivro, autorIdSingle) {
     try {
@@ -293,6 +329,67 @@ api.getGeneroByName = async function(nameGenero) {
         }
     } catch (error) {
         console.error("Erro ao buscar o generos:", error);
+        throw error;
+    }
+};
+
+//metodo get para buscar os autores do livro
+api.buscarAutoresPorLivro = async function(idLivro) {
+    try {
+        const response = await api.get(`/api/AutorLivro/${idLivro}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        return response.data; // Retorna os IDs dos autores para esse livro
+    } catch (error) {
+        console.error("Erro ao buscar autores do livro:", error);
+        throw error;
+    }
+};
+
+//metodo get para buscar o autor por id
+api.buscarAutorPorId = async function(idAutor) {
+    try {
+        const response = await api.get(`/api/Autores/${idAutor}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        return response.data; // Retorna os detalhes do autor (nomeAutor)
+    } catch (error) {
+        console.error("Erro ao buscar autor:", error);
+        throw error;
+    }
+};
+
+//metodo get para buscar o genero por id do livro
+api.buscarGenerosPorLivro = async function(idLivro) {
+    try {
+        const response = await api.get(`/api/GenerosLivro/${idLivro}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        return response.data; // Retorna os IDs dos gêneros para esse livro
+    } catch (error) {
+        console.error("Erro ao buscar gêneros do livro:", error);
+        throw error;
+    }
+};
+
+
+//metodo get para buscar o genero por id
+api.buscarGeneroPorId = async function(idGenero) {
+    try {
+        const response = await api.get(`/api/Generos/${idGenero}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        return response.data; // Retorna os detalhes do gênero (nomegenero)
+    } catch (error) {
+        console.error("Erro ao buscar gênero:", error);
         throw error;
     }
 };

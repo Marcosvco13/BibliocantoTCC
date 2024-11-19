@@ -78,7 +78,8 @@ export default function CadastrarLivro() {
   // Faz a requisição para a BrasilAPI usando o ISBN, se disponível
   useEffect(() => {
     if (isbn) {
-      apiBrasil.isbn.getBy(isbn)
+      apiBrasil.isbn
+        .getBy(isbn)
         .then((data) => {
           // Preenche os campos apenas se estiverem vazios
           if (!titulo) setTitulo(data.title || "");
@@ -95,30 +96,39 @@ export default function CadastrarLivro() {
             setGeneroId(data.subjects);
           }
         })
-        .catch((error) => console.error("Erro ao obter dados da BrasilAPI:", error));
+        .catch((error) =>
+          console.error("Erro ao obter dados da BrasilAPI:", error)
+        );
     }
   }, [isbn]); // Executa quando o ISBN está disponível
 
   useEffect(() => {
-    const autoresCadastrados = JSON.parse(localStorage.getItem("autoresCriados")) || [];
-    const generosCadastrados = JSON.parse(localStorage.getItem("generosCriados")) || [];
-  
-    console.log("Autores carregados do localStorage em CadastrarLivro:", autoresCadastrados);
-    console.log("Gêneros carregados do localStorage em CadastrarLivro:", generosCadastrados);
-  
+    const autoresCadastrados =
+      JSON.parse(localStorage.getItem("autoresCriados")) || [];
+    const generosCadastrados =
+      JSON.parse(localStorage.getItem("generosCriados")) || [];
+
+    console.log(
+      "Autores carregados do localStorage em CadastrarLivro:",
+      autoresCadastrados
+    );
+    console.log(
+      "Gêneros carregados do localStorage em CadastrarLivro:",
+      generosCadastrados
+    );
+
     if (autoresCadastrados.length > 0) {
       setAutorId(autoresCadastrados);
     } else {
       console.log("Nenhum autor selecionado para cadastrar.");
     }
-  
+
     if (generosCadastrados.length > 0) {
       setGeneroId(generosCadastrados);
     } else {
       console.log("Nenhum gênero selecionado para cadastrar.");
     }
   }, []);
-  
 
   // Função para buscar o ID da editora pelo nome
   const RequisicaoEditora = async (editoraNome) => {
@@ -160,8 +170,7 @@ export default function CadastrarLivro() {
       const updatedBook = await api.putLivro(id, livroData);
       console.log("Livro atualizado com sucesso:", updatedBook);
 
-      // Redireciona ou faz outra ação após a atualização
-      //navigate("/sua-rota-de-destino"); // Altere para a rota que você deseja redirecionar
+      //navigate("/sua-rota-de-destino");
     } catch (error) {
       console.error("Erro ao atualizar o livro:", error);
     }
@@ -170,37 +179,47 @@ export default function CadastrarLivro() {
   const cadastrarAutoresLivro = async () => {
     try {
       const idLivro = id; // ID do livro que você está associando aos autores
-  
+
       if (Array.isArray(autorId) && autorId.length > 0) {
-        for (const autorIdSingle of autorId) {
+        for (const autor of autorId) {
+          // Alteração aqui: iterar sobre o array de objetos de autores
+          const autorIdSingle = autor.id; // Pegando o ID do autor
           console.log("Enviando ID do autor:", autorIdSingle);
-          await api.cadastrarLivroAutor(idLivro, autorIdSingle);
+          await api.cadastrarLivroAutor(idLivro, autorIdSingle); // Usando autorIdSingle (id do autor)
         }
         alert("Todos os autores foram associados ao livro com sucesso!");
       } else {
         alert("Nenhum autor selecionado para associar ao livro.");
       }
     } catch (error) {
-      console.error("Erro ao associar autores aos livros:", error.response ? error.response.data : error.message);
+      console.error(
+        "Erro ao associar autores aos livros:",
+        error.response ? error.response.data : error.message
+      );
       alert("Ocorreu um erro ao associar os autores ao livro.");
     }
   };
-  
+
   const cadastrarGenerosLivro = async () => {
     try {
       const idLivro = id; // ID do livro que você está associando aos generos
-  
+
       if (Array.isArray(generoId) && generoId.length > 0) {
-        for (const generoIdSingle of generoId) {
+        for (const genero of generoId) {
+          // Alteração aqui: iterar sobre o array de objetos de gêneros
+          const generoIdSingle = genero.id; // Pegando o ID do gênero
           console.log("Enviando ID do genero:", generoIdSingle);
-          await api.cadastrarLivroGenero(idLivro, generoIdSingle);
+          await api.cadastrarLivroGenero(idLivro, generoIdSingle); // Usando generoIdSingle (id do gênero)
         }
         alert("Todos os generos foram associados ao livro com sucesso!");
       } else {
         alert("Nenhum genero selecionado para associar ao livro.");
       }
     } catch (error) {
-      console.error("Erro ao associar generos aos livros:", error.response ? error.response.data : error.message);
+      console.error(
+        "Erro ao associar generos aos livros:",
+        error.response ? error.response.data : error.message
+      );
       alert("Ocorreu um erro ao associar os generos ao livro.");
     }
   };
@@ -211,7 +230,7 @@ export default function CadastrarLivro() {
     await atualizarLivro();
     await cadastrarAutoresLivro();
     await cadastrarGenerosLivro();
-};
+  };
 
   return (
     <div className="Container-CadLivro">
@@ -220,13 +239,13 @@ export default function CadastrarLivro() {
       <br />
       <div className="jumbotron jumbotron-custom">
         <form
-          className="formCad"
+          className="form-row"
           onSubmit={(e) => {
             e.preventDefault();
             atualizarLivro();
           }}
         >
-          <div className="col-4">
+          <div className="form-group col-md-8">
             <label>Título</label>
             <input
               type="text"
@@ -238,38 +257,32 @@ export default function CadastrarLivro() {
             />
           </div>
 
-          <div className="col-4">
+          <div className="form-group col-md-4">
+            <label>ISBN</label>
+            <ul className="list-group">
+              <li className="list-group-item">{isbn}</li>
+            </ul>
+          </div>
+
+          <div className="form-group col-md-12">
             <label>Descrição</label>
-            <input
-              type="text"
+            <textarea
               className="form-control"
               placeholder="Descrição do livro"
               value={descricao}
               onChange={(e) => setDescricao(e.target.value)}
+              rows="2"
             />
           </div>
 
-          <div className="col-4">
-            <label>ISBN</label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="ISBN do livro"
-              value={isbn}
-              onChange={(e) => setIsbn(e.target.value)}
-              required
-            />
-            <br />
-          </div>
-
-          <div className="col-4">
+          <div className="form-group col-md-4">
             <label>Editora</label>
             <ul className="list-group">
               <li className="list-group-item">{editoraId}</li>
             </ul>
           </div>
 
-          <div className="col-4">
+          <div className="form-group col-md-4">
             <label>Link da Capa</label>
             <input
               type="text"
@@ -280,7 +293,7 @@ export default function CadastrarLivro() {
             />
           </div>
 
-          <div className="col-4">
+          <div className="form-group col-md-4">
             <label>Link de Compra</label>
             <input
               type="text"
@@ -291,37 +304,35 @@ export default function CadastrarLivro() {
             />
           </div>
 
-          <div className="col-4">
+          <div className="form-group col-md-4">
             <label>Autores</label>
             <ul className="list-group">
-              {autorId.map((autor, index) => (
-                <li key={index} className="list-group-item">
-                  {autor}
+              {autorId.map((autor) => (
+                <li key={autor.id} className="list-group-item">
+                  {autor.nome}
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="col-4">
+          <div className="form-group col-md-3">
             <label>Gêneros</label>
             <ul className="list-group">
-              {generoId.map((genero, index) => (
-                <li key={index} className="list-group-item">
-                  {genero}
-                </li>
-              ))}
+              <li className="list-group-item">
+                {generoId.map((genero) => genero.nome).join("; ")}
+              </li>
             </ul>
           </div>
 
           <br />
-          
-          <button 
-          type="submit" 
-          className="btn btn-success btnCadastro" 
-          onClick={handleClick}>
+
+          <button
+            type="submit"
+            className="btn btn-success btnCadastro"
+            onClick={handleClick}
+          >
             Cadastrar Livro
           </button>
-
         </form>
       </div>
     </div>
