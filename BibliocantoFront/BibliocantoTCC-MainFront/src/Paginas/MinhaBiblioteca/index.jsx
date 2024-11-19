@@ -3,10 +3,7 @@ import { Link, useNavigate  } from "react-router-dom";
 import api from "../../services/api";
 import "./style.css";
 import { Modal } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 
 export default function Linha() {
@@ -14,55 +11,56 @@ export default function Linha() {
   const [error, setError] = useState(null);
   const [modalVisible, setModalVisible] = useState(false); // visibilidade do modal
   const [selectedLivro, setSelectedLivro] = useState(null);
-  const [email] = useState(localStorage.getItem('email') || null);
 
   useEffect(() => {
     const fetchData = async () => {
+      const idUser = localStorage.getItem("Id");
+      if (!idUser) {
+        setError("Usuário não encontrado.");
+        return;
+      }
+  
       try {
-        await api.get('api/MeusLivros/BibliotecaByUser', param );
+        const response = await api.get(`api/MeusLivros/BibliotecaByUser?idUser=${idUser}`);
+
+        setLivros(response.data);
       } catch (err) {
         setError("Erro ao carregar os dados.");
         console.error(err);
       }
     };
-
+  
     fetchData();
   }, []);
 
   const handleImageClick = (livro) => {
-    setSelectedLivro(livro); // armazena qual livro clicou
+    setSelectedLivro(livro.livros); // armazena qual livro clicou
     setModalVisible(true); // abre o modal
-  };
-
-  const navigate = useNavigate(); // Hook para navegação
-
-  const handleEditClick = () => {
-    if (selectedLivro) {
-      navigate(`/EditarLivro/${selectedLivro.id}`); // Redireciona para a página de edição do livro selecionado
-    }
   };
 
   return (
     <div className="linha-container">
-
       {error && <p className="error">{error}</p>}
       {livros.length > 0 ? (
         <div className="livros-container">
           {livros.map((livro) => (
             <img
               className="livro-card"
-              key={livro.id}
-              src={livro.caminhoImagem}
-              alt={livro.titulo}
+              key={livro.livros.id}
+              src={livro.livros.caminhoImagem}
+              alt={livro.livros.titulo}
               onClick={() => handleImageClick(livro)}
             />
           ))}
         </div>
       ) : (
-        <p>Carregando livros...</p>
+        <button className="btn btn-load" type="button" disabled>
+          <span
+            className="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+          ></span>
+          Carregando os livros...
+        </button>
       )}
-
-
       {/* Popup Modal */}
       <Modal
         show={modalVisible}
@@ -71,7 +69,7 @@ export default function Linha() {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title>
+          <Modal.Title className="modal-title">
             {selectedLivro ? selectedLivro.titulo : "Livro"}
           </Modal.Title>
         </Modal.Header>
@@ -86,52 +84,31 @@ export default function Linha() {
                 />
               </div>
               <div className="col-md">
-                <div className="modal-text">
+                <div className="modal-text-1">
                   {selectedLivro
                     ? selectedLivro.descricao
                     : "Descrição do livro"}
                 </div>
-                <div className="modal-text">
-                  Autor: {selectedLivro?.autores?.nomeAutor || "Autor do livro"}
+                <div className="modal-text-2">
+                  Autor(es):{" "}
+                  {selectedLivro?.autores?.nomeAutor || "Autor do livro"}
                 </div>
-                <div className="modal-text">
-                  Gênero:{" "}
+                <div className="modal-text-3">
+                  Gênero(s):{" "}
                   {selectedLivro?.generos?.nomegenero || "Gênero do livro"}
                 </div>
-                <div className="modal-text">
+                <div className="modal-text-4">
                   Editora:{" "}
                   {selectedLivro?.editoras?.nomeEditora || "Editora do livro"}
                 </div>
-                <div className="modal-text">
+                <div className="modal-text-5">
                   ISBN: {selectedLivro ? selectedLivro.isbn : "ISBN"}
                 </div>
               </div>
             </div>
           </div>
         </Modal.Body>
-
-        {email && (
-          <Modal.Footer>
-          {email && (
-            <>
-              <button
-                className="btnIcon"
-                onClick={handleEditClick} // Função para editar
-              >
-                <FontAwesomeIcon icon={faEdit} />
-              </button>
-              <button
-                className="btnIcon"
-                onClick={() => handleDeleteClick(selectedLivro?.id)} // Função para deletar
-              >
-                <FontAwesomeIcon icon={faTrash} />
-              </button>
-            </>
-          )}
-        </Modal.Footer>
-        )}
       </Modal>
-
     </div>
   );
 }

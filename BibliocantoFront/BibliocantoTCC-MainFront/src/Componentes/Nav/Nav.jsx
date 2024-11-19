@@ -64,7 +64,7 @@ export default function Nav() {
 
         {email ? (
           <span>
-            <a href="/TodosLivros">Minha Biblioteca</a>
+            <a href="/MinhaBiblioteca">Minha Biblioteca</a>
           </span>
         ) : ('')}
 

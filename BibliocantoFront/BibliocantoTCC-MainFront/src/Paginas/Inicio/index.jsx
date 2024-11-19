@@ -14,7 +14,6 @@ function Inicio() {
   const [modalVisible, setModalVisible] = useState(false); // visibilidade do modal
   const [selectedLivro, setSelectedLivro] = useState(null);
   const [email] = useState(localStorage.getItem("email") || null);
-  const [idUser] = useState(localStorage.getItem("Id") || null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,15 +41,29 @@ function Inicio() {
     }
   };
 
-  const handleCheck = async (IdUser, idLivro) => {
-    try {
-      const response = await api.post('/api/MeusLivros', {
-        IdUser: IdUser,
-        idLivro: selectedLivro.id
-      });
-      console.log('Livro adicionado com sucesso:', response.data);
-    } catch (error) {
-      console.error('Erro ao adicionar o livro:', error);
+  const handleAddMeuLivro = async () => {
+    const idUser = localStorage.getItem("Id");
+  
+    if (!idUser) {
+      alert('Usuário não encontrado');
+      return;
+    }
+  
+    if (selectedLivro) {
+      const idLivro = selectedLivro.id;
+  
+      const data = { idUser, idLivro };
+      
+      try {
+        const response = await api.post('/api/MeusLivros', data);
+        console.log(response);
+        alert('Livro adicionado com sucesso!');
+      } catch (error) {
+        console.error(error);
+        alert('Falha ao salvar livro na biblioteca!: ' + error.message);
+      }
+    } else {
+      alert('Nenhum livro selecionado');
     }
   };
 
@@ -137,7 +150,7 @@ function Inicio() {
                 </button>
                 <button
                   className="btnIcon"
-                  onClick={handleCheck} // Função para editar
+                  onClick={handleAddMeuLivro} // Função para editar
                 >
                   <FontAwesomeIcon icon={faCheck} />
                 </button>
