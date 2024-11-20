@@ -6,7 +6,11 @@ import { Modal } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faCheck } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEdit,
+  faCheck,
+  faCartShopping,
+} from "@fortawesome/free-solid-svg-icons";
 
 function Inicio() {
   const [livros, setLivros] = useState([]);
@@ -70,27 +74,27 @@ function Inicio() {
 
   const handleAddMeuLivro = async () => {
     const idUser = localStorage.getItem("Id");
-  
+
     if (!idUser) {
-      alert('Usuário não encontrado');
+      alert("Usuário não encontrado");
       return;
     }
-  
+
     if (selectedLivro) {
       const idLivro = selectedLivro.id;
-  
+
       const data = { idUser, idLivro };
-      
+
       try {
-        const response = await api.post('/api/MeusLivros', data);
+        const response = await api.post("/api/MeusLivros", data);
         console.log(response);
-        alert('Livro adicionado com sucesso!');
+        alert("Livro adicionado com sucesso!");
       } catch (error) {
         console.error(error);
-        alert('Falha ao salvar livro na biblioteca!: ' + error.message);
+        alert("Falha ao salvar livro na biblioteca!: " + error.message);
       }
     } else {
-      alert('Nenhum livro selecionado');
+      alert("Nenhum livro selecionado");
     }
   };
 
@@ -182,6 +186,14 @@ function Inicio() {
                 >
                   <FontAwesomeIcon icon={faEdit} />
                 </button>
+                {selectedLivro?.linkCompra && (
+              <button
+                className="btnIcon"
+                onClick={() => window.open(selectedLivro.linkCompra, "_blank")}
+              >
+                <FontAwesomeIcon icon={faCartShopping} />
+              </button>
+            )}
                 <button
                   className="btnIcon"
                   onClick={handleAddMeuLivro} // Função para editar
@@ -190,6 +202,7 @@ function Inicio() {
                 </button>
               </>
             )}
+            
           </Modal.Footer>
         )}
       </Modal>

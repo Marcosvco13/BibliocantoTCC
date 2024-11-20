@@ -12,7 +12,7 @@ namespace Bibliocanto.Resources
         public string? CaminhoImagem { get; set; }
         [StringLength(50)]
         public string? Isbn { get; set; }
-        [StringLength(255)]
+        [StringLength(1555)]
         public string? LinkCompra { get; set; }
         public int EditoraId { get; set; }
     }
