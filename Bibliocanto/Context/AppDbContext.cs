@@ -116,8 +116,8 @@ namespace Bibliocanto.Context
 
             builder.Entity<AutoresLivros>().HasData
             (
-                new AutoresLivros { Id = 1, IdLivro = 100, IdAutor = 101 },
-                new AutoresLivros { Id = 2, IdLivro = 101, IdAutor = 100 }
+                new AutoresLivros { Id = 1, IdLivro = 100, IdAutor = 100 },
+                new AutoresLivros { Id = 2, IdLivro = 101, IdAutor = 101 }
             );
 
             builder.Entity<GeneroLivro>().ToTable("GenerosLivro");
