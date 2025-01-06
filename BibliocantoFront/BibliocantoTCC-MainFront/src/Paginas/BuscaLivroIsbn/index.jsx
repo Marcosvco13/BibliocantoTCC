@@ -201,7 +201,7 @@ export default function BuscaLivroIsbn() {
       localStorage.setItem("autoresCriados", JSON.stringify(autoresCompletos));
       localStorage.setItem("generosCriados", JSON.stringify(generosCompletos));
   
-      alert("Autores e Gêneros cadastrados com sucesso!");
+      //alert("Autores e Gêneros cadastrados com sucesso!");
     } catch (error) {
       console.error("Erro ao cadastrar autores e gêneros:", error);
       alert("Erro ao cadastrar autores e gêneros.");

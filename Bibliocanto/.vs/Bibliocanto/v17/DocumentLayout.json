@@ -36,7 +36,7 @@
               "RelativeDocumentMoniker": "Context\\AppDbContext.cs",
               "ToolTip": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Context\\AppDbContext.cs",
               "RelativeToolTip": "Context\\AppDbContext.cs",
-              "ViewState": "AQIAAGwAAAAAAAAAAAAAAHoAAABCAAAA",
+              "ViewState": "AQIAAGwAAAAAAAAAAAAAAGwAAAB5AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-20T21:01:01.543Z",
               "EditorCaption": ""
@@ -51,8 +51,7 @@
               "RelativeToolTip": "appsettings.json",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-11-12T23:19:00.452Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-12T23:19:00.452Z"
             }
           ]
         }

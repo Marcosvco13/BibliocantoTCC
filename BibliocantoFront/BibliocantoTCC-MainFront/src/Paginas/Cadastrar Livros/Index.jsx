@@ -170,7 +170,7 @@ export default function CadastrarLivro() {
       const updatedBook = await api.putLivro(id, livroData);
       console.log("Livro atualizado com sucesso:", updatedBook);
 
-      //navigate("/sua-rota-de-destino");
+      navigate("/");
     } catch (error) {
       console.error("Erro ao atualizar o livro:", error);
     }
@@ -187,7 +187,7 @@ export default function CadastrarLivro() {
           console.log("Enviando ID do autor:", autorIdSingle);
           await api.cadastrarLivroAutor(idLivro, autorIdSingle); // Usando autorIdSingle (id do autor)
         }
-        alert("Todos os autores foram associados ao livro com sucesso!");
+        //alert("Todos os autores foram associados ao livro com sucesso!");
       } else {
         alert("Nenhum autor selecionado para associar ao livro.");
       }
@@ -211,7 +211,7 @@ export default function CadastrarLivro() {
           console.log("Enviando ID do genero:", generoIdSingle);
           await api.cadastrarLivroGenero(idLivro, generoIdSingle); // Usando generoIdSingle (id do gênero)
         }
-        alert("Todos os generos foram associados ao livro com sucesso!");
+        //alert("Todos os generos foram associados ao livro com sucesso!");
       } else {
         alert("Nenhum genero selecionado para associar ao livro.");
       }
