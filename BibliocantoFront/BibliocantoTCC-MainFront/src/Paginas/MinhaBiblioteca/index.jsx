@@ -4,6 +4,8 @@ import api from "../../services/api";
 import "./style.css";
 import { Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 
 export default function Linha() {
@@ -11,6 +13,7 @@ export default function Linha() {
   const [error, setError] = useState(null);
   const [modalVisible, setModalVisible] = useState(false); // visibilidade do modal
   const [selectedLivro, setSelectedLivro] = useState(null);
+  const [email] = useState(localStorage.getItem("email") || null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,8 +39,47 @@ export default function Linha() {
   const handleImageClick = (livro) => {
     setSelectedLivro(livro.livros); // armazena qual livro clicou
     setModalVisible(true); // abre o modal
+    console.log(livro.id);
   };
 
+  const handleRemoverLivro = async () => {
+    const idUser = localStorage.getItem("Id");
+    const getToken = () => localStorage.getItem('token');
+  
+    if (!idUser) {
+      setError("Usuário não encontrado.");
+      return;
+    }
+  
+    const token = getToken();
+    if (!token) {
+      setError("Token de autenticação não encontrado.");
+      return;
+    }
+  
+    try {
+      const response = await api.delete(`api/MeusLivros/${livro.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+  
+      if (response.status === 200) {
+        alert("Livro removido da sua biblioteca.");
+      } else if (response.status === 401) {
+        setError("Não autorizado. Faça login novamente.");
+      } else if (response.status === 404) {
+        setError("Livro não encontrado.");
+      } else {
+        setError("Falha ao remover o livro. Tente novamente.");
+      }
+  
+    } catch (err) {
+      setError("Erro ao carregar os dados. Por favor, tente novamente.");
+      console.error("Erro ao remover o livro:", err);
+    }
+  };
+  
   return (
     <div className="linha-container">
       {error && <p className="error">{error}</p>}
@@ -108,6 +150,19 @@ export default function Linha() {
             </div>
           </div>
         </Modal.Body>
+        <Modal.Footer>
+                    {email && (
+                      <>                  
+                        <button
+                          className="btnIcon"
+                          onClick={handleRemoverLivro} // Função para adicionar o livro a biblioteca
+                        >
+                          <FontAwesomeIcon icon={faTrash} />
+                        </button>
+                      </>
+                    )}
+                    
+        </Modal.Footer>
       </Modal>
     </div>
   );

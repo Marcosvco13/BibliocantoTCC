@@ -86,9 +86,10 @@ function Inicio() {
       const data = { idUser, idLivro };
 
       try {
+        
         const response = await api.post("/api/MeusLivros", data);
-        console.log(response);
         alert("Livro adicionado com sucesso!");
+
       } catch (error) {
         console.error(error);
         alert("Falha ao salvar livro na biblioteca!: " + error.message);
@@ -196,7 +197,7 @@ function Inicio() {
             )}
                 <button
                   className="btnIcon"
-                  onClick={handleAddMeuLivro} // Função para editar
+                  onClick={handleAddMeuLivro} // Função para adicionar o livro a biblioteca
                 >
                   <FontAwesomeIcon icon={faCheck} />
                 </button>
