@@ -18,18 +18,17 @@ const getToken = () => localStorage.getItem('token');
 // Método GET para buscar livro por ISBN
 api.buscarLivroPorISBN = async function(isbn) {
     try {
-        const response = await api.get(`/api/Livros/ISBN/${isbn}`, {
+        const response = await api.get(`/api/Livros/GetLivroByIsbn?isbn=${isbn}`, {
             headers: {
                 Authorization: `Bearer ${getToken()}`
             }
         });
-        return response.data;
+        return response; // Retorna o objeto completo, incluindo status e data
     } catch (error) {
         console.error("Erro ao buscar o livro:", error);
         throw error;
     }
 };
-
 
 // Função para cadastrar um único autor
 api.cadastrarAutor = async (autor) => {
@@ -98,7 +97,7 @@ api.buscarGeneroPorNomeAjustado = async (nomeGenero) => {
     }
   };
   
-  // Função para cadastrar múltiplos autores e gêneros armazenados com verificação de duplicidade robusta
+  // Função para cadastrar múltiplos autores e gêneros armazenados com verificação de duplicidade
 api.cadastrarAutoresEGêneros = async function(autoresArmazenados, generosArmazenados) {
     try {
       const autorIds = await Promise.all(autoresArmazenados.map(async (autor) => {
@@ -136,6 +135,7 @@ api.cadastrarAutoresEGêneros = async function(autoresArmazenados, generosArmaze
       throw error;
     }
   };
+
   // cadastrar na tabela LivroAutor
   api.cadastrarLivroAutor = async function (idLivro, autorIdSingle) {
     try {
@@ -240,6 +240,7 @@ api.cadastrarEditora = async function (nomeEditora) {
 
 api.PreCadastroLivro = async function (titulo, isbn, editoraId) {
     try {
+
         const response = await axios.post('http://localhost:5162/api/Livros', 
             {
                 titulo: titulo,
@@ -402,7 +403,7 @@ api.getEditoraByName = async function(nameEditora) {
                 Authorization: `Bearer ${getToken()}`
             }
         });
-        console.log("Resposta da API:", response.data); // Log da resposta da API
+        //console.log("Resposta da API:", response.data); // Log da resposta da API
         if (response && response.data) {
             return response.data; // Presumindo que a resposta retorna o ID da editora
         } else {
@@ -557,67 +558,5 @@ api.putLivro = async function(id, livroData) {
       throw error;
     }
   };  
-
-api.putAutor = async function(id, autorData) {
-    try {
-        const response = await api.put(`/api/Autores/${id}`, autorData, {
-            headers: {
-                Authorization: `Bearer ${getToken()}`
-            }
-        });
-        console.log('Autor atualizado com sucesso:', response.data);
-        return response.data;
-    } catch (error) {
-        console.error("Erro ao atualizar o autor:", error);
-        throw error;
-    }
-};
-
-api.putEditora = async function(id, editoraData) {
-    try {
-        const response = await api.put(`/api/Editoras/${id}`, editoraData, {
-            headers: {
-                Authorization: `Bearer ${getToken()}`
-            }
-        });
-        console.log('Editora atualizada com sucesso:', response.data);
-        return response.data;
-    } catch (error) {
-        console.error('Erro ao atualizar a editora:', error);
-        throw error;
-    }
-};
-
-// Método DELETE para Editoras
-api.deleteEditora = async function(id) {
-    try {
-        const response = await api.delete(`/api/Editoras/${id}`, {
-            headers: {
-                Authorization: `Bearer ${getToken()}`
-            }
-        });
-        console.log('Editora excluída com sucesso:', response.data);
-        return response.data;
-    } catch (error) {
-        console.error('Erro ao excluir a editora:', error);
-        throw error;
-    }
-};
-
-// Método DELETE para Livros
-api.deleteLivro = async function(id) {
-    try {
-        const response = await api.delete(`/api/Livros/${id}`, {
-            headers: {
-                Authorization: `Bearer ${getToken()}`
-            }
-        });
-        console.log('Livro excluído com sucesso:', response.data);
-        return response.data;
-    } catch (error) {
-        console.error('Erro ao excluir o livro:', error);
-        throw error;
-    }
-};
 
 export default api;

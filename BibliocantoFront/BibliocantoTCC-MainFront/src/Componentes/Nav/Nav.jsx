@@ -56,7 +56,7 @@ export default function Nav() {
       <div className="nav-options-left-2">
       {email && !isOnRestrictedPage && (
         <>
-          <a href="/BuscaIsbn">Cadastrar Livro</a>
+          <a href="/BuscaISBN">Cadastrar Livro</a>
         </>
       )}
     </div>
