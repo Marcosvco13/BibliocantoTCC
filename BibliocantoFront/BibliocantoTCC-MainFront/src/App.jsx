@@ -8,7 +8,6 @@ import Nav from "./Componentes/Nav/Nav";
 import Footer from "./Componentes/Footer/index";
 
 //paginas
-import CadastrarLivro from "./Paginas/Cadastrar Livros/Index";
 import Login from "./Paginas/Login";
 import NewUser from "./Paginas/NewUser";
 import EditarLivro from "./Paginas/Edit Livro";
@@ -35,7 +34,6 @@ export default function App() {
         <Nav />
         <Routes>
           <Route path="/" element={<Inicio />} />
-          <Route path="/CadastrarLivro/:id" element={<CadastrarLivro />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/NewUser" element={<NewUser />} />
           <Route path="/EditarLivro/:id" element={<EditarLivro />} />

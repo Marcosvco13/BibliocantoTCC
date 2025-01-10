@@ -5,8 +5,11 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import api from "../../services/api";
+import "./CadastroLivro.css";
 
 function CadastroLivro() {
+  const navigate = useNavigate();
+
   const [titulo, setTitulo] = useState("");
   const [isbn, setIsbn] = useState("");
   const [descricao, setDescricao] = useState("");
@@ -26,11 +29,11 @@ function CadastroLivro() {
     // Recupera os dados do localStorage da pag pre cadastro
     const autoresCriados = JSON.parse(localStorage.getItem("autoresCriados")) || [];
     setAutores(autoresCriados);
-    console.log("Autores no localStorage:", autoresCriados);
+    //console.log("Autores no localStorage:", autoresCriados);
 
     const generosCriados = JSON.parse(localStorage.getItem("generosCriados")) || [];
     setGeneros(generosCriados);
-    console.log("Gêneros do localStorage:", generosCriados);
+    //console.log("Gêneros do localStorage:", generosCriados);
   }, []);
 
   useEffect(() => {
@@ -73,7 +76,7 @@ function CadastroLivro() {
       if (editoraData && editoraData.length > 0) {
         const editora = editoraData[0];
         if (editora.id) {
-          console.log("ID da Editora:", editora.id);
+          //console.log("ID da Editora:", editora.id);
           return editora.id;
         } else {
           console.error("Editora não encontrada ou ID não disponível");
@@ -106,7 +109,7 @@ function CadastroLivro() {
       };
 
       const updatedBook = await api.putLivro(livro.id, livroData);
-      console.log("Livro atualizado com sucesso:", updatedBook);
+      //console.log("Livro atualizado com sucesso:", updatedBook);
     } catch (error) {
       console.error("Erro ao atualizar o livro:", error);
     }
@@ -121,7 +124,7 @@ function CadastroLivro() {
         //console.log("Lista de autores a serem associados:", autores); // Log para verificar os autores
 
         for (const autor of autores) {
-          console.log("Enviando ID do autor:", autor.id);
+          //console.log("Enviando ID do autor:", autor.id);
           await api.cadastrarLivroAutor(idLivro, autor.id); // Usando o ID do autor
         }
         alert("Todos os autores foram associados ao livro com sucesso!");
@@ -143,7 +146,7 @@ function CadastroLivro() {
 
       if (Array.isArray(generos) && generos.length > 0) {
         for (const genero of generos) {
-          console.log("Enviando ID do genero:", genero.id);
+          //console.log("Enviando ID do genero:", genero.id);
           await api.cadastrarLivroGenero(idLivro, genero.id); // Usando o ID do gênero
         }
         alert("Todos os generos foram associados ao livro com sucesso!");
@@ -165,10 +168,16 @@ function CadastroLivro() {
     await atualizarLivro();
     await cadastrarAutoresLivro();
     await cadastrarGenerosLivro();
+    
+    navigate(`/`);
   };
 
   return (
-    <Form>
+    <div className="PagFinalizarCad">
+      <div className="TituloFinalizarCad">
+        <h2>Finalizar Cadastro</h2>
+      </div>
+    <Form className="formFinalizarCad">
       <Row className="mb-3">
         <Form.Group as={Col} controlId="formGridISBN">
           <Form.Label>ISBN</Form.Label>
@@ -194,7 +203,9 @@ function CadastroLivro() {
       <Form.Group className="mb-3" controlId="formGridSinopse">
         <Form.Label>Sinopse</Form.Label>
         <Form.Control
-          type="text"
+          as="textarea"
+          rows={2}
+          className="sinopse-textarea"
           value={descricao} // Usando o estado descricao
           placeholder="Enter Sinopse"
           onChange={(e) => setDescricao(e.target.value)} // Atualiza o estado descricao
@@ -261,10 +272,16 @@ function CadastroLivro() {
       </Form.Group>
     </Row>
 
-      <Button variant="primary" type="submit" onClick={handleClick}>
+      <Button 
+      variant="primary" 
+      type="submit" 
+      onClick={handleClick}
+      className="btn-cadastrar-livro"
+      >
         Finalizar Cadastro
       </Button>
     </Form>
+    </div>
   );
 }
 

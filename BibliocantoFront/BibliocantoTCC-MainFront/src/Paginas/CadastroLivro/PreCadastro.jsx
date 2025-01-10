@@ -5,6 +5,7 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import api from "../../services/api";
+import "./PreCadastro.css";
 
 function PreCadastro() {
   const location = useLocation();
@@ -101,7 +102,7 @@ const handleAdicionarAutor = () => {
   setNovoAutor(""); // Limpa o campo de input
 
   // Log para verificar como os autores estão sendo armazenados
-  console.log("Autores cadastrados:", autoresAtualizados);
+  //console.log("Autores cadastrados:", autoresAtualizados);
 };
 
 // Função para adicionar o novo gênero
@@ -117,11 +118,15 @@ const handleAdicionarGenero = () => {
   setNovoGenero(""); // Limpa o campo de input
 
   // Log para verificar como os gêneros estão sendo armazenados
-  console.log("Gêneros cadastrados:", generosAtualizados);
+  //console.log("Gêneros cadastrados:", generosAtualizados);
 };
 
   return (
-    <Form>
+    <div className="PagPreCad">
+      <div className="TituloPreCad">
+        <h2>Pré-Cadastro</h2>
+      </div>
+    <Form className="formprecadastro">
       <Row className="mb-3">
         <Form.Group as={Col} controlId="formGridISBN">
           <Form.Label>ISBN</Form.Label>
@@ -129,6 +134,7 @@ const handleAdicionarGenero = () => {
             type="text"
             defaultValue={isbn}
             placeholder="Enter ISBN"
+            readOnly
           />
         </Form.Group>
 
@@ -138,6 +144,7 @@ const handleAdicionarGenero = () => {
             type="text"
             defaultValue={livro.title}
             placeholder="Enter Title"
+            readOnly
           />
         </Form.Group>
       </Row>
@@ -148,6 +155,7 @@ const handleAdicionarGenero = () => {
           type="text"
           defaultValue={livro.publisher}
           placeholder="Enter Publisher"
+          readOnly
         />
       </Form.Group>
 
@@ -167,7 +175,7 @@ const handleAdicionarGenero = () => {
     ))
   ) : (
     <>
-      <p>Nenhum autor encontrado. Adicione manualmente abaixo:</p>
+      <p className="alerta-vermelho">Nenhum autor encontrado. Adicione manualmente abaixo:</p>
       {novosAutores.map((autor, index) => (
         <div
           key={`new-author-${index}`}
@@ -181,15 +189,17 @@ const handleAdicionarGenero = () => {
           />
         </div>
       ))}
-      <div className="d-flex align-items-center">
+      <div className="d-flex align-items-center gap-2">
         <Form.Control
           type="text"
           value={novoAutor}
           onChange={(e) => setNovoAutor(e.target.value)}
           placeholder="Novo autor"
-          className="me-2"
+          className="input-align"
         />
-        <Button variant="success" onClick={handleAdicionarAutor}>
+        <Button variant="success"
+         onClick={handleAdicionarAutor} 
+         className="button-align">
           Adicionar
         </Button>
       </div>
@@ -212,7 +222,7 @@ const handleAdicionarGenero = () => {
     ))
   ) : (
     <>
-      <p>Nenhum gênero encontrado. Adicione manualmente abaixo:</p>
+      <p className="alerta-vermelho">Nenhum gênero encontrado. Adicione manualmente abaixo:</p>
       {novosGeneros.map((genero, index) => (
         <div
           key={`new-subject-${index}`}
@@ -226,15 +236,17 @@ const handleAdicionarGenero = () => {
           />
         </div>
       ))}
-      <div className="d-flex align-items-center">
+      <div className="d-flex align-items-center gap-2">
         <Form.Control
           type="text"
           value={novoGenero}
           onChange={(e) => setNovoGenero(e.target.value)}
           placeholder="Novo gênero"
-          className="me-2"
+          className="input-align"
         />
-        <Button variant="success" onClick={handleAdicionarGenero}>
+        <Button variant="success" 
+        onClick={handleAdicionarGenero} 
+        className="button-align">
           Adicionar
         </Button>
       </div>
@@ -253,13 +265,13 @@ const handleAdicionarGenero = () => {
           try {
             // Cadastra a editora
             const editoraId = await api.cadastrarEditora(livro.publisher);
-            console.log("Editora cadastrada com ID:", editoraId);
+            //console.log("Editora cadastrada com ID:", editoraId);
 
             // Pre-cadastro do livro
             const titulo = livro.title || livro.titulo;
             const livroId = await api.PreCadastroLivro(titulo, isbn, editoraId);
 
-            console.log("Livro pré-cadastrado com ID:", livroId);
+            //console.log("Livro pré-cadastrado com ID:", livroId);
 
             // Cadastra autores e gêneros
             await handleCadastrarAutoresEGêneros();
@@ -273,10 +285,13 @@ const handleAdicionarGenero = () => {
             console.error("Erro ao pre-cadastrar o livro:", error);
           }
         }}
+
+        className="btn-pre-cadastrar-livro"
       >
         Pre-Cadastrar Livro
       </Button>
     </Form>
+    </div>
   );
 }
 

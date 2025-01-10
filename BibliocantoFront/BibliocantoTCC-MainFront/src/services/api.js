@@ -103,10 +103,10 @@ api.cadastrarAutoresEGêneros = async function(autoresArmazenados, generosArmaze
       const autorIds = await Promise.all(autoresArmazenados.map(async (autor) => {
         const autorExistente = await api.buscarAutorPorNomeAjustado(autor.nome);
         if (autorExistente) {
-          console.log(`Autor já existe: ${autor.nome} com ID ${autorExistente.id}`);
+          //console.log(`Autor já existe: ${autor.nome} com ID ${autorExistente.id}`);
           return autorExistente.id; // Retorna o ID do autor existente
         } else {
-          console.log(`Cadastrando novo autor: ${autor.nome}`);
+          //console.log(`Cadastrando novo autor: ${autor.nome}`);
           const novoAutor = await api.cadastrarAutor({ NomeAutor: autor.nome });
           return novoAutor.id; // Retorna o ID do novo autor
         }
@@ -118,16 +118,16 @@ api.cadastrarAutoresEGêneros = async function(autoresArmazenados, generosArmaze
         const generoExistente = await api.buscarGeneroPorNomeAjustado(genero.nome);
         
         if (generoExistente) {
-          console.log(`Gênero já existe: ${genero.nome} com ID ${generoExistente.id}`);
+          //console.log(`Gênero já existe: ${genero.nome} com ID ${generoExistente.id}`);
           return generoExistente.id; // Retorna o ID do gênero existente
         } else {
-          console.log(`Cadastrando novo gênero: ${genero.nome}`);
+          //console.log(`Cadastrando novo gênero: ${genero.nome}`);
           const novoGenero = await api.cadastrarGenero({ NomeGenero: genero.nome });
           return novoGenero.id; // Retorna o ID do novo gênero
         }
       }));
   
-      console.log('Autores e gêneros cadastrados com sucesso:', { autorIds, generoIds });
+      //console.log('Autores e gêneros cadastrados com sucesso:', { autorIds, generoIds });
       return { autorIds, generoIds };
   
     } catch (error) {
@@ -204,7 +204,7 @@ api.cadastrarEditora = async function (nomeEditora) {
 
         } catch (error) {
             if (error.response && error.response.status === 404) {
-                console.log(`Editora com o nome "${nomeEditora}" não encontrada, procedendo com o cadastro.`);
+                //console.log(`Editora com o nome "${nomeEditora}" não encontrada, procedendo com o cadastro.`);
             } else {
                 console.error('Erro ao verificar editora:', error);
                 throw error;
@@ -213,7 +213,7 @@ api.cadastrarEditora = async function (nomeEditora) {
 
         // Se a editora já existe, retorna o ID
         if (editoraExistente) {
-            console.log('Editora já existente:', editoraExistente);
+            //console.log('Editora já existente:', editoraExistente);
             return editoraExistente.id;
         }
 
@@ -227,7 +227,7 @@ api.cadastrarEditora = async function (nomeEditora) {
                 }
             }
         );
-        console.log('Editora cadastrada com sucesso:', response.data);
+        //console.log('Editora cadastrada com sucesso:', response.data);
         return response.data.id;
 
     } catch (error) {
@@ -253,7 +253,7 @@ api.PreCadastroLivro = async function (titulo, isbn, editoraId) {
                 }
             }
         );
-        console.log('Livro pré-cadastrado com sucesso:', response.data);
+        //console.log('Livro pré-cadastrado com sucesso:', response.data);
         return response.data.id;
     } catch (error) {
         console.error('Erro ao pré-cadastrar livro:', error);
