@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate  } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../../services/api";
 import "./style.css";
 import { Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 export default function Linha() {
   const [livros, setLivros] = useState([]);
@@ -19,9 +21,11 @@ export default function Linha() {
         setError("Usuário não encontrado.");
         return;
       }
-  
+
       try {
-        const response = await api.get(`api/MeusLivros/BibliotecaByUser?idUser=${idUser}`);
+        const response = await api.get(
+          `api/MeusLivros/BibliotecaByUser?idUser=${idUser}`
+        );
 
         setLivros(response.data);
       } catch (err) {
@@ -29,7 +33,7 @@ export default function Linha() {
         console.error(err);
       }
     };
-  
+
     fetchData();
   }, []);
 
@@ -56,7 +60,9 @@ export default function Linha() {
       ) : (
         <button className="btn btn-load" type="button" disabled>
           <span
-            className="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+            className="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
           ></span>
           Carregando os livros...
         </button>
@@ -108,6 +114,30 @@ export default function Linha() {
             </div>
           </div>
         </Modal.Body>
+
+        <Modal.Footer>
+          <>
+            <button className="btnIcon">
+              <FontAwesomeIcon icon={faEdit} />
+            </button>
+            {selectedLivro?.linkCompra && (
+              <button
+                className="btnIcon"
+                onClick={() => window.open(selectedLivro.linkCompra, "_blank")}
+              >
+                <FontAwesomeIcon icon={faCartShopping} />
+              </button>
+            )}
+          </>
+
+          <button className="btnIcon">
+            <i className="bi bi-bookmark-x"></i>
+          </button>
+
+          <button className="btnIcon">
+            <i className="bi bi-box-arrow-in-right"></i>
+          </button>
+        </Modal.Footer>
       </Modal>
     </div>
   );

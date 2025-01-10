@@ -5,6 +5,7 @@ import "./style.css";
 import { Modal } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEdit,
@@ -196,9 +197,9 @@ function Inicio() {
             )}
                 <button
                   className="btnIcon"
-                  onClick={handleAddMeuLivro} // Função para editar
+                  onClick={handleAddMeuLivro}
                 >
-                  <FontAwesomeIcon icon={faCheck} />
+                  <i className="bi bi-bookmark-plus"></i>
                 </button>
               </>
             )}
