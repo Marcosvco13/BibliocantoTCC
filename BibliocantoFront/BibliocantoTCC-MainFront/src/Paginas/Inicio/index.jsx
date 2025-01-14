@@ -187,6 +187,8 @@ function Inicio() {
                 >
                   <FontAwesomeIcon icon={faEdit} />
                 </button>
+
+
                 {selectedLivro?.linkCompra && (
               <button
                 className="btnIcon"
@@ -195,6 +197,8 @@ function Inicio() {
                 <FontAwesomeIcon icon={faCartShopping} />
               </button>
             )}
+
+            
                 <button
                   className="btnIcon"
                   onClick={handleAddMeuLivro}

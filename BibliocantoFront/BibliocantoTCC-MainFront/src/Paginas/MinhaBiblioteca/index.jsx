@@ -14,6 +14,8 @@ export default function Linha() {
   const [modalVisible, setModalVisible] = useState(false); // visibilidade do modal
   const [selectedLivro, setSelectedLivro] = useState(null);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchData = async () => {
       const idUser = localStorage.getItem("Id");
@@ -40,6 +42,12 @@ export default function Linha() {
   const handleImageClick = (livro) => {
     setSelectedLivro(livro.livros); // armazena qual livro clicou
     setModalVisible(true); // abre o modal
+  };
+
+  const handleNavigateToLivro = () => {
+    if (selectedLivro) {
+      navigate(`/Livro/${selectedLivro.id}`);
+    }
   };
 
   return (
@@ -134,8 +142,8 @@ export default function Linha() {
             <i className="bi bi-bookmark-x"></i>
           </button>
 
-          <button className="btnIcon">
-            <i className="bi bi-box-arrow-in-right"></i>
+          <button className="btnIcon" onClick={handleNavigateToLivro}>
+            <i className="bi bi-book"></i>
           </button>
         </Modal.Footer>
       </Modal>

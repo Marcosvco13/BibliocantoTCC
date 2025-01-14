@@ -60,20 +60,20 @@ export default function Nav() {
             <a href="/BuscaISBN">Cadastrar Livro</a>
           </>
         )}
+
+        {email ? (
+          <span>
+            <a href="/NavegarPorGenero">Navegar Por Gêneros</a>
+          </span>
+        ) : (
+          ""
+        )}
       </div>
 
       <div className="nav-options-right">
         {email ? (
           <span>
             <a href="/MinhaBiblioteca">Minha Biblioteca</a>
-          </span>
-        ) : (
-          ""
-        )}
-
-        {email ? (
-          <span>
-            <a href="/NavegarPorGenero">Navegar Por Gêneros</a>
           </span>
         ) : (
           ""

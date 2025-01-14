@@ -17,7 +17,7 @@ function NavegarGenero() {
       
           const generosComDetalhes = await Promise.all(
             generos.map(async (genero) => {
-              console.log(`Buscando livros para o gênero: ${genero.nomegenero} (ID: ${genero.id})`);
+              //console.log(`Buscando livros para o gênero: ${genero.nomegenero} (ID: ${genero.id})`);
       
               if (!genero.id) {
                 console.error(`ID inválido para o gênero: ${genero.nomegenero}`);

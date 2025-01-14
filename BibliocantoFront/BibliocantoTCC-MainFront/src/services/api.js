@@ -315,6 +315,28 @@ api.getLivrosByGenero = async function(generoId) {
     }
 };
 
+// Método GET para buscar uma editora por ID
+api.getEditoraByID = async function(editoraid) {
+    try {
+        // Ajuste da URL para usar um endpoint com ID direto na URL
+        const response = await api.get(`/api/Editoras/${editoraid}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}` // Incluindo o token de autorização
+            }
+        });
+        
+        // Verifica se a resposta contém dados
+        if (response && response.data) {
+            return response.data;
+        } else {
+            console.error("No data in response");
+        }
+    } catch (error) {
+        console.error("Erro ao buscar a editora com ID:", error);
+        throw error;
+    }
+};
+
 // Método GET para buscar id generos de pelo nome
 api.getGeneroByName = async function(nameGenero) {
     try {

@@ -19,6 +19,7 @@ import PreCadastro from "./Paginas/CadastroLivro/PreCadastro";
 import BuscaIsbn from "./Paginas/CadastroLivro/BuscaISBN";
 import CadastroLivro from "./Paginas/CadastroLivro/CadastroLivro";
 import NavegarGenero from "./Paginas/Navegar Por Generos";
+import Livro from "./Paginas/Livro/livro";
 
 export default function App() {
   const [generos, setGeneros] = useState([]);
@@ -45,6 +46,8 @@ export default function App() {
           <Route path="/PreCadastrar" element={<PreCadastro />} />
           <Route path="/FinalizarCadastro" element={<CadastroLivro />} />
           <Route path="/NavegarPorGenero" element={<NavegarGenero />} />
+          <Route path="/Livro/:id" element={<Livro />} />
+
         </Routes>
         <Footer />
       </BrowserRouter>
