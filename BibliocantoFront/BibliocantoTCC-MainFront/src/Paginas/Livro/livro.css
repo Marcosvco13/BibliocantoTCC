@@ -1,9 +1,57 @@
+.livro-coluna {
+  display: flex; /* Torna o contêiner um flex container */
+  flex-direction: column; /* Organiza os itens verticalmente */
+  align-items: center; /* Centraliza os itens horizontalmente */
+  justify-content: flex-start; /* Garante que os itens começam no topo */
+  text-align: center; /* Centraliza o texto dentro dos elementos */
+  height: 100%; /* Garante que a altura ocupe todo o espaço */
+  padding: 10px; /* Adiciona espaçamento interno */
+}
+
 .livro-imagem {
-    width: 280px;
-    height: 100%;
-    object-fit: cover;
-    border: 1px solid rgba(0, 0, 0, 0.1); /* Borda discreta */
-    border-radius: 5px; /* Bordas levemente arredondadas */
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave para destaque */
-    transition: transform 0.2s ease-in-out; /* Efeito suave ao passar o mouse */
-  }
+  width: 280px;
+  height: auto; /* Mantém a proporção da imagem */
+  object-fit: cover; /* Ajusta a imagem sem distorcer */
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Borda discreta */
+  border-radius: 5px; /* Bordas arredondadas */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para destaque */
+  margin-bottom: 20px; /* Espaço inferior para separar da descrição */
+}
+
+.div-info {
+  width: 100%; /* Faz a div ocupar toda a largura do contêiner */
+  padding: 10px 0; /* Adiciona espaço interno */
+}
+
+.box-avaliacao {
+  display: flex; /* Centraliza a avaliação */
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.rating-container {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.livro-coluna-texto {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Alinha o conteúdo verticalmente no centro */
+  align-items: center; /* Alinha o conteúdo horizontalmente no centro */
+  text-align: justify; /* Justifica o texto */
+  padding: 10px; /* Adiciona espaçamento interno */
+  height: 100%; /* Garante que a coluna ocupe toda a altura */
+}
+
+.livro-coluna-texto h1 {
+  text-align: center; /* Centraliza o título */
+  margin-bottom: 20px; /* Adiciona espaço abaixo do título */
+}
+
+.livro-coluna-texto p {
+  text-align: justify; /* Justifica o texto */
+  margin-bottom: 20px; /* Adiciona espaço entre parágrafos */
+}
