@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate  } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../../services/api";
 import "./style.css";
 import { Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
-
+import { faEdit, faCartShopping, faTrash } from "@fortawesome/free-solid-svg-icons";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 export default function Linha() {
   const [livros, setLivros] = useState([]);
@@ -15,6 +15,8 @@ export default function Linha() {
   const [selectedLivro, setSelectedLivro] = useState(null);
   const [meuLivro, setMeuLivroClick] = useState(null);
   const [email] = useState(localStorage.getItem("email") || null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,7 +27,9 @@ export default function Linha() {
       }
 
       try {
-        const response = await api.get(`api/MeusLivros/BibliotecaByUser?idUser=${idUser}`);
+        const response = await api.get(
+          `api/MeusLivros/BibliotecaByUser?idUser=${idUser}`
+        );
 
         setLivros(response.data);
       } catch (err) {
@@ -79,6 +83,11 @@ export default function Linha() {
       console.error("Erro ao remover o livro:", err);
     }
 
+  const handleNavigateToLivro = () => {
+    if (selectedLivro) {
+      navigate(`/Livro/${selectedLivro.id}`);
+    }
+
   };
 
   return (
@@ -99,7 +108,9 @@ export default function Linha() {
       ) : (
         <button className="btn btn-load" type="button" disabled>
           <span
-            className="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+            className="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
           ></span>
           Carregando os livros...
         </button>
@@ -151,8 +162,23 @@ export default function Linha() {
             </div>
           </div>
         </Modal.Body>
+
         <Modal.Footer>
-                    {email && (
+          <>
+            <button className="btnIcon">
+              <FontAwesomeIcon icon={faEdit} />
+            </button>
+            {selectedLivro?.linkCompra && (
+              <button
+                className="btnIcon"
+                onClick={() => window.open(selectedLivro.linkCompra, "_blank")}
+              >
+                <FontAwesomeIcon icon={faCartShopping} />
+              </button>
+            )}
+          </>
+          
+          {email && (
                       <>
                         <button
                           className="btnIcon"
@@ -161,10 +187,18 @@ export default function Linha() {
                           <FontAwesomeIcon icon={faTrash} />
                         </button>
                       </>
-                    )}
+          )}
 
+          <button className="btnIcon">
+            <i className="bi bi-bookmark-x"></i>
+          </button>
+
+          <button className="btnIcon" onClick={handleNavigateToLivro}>
+            <i className="bi bi-book"></i>
+          </button>
         </Modal.Footer>
       </Modal>
     </div>
   );
+}
 }

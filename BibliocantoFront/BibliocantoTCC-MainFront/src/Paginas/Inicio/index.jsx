@@ -5,6 +5,7 @@ import "./style.css";
 import { Modal } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEdit,
@@ -86,10 +87,9 @@ function Inicio() {
       const data = { idUser, idLivro };
 
       try {
-        
         const response = await api.post("/api/MeusLivros", data);
+        console.log(response);
         alert("Livro adicionado com sucesso!");
-
       } catch (error) {
         console.error(error);
         alert("Falha ao salvar livro na biblioteca!: " + error.message);
@@ -187,6 +187,8 @@ function Inicio() {
                 >
                   <FontAwesomeIcon icon={faEdit} />
                 </button>
+
+
                 {selectedLivro?.linkCompra && (
               <button
                 className="btnIcon"
@@ -195,11 +197,13 @@ function Inicio() {
                 <FontAwesomeIcon icon={faCartShopping} />
               </button>
             )}
+
+            
                 <button
                   className="btnIcon"
-                  onClick={handleAddMeuLivro} // Função para adicionar o livro a biblioteca
+                  onClick={handleAddMeuLivro}
                 >
-                  <FontAwesomeIcon icon={faCheck} />
+                  <i className="bi bi-bookmark-plus"></i>
                 </button>
               </>
             )}

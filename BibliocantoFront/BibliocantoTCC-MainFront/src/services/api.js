@@ -18,18 +18,17 @@ const getToken = () => localStorage.getItem('token');
 // Método GET para buscar livro por ISBN
 api.buscarLivroPorISBN = async function(isbn) {
     try {
-        const response = await api.get(`/api/Livros/ISBN/${isbn}`, {
+        const response = await api.get(`/api/Livros/GetLivroByIsbn?isbn=${isbn}`, {
             headers: {
                 Authorization: `Bearer ${getToken()}`
             }
         });
-        return response.data;
+        return response; // Retorna o objeto completo, incluindo status e data
     } catch (error) {
         console.error("Erro ao buscar o livro:", error);
         throw error;
     }
 };
-
 
 // Função para cadastrar um único autor
 api.cadastrarAutor = async (autor) => {
@@ -98,16 +97,16 @@ api.buscarGeneroPorNomeAjustado = async (nomeGenero) => {
     }
   };
   
-  // Função para cadastrar múltiplos autores e gêneros armazenados com verificação de duplicidade robusta
+  // Função para cadastrar múltiplos autores e gêneros armazenados com verificação de duplicidade
 api.cadastrarAutoresEGêneros = async function(autoresArmazenados, generosArmazenados) {
     try {
       const autorIds = await Promise.all(autoresArmazenados.map(async (autor) => {
         const autorExistente = await api.buscarAutorPorNomeAjustado(autor.nome);
         if (autorExistente) {
-          console.log(`Autor já existe: ${autor.nome} com ID ${autorExistente.id}`);
+          //console.log(`Autor já existe: ${autor.nome} com ID ${autorExistente.id}`);
           return autorExistente.id; // Retorna o ID do autor existente
         } else {
-          console.log(`Cadastrando novo autor: ${autor.nome}`);
+          //console.log(`Cadastrando novo autor: ${autor.nome}`);
           const novoAutor = await api.cadastrarAutor({ NomeAutor: autor.nome });
           return novoAutor.id; // Retorna o ID do novo autor
         }
@@ -119,16 +118,16 @@ api.cadastrarAutoresEGêneros = async function(autoresArmazenados, generosArmaze
         const generoExistente = await api.buscarGeneroPorNomeAjustado(genero.nome);
         
         if (generoExistente) {
-          console.log(`Gênero já existe: ${genero.nome} com ID ${generoExistente.id}`);
+          //console.log(`Gênero já existe: ${genero.nome} com ID ${generoExistente.id}`);
           return generoExistente.id; // Retorna o ID do gênero existente
         } else {
-          console.log(`Cadastrando novo gênero: ${genero.nome}`);
+          //console.log(`Cadastrando novo gênero: ${genero.nome}`);
           const novoGenero = await api.cadastrarGenero({ NomeGenero: genero.nome });
           return novoGenero.id; // Retorna o ID do novo gênero
         }
       }));
   
-      console.log('Autores e gêneros cadastrados com sucesso:', { autorIds, generoIds });
+      //console.log('Autores e gêneros cadastrados com sucesso:', { autorIds, generoIds });
       return { autorIds, generoIds };
   
     } catch (error) {
@@ -136,6 +135,7 @@ api.cadastrarAutoresEGêneros = async function(autoresArmazenados, generosArmaze
       throw error;
     }
   };
+
   // cadastrar na tabela LivroAutor
   api.cadastrarLivroAutor = async function (idLivro, autorIdSingle) {
     try {
@@ -204,7 +204,7 @@ api.cadastrarEditora = async function (nomeEditora) {
 
         } catch (error) {
             if (error.response && error.response.status === 404) {
-                console.log(`Editora com o nome "${nomeEditora}" não encontrada, procedendo com o cadastro.`);
+                //console.log(`Editora com o nome "${nomeEditora}" não encontrada, procedendo com o cadastro.`);
             } else {
                 console.error('Erro ao verificar editora:', error);
                 throw error;
@@ -213,7 +213,7 @@ api.cadastrarEditora = async function (nomeEditora) {
 
         // Se a editora já existe, retorna o ID
         if (editoraExistente) {
-            console.log('Editora já existente:', editoraExistente);
+            //console.log('Editora já existente:', editoraExistente);
             return editoraExistente.id;
         }
 
@@ -227,7 +227,7 @@ api.cadastrarEditora = async function (nomeEditora) {
                 }
             }
         );
-        console.log('Editora cadastrada com sucesso:', response.data);
+        //console.log('Editora cadastrada com sucesso:', response.data);
         return response.data.id;
 
     } catch (error) {
@@ -240,6 +240,7 @@ api.cadastrarEditora = async function (nomeEditora) {
 
 api.PreCadastroLivro = async function (titulo, isbn, editoraId) {
     try {
+
         const response = await axios.post('http://localhost:5162/api/Livros', 
             {
                 titulo: titulo,
@@ -252,7 +253,7 @@ api.PreCadastroLivro = async function (titulo, isbn, editoraId) {
                 }
             }
         );
-        console.log('Livro pré-cadastrado com sucesso:', response.data);
+        //console.log('Livro pré-cadastrado com sucesso:', response.data);
         return response.data.id;
     } catch (error) {
         console.error('Erro ao pré-cadastrar livro:', error);
@@ -310,6 +311,28 @@ api.getLivrosByGenero = async function(generoId) {
         }
     } catch (error) {
         console.error("Erro ao buscar os livros do gênero:", error);
+        throw error;
+    }
+};
+
+// Método GET para buscar uma editora por ID
+api.getEditoraByID = async function(editoraid) {
+    try {
+        // Ajuste da URL para usar um endpoint com ID direto na URL
+        const response = await api.get(`/api/Editoras/${editoraid}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}` // Incluindo o token de autorização
+            }
+        });
+        
+        // Verifica se a resposta contém dados
+        if (response && response.data) {
+            return response.data;
+        } else {
+            console.error("No data in response");
+        }
+    } catch (error) {
+        console.error("Erro ao buscar a editora com ID:", error);
         throw error;
     }
 };
@@ -402,7 +425,7 @@ api.getEditoraByName = async function(nameEditora) {
                 Authorization: `Bearer ${getToken()}`
             }
         });
-        console.log("Resposta da API:", response.data); // Log da resposta da API
+        //console.log("Resposta da API:", response.data); // Log da resposta da API
         if (response && response.data) {
             return response.data; // Presumindo que a resposta retorna o ID da editora
         } else {
@@ -557,67 +580,5 @@ api.putLivro = async function(id, livroData) {
       throw error;
     }
   };  
-
-api.putAutor = async function(id, autorData) {
-    try {
-        const response = await api.put(`/api/Autores/${id}`, autorData, {
-            headers: {
-                Authorization: `Bearer ${getToken()}`
-            }
-        });
-        console.log('Autor atualizado com sucesso:', response.data);
-        return response.data;
-    } catch (error) {
-        console.error("Erro ao atualizar o autor:", error);
-        throw error;
-    }
-};
-
-api.putEditora = async function(id, editoraData) {
-    try {
-        const response = await api.put(`/api/Editoras/${id}`, editoraData, {
-            headers: {
-                Authorization: `Bearer ${getToken()}`
-            }
-        });
-        console.log('Editora atualizada com sucesso:', response.data);
-        return response.data;
-    } catch (error) {
-        console.error('Erro ao atualizar a editora:', error);
-        throw error;
-    }
-};
-
-// Método DELETE para Editoras
-api.deleteEditora = async function(id) {
-    try {
-        const response = await api.delete(`/api/Editoras/${id}`, {
-            headers: {
-                Authorization: `Bearer ${getToken()}`
-            }
-        });
-        console.log('Editora excluída com sucesso:', response.data);
-        return response.data;
-    } catch (error) {
-        console.error('Erro ao excluir a editora:', error);
-        throw error;
-    }
-};
-
-// Método DELETE para Livros
-api.deleteLivro = async function(id) {
-    try {
-        const response = await api.delete(`/api/Livros/${id}`, {
-            headers: {
-                Authorization: `Bearer ${getToken()}`
-            }
-        });
-        console.log('Livro excluído com sucesso:', response.data);
-        return response.data;
-    } catch (error) {
-        console.error('Erro ao excluir o livro:', error);
-        throw error;
-    }
-};
 
 export default api;
