@@ -30,7 +30,7 @@ namespace Bibliocanto.Services
         {
             IEnumerable<GeneroLivro> generoLivro;
 
-            generoLivro = await _generoLivroRepository.GetByIdLivro(idGenero);
+            generoLivro = await _generoLivroRepository.GetByIdGenero(idGenero);
 
             return generoLivro;
         }
