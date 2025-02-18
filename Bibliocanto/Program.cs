@@ -107,7 +107,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors(options =>
 {
-    options.WithOrigins("http://localhost:3000", "http://localhost:5173");
+    options.WithOrigins("http://localhost:3000", "http://localhost:5173", "http://192.168.18.180:3000", "http://192.168.18.180:5173", "http://192.168.18.180:5162");
     options.AllowAnyMethod();
     options.AllowAnyHeader();
 });
