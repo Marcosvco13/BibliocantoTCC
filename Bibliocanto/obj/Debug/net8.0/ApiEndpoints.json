@@ -283,7 +283,33 @@
   },
   {
     "ContainingType": "Bibliocanto.Controllers.AutorLivroController",
-    "Method": "GetByIdLivro",
+    "Method": "GetByIdAutor",
+    "RelativePath": "api/AutorLivro/{idAutor}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idAutor",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Bibliocanto.Resources.AutorLivroResource, Bibliocanto, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Bibliocanto.Controllers.AutorLivroController",
+    "Method": "GetAutorByIdLivro",
     "RelativePath": "api/AutorLivro/{idLivro}",
     "HttpMethod": "GET",
     "IsController": true,
@@ -1124,7 +1150,33 @@
   },
   {
     "ContainingType": "Bibliocanto.Controllers.GenerosLivroController",
-    "Method": "GetByIdLivro",
+    "Method": "GetByIdGenero",
+    "RelativePath": "api/GenerosLivro/{idGenero}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idGenero",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Bibliocanto.Resources.GeneroLivroResource, Bibliocanto, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Bibliocanto.Controllers.GenerosLivroController",
+    "Method": "GetGeneroByIdLivro",
     "RelativePath": "api/GenerosLivro/{idLivro}",
     "HttpMethod": "GET",
     "IsController": true,

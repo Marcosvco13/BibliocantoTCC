@@ -25,8 +25,8 @@ namespace Bibliocanto.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{idLivro:int}", Name = "GetByIdLivroAutor")]
-        public async Task<ActionResult<IEnumerable<AutorLivroResource>>> GetByIdLivro(int idLivro)
+        [HttpGet("livro/{idLivro:int}", Name = "GetByIdLivroAutor")]
+        public async Task<ActionResult<IEnumerable<AutorLivroResource>>> GetAutorByIdLivro(int idLivro)
         {
 
             try
@@ -47,7 +47,7 @@ namespace Bibliocanto.Controllers
             }
         }
 
-        [HttpGet("{idAutor:int}", Name = "GetByIdAutor")]
+        [HttpGet("autor/{idAutor:int}", Name = "GetByIdAutor")]
         public async Task<ActionResult<IEnumerable<AutorLivroResource>>> GetByIdAutor(int idAutor)
         {
 

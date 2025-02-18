@@ -359,7 +359,7 @@ api.getGeneroByName = async function(nameGenero) {
 //metodo get para buscar os autores do livro
 api.buscarAutoresPorLivro = async function(idLivro) {
     try {
-        const response = await api.get(`/api/AutorLivro/${idLivro}`, {
+        const response = await api.get(`/api/AutorLivro/livro/${idLivro}`, {
             headers: {
                 Authorization: `Bearer ${getToken()}`
             }
@@ -389,7 +389,7 @@ api.buscarAutorPorId = async function(idAutor) {
 //metodo get para buscar o genero por id do livro
 api.buscarGenerosPorLivro = async function(idLivro) {
     try {
-        const response = await api.get(`/api/GenerosLivro/${idLivro}`, {
+        const response = await api.get(`/api/GenerosLivro/livro/${idLivro}`, {
             headers: {
                 Authorization: `Bearer ${getToken()}`
             }

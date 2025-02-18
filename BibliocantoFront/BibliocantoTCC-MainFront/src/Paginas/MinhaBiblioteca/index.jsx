@@ -48,27 +48,25 @@ export default function Linha() {
   };
 
   const handleRemoverLivro = async () => {
-
     const idUser = localStorage.getItem("Id");
     const idMeuLivro = meuLivro;
-    //const navigate = useNavigate();
-
+  
     if (!idUser) {
       setError("Usuário não encontrado.");
       return;
     }
-
+  
     if (!idMeuLivro) {
       setError("Livro não encontrado.");
       return;
     }
-
+  
     try {
       const response = await api.delete(`api/MeusLivros/${idMeuLivro}`);
-
+  
       if (response.status === 200) {
         alert("Livro removido da sua biblioteca.");
-        setModalVisible(false)
+        setModalVisible(false);
         window.location.reload();
       } else if (response.status === 401) {
         setError("Não autorizado. Faça login novamente.");
@@ -77,17 +75,16 @@ export default function Linha() {
       } else {
         setError("Falha ao remover o livro. Tente novamente.");
       }
-
     } catch (err) {
       setError("Erro ao carregar os dados. Por favor, tente novamente.");
       console.error("Erro ao remover o livro:", err);
     }
-
+  };
+  
   const handleNavigateToLivro = () => {
     if (selectedLivro) {
       navigate(`/Livro/${selectedLivro.id}`);
     }
-
   };
 
   return (
@@ -200,5 +197,4 @@ export default function Linha() {
       </Modal>
     </div>
   );
-}
 }
