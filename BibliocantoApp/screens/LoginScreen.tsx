@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Alert, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import { RootStackParamList } from '../routes/StackNavigator';
+import api from '../services/api';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
@@ -17,9 +17,7 @@ export default function LoginScreen() {
     try {
 
       // Faz a requisição de login
-      const response = await axios.post('http://192.168.18.180:5162/api/Account/LoginUser', data);
-
-      console.log('Passei aqui 2');
+      const response = await api.post('api/Account/LoginUser', data);
 
       // Armazenando dados de login com SecureStore
       await SecureStore.setItemAsync('email', email);
@@ -27,14 +25,12 @@ export default function LoginScreen() {
       await SecureStore.setItemAsync('expiration', response.data.expiration);
 
       // Buscando o ID do usuário pelo email
-      const responseId = await axios.get('http://192.168.18.180:5162/api/Account/IdUserByEmail', {
+      const responseId = await api.get('api/Account/IdUserByEmail', {
         params: { email: email },
       });
 
       // Armazenando o ID do usuário com SecureStore
       await SecureStore.setItemAsync('Id', responseId.data.id);
-
-      console.log('Passei aqui 3');
 
       // Navegando para a tela principal
       navigation.navigate('Home');

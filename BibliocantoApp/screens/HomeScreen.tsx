@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { View, Text, Image, TouchableOpacity, ActivityIndicator, StyleSheet, FlatList } from "react-native";
+import api from "../services/api";
 
 // Definição do tipo para os livros
 interface Livro {
@@ -16,7 +16,7 @@ export default function HomeScreen() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://10.0.2.2:5162/api/Livros");
+        const response = await api.get("api/Livros");
         setLivros(response.data);
       } catch (err) {
         setError("Erro ao carregar os dados.");
@@ -40,7 +40,7 @@ export default function HomeScreen() {
         <FlatList
           data={livros}
           keyExtractor={(livro) => livro.id.toString()}
-          numColumns={2} // Exibe os livros em duas colunas
+          numColumns={3} // Exibe os livros em duas colunas
           renderItem={({ item }) => (
             <TouchableOpacity onPress={() => handleImageClick(item)}>
               <Image source={{ uri: item.caminhoImagem }} style={styles.livroCard} />
@@ -61,6 +61,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: "center",
     padding: 16,
     backgroundColor: "#fff",
   },
@@ -77,6 +78,8 @@ const styles = StyleSheet.create({
     width: 100,
     height: 150,
     margin: 8,
+    borderColor: 'black',
+    borderWidth: 1,
     borderRadius: 8,
   },
   loadingContainer: {
