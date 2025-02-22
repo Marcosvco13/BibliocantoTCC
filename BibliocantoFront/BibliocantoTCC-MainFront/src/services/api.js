@@ -294,6 +294,21 @@ api.cadastrarGenero = async function(generoData) {
     }
 };
 
+//Metodo Post Resenha
+api.cadastrarResenha = async function(resenhaData) {
+    try {
+        const response = await api.post('/api/Resenha', resenhaData, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        console.log('Resenha enviada com sucesso:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao enviar a resenha:", error);
+        throw error;
+    }
+};
 
 
 // Método GET para buscar livros de um gênero específico
@@ -456,6 +471,44 @@ api.getAutorByName = async function(nameAutor) {
     }
 };
 
+// Métodos GET para resenhas pelo id do livro
+api.getResenhaByIdLivro = async function(id) {
+    try {
+        const response = await api.get(`/api/Resenha/ResenhaByLivro?idLivro=${id}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        if (response && response.data) {
+            return response.data;
+        } else {
+            console.error("No data in response");
+        }
+    } catch (error) {
+        console.error("Erro ao buscar o livro:", error);
+        throw error;
+    }
+};
+
+// Métodos GET para resenhas pelo id do livro e id do usuario
+api.getResenhaByUserLivro = async function(idUser, id) {
+    try {
+        const response = await api.get(`/api/Resenha/ResenhaByUserLivro?idUser=${idUser}&idLivro=${id}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        if (response && response.data) {
+            return response.data;
+        } else {
+            console.error("No data in response");
+        }
+    } catch (error) {
+        console.error("Erro ao buscar a resenha:", error);
+        throw error;
+    }
+};
+
 // Métodos GET para detalhes do livro
 api.getLivroById = async function(id) {
     try {
@@ -546,6 +599,22 @@ api.getEditoras = async function(setEditoras) {
     }
 };
 
+// API para buscar comentários em uma resenha
+api.ComentarioByResenha = async function(idResenha) {
+    try {
+        const response = await api.get(`/api/Comentario/ComentarioByResenha?idResenha=${idResenha}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        //console.log('Comentários obtidos com sucesso:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao buscar comentários:", error);
+        throw error;
+    }
+};
+
 api.cadastrarLivro = async function(livroData) {
     try {
         const response = await api.post('/api/Livros', livroData, {
@@ -557,6 +626,22 @@ api.cadastrarLivro = async function(livroData) {
         return response.data;
     } catch (error) {
         console.error("Erro ao cadastrar o livro:", error);
+        throw error;
+    }
+};
+
+// API para submeter um comentário em uma resenha
+api.CadastrarComentario = async function(ComentarioData) {
+    try {
+        const response = await api.post('/api/Comentario', ComentarioData, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        console.log('Comentário cadastrado com sucesso:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao cadastrar o comentário:", error);
         throw error;
     }
 };

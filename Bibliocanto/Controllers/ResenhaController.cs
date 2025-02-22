@@ -14,6 +14,8 @@ namespace Bibliocanto.Controllers
     { 
         private readonly IMapper _mapper;
         private readonly IResenhaService _resenhaService;
+
+
         public ResenhaController(IMapper mapper, IResenhaService resenhaService)
         {
             _mapper = mapper;

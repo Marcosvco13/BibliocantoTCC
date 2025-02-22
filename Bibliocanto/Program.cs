@@ -94,6 +94,13 @@ builder.Services.AddScoped<IGeneroLivroService, GeneroLivroService>();
 builder.Services.AddScoped<IAutoresLivrosRepository, AutoresLivroRepository>();
 builder.Services.AddScoped<IAutoresLivroService, AutoresLivroService>();
 
+builder.Services.AddScoped<IResenhaRepository, ResenhaRepository>();
+builder.Services.AddScoped<IResenhaService, ResenhaService>();
+
+builder.Services.AddScoped<IComentarioRepository, ComentariosRepository>();
+builder.Services.AddScoped<IComentarioService, ComentarioService>();
+
+
 builder.Services.AddScoped<IUnitOFWork, UnitOfWork>();
 
 var app = builder.Build();
