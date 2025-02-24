@@ -615,6 +615,21 @@ api.ComentarioByResenha = async function(idResenha) {
     }
 };
 
+// API para o email do usuario pelo id
+api.EmailUserByID = async function(idUser) {
+    try {
+        const response = await api.get(`/api/Account/IdUserById?idUser=${idUser}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao buscar o usuario:", error);
+        throw error;
+    }
+};
+
 api.cadastrarLivro = async function(livroData) {
     try {
         const response = await api.post('/api/Livros', livroData, {

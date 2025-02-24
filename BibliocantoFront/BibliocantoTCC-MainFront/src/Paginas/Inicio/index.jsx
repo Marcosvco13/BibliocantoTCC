@@ -100,13 +100,13 @@ function Inicio() {
   };
 
   return (
-    <div className="linha-container">
+    <div className="inicio-linha-container">
       {error && <p className="error">{error}</p>}
       {livros.length > 0 ? (
-        <div className="livros-container">
+        <div className="inicio-livros-container">
           {livros.map((livro) => (
             <img
-              className="livro-card"
+              className="inicio-livro-card"
               key={livro.id}
               src={livro.caminhoImagem}
               alt={livro.titulo}
@@ -117,7 +117,7 @@ function Inicio() {
       ) : (
         <button className="btn btn-load" type="button" disabled>
           <span
-            className="spinner-border spinner-border-sm"
+            className="inicio-container spinner-border spinner-border-sm"
             role="status"
             aria-hidden="true"
           ></span>
@@ -132,7 +132,7 @@ function Inicio() {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title className="modal-title">
+          <Modal.Title className="inicio-modal-title">
             {selectedLivro ? selectedLivro.titulo : "Livro"}
           </Modal.Title>
         </Modal.Header>
@@ -152,24 +152,24 @@ function Inicio() {
               </div>
 
               <div className="col-md">
-                <div className="modal-text-1">
+                <div className="inicio-modal-text-1">
                   {selectedLivro
                     ? selectedLivro.descricao
                     : "Descrição do livro"}
                 </div>
-                <div className="modal-text-2">
+                <div className="inicio-modal-text-2">
                   Autor(es):{" "}
                   {autores.length > 0 ? autores.join(", ") : "Autor do livro"}
                 </div>
-                <div className="modal-text-3">
+                <div className="inicio-modal-text-3">
                   Gênero(s):{" "}
                   {generos.length > 0 ? generos.join(", ") : "Gênero do livro"}
                 </div>
-                <div className="modal-text-4">
+                <div className="inicio-modal-text-4">
                   Editora:{" "}
                   {selectedLivro?.editoras?.nomeEditora || "Editora do livro"}
                 </div>
-                <div className="modal-text-5">
+                <div className="inicio-modal-text-5">
                   ISBN: {selectedLivro ? selectedLivro.isbn : "ISBN"}
                 </div>
               </div>
@@ -182,7 +182,7 @@ function Inicio() {
             {email && (
               <>
                 <button
-                  className="btnIcon"
+                  className="inicio-btnIcon"
                   onClick={handleEditClick} // Função para editar
                 >
                   <FontAwesomeIcon icon={faEdit} />
@@ -191,7 +191,7 @@ function Inicio() {
 
                 {selectedLivro?.linkCompra && (
               <button
-                className="btnIcon"
+                className="inicio-btnIcon"
                 onClick={() => window.open(selectedLivro.linkCompra, "_blank")}
               >
                 <FontAwesomeIcon icon={faCartShopping} />
@@ -200,7 +200,7 @@ function Inicio() {
 
             
                 <button
-                  className="btnIcon"
+                  className="inicio-btnIcon"
                   onClick={handleAddMeuLivro}
                 >
                   <i className="bi bi-bookmark-plus"></i>

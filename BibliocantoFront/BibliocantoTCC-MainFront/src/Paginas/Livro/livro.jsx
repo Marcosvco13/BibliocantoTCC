@@ -24,7 +24,6 @@ function Livro() {
   const [mensagem, setMensagem] = useState("");
   const [resenhas, setResenhas] = useState([]);
   const [idUser, setIdUser] = useState(null);
-  const [email, setEmail] = useState("");
   const [comentarios, setComentarios] = useState({});
   const [resenhaSelecionada, setResenhaSelecionada] = useState(null);
   const [idResenha, setResenhaId] = useState(null);
@@ -32,23 +31,15 @@ function Livro() {
 
   useEffect(() => {
     const fetchData = async () => {
-      // Busca o e-mail do usuário logado
-      const usuarioLogado = localStorage.getItem("email");
-      if (usuarioLogado) {
-        setEmail(usuarioLogado);
+      // Busca o id do usuário logado
+      try {
+        const usuarioLogado = localStorage.getItem("Id");
 
-        // Busca o ID do usuário com base no e-mail
-        try {
-          const response = await api.get(
-            `/api/Account/IdUserByEmail?email=${usuarioLogado}`
-          );
-          console.log("Resposta da API:", response.data); // Debugando a resposta
-
-          // Pega diretamente o ID do usuário, pois a resposta é um objeto
-          setIdUser(response.data.id);
-        } catch (error) {
-          console.error("Erro ao buscar o ID do usuário:", error);
+        if (usuarioLogado) {
+          setIdUser(usuarioLogado);
         }
+      } catch (error) {
+        console.error("Erro ao buscar o ID do usuário:", error);
       }
 
       // Busca os dados do livro utilizando a API centralizada
@@ -63,13 +54,30 @@ function Livro() {
       if (idLivro) {
         try {
           const response = await api.getResenhaByIdLivro(idLivro);
-          console.log("Resenhas recebidas:", response);
+          //console.log("Resenhas recebidas:", response);
           setResenhas(response);
 
           // Verifica se o usuário já fez uma resenha
-        if (response.some((res) => res.idUser === idUser)) {
-          setMensagem("Você já enviou uma resenha para este livro.");
+          if (response.some((res) => res.idUser === idUser)) {
+            setMensagem("Você já enviou uma resenha para este livro.");
           }
+
+          // Adiciona o email do usuário que escreveu a resenha
+        const resenhasComEmail = await Promise.all(
+          response.map(async (res) => {
+            const usuario = await api.EmailUserByID(res.idUser); // Busca o objeto do autor da resenha
+            const email = usuario.email; // Acessa o email do usuário
+            return { ...res, email }; // Retorna a resenha com o email adicionado
+          })
+        );
+
+
+
+        console.log("Resenhas com email:", resenhasComEmail);
+
+
+        setResenhas(resenhasComEmail);
+
         } catch (error) {
           console.error(
             "Erro ao buscar as resenhas:",
@@ -80,7 +88,7 @@ function Livro() {
     };
 
     fetchData();
-  }, [idLivro, idUser]);
+  }, [idLivro]);
 
   // Função para enviar uma nova resenha
   const enviarResenha = async () => {
@@ -130,16 +138,23 @@ function Livro() {
   // Seleciona a Resenha para comentar
   const handleComentar = async (idResenha) => {
     setResenhaSelecionada((prev) => (prev === idResenha ? null : idResenha));
-  
+
+
+    setComentarios((prev) => ({
+      ...prev,
+      [idResenha]: prev[idResenha] || "", // Garante que exista uma chave para o idResenha
+    }));
+
+
     if (!idUser || !idLivro) {
       alert("Erro: Usuário ou livro não identificado.");
       return;
     }
-  
+
     try {
       // Buscando a resenha do usuário para o livro
       const resenha = await api.getResenhaByUserLivro(idUser, idLivro);
-  
+
       // Verifica se a resenha retornada tem um ID
       if (resenha && resenha.id) {
         console.log("Resenha encontrada:", resenha); // Log para verificar a resenha encontrada
@@ -154,45 +169,47 @@ function Livro() {
 
   // Envia um comentário para a API
   const enviarComentario = async () => {
-    const textoComent = comentarios[idResenha]?.trim();
-    if (!textoComent) {
-      alert("O comentário não pode estar vazio.");
-      return;
-    }
+  if (!idResenha) {
+    alert("Erro: ID da resenha não encontrado.");
+    return;
+  }
 
-    try {
-      const comentarioData = {
-        idResenha: idResenha, // O ID da resenha já foi buscado e armazenado
-        idUser: idUser,
-        textoComent: textoComent,
-      };
+  const textoComent = comentarios[idResenha]?.trim();
+  console.log("Texto do comentário:", textoComent);
 
-      // Chama a função CadastrarComentario da API
-      await api.CadastrarComentario(comentarioData);
+  if (!textoComent) {
+    alert("O comentário não pode estar vazio.");
+    return;
+  }
 
-      alert("Comentário enviado com sucesso!");
-      setComentarios((prev) => ({ ...prev, [idResenha]: "" })); // Limpa o campo após envio
-    } catch (error) {
-      console.error(
-        "Erro ao enviar comentário:",
-        error.response?.data || error
-      );
-      alert("Erro ao enviar o comentário. Tente novamente.");
-    }
-  };
+  try {
+    const comentarioData = {
+      idResenha: idResenha,
+      idUser: idUser,
+      textoComent: textoComent,
+    };
+
+    await api.CadastrarComentario(comentarioData);
+    alert("Comentário enviado com sucesso!");
+    setComentarios((prev) => ({ ...prev, [idResenha]: "" })); // Limpa o campo após envio
+  } catch (error) {
+    console.error("Erro ao enviar comentário:", error.response?.data || error);
+    alert("Erro ao enviar o comentário. Tente novamente.");
+  }
+};
+
 
   const buscarComentarios = async (idResenha) => {
     try {
       const comentariosBuscados = await api.ComentarioByResenha(idResenha);
-      console.log('Comentários retornados da API:', comentariosBuscados);
+      console.log("Comentários retornados da API:", comentariosBuscados);
       return comentariosBuscados; // Certifique-se de retornar os comentários aqui
     } catch (error) {
       console.error("Erro ao buscar comentários:", error);
       return []; // Retorna um array vazio em caso de erro para evitar `undefined`
     }
   };
-  
-  
+
   return (
     <Container>
       {/* Stack the columns on mobile by making one full-width and the other half-width */}
@@ -276,21 +293,19 @@ function Livro() {
                 {Array.isArray(resenhas) && resenhas.length > 0 ? (
                   <ul className="lista-resenhas">
                     {resenhas.map((res) => {
-  console.log("Resenha atual:", res); // Adicione isso
-  return (
-    <ResenhaItem
-                        key={`resenha-${res.id}`}
-                        res={res}
-                        handleComentar={handleComentar}
-                        resenhaSelecionada={resenhaSelecionada}
-                        email={email}
-                        setComentarios={setComentarios}
-                        comentarios={comentarios}
-                        enviarComentario={enviarComentario}
-                        buscarComentarios={buscarComentarios}
-                      />
-                    );
-})}
+                      return (
+                        <ResenhaItem
+                          key={`resenha-${res.id}`}
+                          res={res}
+                          handleComentar={handleComentar}
+                          resenhaSelecionada={resenhaSelecionada}
+                          setComentarios={setComentarios}
+                          comentarios={comentarios}
+                          enviarComentario={enviarComentario}
+                          buscarComentarios={buscarComentarios}
+                        />
+                      );
+                    })}
                   </ul>
                 ) : (
                   <p>Ainda não há resenhas para este livro.</p>

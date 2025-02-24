@@ -55,3 +55,8 @@
   text-align: justify; /* Justifica o texto */
   margin-bottom: 20px; /* Adiciona espaço entre parágrafos */
 }
+
+.lista-resenhas {
+  list-style: none; /* Remove os pontos */
+  padding-left: 0; /* Remove recuo padrão */
+}

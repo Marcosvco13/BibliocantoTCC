@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { TextField } from "@mui/material";
+import api from "../../services/api";
+import "./ResenhaItem.css";
 
 const ResenhaItem = ({
   res,
   handleComentar,
-  email,
   resenhaSelecionada,
   setComentarios,
   comentarios,
@@ -42,23 +43,30 @@ const ResenhaItem = ({
   return (
     <>
       <li key={`resenha-${res.id}`} className="resenha-item">
-        <p>
-          <strong>E-mail:</strong> {res.idUser}
-        </p>
-        <p>{res.textoResenha}</p>
-
-        {/* Botão para abrir a modal */}
-        <Button
-          variant="outline-secondary"
-          onClick={() => handleShow(res)}
-          style={{ marginLeft: "10px" }}
-        >
-          Visualizar
-        </Button>
+        <div className="comentario-container">
+          <i className="bi bi-person-circle icone"></i>
+          <div className="comentario-texto">
+            <p className="email">{res.email || "Carregando..."}</p>
+            <p className="resenha">{res.textoResenha}</p>
+            <div className="comentario-acoes">
+              <div className="icones-esquerda">
+                <i className="bi bi-heart"></i>
+                <i className="bi bi-chat"></i>
+              </div>
+              <i className="bi bi-arrow-up-right-square icone-direita" onClick={() => handleShow(res)}></i>
+            </div>
+          </div>
+        </div>
       </li>
 
       {/* Modal de visualização da resenha */}
-      <Modal show={showModal} onHide={handleClose} size="lg" centered>
+      <Modal
+        show={showModal}
+        onHide={handleClose}
+        size="lg"
+        centered
+        className="resenha-modal"
+      >
         <Modal.Header closeButton>
           <Modal.Title>
             {selectedResenha ? selectedResenha.textoResenha : "Resenha"}
@@ -68,8 +76,9 @@ const ResenhaItem = ({
           {listaComentarios.length > 0 ? (
             <ul>
               {listaComentarios.map((comentario) => (
-                <li key={comentario.id}>
-                  <strong>E-mail:</strong> {res.idUser} {comentario.textoComent}
+                <li key={comentario.id} className="lista-comentarios">
+                  <i className="bi bi-person-circle fs-3"></i> {res.email}{" "}
+                  {comentario.textoComent}
                 </li>
               ))}
             </ul>
@@ -107,7 +116,9 @@ const ResenhaItem = ({
                 color="secondary"
                 onClick={async () => {
                   await enviarComentario(res.id);
-                  const comentariosAtualizados = await buscarComentarios(res.id); // Atualiza a lista após o envio
+                  const comentariosAtualizados = await buscarComentarios(
+                    res.id
+                  ); // Atualiza a lista após o envio
                   setListaComentarios(comentariosAtualizados || []);
                 }}
               >

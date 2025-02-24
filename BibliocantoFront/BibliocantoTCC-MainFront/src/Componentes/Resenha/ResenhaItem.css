@@ -1,0 +1,114 @@
+.resenha-item {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 10px 0;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .resenha-item p {
+    margin: 5px 0;
+    color: #333;
+  }
+  
+  .resenha-item strong {
+    color: #007bff; /* Cor do texto em destaque */
+  }
+  
+  .comentario-box {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    background-color: #f1f1f1;
+  }
+  
+  .comentario-box .MuiTextField-root {
+    margin-top: 5px;
+  }
+  
+  .modal-content {
+    border-radius: 8px;
+  }
+  
+  .modal-header {
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .modal-title {
+    color: #007bff; /* Cor do título da modal */
+  }
+  
+  .modal-footer {
+    border-top: 1px solid #e0e0e0;
+  }
+  
+  button {
+    transition: background-color 0.3s, color 0.3s; /* Efeito de transição */
+  }
+  
+  button:hover {
+    background-color: #007bff; /* Cor ao passar o mouse sobre o botão */
+    color: white; /* Texto branco ao passar o mouse */
+  }
+  
+  .lista-comentarios {
+    list-style: none; /* Remove os pontos */
+    padding-left: 0; /* Remove recuo padrão */
+  }
+
+  .comentario-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+  }
+  
+  .icone {
+    font-size: 2rem;
+  }
+  
+  .comentario-texto {
+    display:list-item;
+    flex-direction: column;
+    flex: 1; /* Faz com que o texto ocupe todo o espaço disponível */
+    max-width: calc(100% - 40px); /* Ajusta considerando o ícone ao lado */
+  }
+  
+  .email {
+    margin: 0;
+    font-weight: bold;
+  }
+  
+  .resenha {
+    margin: 5px 0;
+  }
+  
+  .comentario-acoes {
+    border-top: 1px solid #ccc; /* Linha separadora */
+    padding-top: 5px;
+    display: flex;
+    justify-content: space-between; /* Mantém os ícones separados */
+    align-items: center;
+  }
+  
+  .icones-esquerda {
+    display: flex;
+    gap: 10px; /* Espaço entre os ícones à esquerda */
+    font-size: 1.2rem;
+    color: #555;
+  }
+  
+  .icone-direita {
+    font-size: 1.2rem;
+    color: #555;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  
+  .icone-direita:hover,
+  .icones-esquerda i:hover {
+    color: red; /* Muda de cor ao passar o mouse */
+  }
+  
