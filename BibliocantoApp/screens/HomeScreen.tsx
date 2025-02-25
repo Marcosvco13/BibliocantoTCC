@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '../routes/StackNavigator';
 import { View, Text, Image, TouchableOpacity, ActivityIndicator, StyleSheet, FlatList } from "react-native";
 import api from "../services/api";
 
@@ -12,6 +14,7 @@ interface Livro {
 export default function HomeScreen() {
   const [livros, setLivros] = useState<Livro[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,7 +32,7 @@ export default function HomeScreen() {
 
   // Função para tratar clique na imagem
   const handleImageClick = (livro: Livro) => {
-    console.log(`Livro selecionado: ${livro.titulo}`);
+    navigation.navigate('Book', { idLivro: livro.id });
   };
 
   return (
