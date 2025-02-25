@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import axios from 'axios';
-import { MMKV } from 'react-native-mmkv';
+import * as SecureStore from 'expo-secure-store';
 import { RootStackParamList } from '../routes/StackNavigator';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-
-const storage = new MMKV();
+import api from '../services/api';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
@@ -40,17 +38,17 @@ export default function RegisterScreen(){
 
         // Check if email is already registered
         try {
-            const verificaEmail = await axios.get('/api/Account/UserByEmail', {
+            const verificaEmail = await api.get('api/Account/UserByEmail', {
                 params: { email }
             });
 
             if (!verificaEmail.data) {
 
-                const response = await axios.post('/api/Account/CreateUser', data);
+                const response = await api.post('api/Account/CreateUser', data);
 
                 console.log(response);
 
-                const loginResponse = await axios.post('/api/Account/LoginUser', {
+                const loginResponse = await api.post('api/Account/LoginUser', {
                     email,
                     password
                 });
@@ -58,13 +56,13 @@ export default function RegisterScreen(){
                 if (loginResponse.data) {
                     console.log('User logged in successfully:', loginResponse.data);
 
-                    storage.set('email', email);
-                    storage.set('token', loginResponse.data.token);
-                    storage.set('expiration', loginResponse.data.expiration);
+                    await SecureStore.setItemAsync('email', email);
+                    await SecureStore.setItemAsync('token', response.data.token);
+                    await SecureStore.setItemAsync('expiration', response.data.expiration);
 
                     try{
                 
-                        const responseId = await axios.get('/api/Account/IdUserByEmail', {
+                        const responseId = await api.get('api/Account/IdUserByEmail', {
                             params: {
                               email: email,
                             },

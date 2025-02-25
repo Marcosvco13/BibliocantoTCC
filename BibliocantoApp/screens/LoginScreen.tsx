@@ -1,54 +1,48 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Alert, TouchableOpacity, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import axios from 'axios';
-import { MMKV } from 'react-native-mmkv';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+import * as SecureStore from 'expo-secure-store';
 import { RootStackParamList } from '../routes/StackNavigator';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-
-const storage = new MMKV();
-
-type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
+import api from '../services/api';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   // Função de login
   const login = async () => {
     const data = { email, password };
 
     try {
-      // Faz a requisição de login
-      const response = await axios.post('http://10.0.2.2:5162/api/Account/LoginUser', data);
 
-      // Armazenando dados de login
-      storage.set('email', email);
-      storage.set('token', response.data.token);
-      storage.set('expiration', response.data.expiration);
+      // Faz a requisição de login
+      const response = await api.post('api/Account/LoginUser', data);
+
+      // Armazenando dados de login com SecureStore
+      await SecureStore.setItemAsync('email', email);
+      await SecureStore.setItemAsync('token', response.data.token);
+      await SecureStore.setItemAsync('expiration', response.data.expiration);
 
       // Buscando o ID do usuário pelo email
-      const responseId = await axios.get('http://10.0.2.2:5162/api/Account/IdUserByEmail', {
-        params: { email },
+      const responseId = await api.get('api/Account/IdUserByEmail', {
+        params: { email: email },
       });
 
-      // Armazenando o ID do usuário
-      storage.set('Id', responseId.data.id);
+      // Armazenando o ID do usuário com SecureStore
+      await SecureStore.setItemAsync('Id', responseId.data.id);
 
       // Navegando para a tela principal
-      const navigation = useNavigation<NavigationProp>();
       navigation.navigate('Home');
 
     } catch (error) {
-      Alert.alert('Erro', 'Falha no login. ');
+      Alert.alert('Erro', 'Falha no login.');
     }
   };
 
   // Função para redirecionar para a página de criação de usuário
   const handleCreateUser = () => {
-    const navigation = useNavigation<NavigationProp>();
-  
+
     navigation.navigate('Register');
   };
 
