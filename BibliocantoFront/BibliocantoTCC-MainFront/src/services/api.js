@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:5162'
+    baseURL: 'https://localhost:44331'
 });
 
 api.validarToken = async () => {
