@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate  } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../../services/api";
-import "./style.css";
+import "./MinhaBiblioteca.css";
 import { Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
-
+import {
+  faEdit,
+  faCartShopping,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 export default function Linha() {
   const [livros, setLivros] = useState([]);
@@ -15,6 +19,8 @@ export default function Linha() {
   const [selectedLivro, setSelectedLivro] = useState(null);
   const [meuLivro, setMeuLivroClick] = useState(null);
   const [email] = useState(localStorage.getItem("email") || null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,7 +31,9 @@ export default function Linha() {
       }
 
       try {
-        const response = await api.get(`api/MeusLivros/BibliotecaByUser?idUser=${idUser}`);
+        const response = await api.get(
+          `api/MeusLivros/BibliotecaByUser?idUser=${idUser}`
+        );
 
         setLivros(response.data);
       } catch (err) {
@@ -44,10 +52,8 @@ export default function Linha() {
   };
 
   const handleRemoverLivro = async () => {
-
     const idUser = localStorage.getItem("Id");
     const idMeuLivro = meuLivro;
-    //const navigate = useNavigate();
 
     if (!idUser) {
       setError("Usuário não encontrado.");
@@ -64,7 +70,7 @@ export default function Linha() {
 
       if (response.status === 200) {
         alert("Livro removido da sua biblioteca.");
-        setModalVisible(false)
+        setModalVisible(false);
         window.location.reload();
       } else if (response.status === 401) {
         setError("Não autorizado. Faça login novamente.");
@@ -73,22 +79,26 @@ export default function Linha() {
       } else {
         setError("Falha ao remover o livro. Tente novamente.");
       }
-
     } catch (err) {
       setError("Erro ao carregar os dados. Por favor, tente novamente.");
       console.error("Erro ao remover o livro:", err);
     }
+  };
 
+  const handleNavigateToLivro = () => {
+    if (selectedLivro) {
+      navigate(`/Livro/${selectedLivro.id}`);
+    }
   };
 
   return (
-    <div className="linha-container">
+    <div className="biblioteca-container">
       {error && <p className="error">{error}</p>}
       {livros.length > 0 ? (
-        <div className="livros-container">
+        <div className="biblioteca-livros-container">
           {livros.map((livro) => (
             <img
-              className="livro-card"
+              className="biblioteca-livro-card"
               key={livro.livros.id}
               src={livro.livros.caminhoImagem}
               alt={livro.livros.titulo}
@@ -99,7 +109,9 @@ export default function Linha() {
       ) : (
         <button className="btn btn-load" type="button" disabled>
           <span
-            className="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+            className="biblioteca-spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
           ></span>
           Carregando os livros...
         </button>
@@ -112,7 +124,7 @@ export default function Linha() {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title className="modal-title">
+          <Modal.Title className="biblioteca-modal-title">
             {selectedLivro ? selectedLivro.titulo : "Livro"}
           </Modal.Title>
         </Modal.Header>
@@ -127,42 +139,64 @@ export default function Linha() {
                 />
               </div>
               <div className="col-md">
-                <div className="modal-text-1">
+                <div className="biblioteca-modal-text-1">
                   {selectedLivro
                     ? selectedLivro.descricao
                     : "Descrição do livro"}
                 </div>
-                <div className="modal-text-2">
+                <div className="biblioteca-modal-text-2">
                   Autor(es):{" "}
                   {selectedLivro?.autores?.nomeAutor || "Autor do livro"}
                 </div>
-                <div className="modal-text-3">
+                <div className="biblioteca-modal-text-3">
                   Gênero(s):{" "}
                   {selectedLivro?.generos?.nomegenero || "Gênero do livro"}
                 </div>
-                <div className="modal-text-4">
+                <div className="biblioteca-modal-text-4">
                   Editora:{" "}
                   {selectedLivro?.editoras?.nomeEditora || "Editora do livro"}
                 </div>
-                <div className="modal-text-5">
+                <div className="biblioteca-modal-text-5">
                   ISBN: {selectedLivro ? selectedLivro.isbn : "ISBN"}
                 </div>
               </div>
             </div>
           </div>
         </Modal.Body>
-        <Modal.Footer>
-                    {email && (
-                      <>
-                        <button
-                          className="btnIcon"
-                          onClick={handleRemoverLivro} // Função para adicionar o livro a biblioteca
-                        >
-                          <FontAwesomeIcon icon={faTrash} />
-                        </button>
-                      </>
-                    )}
 
+        <Modal.Footer>
+          <>
+            <button className="biblioteca-btnIcon">
+              <FontAwesomeIcon icon={faEdit} />
+            </button>
+            {selectedLivro?.linkCompra && (
+              <button
+                className="biblioteca-btnIcon"
+                onClick={() => window.open(selectedLivro.linkCompra, "_blank")}
+              >
+                <FontAwesomeIcon icon={faCartShopping} />
+              </button>
+            )}
+          </>
+
+          {email && (
+            <>
+              <button
+                className="biblioteca-btnIcon"
+                onClick={handleRemoverLivro} // Função para adicionar o livro a biblioteca
+              >
+                <FontAwesomeIcon icon={faTrash} />
+              </button>
+            </>
+          )}
+
+          <button className="biblioteca-btnIcon">
+            <i className="bi bi-bookmark-x"></i>
+          </button>
+
+          <button className="biblioteca-btnIcon" onClick={handleNavigateToLivro}>
+            <i className="bi bi-book"></i>
+          </button>
         </Modal.Footer>
       </Modal>
     </div>

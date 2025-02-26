@@ -1,0 +1,81 @@
+.PagFinalizarCad {
+    display: flex; /* Ativa o Flexbox */
+    flex-direction: column; /* Organiza os itens em coluna */
+    justify-content: center; /* Alinha os itens verticalmente no centro */
+    align-items: center; /* Alinha os itens horizontalmente no centro */
+  }
+
+.TituloFinalizarCad {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.formFinalizarCad {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    min-width: 900px;  /* Define uma largura máxima para o formulário */
+    margin: 0 auto;    /* Centraliza o formulário na página */
+    text-align: center;  /* Garante que tudo dentro fique centralizado */
+    display: inline-block;
+    margin-bottom: 50px;
+}
+
+.formFinalizarCad label {
+    display: block; /* Garante que o label ocupe toda a largura */
+    font-weight: bold; /* Destaca o texto do label */
+    font-size: 16px; /* Define um tamanho de fonte consistente */
+    color: #333; /* Escolha uma cor neutra e fácil de ler */
+    margin-bottom: 8px; /* Adiciona espaçamento abaixo do label */
+}
+
+.formFinalizarCad .form-control {
+    width: 100%; /* Garante que ocupe toda a largura disponível */
+    padding: 10px; /* Adiciona espaço interno para melhorar a usabilidade */
+    font-size: 14px; /* Define um tamanho de fonte confortável */
+    transition: border-color 0.2s, box-shadow 0.2s; /* Animação suave ao interagir */
+}
+
+.formFinalizarCad .form-control:focus {
+    border-color: #007bff; /* Cor azul para indicar foco */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Realce ao focar */
+    outline: none; /* Remove o contorno padrão */
+}
+
+.sinopse-textarea {
+    resize: vertical;  /* Permite que o usuário redimensione a altura se desejar */
+    min-height: 80px;  /* Altura mínima */
+    width: 100%;  /* Garante que ocupe toda a largura disponível */
+    word-wrap: break-word;  /* Garante que o texto quebre as palavras corretamente */
+  }
+
+  .btn-cadastrar-livro {
+    background-color: #5a251d; /* Cor mais saturada */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-top: 20px;
+    font-size: 16px; /* Tamanho da fonte */
+    cursor: pointer; /* Aponta para o cursor */
+    width: 30%;
+    transition: background-color 0.3s, transform 0.3s; /* Efeitos de transição */
+  }
+  
+  .btn-cadastrar-livro:hover {
+    background-color: #47211c; /* Cor de fundo ao passar o mouse */
+    transform: scale(1.05); /* Aumenta um pouco o tamanho ao passar o mouse */
+  }
+  
+  .btn-cadastrar-livro:focus {
+    outline: none; /* Remove a borda de foco padrão */
+  }
+  
+  .btn-cadastrar-livro:active {
+    background-color: #3d1c18 !important;
+    box-shadow: 0 5px #666 !important;
+    transform: translateY(4px) !important;
+    border: none !important;
+    border-radius: 5px !important;
+  }

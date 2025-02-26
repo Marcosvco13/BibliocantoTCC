@@ -126,6 +126,34 @@ namespace Bibliocanto.Controllers
             }
         }
 
+        [HttpGet("IdUserById")]
+        public async Task<ActionResult<IdentityUser>> GetUserById([FromQuery] string idUser)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(idUser))
+                {
+                    return BadRequest("Email não pode estar vazio.");
+                }
+
+                var result = await _authentication.FindUserById(idUser);
+
+                if (result == null)
+                {
+                    return NotFound("Usuário não encontrado.");
+                }
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                // Log da exceção (você pode usar qualquer mecanismo de logging aqui)
+                Console.WriteLine(ex.Message); // Melhor usar um logger como ILogger no lugar de Console.
+
+                return StatusCode(500, "Ocorreu um erro interno.");
+            }
+        }
+
         [HttpPost("LoginUser")]
         public async Task<ActionResult<UserToken>> Login([FromBody] LoginModel userInfo)
         {

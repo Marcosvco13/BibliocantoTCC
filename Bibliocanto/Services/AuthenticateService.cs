@@ -50,6 +50,12 @@ namespace Bibliocanto.Services
             return user;
         }
 
+        public async Task<IdentityUser> FindUserById(string idUser)
+        {
+            var user = await _userManager.FindByIdAsync(idUser);
+            return user;
+        }
+
         public async Task Logout()
         {
             await _signInManager.SignOutAsync();

@@ -5,18 +5,21 @@ import api from "./services/api";
 
 //componentes
 import Nav from "./Componentes/Nav/Nav";
-import Footer from './Componentes/Footer/index'
+import Footer from "./Componentes/Footer/index";
 
 //paginas
-import CadastrarLivro from "./Paginas/Cadastrar Livros/Index";
 import Login from "./Paginas/Login";
 import NewUser from "./Paginas/NewUser";
 import EditarLivro from "./Paginas/Edit Livro";
-import BuscaIsbn from "./Paginas/BuscaLivroIsbn";
 import SobreSite from "./Paginas/Sobre o Site";
 import PoliticaPrivacidade from "./Paginas/Politica de Privacidade";
 import Inicio from "./Paginas/Inicio";
 import Biblioteca from "./Paginas/MinhaBiblioteca";
+import PreCadastro from "./Paginas/CadastroLivro/PreCadastro";
+import BuscaIsbn from "./Paginas/CadastroLivro/BuscaISBN";
+import CadastroLivro from "./Paginas/CadastroLivro/CadastroLivro";
+import NavegarGenero from "./Paginas/Navegar Por Generos";
+import Livro from "./Paginas/Livro/livro";
 
 export default function App() {
   const [generos, setGeneros] = useState([]);
@@ -33,18 +36,21 @@ export default function App() {
         <Nav />
         <Routes>
           <Route path="/" element={<Inicio />} />
-          <Route path="/CadastrarLivro/:id" element={<CadastrarLivro />} />
-          <Route path="/Login" element={<Login/>}/>
-          <Route path="/NewUser" element={<NewUser/>}/>
-          <Route path="/BuscaIsbn" element={<BuscaIsbn/>}/>
+          <Route path="/Login" element={<Login />} />
+          <Route path="/NewUser" element={<NewUser />} />
           <Route path="/EditarLivro/:id" element={<EditarLivro />} />
           <Route path="/about" element={<SobreSite />} />
           <Route path="/privacy-policy" element={<PoliticaPrivacidade />} />
-          <Route path="/MinhaBiblioteca" element={<Biblioteca/>} />
+          <Route path="/MinhaBiblioteca" element={<Biblioteca />} />
+          <Route path="/BuscaISBN" element={<BuscaIsbn />} />
+          <Route path="/PreCadastrar" element={<PreCadastro />} />
+          <Route path="/FinalizarCadastro" element={<CadastroLivro />} />
+          <Route path="/NavegarPorGenero" element={<NavegarGenero />} />
+          <Route path="/Livro/:id" element={<Livro />} />
+
         </Routes>
-        <Footer/>
+        <Footer />
       </BrowserRouter>
-      
     </div>
   );
 }

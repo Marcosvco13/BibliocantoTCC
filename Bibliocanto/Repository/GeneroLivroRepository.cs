@@ -18,6 +18,11 @@ namespace Bibliocanto.Repository
             return await _context.GeneroLivro.Where(l => l.IdLivro == idLivro).ToListAsync(); ;
         }
 
+        public async Task<IEnumerable<GeneroLivro>> GetByIdGenero(int idGenero)
+        {
+            return await _context.GeneroLivro.Where(l => l.IdGenero == idGenero).ToListAsync(); ;
+        }
+
         public async Task<GeneroLivro> GetById(int id)
         {
             return await _context.GeneroLivro.FirstOrDefaultAsync(l => l.IdGenero == id);

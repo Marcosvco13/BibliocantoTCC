@@ -6,6 +6,7 @@ namespace Bibliocanto.IServices
     public interface IGeneroLivroService
     {
         Task<IEnumerable<GeneroLivro>> GetByIdLivro(int idLivro);
+        Task<IEnumerable<GeneroLivro>> GetByIdGenero(int idGenero);
         Task<GeneroLivro> GetById(int id);
         Task<GeneroLivroResponse> Add(GeneroLivro generoLivro);
         Task<GeneroLivroResponse> Update(int id, GeneroLivro generoLivro);

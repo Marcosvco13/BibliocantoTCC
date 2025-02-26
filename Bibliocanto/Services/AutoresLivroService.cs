@@ -26,6 +26,15 @@ namespace Bibliocanto.Services
             return autoresLivro;
         }
 
+        public async Task<IEnumerable<AutoresLivros>> GetByIdAutor(int idAutor)
+        {
+            IEnumerable<AutoresLivros> autoresLivro;
+
+            autoresLivro = await _autoresLivrosRepository.GetByIdAutor(idAutor);
+
+            return autoresLivro;
+        }
+
         public async Task<AutoresLivros> GetById(int id)
         {
             return await _autoresLivrosRepository.GetById(id);

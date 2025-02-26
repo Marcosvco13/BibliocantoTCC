@@ -30,7 +30,7 @@ namespace Bibliocanto.Services
         public async Task<IEnumerable<Comentarios>> GetByResenha(int idResenha)
         {
             IEnumerable<Comentarios> baseComentarios;
-            if (idResenha == null)
+            if (idResenha != null)
             {
                 baseComentarios = await _comentarioRepository.GetByResenha(idResenha);
             }

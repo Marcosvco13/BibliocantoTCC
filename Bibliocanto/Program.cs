@@ -94,6 +94,13 @@ builder.Services.AddScoped<IGeneroLivroService, GeneroLivroService>();
 builder.Services.AddScoped<IAutoresLivrosRepository, AutoresLivroRepository>();
 builder.Services.AddScoped<IAutoresLivroService, AutoresLivroService>();
 
+builder.Services.AddScoped<IResenhaRepository, ResenhaRepository>();
+builder.Services.AddScoped<IResenhaService, ResenhaService>();
+
+builder.Services.AddScoped<IComentarioRepository, ComentariosRepository>();
+builder.Services.AddScoped<IComentarioService, ComentarioService>();
+
+
 builder.Services.AddScoped<IUnitOFWork, UnitOfWork>();
 
 var app = builder.Build();
@@ -107,7 +114,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors(options =>
 {
-    options.WithOrigins("http://localhost:3000", "http://localhost:5173");
+    options.WithOrigins("http://localhost:3000", "http://localhost:5173", "http://192.168.18.180:3000", "http://192.168.18.180:5173", "http://192.168.18.180:5162");
     options.AllowAnyMethod();
     options.AllowAnyHeader();
 });

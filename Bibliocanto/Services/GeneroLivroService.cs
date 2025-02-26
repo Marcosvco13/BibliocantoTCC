@@ -26,6 +26,15 @@ namespace Bibliocanto.Services
             return generoLivro;
         }
 
+        public async Task<IEnumerable<GeneroLivro>> GetByIdGenero(int idGenero)
+        {
+            IEnumerable<GeneroLivro> generoLivro;
+
+            generoLivro = await _generoLivroRepository.GetByIdGenero(idGenero);
+
+            return generoLivro;
+        }
+
         public async Task<GeneroLivro> GetById(int id)
         {
             return await _generoLivroRepository.GetById(id);

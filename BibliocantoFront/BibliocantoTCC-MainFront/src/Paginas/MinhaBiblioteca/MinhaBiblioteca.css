@@ -1,4 +1,4 @@
-.linha-container {
+.biblioteca-container {
   display: flex;
   flex-direction: column;
   height: 100vh; /* Ocupa a altura total da janela */
@@ -8,7 +8,7 @@
   overflow-x: hidden;
 }
 
-.livros-container {
+.biblioteca-livros-container {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
@@ -19,7 +19,7 @@
   overflow-x: hidden;
 }
 
-.livro-card {
+.biblioteca-livro-card {
   width: 150px;
   height: 220px;
   object-fit: cover;
@@ -29,7 +29,7 @@
   transition: transform 0.2s ease-in-out; /* Efeito suave ao passar o mouse */
 }
 
-.livro-card:hover {
+.biblioteca-livro-card:hover {
   transform: scale(1.05); /* Aumenta levemente ao passar o mouse */
 }
 
@@ -44,7 +44,7 @@
 }
 
 /* Estiliza o botão de edição */
-.btnIcon {
+.biblioteca-btnIcon {
   color: #47211c; /* Define a cor para o ícone de edição */
   background: none; /* Remove o fundo do botão */
   border: none; /* Remove a borda do botão */
@@ -52,30 +52,31 @@
   font-size: 1.5em; /* Aumenta o tamanho do ícone */
 }
 
-.btnIcon:hover {
+.biblioteca-btnIcon:hover {
   color: #7a3e36; /* Opcional: tom mais claro no hover */
+  background: none;
 }
 
-.modal-text-1, .modal-text-2, .modal-text-3, .modal-text-4, .modal-text-5 {
+.biblioteca-modal-text-1, .biblioteca-modal-text-2, .biblioteca-modal-text-3, .biblioteca-modal-text-4, .biblioteca-modal-text-5 {
   margin-bottom: 10px; /* Espaçamento entre as informações */
   font-size: 14px;
   line-height: 1.4;
 }
 
 /* Estilo adicional para o título da descrição */
-.modal-text-1 {
+.biblioteca-modal-text-1 {
   font-weight: bold;
   font-size: 15px;
   color: #47211c;
 }
 
 /* Para destacar informações como Autor, Gênero, Editora e ISBN */
-.modal-text-2, .modal-text-3, .modal-text-4, .modal-text-5 {
+.biblioteca-modal-text-2, .biblioteca-modal-text-3, .biblioteca-modal-text-4, .biblioteca-modal-text-5 {
   font-weight: 500;
   color: #555;
 }
 
-.modal-header .modal-title {
+.modal-header .biblioteca-modal-title {
   font-size: 24px !important;
   font-weight: bold !important;
   color: #c8a165 !important;
@@ -83,7 +84,7 @@
   width: 100%; /* Garante largura total */
 }
 
-.spinner-border {
+.biblioteca-spinner-border {
   margin-right: 8px; /* Espaço entre o spinner e o texto */
   border-width: 2px; /* Largura da borda do spinner */
   color: black; /* Cor do spinner */

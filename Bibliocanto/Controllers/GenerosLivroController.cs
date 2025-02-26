@@ -21,13 +21,35 @@ namespace Bibliocanto.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{idLivro:int}", Name = "GetByIdLivroGenero")]
-        public async Task<ActionResult<IEnumerable<GeneroLivroResource>>> GetByIdLivro(int idLivro)
+        [HttpGet("livro/{idLivro:int}", Name = "GetByIdLivroGenero")]
+        public async Task<ActionResult<IEnumerable<GeneroLivroResource>>> GetGeneroByIdLivro(int idLivro)
         {
 
             try
             {
                 var generolivro = await _generoLivroService.GetByIdLivro(idLivro);
+                var recurso = _mapper.Map<IEnumerable<GeneroLivro>, IEnumerable<GeneroLivroResource>>(generolivro);
+
+                if (generolivro == null)
+                {
+                    return NotFound("registro não encontrado");
+                }
+
+                return Ok(recurso);
+            }
+            catch
+            {
+                return BadRequest("Request Inválido");
+            }
+        }
+
+        [HttpGet("genero/{idGenero:int}", Name = "GetByIdGenero")]
+        public async Task<ActionResult<IEnumerable<GeneroLivroResource>>> GetByIdGenero(int idGenero)
+        {
+
+            try
+            {
+                var generolivro = await _generoLivroService.GetByIdGenero(idGenero);
                 var recurso = _mapper.Map<IEnumerable<GeneroLivro>, IEnumerable<GeneroLivroResource>>(generolivro);
 
                 if (generolivro == null)
