@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { RootStackParamList } from '../routes/StackNavigator';
+import { DrawerParamList } from '../routes/DrawerNavigator';
 import { View, Text, Image, TouchableOpacity, ActivityIndicator, StyleSheet, FlatList } from "react-native";
 import api from "../services/api";
 
@@ -14,7 +14,7 @@ interface Livro {
 export default function HomeScreen() {
   const [livros, setLivros] = useState<Livro[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<NavigationProp<DrawerParamList>>();
 
   useEffect(() => {
     const fetchData = async () => {

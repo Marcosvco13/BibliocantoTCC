@@ -5,15 +5,18 @@ import * as SecureStore from "expo-secure-store";
 import { useRoute } from '@react-navigation/native';
 import api from "../services/api";
 
-interface Livro {
+type Editora = {
+    nomeEditora: string;
+}
+
+type Livro = {
     id: number;
     titulo: string;
     caminhoImagem: string;
     descricao: string;
-    editoras: string;
-    nomeEditora: string;
+    editoras: Editora;
     isbn: number;
-  }
+  };
 
 export default function BookScreen() {
     const route = useRoute();
@@ -123,7 +126,7 @@ export default function BookScreen() {
                     <Text style={styles.text}>{selectedLivro ? selectedLivro.descricao : "Descrição do livro"}</Text>
                     <Text style={styles.text}>Autor(es): {autores.length > 0 ? autores.join(", ") : "Autor do livro"}</Text>
                     <Text style={styles.text}>Gênero(s): {generos.length > 0 ? generos.join(", ") : "Gênero do livro"}</Text>
-                    <Text style={styles.text}>Editora: {selectedLivro?.nomeEditora || "Editora do livro"}</Text>
+                    <Text style={styles.text}>Editora: {selectedLivro ? selectedLivro.editoras?.nomeEditora : "Editora do livro"}</Text>
                     <Text style={styles.text}>ISBN: {selectedLivro ? selectedLivro.isbn : "ISBN"}</Text>
                 </View>
             </View>

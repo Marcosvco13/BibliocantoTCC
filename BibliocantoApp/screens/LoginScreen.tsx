@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Alert, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
+import { DrawerParamList } from '../routes/DrawerNavigator';
 import { RootStackParamList } from '../routes/StackNavigator';
 import api from '../services/api';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<NavigationProp<DrawerParamList>>();
+  const navigationRoot = useNavigation<NavigationProp<RootStackParamList>>();
 
   // Função de login
   const login = async () => {
@@ -43,7 +45,7 @@ export default function LoginScreen() {
   // Função para redirecionar para a página de criação de usuário
   const handleCreateUser = () => {
 
-    navigation.navigate('Register');
+    navigationRoot.navigate('Register');
   };
 
   // Função para redirecionar para a página de recuperação de senha

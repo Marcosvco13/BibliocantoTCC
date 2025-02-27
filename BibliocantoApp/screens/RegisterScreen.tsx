@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
-import { RootStackParamList } from '../routes/StackNavigator';
+import { DrawerParamList } from '../routes/DrawerNavigator';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import api from '../services/api';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
+type NavigationProp = NativeStackNavigationProp<DrawerParamList>;
 
 export default function RegisterScreen(){
     const [email, setEmail] = useState('');
