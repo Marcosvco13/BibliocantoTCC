@@ -28,6 +28,7 @@ function Livro() {
   const [resenhaSelecionada, setResenhaSelecionada] = useState(null);
   const [idResenha, setResenhaId] = useState(null);
   const [listaComentarios, setListaComentarios] = useState([]);
+  const [likesResenha, setLikesResenha] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,21 +64,17 @@ function Livro() {
           }
 
           // Adiciona o email do usuário que escreveu a resenha
-        const resenhasComEmail = await Promise.all(
-          response.map(async (res) => {
-            const usuario = await api.EmailUserByID(res.idUser); // Busca o objeto do autor da resenha
-            const email = usuario.email; // Acessa o email do usuário
-            return { ...res, email }; // Retorna a resenha com o email adicionado
-          })
-        );
+          const resenhasComEmail = await Promise.all(
+            response.map(async (res) => {
+              const usuario = await api.EmailUserByID(res.idUser); // Busca o objeto do autor da resenha
+              const email = usuario.email; // Acessa o email do usuário
+              return { ...res, email }; // Retorna a resenha com o email adicionado
+            })
+          );
 
+          console.log("Resenhas com email:", resenhasComEmail);
 
-
-        console.log("Resenhas com email:", resenhasComEmail);
-
-
-        setResenhas(resenhasComEmail);
-
+          setResenhas(resenhasComEmail);
         } catch (error) {
           console.error(
             "Erro ao buscar as resenhas:",
@@ -135,16 +132,50 @@ function Livro() {
     }
   };
 
+  const handleLikeResenha = async (idResenha) => {
+    try {
+      // Verifica se o usuário já curtiu a resenha
+      let likeExistente;
+      try {
+        likeExistente = await api.LikeResenhaByUserResenha(idUser, idResenha);
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          console.log("Like não encontrado. Criando um novo.");
+          likeExistente = null;
+        } else {
+          console.error("Erro ao verificar o like da resenha:", error);
+          return;
+        }
+      }
+
+      if (likeExistente) {
+        // Se o like já existir, exclui o like
+        await api.DeleteLikeResenha(likeExistente.id);
+        console.log("Like removido da resenha:", idResenha);
+      } else {
+        // Se o like não existir, adiciona o like
+        const likeDataResenha = {
+          idResenha,
+          idUser,
+          like: 1,
+        };
+
+        await api.cadastrarLikeResenha(likeDataResenha);
+        console.log("Like adicionado à resenha:", idResenha);
+      }
+    } catch (error) {
+      console.error("Erro ao processar o like na resenha:", error);
+    }
+  };
+
   // Seleciona a Resenha para comentar
   const handleComentar = async (idResenha) => {
     setResenhaSelecionada((prev) => (prev === idResenha ? null : idResenha));
-
 
     setComentarios((prev) => ({
       ...prev,
       [idResenha]: prev[idResenha] || "", // Garante que exista uma chave para o idResenha
     }));
-
 
     if (!idUser || !idLivro) {
       alert("Erro: Usuário ou livro não identificado.");
@@ -169,35 +200,37 @@ function Livro() {
 
   // Envia um comentário para a API
   const enviarComentario = async () => {
-  if (!idResenha) {
-    alert("Erro: ID da resenha não encontrado.");
-    return;
-  }
+    if (!idResenha) {
+      alert("Erro: ID da resenha não encontrado.");
+      return;
+    }
 
-  const textoComent = comentarios[idResenha]?.trim();
-  console.log("Texto do comentário:", textoComent);
+    const textoComent = comentarios[idResenha]?.trim();
+    console.log("Texto do comentário:", textoComent);
 
-  if (!textoComent) {
-    alert("O comentário não pode estar vazio.");
-    return;
-  }
+    if (!textoComent) {
+      alert("O comentário não pode estar vazio.");
+      return;
+    }
 
-  try {
-    const comentarioData = {
-      idResenha: idResenha,
-      idUser: idUser,
-      textoComent: textoComent,
-    };
+    try {
+      const comentarioData = {
+        idResenha: idResenha,
+        idUser: idUser,
+        textoComent: textoComent,
+      };
 
-    await api.CadastrarComentario(comentarioData);
-    alert("Comentário enviado com sucesso!");
-    setComentarios((prev) => ({ ...prev, [idResenha]: "" })); // Limpa o campo após envio
-  } catch (error) {
-    console.error("Erro ao enviar comentário:", error.response?.data || error);
-    alert("Erro ao enviar o comentário. Tente novamente.");
-  }
-};
-
+      await api.CadastrarComentario(comentarioData);
+      alert("Comentário enviado com sucesso!");
+      setComentarios((prev) => ({ ...prev, [idResenha]: "" })); // Limpa o campo após envio
+    } catch (error) {
+      console.error(
+        "Erro ao enviar comentário:",
+        error.response?.data || error
+      );
+      alert("Erro ao enviar o comentário. Tente novamente.");
+    }
+  };
 
   const buscarComentarios = async (idResenha) => {
     try {
@@ -303,6 +336,8 @@ function Livro() {
                           comentarios={comentarios}
                           enviarComentario={enviarComentario}
                           buscarComentarios={buscarComentarios}
+                          handleLikeResenha={() => handleLikeResenha(res.id)}
+                          likesResenha={likesResenha}
                         />
                       );
                     })}

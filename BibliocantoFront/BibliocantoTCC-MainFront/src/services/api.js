@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:5162'
+    baseURL: 'https://localhost:44331'
 });
 
 api.validarToken = async () => {
@@ -294,23 +294,6 @@ api.cadastrarGenero = async function(generoData) {
     }
 };
 
-//Metodo Post Resenha
-api.cadastrarResenha = async function(resenhaData) {
-    try {
-        const response = await api.post('/api/Resenha', resenhaData, {
-            headers: {
-                Authorization: `Bearer ${getToken()}`
-            }
-        });
-        console.log('Resenha enviada com sucesso:', response.data);
-        return response.data;
-    } catch (error) {
-        console.error("Erro ao enviar a resenha:", error);
-        throw error;
-    }
-};
-
-
 // Método GET para buscar livros de um gênero específico
 api.getLivrosByGenero = async function(generoId) {
     try {
@@ -471,44 +454,6 @@ api.getAutorByName = async function(nameAutor) {
     }
 };
 
-// Métodos GET para resenhas pelo id do livro
-api.getResenhaByIdLivro = async function(id) {
-    try {
-        const response = await api.get(`/api/Resenha/ResenhaByLivro?idLivro=${id}`, {
-            headers: {
-                Authorization: `Bearer ${getToken()}`
-            }
-        });
-        if (response && response.data) {
-            return response.data;
-        } else {
-            console.error("No data in response");
-        }
-    } catch (error) {
-        console.error("Erro ao buscar o livro:", error);
-        throw error;
-    }
-};
-
-// Métodos GET para resenhas pelo id do livro e id do usuario
-api.getResenhaByUserLivro = async function(idUser, id) {
-    try {
-        const response = await api.get(`/api/Resenha/ResenhaByUserLivro?idUser=${idUser}&idLivro=${id}`, {
-            headers: {
-                Authorization: `Bearer ${getToken()}`
-            }
-        });
-        if (response && response.data) {
-            return response.data;
-        } else {
-            console.error("No data in response");
-        }
-    } catch (error) {
-        console.error("Erro ao buscar a resenha:", error);
-        throw error;
-    }
-};
-
 // Métodos GET para detalhes do livro
 api.getLivroById = async function(id) {
     try {
@@ -599,22 +544,6 @@ api.getEditoras = async function(setEditoras) {
     }
 };
 
-// API para buscar comentários em uma resenha
-api.ComentarioByResenha = async function(idResenha) {
-    try {
-        const response = await api.get(`/api/Comentario/ComentarioByResenha?idResenha=${idResenha}`, {
-            headers: {
-                Authorization: `Bearer ${getToken()}`
-            }
-        });
-        //console.log('Comentários obtidos com sucesso:', response.data);
-        return response.data;
-    } catch (error) {
-        console.error("Erro ao buscar comentários:", error);
-        throw error;
-    }
-};
-
 // API para o email do usuario pelo id
 api.EmailUserByID = async function(idUser) {
     try {
@@ -645,22 +574,6 @@ api.cadastrarLivro = async function(livroData) {
     }
 };
 
-// API para submeter um comentário em uma resenha
-api.CadastrarComentario = async function(ComentarioData) {
-    try {
-        const response = await api.post('/api/Comentario', ComentarioData, {
-            headers: {
-                Authorization: `Bearer ${getToken()}`
-            }
-        });
-        console.log('Comentário cadastrado com sucesso:', response.data);
-        return response.data;
-    } catch (error) {
-        console.error("Erro ao cadastrar o comentário:", error);
-        throw error;
-    }
-};
-
 // Métodos PUT
 // Função para atualizar livro
 api.putLivro = async function(id, livroData) {
@@ -682,3 +595,159 @@ api.putLivro = async function(id, livroData) {
   };  
 
 export default api;
+
+//metodos resenha
+
+//Metodo Post Resenha
+api.cadastrarResenha = async function(resenhaData) {
+    try {
+        const response = await api.post('/api/Resenha', resenhaData, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        console.log('Resenha enviada com sucesso:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao enviar a resenha:", error);
+        throw error;
+    }
+};
+
+// Métodos GET para resenhas pelo id do livro e id do usuario
+api.getResenhaByUserLivro = async function(idUser, id) {
+    try {
+        const response = await api.get(`/api/Resenha/ResenhaByUserLivro?idUser=${idUser}&idLivro=${id}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        if (response && response.data) {
+            return response.data;
+        } else {
+            console.error("No data in response");
+        }
+    } catch (error) {
+        console.error("Erro ao buscar a resenha:", error);
+        throw error;
+    }
+};
+
+// Métodos GET para resenhas pelo id do livro
+api.getResenhaByIdLivro = async function(id) {
+    try {
+        const response = await api.get(`/api/Resenha/ResenhaByLivro?idLivro=${id}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        if (response && response.data) {
+            return response.data;
+        } else {
+            console.error("No data in response");
+        }
+    } catch (error) {
+        console.error("Erro ao buscar o livro:", error);
+        throw error;
+    }
+};
+
+//metodos like resenha
+
+// Método post para dar like na resenha
+api.cadastrarLikeResenha = async function(likeDataResenha) {
+    try {
+        const response = await api.post('/api/LikeResenha', likeDataResenha, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        console.log('Like na Resenha enviado com sucesso:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao enviar o like para a resenha:", error);
+        throw error;
+    }
+};
+
+// Método get para buscar like do usuario na resenha especifica
+api.LikeResenhaByUserResenha = async function(idUser, idResenha) {
+    try {
+        const response = await api.get(`/api/LikeResenha/LikeByUserResenha?idUser=${idUser}&idResenha=${idResenha}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        console.log('Like do usuario na Resenha encontrado com sucesso:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao buscar o like do usuario na resenha:", error);
+        throw error;
+    }
+};
+
+// Método get para buscar likes da resenha especifica
+api.LikeResenhaByResenha = async function(idResenha) {
+    try {
+        const response = await api.get(`/api/LikeResenha/LikeByResenha?idResenha=${idResenha}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        console.log('Likes da Resenha encontrados com sucesso:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao buscar os likes da resenha:", error);
+        throw error;
+    }
+};
+
+// Método delete excluir like do usuario na resenha
+api.DeleteLikeResenha = async function(idLikeResenha) {
+    try {
+        const response = await api.delete(`/api/LikeResenha/${idLikeResenha}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        console.log('Like na Resenha excluido com sucesso:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao excluir o like para a resenha:", error);
+        throw error;
+    }
+};
+
+//metodos comentario
+
+// API para buscar comentários em uma resenha
+api.ComentarioByResenha = async function(idResenha) {
+    try {
+        const response = await api.get(`/api/Comentario/ComentarioByResenha?idResenha=${idResenha}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        //console.log('Comentários obtidos com sucesso:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao buscar comentários:", error);
+        throw error;
+    }
+};
+
+// API para submeter um comentário em uma resenha
+api.CadastrarComentario = async function(ComentarioData) {
+    try {
+        const response = await api.post('/api/Comentario', ComentarioData, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        console.log('Comentário cadastrado com sucesso:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao cadastrar o comentário:", error);
+        throw error;
+    }
+};

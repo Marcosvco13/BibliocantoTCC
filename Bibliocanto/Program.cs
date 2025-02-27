@@ -100,6 +100,12 @@ builder.Services.AddScoped<IResenhaService, ResenhaService>();
 builder.Services.AddScoped<IComentarioRepository, ComentariosRepository>();
 builder.Services.AddScoped<IComentarioService, ComentarioService>();
 
+builder.Services.AddScoped<ILikeComentarioRepository, LikeComentarioRepository>();
+builder.Services.AddScoped<ILikeComentarioService, LikeComentarioService>();
+
+builder.Services.AddScoped<ILikeResenhaRepository, LikeResenhaRespository>();
+builder.Services.AddScoped<ILikeResenhaService, LikeResenhaService>();
+
 
 builder.Services.AddScoped<IUnitOFWork, UnitOfWork>();
 

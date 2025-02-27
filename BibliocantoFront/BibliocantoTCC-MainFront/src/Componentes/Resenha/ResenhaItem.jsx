@@ -12,7 +12,10 @@ const ResenhaItem = ({
   comentarios,
   enviarComentario,
   buscarComentarios,
+  handleLikeResenha,
+  likesResenha,
 }) => {
+
   const [listaComentarios, setListaComentarios] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedResenha, setSelectedResenha] = useState(null);
@@ -50,7 +53,8 @@ const ResenhaItem = ({
             <p className="resenha">{res.textoResenha}</p>
             <div className="comentario-acoes">
               <div className="icones-esquerda">
-                <i className="bi bi-heart"></i>
+              <i className="bi bi-heart" onClick={handleLikeResenha}></i>
+              <span>{likesResenha}</span>
                 <i className="bi bi-chat"></i>
               </div>
               <i className="bi bi-arrow-up-right-square icone-direita" onClick={() => handleShow(res)}></i>
