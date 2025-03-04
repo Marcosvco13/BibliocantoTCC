@@ -39,11 +39,10 @@
 .livro-coluna-texto {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   justify-content: center; /* Alinha o conteúdo verticalmente no centro */
-  align-items: center; /* Alinha o conteúdo horizontalmente no centro */
   text-align: justify; /* Justifica o texto */
-  padding: 10px; /* Adiciona espaçamento interno */
-  height: 100%; /* Garante que a coluna ocupe toda a altura */
+  padding: 15px; /* Adiciona espaçamento interno */
 }
 
 .livro-coluna-texto h1 {
@@ -57,6 +56,7 @@
 }
 
 .lista-resenhas {
-  list-style: none; /* Remove os pontos */
-  padding-left: 0; /* Remove recuo padrão */
+  width: 100%;
+  padding: 0;
+  list-style: none;
 }

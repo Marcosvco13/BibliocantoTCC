@@ -687,20 +687,22 @@ api.LikeResenhaByUserResenha = async function(idUser, idResenha) {
 };
 
 // Método get para buscar likes da resenha especifica
-api.LikeResenhaByResenha = async function(idResenha) {
+api.LikeResenhaByResenha = async function (idResenha) {
     try {
         const response = await api.get(`/api/LikeResenha/LikeByResenha?idResenha=${idResenha}`, {
             headers: {
                 Authorization: `Bearer ${getToken()}`
             }
         });
-        console.log('Likes da Resenha encontrados com sucesso:', response.data);
         return response.data;
     } catch (error) {
-        console.error("Erro ao buscar os likes da resenha:", error);
-        throw error;
+        if (error.response && error.response.status === 404) {
+            return []; // Suppresses error logs
+        }
+        return [];
     }
 };
+
 
 // Método delete excluir like do usuario na resenha
 api.DeleteLikeResenha = async function(idLikeResenha) {

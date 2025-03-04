@@ -9,6 +9,12 @@ import Rating from "@mui/material/Rating";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faEdit,
+  faCartShopping,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 
 //css
 import "./livro.css";
@@ -28,7 +34,8 @@ function Livro() {
   const [resenhaSelecionada, setResenhaSelecionada] = useState(null);
   const [idResenha, setResenhaId] = useState(null);
   const [listaComentarios, setListaComentarios] = useState([]);
-  const [likesResenha, setLikesResenha] = useState(0);
+  const [autores, setAutores] = useState([]);
+  const [generos, setGeneros] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -72,7 +79,7 @@ function Livro() {
             })
           );
 
-          console.log("Resenhas com email:", resenhasComEmail);
+          //console.log("Resenhas com email:", resenhasComEmail);
 
           setResenhas(resenhasComEmail);
         } catch (error) {
@@ -81,6 +88,37 @@ function Livro() {
             error.response?.data || error.message
           );
         }
+      }
+
+      try {
+        // Busca os dados do livro
+        const data = await api.getLivroById(idLivro);
+        setLivro(data);
+
+        // Busca os autores relacionados ao livro
+        const autorLivros = await api.buscarAutoresPorLivro(data.id);
+        const autoresDetalhados = await Promise.all(
+          autorLivros.map(async (autorLivro) => {
+            const autor = await api.buscarAutorPorId(autorLivro.idAutor);
+            return autor.nomeAutor;
+          })
+        );
+        setAutores(autoresDetalhados);
+
+        // Busca os gêneros relacionados ao livro
+        const generoLivros = await api.buscarGenerosPorLivro(data.id);
+        const generosDetalhados = await Promise.all(
+          generoLivros.map(async (generoLivro) => {
+            const genero = await api.buscarGeneroPorId(generoLivro.idGenero);
+            return genero.nomegenero;
+          })
+        );
+        setGeneros(generosDetalhados);
+      } catch (error) {
+        console.error(
+          "Erro ao buscar as resenhas:",
+          error.response?.data || error.message
+        );
       }
     };
 
@@ -247,8 +285,8 @@ function Livro() {
     <Container>
       {/* Stack the columns on mobile by making one full-width and the other half-width */}
       <Row>
-        {/* Coluna para exibir a imagem do livro xs={12} md={8}*/}
-        <Col xs={12} md={4} className="livro-coluna">
+        {/* Coluna para exibir a imagem do livro xs={12} md={3}*/}
+        <Col xs={12} md={3} className="livro-coluna">
           {livro ? (
             <>
               <div>
@@ -267,6 +305,18 @@ function Livro() {
                   <p>Carregando editora...</p>
                 )}
 
+                {autores.length > 0 ? (
+                  <p>Autor(es): {autores.join(", ")}</p>
+                ) : (
+                  <p>Carregando autores...</p>
+                )}
+
+                {generos.length > 0 ? (
+                  <p>Gênero(s): {generos.join(", ")}</p>
+                ) : (
+                  <p>Carregando gêneros...</p>
+                )}
+
                 <Box
                   component="fieldset"
                   mb={3}
@@ -283,6 +333,15 @@ function Livro() {
                     />
                   </div>
                 </Box>
+
+                {livro?.linkCompra && (
+                  <button
+                    className="biblioteca-btnIcon"
+                    onClick={() => window.open(livro.linkCompra, "_blank")}
+                  >
+                    <FontAwesomeIcon icon={faCartShopping} />
+                  </button>
+                )}
               </div>
             </>
           ) : (
@@ -337,7 +396,6 @@ function Livro() {
                           enviarComentario={enviarComentario}
                           buscarComentarios={buscarComentarios}
                           handleLikeResenha={() => handleLikeResenha(res.id)}
-                          likesResenha={likesResenha}
                         />
                       );
                     })}
@@ -350,6 +408,13 @@ function Livro() {
           ) : (
             <p>Carregando...</p>
           )}
+        </Col>
+
+        <Col xs={12} md={3} className="livro-coluna-extra">
+          <p>
+            Aqui você pode adicionar mais informações ou funcionalidades
+            futuramente.
+          </p>
         </Col>
       </Row>
     </Container>

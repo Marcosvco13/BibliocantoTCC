@@ -188,26 +188,29 @@ function Inicio() {
                   <FontAwesomeIcon icon={faEdit} />
                 </button>
 
-
                 {selectedLivro?.linkCompra && (
-              <button
-                className="inicio-btnIcon"
-                onClick={() => window.open(selectedLivro.linkCompra, "_blank")}
-              >
-                <FontAwesomeIcon icon={faCartShopping} />
-              </button>
-            )}
+                  <button
+                    className="inicio-btnIcon"
+                    onClick={() =>
+                      window.open(selectedLivro.linkCompra, "_blank")
+                    }
+                  >
+                    <FontAwesomeIcon icon={faCartShopping} />
+                  </button>
+                )}
 
-            
-                <button
-                  className="inicio-btnIcon"
-                  onClick={handleAddMeuLivro}
-                >
+                <button className="inicio-btnIcon" onClick={handleAddMeuLivro}>
                   <i className="bi bi-bookmark-plus"></i>
+                </button>
+
+                <button
+                  className="biblioteca-btnIcon"
+                  onClick={() => navigate(`/Livro/${selectedLivro.id}`)}
+                >
+                  <i className="bi bi-book"></i>
                 </button>
               </>
             )}
-            
           </Modal.Footer>
         )}
       </Modal>

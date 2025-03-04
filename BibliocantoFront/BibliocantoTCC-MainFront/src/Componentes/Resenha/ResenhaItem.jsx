@@ -13,12 +13,36 @@ const ResenhaItem = ({
   enviarComentario,
   buscarComentarios,
   handleLikeResenha,
-  likesResenha,
 }) => {
 
   const [listaComentarios, setListaComentarios] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedResenha, setSelectedResenha] = useState(null);
+
+  const [likesResenha, setLikesResenha] = useState(0);
+
+  useEffect(() => {
+    const fetchLikesResenha = async () => {
+      try {
+          const data = await api.LikeResenhaByResenha(res.id);
+          setLikesResenha(data.length);
+      } catch (error) {
+          console.error("Erro ao buscar likes da resenha:", error);
+      }
+  };
+
+  fetchLikesResenha();
+}, []);
+
+// Função que será chamada após curtir/descurtir a resenha
+const atualizarLikesResenha = async () => {
+  try {
+      const data = await api.LikeResenhaByResenha(res.id);
+      setLikesResenha(data.length); // Atualiza apenas a resenha alterada
+  } catch (error) {
+      console.error("Erro ao atualizar likes da resenha:", error);
+  }
+};
 
   // Função para buscar comentários e abrir a modal
   const handleShow = async (resenha) => {
@@ -53,7 +77,7 @@ const ResenhaItem = ({
             <p className="resenha">{res.textoResenha}</p>
             <div className="comentario-acoes">
               <div className="icones-esquerda">
-              <i className="bi bi-heart" onClick={handleLikeResenha}></i>
+              <i className="bi bi-heart" onClick={() => handleLikeResenha(res.id).then(() => atualizarLikesResenha())}></i>
               <span>{likesResenha}</span>
                 <i className="bi bi-chat"></i>
               </div>
