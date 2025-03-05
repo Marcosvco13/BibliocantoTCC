@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
 import "./style.css";
 import { Modal } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faEdit,
-  faCheck,
-  faCartShopping,
-} from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 
 function Inicio() {
   const [livros, setLivros] = useState([]);

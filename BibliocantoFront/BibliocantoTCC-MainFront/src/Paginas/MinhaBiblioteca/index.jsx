@@ -18,19 +18,16 @@ export default function Linha() {
         setError("Usuário não encontrado.");
         return;
       }
-
+  
       try {
-        const response = await api.get(
-          `api/MeusLivros/BibliotecaByUser?idUser=${idUser}`
-        );
-
-        setLivros(response.data);
+        const livros = await api.BibliotecaByUser(idUser);
+        setLivros(livros);
       } catch (err) {
         setError("Erro ao carregar os dados.");
         console.error(err);
       }
     };
-
+  
     fetchData();
   }, []);
 

@@ -52,11 +52,6 @@
     background-color: #007bff; /* Cor ao passar o mouse sobre o botão */
     color: white; /* Texto branco ao passar o mouse */
   }
-  
-  .lista-comentarios {
-    list-style: none; /* Remove os pontos */
-    padding-left: 0; /* Remove recuo padrão */
-  }
 
   .comentario-container {
     display: flex;
@@ -112,3 +107,81 @@
     color: red; /* Muda de cor ao passar o mouse */
   }
   
+  /* Estiliza a modal de comentários */
+.modal-comentarios {
+  max-width: 100%; /* Define a largura máxima da modal */
+  background: #fff; /* Fundo branco */
+  border-radius: 12px; /* Bordas arredondadas para um design moderno */
+  padding: 15px; /* Espaçamento interno para melhor legibilidade */
+  max-height: 70vh; /* Define uma altura máxima de 70% da altura da tela */
+  overflow-y: auto; /* Ativa a rolagem vertical quando necessário */
+}
+
+/* Conteúdo do comentário (ícone + email + texto) */
+.comentario-conteudo {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Espaçamento entre os elementos */
+}
+
+.comentario-conteudo i {
+  font-size: 25px !important; /* Força o tamanho maior do ícone */
+}
+
+/* Estiliza cada comentário dentro da lista */
+.lista-comentarios {
+  justify-content: space-between; /* Deixa o coração na direita */
+  align-items: center;
+  display: flex; /* Usa flexbox para alinhar os elementos na mesma linha */
+  gap: 10px; /* Adiciona espaçamento entre o ícone e o texto */
+  padding: 10px; /* Adiciona um espaçamento interno para cada comentário */
+  border-bottom: 1px solid #dbdbdb; /* Adiciona uma linha cinza clara para separar os comentários */
+  font-size: 15px; /* Define o tamanho da fonte para manter o design leve */
+}
+
+/* Ícone do coração no canto direito */
+.icone-like {
+  font-size: 20px; /* Ajusta o tamanho */
+  color: #8e8e8e; /* Cinza padrão do Instagram */
+  cursor: pointer; /* Indica que é clicável */
+  transition: color 0.3s ease; /* Animação suave ao passar o mouse */
+}
+
+/* Efeito ao passar o mouse */
+.icone-like:hover {
+  color: red; /* Fica vermelho ao passar o mouse */
+}
+
+/* Remove a borda inferior do último comentário */
+.lista-comentarios:last-child {
+  border-bottom: none;
+}
+
+/* Estiliza o texto do comentário */
+.lista-comentarios p {
+  margin: 0; /* Remove margens extras do texto */
+  font-weight: 400; /* Usa um peso de fonte médio para legibilidade */
+  word-wrap: break-word; /* Garante que palavras longas quebrem corretamente */
+}
+
+/* Estiliza o título da modal (resenha original) */
+.modal-title-resenha {
+  display: flex; /* Alinha o ícone e o texto na mesma linha */
+  align-items: center; /* Centraliza verticalmente */
+  font-size: 18px; /* Tamanho do texto normal */
+  gap: 10px; /* Adiciona espaçamento entre o ícone e o texto */
+  font-weight: bold; /* Deixa o título em negrito */
+  color: #262626; /* Cor padrão do Instagram para textos */
+  padding: 2px 15px; /* Adiciona espaçamento interno */
+  background: #fff; /* Fundo branco para manter um visual limpo */
+}
+
+/* Aumenta o tamanho do ícone */
+.modal-title-resenha i {
+  font-size: 32px !important; /* Força o tamanho maior do ícone */
+}
+
+/* Resenha com estilo normal (sem negrito) */
+.texto-resenha {
+  font-weight: normal;
+}

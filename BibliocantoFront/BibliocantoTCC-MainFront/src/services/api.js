@@ -753,3 +753,20 @@ api.CadastrarComentario = async function(ComentarioData) {
         throw error;
     }
 };
+
+// API dos meus livros / biblioteca
+
+// API para buscar os livros da biblioteca do usuario
+api.BibliotecaByUser = async function (idUser) {
+    try {
+      const response = await api.get(`/api/MeusLivros/BibliotecaByUser?idUser=${idUser}`, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Erro ao buscar os livros do usuário:", error);
+      throw error;
+    }
+  };

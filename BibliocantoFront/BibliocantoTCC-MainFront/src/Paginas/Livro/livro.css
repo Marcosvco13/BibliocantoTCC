@@ -20,14 +20,13 @@
 
 .div-info {
   width: 100%; /* Faz a div ocupar toda a largura do contêiner */
-  padding: 10px 0; /* Adiciona espaço interno */
+  padding: 5px; /* Adiciona espaço interno */
 }
 
 .box-avaliacao {
   display: flex; /* Centraliza a avaliação */
   justify-content: center;
   align-items: center;
-  margin-top: 10px;
 }
 
 .rating-container {
@@ -40,7 +39,6 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  justify-content: center; /* Alinha o conteúdo verticalmente no centro */
   text-align: justify; /* Justifica o texto */
   padding: 15px; /* Adiciona espaçamento interno */
 }
@@ -59,4 +57,21 @@
   width: 100%;
   padding: 0;
   list-style: none;
+}
+
+/* Estilo para a área de resenha */
+.escrever-resenha {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+  gap: 15px;
+}
+
+/* Estilo para os botões */
+.escrever-resenha .MuiButton-root {
+  border-radius: 20px;
+  font-weight: bold;
+  text-transform: none;
 }

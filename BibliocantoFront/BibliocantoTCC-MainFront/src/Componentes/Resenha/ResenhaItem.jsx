@@ -14,35 +14,45 @@ const ResenhaItem = ({
   buscarComentarios,
   handleLikeResenha,
 }) => {
-
   const [listaComentarios, setListaComentarios] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedResenha, setSelectedResenha] = useState(null);
 
   const [likesResenha, setLikesResenha] = useState(0);
+  const [comentariosResenha, setComentariosResenha] = useState(0);
 
   useEffect(() => {
     const fetchLikesResenha = async () => {
       try {
-          const data = await api.LikeResenhaByResenha(res.id);
-          setLikesResenha(data.length);
+        const data = await api.LikeResenhaByResenha(res.id);
+        setLikesResenha(data.length);
       } catch (error) {
-          console.error("Erro ao buscar likes da resenha:", error);
+        console.error("Erro ao buscar likes da resenha:", error);
       }
-  };
+    };
 
-  fetchLikesResenha();
-}, []);
+    const fetchComentariosResenha = async () => {
+      try {
+        const comentariosData = await buscarComentarios(res.id);
+        setComentariosResenha(comentariosData.length);
+      } catch (error) {
+        console.error("Erro ao buscar comentários da resenha:", error);
+      }
+    };
 
-// Função que será chamada após curtir/descurtir a resenha
-const atualizarLikesResenha = async () => {
-  try {
+    fetchLikesResenha();
+    fetchComentariosResenha();
+  }, [res.id, buscarComentarios]);
+
+  // Função que será chamada após curtir/descurtir a resenha
+  const atualizarLikesResenha = async () => {
+    try {
       const data = await api.LikeResenhaByResenha(res.id);
       setLikesResenha(data.length); // Atualiza apenas a resenha alterada
-  } catch (error) {
+    } catch (error) {
       console.error("Erro ao atualizar likes da resenha:", error);
-  }
-};
+    }
+  };
 
   // Função para buscar comentários e abrir a modal
   const handleShow = async (resenha) => {
@@ -77,11 +87,20 @@ const atualizarLikesResenha = async () => {
             <p className="resenha">{res.textoResenha}</p>
             <div className="comentario-acoes">
               <div className="icones-esquerda">
-              <i className="bi bi-heart" onClick={() => handleLikeResenha(res.id).then(() => atualizarLikesResenha())}></i>
-              <span>{likesResenha}</span>
-                <i className="bi bi-chat"></i>
+                <i
+                  className="bi bi-heart"
+                  onClick={() =>
+                    handleLikeResenha(res.id).then(() =>
+                      atualizarLikesResenha()
+                    )
+                  }
+                ></i>
+                <span>{likesResenha}</span>
+                <i className="bi bi-chat"
+                onClick={() => handleShow(res)}
+                ></i>
+                <span>{comentariosResenha}</span>
               </div>
-              <i className="bi bi-arrow-up-right-square icone-direita" onClick={() => handleShow(res)}></i>
             </div>
           </div>
         </div>
@@ -96,17 +115,24 @@ const atualizarLikesResenha = async () => {
         className="resenha-modal"
       >
         <Modal.Header closeButton>
-          <Modal.Title>
-            {selectedResenha ? selectedResenha.textoResenha : "Resenha"}
+          <Modal.Title className="modal-title-resenha">
+            <i className="bi bi-person-circle fs-3"></i>
+            <strong>{res.email}</strong>
+            <span className="texto-resenha">
+              {selectedResenha ? selectedResenha.textoResenha : "Resenha"}
+            </span>
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="modal-comentarios">
           {listaComentarios.length > 0 ? (
             <ul>
               {listaComentarios.map((comentario) => (
                 <li key={comentario.id} className="lista-comentarios">
-                  <i className="bi bi-person-circle fs-3"></i> {res.email}{" "}
-                  {comentario.textoComent}
+                  <div className="comentario-conteudo">
+                    <i className="bi bi-person-circle"></i>{" "}
+                    <strong>{res.email}</strong> {comentario.textoComent}
+                  </div>
+                  <i className="bi bi-heart icone-like"></i>{" "}
                 </li>
               ))}
             </ul>

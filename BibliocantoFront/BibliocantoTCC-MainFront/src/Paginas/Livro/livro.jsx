@@ -4,17 +4,12 @@ import { useParams } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import axios from "axios";
 import Rating from "@mui/material/Rating";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faEdit,
-  faCartShopping,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 
 //css
 import "./livro.css";
@@ -33,9 +28,9 @@ function Livro() {
   const [comentarios, setComentarios] = useState({});
   const [resenhaSelecionada, setResenhaSelecionada] = useState(null);
   const [idResenha, setResenhaId] = useState(null);
-  const [listaComentarios, setListaComentarios] = useState([]);
   const [autores, setAutores] = useState([]);
   const [generos, setGeneros] = useState([]);
+  const [mostrarEnviarResenha, setMostrarEnviarResenha] = useState(false); //mostrar opcao de enviar resenha ou nao
 
   useEffect(() => {
     const fetchData = async () => {
@@ -127,9 +122,9 @@ function Livro() {
 
   // Função para enviar uma nova resenha
   const enviarResenha = async () => {
-    console.log("ID do usuário:", idUser);
-    console.log("ID do livro:", idLivro);
-    console.log("Texto da resenha:", resenha);
+    //console.log("ID do usuário:", idUser);
+    //console.log("ID do livro:", idLivro);
+    //console.log("Texto da resenha:", resenha);
 
     if (!idUser) {
       setMensagem("Erro: usuário não identificado.");
@@ -155,13 +150,14 @@ function Livro() {
         textoResenha: resenha,
       };
 
-      console.log("Enviando dados:", resenhaData);
+      //console.log("Enviando dados:", resenhaData);
 
       // Chamada à função cadastrarResenha da API
       await api.cadastrarResenha(resenhaData);
 
       setMensagem("Resenha enviada com sucesso!");
       setResenha(""); // Limpa o campo de resenha
+      setMostrarEnviarResenha(false);
 
       fetchResenhas(); // Atualiza a lista de resenhas após o envio
     } catch (error) {
@@ -273,7 +269,7 @@ function Livro() {
   const buscarComentarios = async (idResenha) => {
     try {
       const comentariosBuscados = await api.ComentarioByResenha(idResenha);
-      console.log("Comentários retornados da API:", comentariosBuscados);
+      //console.log("Comentários retornados da API:", comentariosBuscados);
       return comentariosBuscados; // Certifique-se de retornar os comentários aqui
     } catch (error) {
       console.error("Erro ao buscar comentários:", error);
@@ -296,6 +292,7 @@ function Livro() {
                   alt={livro.titulo}
                 />
               </div>
+
               <div className="div-info">
                 <p>ISBN-13: {livro.isbn}</p>
 
@@ -334,6 +331,14 @@ function Livro() {
                   </div>
                 </Box>
 
+                <Button
+                  variant="contained"
+                  onClick={() => setMostrarEnviarResenha(true)}
+                >
+                  Adicionar Resenha
+                </Button>
+
+                <div className="icones-acoes-livro">
                 {livro?.linkCompra && (
                   <button
                     className="biblioteca-btnIcon"
@@ -342,6 +347,7 @@ function Livro() {
                     <FontAwesomeIcon icon={faCartShopping} />
                   </button>
                 )}
+                </div>
               </div>
             </>
           ) : (
@@ -358,26 +364,42 @@ function Livro() {
               </div>
 
               <div className="resenha-container">
-                <TextField
-                  label="Escreva sua resenha"
-                  multiline
-                  fullWidth
-                  rows={4}
-                  variant="outlined"
-                  value={resenha}
-                  onChange={(e) => setResenha(e.target.value)}
-                  style={{ marginTop: "20px" }}
-                />
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={enviarResenha}
-                  style={{ marginTop: "10px" }}
-                >
-                  Enviar Resenha
-                </Button>
-                {mensagem && (
-                  <p style={{ marginTop: "10px", color: "red" }}>{mensagem}</p>
+                {mostrarEnviarResenha && (
+                  <div className="escrever-resenha">
+                    <TextField
+                      label="Escreva sua resenha"
+                      multiline
+                      fullWidth
+                      rows={4}
+                      variant="outlined"
+                      value={resenha}
+                      onChange={(e) => setResenha(e.target.value)}
+                      style={{ marginTop: "20px" }}
+                    />
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={enviarResenha}
+                      style={{ marginTop: "10px" }}
+                    >
+                      Enviar Resenha
+                    </Button>
+
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => setMostrarEnviarResenha(false)}
+                      style={{ marginTop: "10px" }}
+                    >
+                      Cancelar Resenha
+                    </Button>
+
+                    {mensagem && (
+                      <p style={{ marginTop: "10px", color: "red" }}>
+                        {mensagem}
+                      </p>
+                    )}
+                  </div>
                 )}
 
                 {/* Listagem de Resenhas */}
