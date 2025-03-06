@@ -90,7 +90,7 @@
   
   .icones-esquerda {
     display: flex;
-    gap: 10px; /* Espaço entre os ícones à esquerda */
+    gap: 5px; /* Espaço entre os ícones à esquerda */
     font-size: 1.2rem;
     color: #555;
   }
@@ -138,6 +138,15 @@
   border-bottom: 1px solid #dbdbdb; /* Adiciona uma linha cinza clara para separar os comentários */
   font-size: 15px; /* Define o tamanho da fonte para manter o design leve */
 }
+
+.like-container {
+  display: flex;
+  align-items: center;
+  color: #555;
+  gap: 5px; /* Espaço entre os ícones à esquerda */
+    font-size: 1.2rem;
+}
+
 
 /* Ícone do coração no canto direito */
 .icone-like {

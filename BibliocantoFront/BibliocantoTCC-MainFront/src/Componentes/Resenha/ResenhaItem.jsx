@@ -14,12 +14,14 @@ const ResenhaItem = ({
   buscarComentarios,
   handleLikeResenha,
   handleLikeComentario,
+  likesComentarios,
 }) => {
   const [listaComentarios, setListaComentarios] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedResenha, setSelectedResenha] = useState(null);
 
   const [likesResenha, setLikesResenha] = useState(0);
+
   const [comentariosResenha, setComentariosResenha] = useState(0);
 
   useEffect(() => {
@@ -62,13 +64,25 @@ const ResenhaItem = ({
 
     try {
       const comentariosBuscados = await buscarComentarios(resenha.id);
-      console.log(
-        `Comentários para resenha ${resenha.id}:`,
-        comentariosBuscados
-      );
       setListaComentarios(comentariosBuscados || []);
+
+      // Buscar likes de cada comentário
+      const likesPromises = comentariosBuscados.map(async (comentario) => {
+        const likes = await api.LikeComentarioByComentario(comentario.id);
+        return { id: comentario.id, likes: likes.length };
+      });
+
+      const likesResultados = await Promise.all(likesPromises);
+
+      // Criar um objeto com os likes dos comentários
+      const likesMap = likesResultados.reduce((acc, cur) => {
+        acc[cur.id] = cur.likes;
+        return acc;
+      }, {});
+
+      setLikesComentarios(likesMap);
     } catch (error) {
-      console.error("Erro ao carregar comentários:", error);
+      console.error("Erro ao carregar comentários ou likes:", error);
     }
   };
 
@@ -97,9 +111,7 @@ const ResenhaItem = ({
                   }
                 ></i>
                 <span>{likesResenha}</span>
-                <i className="bi bi-chat"
-                onClick={() => handleShow(res)}
-                ></i>
+                <i className="bi bi-chat" onClick={() => handleShow(res)}></i>
                 <span>{comentariosResenha}</span>
               </div>
             </div>
@@ -133,7 +145,13 @@ const ResenhaItem = ({
                     <i className="bi bi-person-circle"></i>{" "}
                     <strong>{res.email}</strong> {comentario.textoComent}
                   </div>
-                  <i className="bi bi-heart icone-like" onClick={() => handleLikeComentario(comentario.id)}></i>{" "}
+                  <div className="like-container">
+                  <i
+                    className="bi bi-heart icone-like"
+                    onClick={() => handleLikeComentario(comentario.id)}
+                  ></i>{" "}
+                  <span>{likesComentarios[comentario.id] || 0}</span>
+                  </div>
                 </li>
               ))}
             </ul>

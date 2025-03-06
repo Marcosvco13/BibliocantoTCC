@@ -32,6 +32,8 @@ function Livro() {
   const [generos, setGeneros] = useState([]);
   const [mostrarEnviarResenha, setMostrarEnviarResenha] = useState(false); //mostrar opcao de enviar resenha ou nao
 
+  const [likesComentarios, setLikesComentarios] = useState({});
+
   useEffect(() => {
     const fetchData = async () => {
       // Busca o id do usuário logado
@@ -122,10 +124,6 @@ function Livro() {
 
   // Função para enviar uma nova resenha
   const enviarResenha = async () => {
-    //console.log("ID do usuário:", idUser);
-    //console.log("ID do livro:", idLivro);
-    //console.log("Texto da resenha:", resenha);
-
     if (!idUser) {
       setMensagem("Erro: usuário não identificado.");
       return;
@@ -204,40 +202,52 @@ function Livro() {
 
   const handleLikeComentario = async (idComentario) => {
     try {
-        // Verifica se o usuário já curtiu o comentário
-        let likeComentarioExistente;
-        try {
-          likeComentarioExistente = await api.LikeComentarioByUserComentario(idUser, idComentario);
-        } catch (error) {
-            if (error.response && error.response.status === 404) {
-                console.log("Like não encontrado. Criando um novo.");
-                likeComentarioExistente = null;
-            } else {
-                console.error("Erro ao verificar o like do comentário:", error);
-                return;
-            }
-        }
-
-        if (likeComentarioExistente) {
-            // Se o like já existir, exclui o like
-            await api.DeleteLikeComentario(likeComentarioExistente.id);
-            console.log("Like removido do comentário:", idComentario);
+      // Verifica se o usuário já curtiu o comentário
+      let likeComentarioExistente;
+      try {
+        likeComentarioExistente = await api.LikeComentarioByUserComentario(
+          idUser,
+          idComentario
+        );
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          console.log("Like não encontrado. Criando um novo.");
+          likeComentarioExistente = null;
         } else {
-            // Se o like não existir, adiciona o like
-            const likeDataComentario = {
-                idComentario: idComentario,
-                idUser: idUser,
-                like: 1,
-            };
-
-            await api.cadastrarLikeComentario(likeDataComentario);
-            console.log("Like adicionado ao comentário:", idComentario);
+          console.error("Erro ao verificar o like do comentário:", error);
+          return;
         }
-    } catch (error) {
-        console.error("Erro ao processar o like no comentário:", error);
-    }
-};
+      }
 
+      if (likeComentarioExistente) {
+        // Se o like já existir, exclui o like
+        await api.DeleteLikeComentario(likeComentarioExistente.id);
+        console.log("Like removido do comentário:", idComentario);
+      } else {
+        // Se o like não existir, adiciona o like
+        const likeDataComentario = {
+          idComentario: idComentario,
+          idUser: idUser,
+          like: 1,
+        };
+
+        await api.cadastrarLikeComentario(likeDataComentario);
+        console.log("Like adicionado ao comentário:", idComentario);
+      }
+
+      // Atualiza a quantidade de likes do comentário específico
+      const likesAtualizados = await api.LikeComentarioByComentario(idComentario);
+        
+      // Atualiza o estado dos likes apenas para o comentário alterado
+      setLikesComentarios((prev) => ({
+          ...prev,
+          [idComentario]: likesAtualizados.length,
+      }));
+
+  } catch (error) {
+      console.error("Erro ao processar o like no comentário:", error);
+  }
+};
 
   // Seleciona a Resenha para comentar
   const handleComentar = async (idResenha) => {
@@ -376,14 +386,14 @@ function Livro() {
                 </Button>
 
                 <div className="icones-acoes-livro">
-                {livro?.linkCompra && (
-                  <button
-                    className="biblioteca-btnIcon"
-                    onClick={() => window.open(livro.linkCompra, "_blank")}
-                  >
-                    <FontAwesomeIcon icon={faCartShopping} />
-                  </button>
-                )}
+                  {livro?.linkCompra && (
+                    <button
+                      className="biblioteca-btnIcon"
+                      onClick={() => window.open(livro.linkCompra, "_blank")}
+                    >
+                      <FontAwesomeIcon icon={faCartShopping} />
+                    </button>
+                  )}
                 </div>
               </div>
             </>
@@ -455,7 +465,10 @@ function Livro() {
                           enviarComentario={enviarComentario}
                           buscarComentarios={buscarComentarios}
                           handleLikeResenha={() => handleLikeResenha(res.id)}
-                          handleLikeComentario={(idComentario) => handleLikeComentario(idComentario)}
+                          handleLikeComentario={(idComentario) =>
+                            handleLikeComentario(idComentario)
+                          }
+                          likesComentarios={likesComentarios}
                         />
                       );
                     })}

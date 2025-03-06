@@ -30,7 +30,7 @@ namespace Bibliocanto.Services
         public async Task<IEnumerable<LikeComentario>> GetByComentario(int idComentario)
         {
             IEnumerable<LikeComentario> baseLikeComentario;
-            if (idComentario == null)
+            if (idComentario != null)
             {
                 baseLikeComentario = await _likeComentarioRepository.GetByComentario(idComentario);
             }

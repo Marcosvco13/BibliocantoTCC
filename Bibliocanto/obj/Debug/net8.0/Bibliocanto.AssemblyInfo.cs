@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Bibliocanto")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dffe5571be7c161cac003ef263a29c3d0a243216")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0a3fed55052c8e92290408568552f12698c10e4f")]
 [assembly: System.Reflection.AssemblyProductAttribute("Bibliocanto")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Bibliocanto")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

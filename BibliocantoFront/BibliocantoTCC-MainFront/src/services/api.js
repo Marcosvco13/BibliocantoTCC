@@ -792,7 +792,7 @@ api.cadastrarLikeComentario = async function(likeDataComentario) {
 // Método get para buscar like do usuario no comentario especifico
 api.LikeComentarioByUserComentario = async function(idUser, idComentario) {
     try {
-        const response = await api.get(`/api/LikeResenha/LikeByUserResenha?idUser=${idUser}&idComentario=${idComentario}`, {
+        const response = await api.get(`/api/LikeComentario/LikeByUserComentario?idUser=${idUser}&idComentario=${idComentario}`, {
             headers: {
                 Authorization: `Bearer ${getToken()}`
             }
@@ -818,5 +818,22 @@ api.DeleteLikeComentario = async function(idLikeComentario) {
     } catch (error) {
         console.error("Erro ao excluir o like para o comentario:", error);
         throw error;
+    }
+};
+
+// Método get para buscar likes do comentario especifico
+api.LikeComentarioByComentario = async function (idComentario) {
+    try {
+        const response = await api.get(`/api/LikeComentario/LikeByComentario?idComentario=${idComentario}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.status === 404) {
+            return []; // Suppresses error logs
+        }
+        return [];
     }
 };
