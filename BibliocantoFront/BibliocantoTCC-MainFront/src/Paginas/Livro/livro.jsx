@@ -202,6 +202,43 @@ function Livro() {
     }
   };
 
+  const handleLikeComentario = async (idComentario) => {
+    try {
+        // Verifica se o usuário já curtiu o comentário
+        let likeComentarioExistente;
+        try {
+          likeComentarioExistente = await api.LikeComentarioByUserComentario(idUser, idComentario);
+        } catch (error) {
+            if (error.response && error.response.status === 404) {
+                console.log("Like não encontrado. Criando um novo.");
+                likeComentarioExistente = null;
+            } else {
+                console.error("Erro ao verificar o like do comentário:", error);
+                return;
+            }
+        }
+
+        if (likeComentarioExistente) {
+            // Se o like já existir, exclui o like
+            await api.DeleteLikeComentario(likeComentarioExistente.id);
+            console.log("Like removido do comentário:", idComentario);
+        } else {
+            // Se o like não existir, adiciona o like
+            const likeDataComentario = {
+                idComentario: idComentario,
+                idUser: idUser,
+                like: 1,
+            };
+
+            await api.cadastrarLikeComentario(likeDataComentario);
+            console.log("Like adicionado ao comentário:", idComentario);
+        }
+    } catch (error) {
+        console.error("Erro ao processar o like no comentário:", error);
+    }
+};
+
+
   // Seleciona a Resenha para comentar
   const handleComentar = async (idResenha) => {
     setResenhaSelecionada((prev) => (prev === idResenha ? null : idResenha));
@@ -418,6 +455,7 @@ function Livro() {
                           enviarComentario={enviarComentario}
                           buscarComentarios={buscarComentarios}
                           handleLikeResenha={() => handleLikeResenha(res.id)}
+                          handleLikeComentario={(idComentario) => handleLikeComentario(idComentario)}
                         />
                       );
                     })}

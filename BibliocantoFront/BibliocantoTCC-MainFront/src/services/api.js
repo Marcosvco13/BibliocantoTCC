@@ -770,3 +770,53 @@ api.BibliotecaByUser = async function (idUser) {
       throw error;
     }
   };
+
+// RequestsLike Comentario
+
+// API para dar like no comentario
+api.cadastrarLikeComentario = async function(likeDataComentario) {
+    try {
+        const response = await api.post('/api/LikeComentario', likeDataComentario, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        console.log('Like no comentario enviado com sucesso:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao enviar o like para o comentario:", error);
+        throw error;
+    }
+};
+
+// Método get para buscar like do usuario no comentario especifico
+api.LikeComentarioByUserComentario = async function(idUser, idComentario) {
+    try {
+        const response = await api.get(`/api/LikeResenha/LikeByUserResenha?idUser=${idUser}&idComentario=${idComentario}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        console.log('Like do usuario na Comentario encontrado com sucesso:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao buscar o like do usuario no Comentario:", error);
+        throw error;
+    }
+};
+
+// Método delete excluir like do usuario no comentario
+api.DeleteLikeComentario = async function(idLikeComentario) {
+    try {
+        const response = await api.delete(`/api/LikeComentario/${idLikeComentario}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        console.log('Like no comentario excluido com sucesso:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao excluir o like para o comentario:", error);
+        throw error;
+    }
+};

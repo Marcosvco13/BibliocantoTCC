@@ -13,6 +13,7 @@ const ResenhaItem = ({
   enviarComentario,
   buscarComentarios,
   handleLikeResenha,
+  handleLikeComentario,
 }) => {
   const [listaComentarios, setListaComentarios] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -132,7 +133,7 @@ const ResenhaItem = ({
                     <i className="bi bi-person-circle"></i>{" "}
                     <strong>{res.email}</strong> {comentario.textoComent}
                   </div>
-                  <i className="bi bi-heart icone-like"></i>{" "}
+                  <i className="bi bi-heart icone-like" onClick={() => handleLikeComentario(comentario.id)}></i>{" "}
                 </li>
               ))}
             </ul>
