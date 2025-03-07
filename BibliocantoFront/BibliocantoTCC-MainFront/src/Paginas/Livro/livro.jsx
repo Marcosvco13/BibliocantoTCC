@@ -156,7 +156,6 @@ function Livro() {
       setResenha(""); // Limpa o campo de resenha
       setMostrarEnviarResenha(false);
 
-      fetchResenhas(); // Atualiza a lista de resenhas após o envio
     } catch (error) {
       console.error("Erro ao enviar a resenha:", error.response?.data || error);
       setMensagem("Erro ao enviar a resenha. Tente novamente.");
@@ -198,7 +197,7 @@ function Livro() {
       console.error("Erro ao processar o like na resenha:", error);
     }
   };
-
+  
   const handleLikeComentario = async (idComentario) => {
     try {
       // Verifica se o usuário já curtiu o comentário
@@ -464,6 +463,7 @@ function Livro() {
                           handleLikeResenha={() => handleLikeResenha(res.id)}
                           handleLikeComentario={handleLikeComentario} 
                           likesComentarios={likesComentarios}
+                          setLikesComentarios={setLikesComentarios}
                         />
                       );
                     })}

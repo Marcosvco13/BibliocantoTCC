@@ -15,67 +15,72 @@ const ResenhaItem = ({
   handleLikeResenha,
   handleLikeComentario,
   likesComentarios,
+  setLikesComentarios,
 }) => {
   const [listaComentarios, setListaComentarios] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [selectedResenha, setSelectedResenha] = useState(null);
-
   const [likesResenha, setLikesResenha] = useState(0);
-
   const [QtdcomentariosResenha, setQtdComentariosResenha] = useState(0);
 
   useEffect(() => {
-    const fetchLikesResenha = async () => {
+    const fetchResenhaData = async () => {
       try {
-        const data = await api.LikeResenhaByResenha(res.id);
-        setLikesResenha(data.length);
-      } catch (error) {
-        console.error("Erro ao buscar likes da resenha:", error);
-      }
-    };
+        const [likesData, comentariosData] = await Promise.all([
+          api.LikeResenhaByResenha(res.id),
+          buscarComentarios(res.id),
+        ]);
 
-    const fetchQtdComentariosResenha = async () => {
-      try {
-        const comentariosData = await buscarComentarios(res.id);
+        setLikesResenha(likesData.length);
         setQtdComentariosResenha(comentariosData.length);
       } catch (error) {
-        console.error("Erro ao buscar comentários da resenha:", error);
+        console.error("Erro ao buscar dados da resenha:", error);
       }
     };
 
-    fetchLikesResenha();
-    fetchQtdComentariosResenha();
+    fetchResenhaData();
   }, [res.id, buscarComentarios]);
 
-  // Função que será chamada após curtir/descurtir a resenha
-  const atualizarLikesResenha = async () => {
-    try {
-      const data = await api.LikeResenhaByResenha(res.id);
-      setLikesResenha(data.length); // Atualiza apenas a resenha alterada
-    } catch (error) {
-      console.error("Erro ao atualizar likes da resenha:", error);
-    }
-  };
-
-  // Função para buscar comentários e abrir a modal
-  const handleShow = async (resenha) => {
-    setSelectedResenha(resenha);
+  const handleShow = async () => {
     setShowModal(true);
-
     try {
-      const comentariosBuscados = await buscarComentarios(resenha.id);
-      setListaComentarios(comentariosBuscados || []);
+      const comentariosBuscados = await buscarComentarios(res.id);
+      setListaComentarios(comentariosBuscados);
 
+      const likesResultados = await Promise.all(
+        comentariosBuscados.map(async (comentario) => ({
+          id: comentario.id,
+          likes: (await api.LikeComentarioByComentario(comentario.id)).length,
+        }))
+      );
+
+      const likesMap = likesResultados.reduce((acc, cur) => {
+        acc[cur.id] = cur.likes;
+        return acc;
+      }, {});
+
+      setLikesComentarios(likesMap);
     } catch (error) {
       console.error("Erro ao carregar comentários ou likes:", error);
     }
   };
 
-  // Fechar o modal
-  const handleClose = () => {
-    setShowModal(false);
-    setSelectedResenha(null);
+  const handleClose = () => setShowModal(false);
+
+  const handleEnviarComentario = async () => {
+    await enviarComentario(res.id);
+    const comentariosAtualizados = await buscarComentarios(res.id);
+    setListaComentarios(comentariosAtualizados);
   };
+
+  // Função que será chamada após curtir/descurtir a resenha
+    const atualizarLikesResenha = async () => {
+      try {
+        const data = await api.LikeResenhaByResenha(res.id);
+        setLikesResenha(data.length); // Atualiza apenas a resenha alterada
+      } catch (error) {
+        console.error("Erro ao atualizar likes da resenha:", error);
+      }
+    };
 
   return (
     <>
@@ -87,7 +92,7 @@ const ResenhaItem = ({
             <p className="resenha">{res.textoResenha}</p>
             <div className="comentario-acoes">
               <div className="icones-esquerda">
-                <i
+              <i
                   className="bi bi-heart"
                   onClick={() =>
                     handleLikeResenha(res.id).then(() =>
@@ -96,7 +101,7 @@ const ResenhaItem = ({
                   }
                 ></i>
                 <span>{likesResenha}</span>
-                <i className="bi bi-chat" onClick={() => handleShow(res)}></i>
+                <i className="bi bi-chat" onClick={handleShow}></i>
                 <span>{QtdcomentariosResenha}</span>
               </div>
             </div>
@@ -104,21 +109,12 @@ const ResenhaItem = ({
         </div>
       </li>
 
-      {/* Modal de visualização da resenha */}
-      <Modal
-        show={showModal}
-        onHide={handleClose}
-        size="lg"
-        centered
-        className="resenha-modal"
-      >
+      <Modal show={showModal} onHide={handleClose} size="lg" centered className="resenha-modal">
         <Modal.Header closeButton>
           <Modal.Title className="modal-title-resenha">
             <i className="bi bi-person-circle fs-3"></i>
             <strong>{res.email}</strong>
-            <span className="texto-resenha">
-              {selectedResenha ? selectedResenha.textoResenha : "Resenha"}
-            </span>
+            <span className="texto-resenha">{res.textoResenha}</span>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className="modal-comentarios">
@@ -127,15 +123,15 @@ const ResenhaItem = ({
               {listaComentarios.map((comentario) => (
                 <li key={comentario.id} className="lista-comentarios">
                   <div className="comentario-conteudo">
-                    <i className="bi bi-person-circle"></i>{" "}
+                    <i className="bi bi-person-circle"></i>
                     <strong>{comentario.emailUsuario}</strong> {comentario.textoComent}
                   </div>
                   <div className="like-container">
-                  <i
-                    className="bi bi-heart icone-like"
-                    onClick={() => handleLikeComentario(comentario.id)}
-                  ></i>{" "}
-                  <span>{likesComentarios[comentario.id] || 0}</span>
+                    <i
+                      className="bi bi-heart icone-like"
+                      onClick={() => handleLikeComentario(comentario.id)}
+                    ></i>
+                    <span>{likesComentarios[comentario.id] || 0}</span>
                   </div>
                 </li>
               ))}
@@ -145,7 +141,6 @@ const ResenhaItem = ({
           )}
         </Modal.Body>
 
-        {/* Exibe a caixa de comentário apenas para a resenha selecionada */}
         {resenhaSelecionada === res.id && (
           <div className="comentario-box">
             <TextField
@@ -166,35 +161,17 @@ const ResenhaItem = ({
           </div>
         )}
         <Modal.Footer>
-          {/* Exibir o botão "Enviar Comentário" apenas se a caixa de comentário estiver aberta */}
           {resenhaSelecionada === res.id ? (
             <>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={async () => {
-                  await enviarComentario(res.id);
-                  const comentariosAtualizados = await buscarComentarios(
-                    res.id
-                  ); // Atualiza a lista após o envio
-                  setListaComentarios(comentariosAtualizados || []);
-                }}
-              >
+              <Button variant="contained" color="secondary" onClick={handleEnviarComentario}>
                 Enviar Comentário
               </Button>
-              <Button
-                variant="outline-danger"
-                onClick={() => handleComentar(null)} // Cancela o comentário
-              >
+              <Button variant="outline-danger" onClick={() => handleComentar(null)}>
                 Cancelar
               </Button>
             </>
           ) : (
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={() => handleComentar(res.id)}
-            >
+            <Button variant="outlined" color="primary" onClick={() => handleComentar(res.id)}>
               Comentar
             </Button>
           )}
