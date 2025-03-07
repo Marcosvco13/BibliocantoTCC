@@ -22,7 +22,7 @@ const ResenhaItem = ({
 
   const [likesResenha, setLikesResenha] = useState(0);
 
-  const [comentariosResenha, setComentariosResenha] = useState(0);
+  const [QtdcomentariosResenha, setQtdComentariosResenha] = useState(0);
 
   useEffect(() => {
     const fetchLikesResenha = async () => {
@@ -34,17 +34,17 @@ const ResenhaItem = ({
       }
     };
 
-    const fetchComentariosResenha = async () => {
+    const fetchQtdComentariosResenha = async () => {
       try {
         const comentariosData = await buscarComentarios(res.id);
-        setComentariosResenha(comentariosData.length);
+        setQtdComentariosResenha(comentariosData.length);
       } catch (error) {
         console.error("Erro ao buscar comentários da resenha:", error);
       }
     };
 
     fetchLikesResenha();
-    fetchComentariosResenha();
+    fetchQtdComentariosResenha();
   }, [res.id, buscarComentarios]);
 
   // Função que será chamada após curtir/descurtir a resenha
@@ -66,21 +66,6 @@ const ResenhaItem = ({
       const comentariosBuscados = await buscarComentarios(resenha.id);
       setListaComentarios(comentariosBuscados || []);
 
-      // Buscar likes de cada comentário
-      const likesPromises = comentariosBuscados.map(async (comentario) => {
-        const likes = await api.LikeComentarioByComentario(comentario.id);
-        return { id: comentario.id, likes: likes.length };
-      });
-
-      const likesResultados = await Promise.all(likesPromises);
-
-      // Criar um objeto com os likes dos comentários
-      const likesMap = likesResultados.reduce((acc, cur) => {
-        acc[cur.id] = cur.likes;
-        return acc;
-      }, {});
-
-      setLikesComentarios(likesMap);
     } catch (error) {
       console.error("Erro ao carregar comentários ou likes:", error);
     }
@@ -112,7 +97,7 @@ const ResenhaItem = ({
                 ></i>
                 <span>{likesResenha}</span>
                 <i className="bi bi-chat" onClick={() => handleShow(res)}></i>
-                <span>{comentariosResenha}</span>
+                <span>{QtdcomentariosResenha}</span>
               </div>
             </div>
           </div>
@@ -143,7 +128,7 @@ const ResenhaItem = ({
                 <li key={comentario.id} className="lista-comentarios">
                   <div className="comentario-conteudo">
                     <i className="bi bi-person-circle"></i>{" "}
-                    <strong>{res.email}</strong> {comentario.textoComent}
+                    <strong>{comentario.emailUsuario}</strong> {comentario.textoComent}
                   </div>
                   <div className="like-container">
                   <i

@@ -30,8 +30,7 @@ function Livro() {
   const [idResenha, setResenhaId] = useState(null);
   const [autores, setAutores] = useState([]);
   const [generos, setGeneros] = useState([]);
-  const [mostrarEnviarResenha, setMostrarEnviarResenha] = useState(false); //mostrar opcao de enviar resenha ou nao
-
+  const [mostrarEnviarResenha, setMostrarEnviarResenha] = useState(false);
   const [likesComentarios, setLikesComentarios] = useState({});
 
   useEffect(() => {
@@ -250,34 +249,16 @@ function Livro() {
 };
 
   // Seleciona a Resenha para comentar
-  const handleComentar = async (idResenha) => {
+  const handleComentar = (idResenha) => {
     setResenhaSelecionada((prev) => (prev === idResenha ? null : idResenha));
-
+  
     setComentarios((prev) => ({
       ...prev,
       [idResenha]: prev[idResenha] || "", // Garante que exista uma chave para o idResenha
     }));
-
-    if (!idUser || !idLivro) {
-      alert("Erro: Usuário ou livro não identificado.");
-      return;
-    }
-
-    try {
-      // Buscando a resenha do usuário para o livro
-      const resenha = await api.getResenhaByUserLivro(idUser, idLivro);
-
-      // Verifica se a resenha retornada tem um ID
-      if (resenha && resenha.id) {
-        console.log("Resenha encontrada:", resenha); // Log para verificar a resenha encontrada
-        setResenhaId(resenha.id); // Armazena o ID da resenha encontrada
-      } else {
-        console.error("Resenha não encontrada ou sem ID:", resenha);
-      }
-    } catch (error) {
-      console.error("Erro ao buscar a resenha:", error);
-    }
-  };
+  
+    setResenhaId(idResenha); // Apenas define o ID da resenha selecionada
+  };  
 
   // Envia um comentário para a API
   const enviarComentario = async () => {
@@ -315,14 +296,30 @@ function Livro() {
 
   const buscarComentarios = async (idResenha) => {
     try {
-      const comentariosBuscados = await api.ComentarioByResenha(idResenha);
-      //console.log("Comentários retornados da API:", comentariosBuscados);
-      return comentariosBuscados; // Certifique-se de retornar os comentários aqui
+        const comentariosBuscados = await api.ComentarioByResenha(idResenha);
+        
+        // Para cada comentário, buscar o email do usuário pelo idUser
+        const comentariosComEmail = await Promise.all(comentariosBuscados.map(async (comentario) => {
+            try {
+                const usuario = await api.EmailUserByID(comentario.idUser); // Buscar o email do usuário
+                return { 
+                    ...comentario, 
+                    emailUsuario: usuario.email // Adicionar o email ao comentário
+                };
+            } catch (error) {
+                console.error("Erro ao buscar o email do usuário para o comentário:", error);
+                return comentario; // Caso falhe, retorna o comentário sem o email
+            }
+        }));
+
+        // Retorna os comentários com o email adicionado
+        return comentariosComEmail;
     } catch (error) {
-      console.error("Erro ao buscar comentários:", error);
-      return []; // Retorna um array vazio em caso de erro para evitar `undefined`
+        console.error("Erro ao buscar comentários:", error);
+        return []; // Retorna um array vazio em caso de erro para evitar `undefined`
     }
-  };
+};
+
 
   return (
     <Container>
@@ -465,9 +462,7 @@ function Livro() {
                           enviarComentario={enviarComentario}
                           buscarComentarios={buscarComentarios}
                           handleLikeResenha={() => handleLikeResenha(res.id)}
-                          handleLikeComentario={(idComentario) =>
-                            handleLikeComentario(idComentario)
-                          }
+                          handleLikeComentario={handleLikeComentario} 
                           likesComentarios={likesComentarios}
                         />
                       );
