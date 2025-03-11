@@ -45,6 +45,7 @@ namespace Bibliocanto.Controllers
             }
         }
 
+
         [HttpGet("ResenhaByUser")]
         public async Task<ActionResult<IEnumerable<ResenhaResource>>> GetByUser([FromQuery] string idUser)
         {

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { TextField } from "@mui/material";
 import api from "../../services/api";
+import { useCallback } from "react";
 import "./ResenhaItem.css";
 
 const ResenhaItem = ({
@@ -66,21 +67,20 @@ const ResenhaItem = ({
 
   const handleClose = () => setShowModal(false);
 
-  const handleEnviarComentario = async () => {
+  const handleEnviarComentario = useCallback(async () => {
     await enviarComentario(res.id);
     const comentariosAtualizados = await buscarComentarios(res.id);
     setListaComentarios(comentariosAtualizados);
-  };
+  }, [res.id, enviarComentario, buscarComentarios]);
 
-  // Função que será chamada após curtir/descurtir a resenha
-    const atualizarLikesResenha = async () => {
-      try {
-        const data = await api.LikeResenhaByResenha(res.id);
-        setLikesResenha(data.length); // Atualiza apenas a resenha alterada
-      } catch (error) {
-        console.error("Erro ao atualizar likes da resenha:", error);
-      }
-    };
+  const atualizarLikesResenha = useCallback(async () => {
+    try {
+      const data = await api.LikeResenhaByResenha(res.id);
+      setLikesResenha(data.length);
+    } catch (error) {
+      console.error("Erro ao atualizar likes da resenha:", error);
+    }
+  }, [res.id]);
 
   return (
     <>
@@ -92,7 +92,7 @@ const ResenhaItem = ({
             <p className="resenha">{res.textoResenha}</p>
             <div className="comentario-acoes">
               <div className="icones-esquerda">
-              <i
+                <i
                   className="bi bi-heart"
                   onClick={() =>
                     handleLikeResenha(res.id).then(() =>
@@ -109,7 +109,13 @@ const ResenhaItem = ({
         </div>
       </li>
 
-      <Modal show={showModal} onHide={handleClose} size="lg" centered className="resenha-modal">
+      <Modal
+        show={showModal}
+        onHide={handleClose}
+        size="lg"
+        centered
+        className="resenha-modal"
+      >
         <Modal.Header closeButton>
           <Modal.Title className="modal-title-resenha">
             <i className="bi bi-person-circle fs-3"></i>
@@ -124,7 +130,8 @@ const ResenhaItem = ({
                 <li key={comentario.id} className="lista-comentarios">
                   <div className="comentario-conteudo">
                     <i className="bi bi-person-circle"></i>
-                    <strong>{comentario.emailUsuario}</strong> {comentario.textoComent}
+                    <strong>{comentario.emailUsuario}</strong>{" "}
+                    {comentario.textoComent}
                   </div>
                   <div className="like-container">
                     <i
@@ -163,16 +170,27 @@ const ResenhaItem = ({
         <Modal.Footer>
           {resenhaSelecionada === res.id ? (
             <>
-              <Button variant="contained" color="secondary" onClick={handleEnviarComentario}>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleEnviarComentario}
+              >
                 Enviar Comentário
               </Button>
-              <Button variant="outline-danger" onClick={() => handleComentar(null)}>
+              <Button
+                variant="outline-danger"
+                onClick={() => handleComentar(null)}
+              >
                 Cancelar
               </Button>
             </>
           ) : (
-            <Button variant="outlined" color="primary" onClick={() => handleComentar(res.id)}>
-              Comentar
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => handleComentar(res.id)}
+            >
+              {resenhaSelecionada ? "Cancelar" : "Comentar"}
             </Button>
           )}
         </Modal.Footer>

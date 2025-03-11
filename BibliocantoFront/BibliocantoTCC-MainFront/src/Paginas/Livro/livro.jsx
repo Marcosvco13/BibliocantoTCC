@@ -10,11 +10,7 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
-
-//css
 import "./livro.css";
-
-//componentes
 import ResenhaItem from "../../Componentes/Resenha/ResenhaItem";
 
 function Livro() {
@@ -46,20 +42,13 @@ function Livro() {
         console.error("Erro ao buscar o ID do usuário:", error);
       }
 
-      // Busca os dados do livro utilizando a API centralizada
-      try {
-        const data = await api.getLivroById(idLivro);
-        setLivro(data);
-      } catch (error) {
-        console.error("Erro ao buscar o livro:", error);
-      }
-
       // Busca resenhas do livro
       if (idLivro) {
         try {
           const response = await api.getResenhaByIdLivro(idLivro);
-          //console.log("Resenhas recebidas:", response);
           setResenhas(response);
+
+          console.log("Resposta da API:", response);
 
           // Verifica se o usuário já fez uma resenha
           if (response.some((res) => res.idUser === idUser)) {
@@ -74,8 +63,6 @@ function Livro() {
               return { ...res, email }; // Retorna a resenha com o email adicionado
             })
           );
-
-          //console.log("Resenhas com email:", resenhasComEmail);
 
           setResenhas(resenhasComEmail);
         } catch (error) {
@@ -147,15 +134,12 @@ function Livro() {
         textoResenha: resenha,
       };
 
-      //console.log("Enviando dados:", resenhaData);
-
       // Chamada à função cadastrarResenha da API
       await api.cadastrarResenha(resenhaData);
 
       setMensagem("Resenha enviada com sucesso!");
       setResenha(""); // Limpa o campo de resenha
       setMostrarEnviarResenha(false);
-
     } catch (error) {
       console.error("Erro ao enviar a resenha:", error.response?.data || error);
       setMensagem("Erro ao enviar a resenha. Tente novamente.");
@@ -170,7 +154,6 @@ function Livro() {
         likeExistente = await api.LikeResenhaByUserResenha(idUser, idResenha);
       } catch (error) {
         if (error.response && error.response.status === 404) {
-          console.log("Like não encontrado. Criando um novo.");
           likeExistente = null;
         } else {
           console.error("Erro ao verificar o like da resenha:", error);
@@ -181,7 +164,6 @@ function Livro() {
       if (likeExistente) {
         // Se o like já existir, exclui o like
         await api.DeleteLikeResenha(likeExistente.id);
-        console.log("Like removido da resenha:", idResenha);
       } else {
         // Se o like não existir, adiciona o like
         const likeDataResenha = {
@@ -191,13 +173,12 @@ function Livro() {
         };
 
         await api.cadastrarLikeResenha(likeDataResenha);
-        console.log("Like adicionado à resenha:", idResenha);
       }
     } catch (error) {
       console.error("Erro ao processar o like na resenha:", error);
     }
   };
-  
+
   const handleLikeComentario = async (idComentario) => {
     try {
       // Verifica se o usuário já curtiu o comentário
@@ -209,7 +190,6 @@ function Livro() {
         );
       } catch (error) {
         if (error.response && error.response.status === 404) {
-          console.log("Like não encontrado. Criando um novo.");
           likeComentarioExistente = null;
         } else {
           console.error("Erro ao verificar o like do comentário:", error);
@@ -220,7 +200,6 @@ function Livro() {
       if (likeComentarioExistente) {
         // Se o like já existir, exclui o like
         await api.DeleteLikeComentario(likeComentarioExistente.id);
-        console.log("Like removido do comentário:", idComentario);
       } else {
         // Se o like não existir, adiciona o like
         const likeDataComentario = {
@@ -230,34 +209,34 @@ function Livro() {
         };
 
         await api.cadastrarLikeComentario(likeDataComentario);
-        console.log("Like adicionado ao comentário:", idComentario);
       }
 
       // Atualiza a quantidade de likes do comentário específico
-      const likesAtualizados = await api.LikeComentarioByComentario(idComentario);
-        
+      const likesAtualizados = await api.LikeComentarioByComentario(
+        idComentario
+      );
+
       // Atualiza o estado dos likes apenas para o comentário alterado
       setLikesComentarios((prev) => ({
-          ...prev,
-          [idComentario]: likesAtualizados.length,
+        ...prev,
+        [idComentario]: likesAtualizados.length,
       }));
-
-  } catch (error) {
+    } catch (error) {
       console.error("Erro ao processar o like no comentário:", error);
-  }
-};
+    }
+  };
 
   // Seleciona a Resenha para comentar
   const handleComentar = (idResenha) => {
     setResenhaSelecionada((prev) => (prev === idResenha ? null : idResenha));
-  
+
     setComentarios((prev) => ({
       ...prev,
       [idResenha]: prev[idResenha] || "", // Garante que exista uma chave para o idResenha
     }));
-  
+
     setResenhaId(idResenha); // Apenas define o ID da resenha selecionada
-  };  
+  };
 
   // Envia um comentário para a API
   const enviarComentario = async () => {
@@ -267,7 +246,6 @@ function Livro() {
     }
 
     const textoComent = comentarios[idResenha]?.trim();
-    console.log("Texto do comentário:", textoComent);
 
     if (!textoComent) {
       alert("O comentário não pode estar vazio.");
@@ -295,36 +273,38 @@ function Livro() {
 
   const buscarComentarios = async (idResenha) => {
     try {
-        const comentariosBuscados = await api.ComentarioByResenha(idResenha);
-        
-        // Para cada comentário, buscar o email do usuário pelo idUser
-        const comentariosComEmail = await Promise.all(comentariosBuscados.map(async (comentario) => {
-            try {
-                const usuario = await api.EmailUserByID(comentario.idUser); // Buscar o email do usuário
-                return { 
-                    ...comentario, 
-                    emailUsuario: usuario.email // Adicionar o email ao comentário
-                };
-            } catch (error) {
-                console.error("Erro ao buscar o email do usuário para o comentário:", error);
-                return comentario; // Caso falhe, retorna o comentário sem o email
-            }
-        }));
+      const comentariosBuscados = await api.ComentarioByResenha(idResenha);
 
-        // Retorna os comentários com o email adicionado
-        return comentariosComEmail;
+      // Para cada comentário, buscar o email do usuário pelo idUser
+      const comentariosComEmail = await Promise.all(
+        comentariosBuscados.map(async (comentario) => {
+          try {
+            const usuario = await api.EmailUserByID(comentario.idUser); // Buscar o email do usuário
+            return {
+              ...comentario,
+              emailUsuario: usuario.email, // Adicionar o email ao comentário
+            };
+          } catch (error) {
+            console.error(
+              "Erro ao buscar o email do usuário para o comentário:",
+              error
+            );
+            return comentario; // Caso falhe, retorna o comentário sem o email
+          }
+        })
+      );
+
+      // Retorna os comentários com o email adicionado
+      return comentariosComEmail;
     } catch (error) {
-        console.error("Erro ao buscar comentários:", error);
-        return []; // Retorna um array vazio em caso de erro para evitar `undefined`
+      console.error("Erro ao buscar comentários:", error);
+      return []; // Retorna um array vazio em caso de erro para evitar `undefined`
     }
-};
-
+  };
 
   return (
     <Container>
-      {/* Stack the columns on mobile by making one full-width and the other half-width */}
       <Row>
-        {/* Coluna para exibir a imagem do livro xs={12} md={3}*/}
         <Col xs={12} md={3} className="livro-coluna">
           {livro ? (
             <>
@@ -357,6 +337,13 @@ function Livro() {
                   <p>Carregando gêneros...</p>
                 )}
 
+                <Button
+                  variant="contained"
+                  onClick={() => setMostrarEnviarResenha(true)}
+                >
+                  Escrever Resenha
+                </Button>
+
                 <Box
                   component="fieldset"
                   mb={3}
@@ -373,13 +360,6 @@ function Livro() {
                     />
                   </div>
                 </Box>
-
-                <Button
-                  variant="contained"
-                  onClick={() => setMostrarEnviarResenha(true)}
-                >
-                  Adicionar Resenha
-                </Button>
 
                 <div className="icones-acoes-livro">
                   {livro?.linkCompra && (
@@ -461,7 +441,7 @@ function Livro() {
                           enviarComentario={enviarComentario}
                           buscarComentarios={buscarComentarios}
                           handleLikeResenha={() => handleLikeResenha(res.id)}
-                          handleLikeComentario={handleLikeComentario} 
+                          handleLikeComentario={handleLikeComentario}
                           likesComentarios={likesComentarios}
                           setLikesComentarios={setLikesComentarios}
                         />
@@ -480,8 +460,7 @@ function Livro() {
 
         <Col xs={12} md={3} className="livro-coluna-extra">
           <p>
-            Aqui você pode adicionar mais informações ou funcionalidades
-            futuramente.
+            Recomendações de livros do(a) mesmo(a) autor(a)
           </p>
         </Col>
       </Row>
