@@ -3,6 +3,7 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { RootStackParamList } from '../routes/StackNavigator';
 import { View, Text, Image, TouchableOpacity, ActivityIndicator, StyleSheet, FlatList } from "react-native";
 import api from "../services/api";
+import NavBar from "../components/NavBar";
 
 
 // Definição do tipo para os livros
@@ -38,26 +39,28 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      {error && <Text style={styles.error}>{error}</Text>}
+        {error && <Text style={styles.error}>{error}</Text>}
 
-      {livros.length > 0 ? (
-        <FlatList
-          data={livros}
-          keyExtractor={(livro) => livro.id.toString()}
-          numColumns={3} // Exibe os livros em duas colunas
-          renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => handleImageClick(item)}>
-              <Image source={{ uri: item.caminhoImagem }} style={styles.livroCard} />
-            </TouchableOpacity>
-          )}
-          contentContainerStyle={styles.livrosContainer}
-        />
-      ) : (
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#0000ff" />
-          <Text style={styles.loadingText}>Carregando os livros...</Text>
-        </View>
-      )}
+        {livros.length > 0 ? (
+          <FlatList
+            data={livros}
+            keyExtractor={(livro) => livro.id.toString()}
+            numColumns={3} // Exibe os livros em duas colunas
+            renderItem={({ item }) => (
+              <TouchableOpacity onPress={() => handleImageClick(item)}>
+                <Image source={{ uri: item.caminhoImagem }} style={styles.livroCard} />
+              </TouchableOpacity>
+            )}
+            contentContainerStyle={styles.livrosContainer}
+          />
+        ) : (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#0000ff" />
+            <Text style={styles.loadingText}>Carregando os livros...</Text>
+          </View>
+        )}
+
+      <NavBar/>
     </View>
   );
 }
@@ -80,7 +83,6 @@ const styles = StyleSheet.create({
   },
   livrosContainer: {
     justifyContent: "center",
-    paddingTop: 50,
   },
   livroCard: {
     width: 100,

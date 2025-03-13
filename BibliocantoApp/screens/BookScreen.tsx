@@ -4,6 +4,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import * as SecureStore from "expo-secure-store";
 import { useRoute } from '@react-navigation/native';
 import api from "../services/api";
+import NavBar from "../components/NavBar";
 
 interface Livro {
     id: number;
@@ -147,6 +148,8 @@ export default function BookScreen() {
 
                 </View>
             )}
+
+            <NavBar/>
         </View>
     );
 }
@@ -162,8 +165,6 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         marginBottom: 15,
-        paddingTop:50,
-        paddingBottom: 20,
     },
     backButton: {
         fontSize: 16,

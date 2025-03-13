@@ -5,6 +5,7 @@ import * as SecureStore from 'expo-secure-store';
 import { RootStackParamList } from '../routes/StackNavigator';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import api from '../services/api';
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
@@ -12,6 +13,7 @@ export default function RegisterScreen(){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
     const CreateUser = async () => {
         const data = { email, password, confirmPassword };
@@ -95,30 +97,42 @@ export default function RegisterScreen(){
         <View style={styles.container}>
           <View style={styles.formContainer}>
             <Text style={styles.title}>Bibliocanto</Text>
-            <Text style={styles.subtitle}>Criar Usuário</Text>
-    
-            <TextInput
-              style={styles.input}
-              placeholder="E-mail"
-              value={email}
-              onChangeText={setEmail}
-            />
-    
-            <TextInput
-              style={styles.input}
-              placeholder="Senha"
-              secureTextEntry
-              value={password}
-              onChangeText={setPassword}
-            />
-    
-            <TextInput
-              style={styles.input}
-              placeholder="Confirme a senha"
-              secureTextEntry
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-            />
+            <Text style={styles.subtitle}>Cadastre-se para gerenciar seus livros.</Text>
+            
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="E-mail"
+                value={email}
+                onChangeText={setEmail}
+              />
+            </View>
+
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="Senha"
+                secureTextEntry
+                value={password}
+                onChangeText={setPassword}
+              />
+              <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.eyeButton}>
+                <Icon name={showPassword ? "visibility" : "visibility-off"} size={24} color="gray" />
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="Confirme a senha"
+                secureTextEntry
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+              />
+              <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.eyeButton}>
+                <Icon name={showPassword ? "visibility" : "visibility-off"} size={24} color="gray" />
+              </TouchableOpacity>
+            </View>
     
             <TouchableOpacity style={styles.button} onPress={CreateUser}>
               <Text style={styles.buttonText}>Criar</Text>
@@ -148,6 +162,20 @@ const styles = StyleSheet.create({
       width: '80%',
       textAlign: 'center',
     },
+    inputContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      borderWidth: 1,
+      borderColor: "#ccc",
+      borderRadius: 8,
+      paddingHorizontal: 10,
+      width: "100%",
+      height: 50,
+      marginBottom: 15,
+    },
+    eyeButton: {
+      padding: 5,
+    },
     title: {
       fontSize: 40,
       fontFamily: 'Merriweather, serif',
@@ -162,13 +190,8 @@ const styles = StyleSheet.create({
       textAlign: 'center',
     },
     input: {
-      height: 50,
-      borderColor: '#ccc',
-      borderWidth: 1,
-      borderRadius: 4,
-      marginBottom: 15,
-      paddingHorizontal: 10,
-      fontSize: 16,
+      flex: 1,
+      height: "100%",
     },
     button: {
       backgroundColor: '#007BFF',

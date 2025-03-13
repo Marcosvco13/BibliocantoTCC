@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import * as SecureStore from 'expo-secure-store';
 import { RootStackParamList } from '../routes/StackNavigator';
-import { View, TouchableOpacity, StyleSheet } from "react-native";
+import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default function NavBar() {
@@ -20,10 +20,12 @@ export default function NavBar() {
     return (
         <View style={styles.navbar}>
             <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.button}>
-                <Icon name="home" size={24} color="#fff" />
+                <Icon name="home" size={24} color="grey" />
+                <Text>Início</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleLogout} style={styles.button}>
-                <Icon name="logout" size={24} color="#fff" />
+                <Icon name="logout" size={24} color="grey" />
+                <Text>Sair</Text>
             </TouchableOpacity>
         </View>
     );
@@ -32,16 +34,22 @@ export default function NavBar() {
 const styles = StyleSheet.create({
     navbar: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        flexWrap: 'nowrap',
+        display: 'flex',
+        justifyContent: 'space-evenly',
         alignItems: 'center',
-        backgroundColor: '#6200ea',
+        backgroundColor: 'white',
         paddingVertical: 10,
-        paddingHorizontal: 20,
+        paddingHorizontal: 'auto',
         bottom: 0,
-        height: 60,
-        position: "static",
+        left: 0,
+        right: 0,
+        height: 65,
+        position: "absolute",
+        borderWidth: 0.2,
     },
     button: {
         padding: 10,
+        alignItems:'center',
     }
 });

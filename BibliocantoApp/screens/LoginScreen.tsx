@@ -4,11 +4,13 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
 import { RootStackParamList } from '../routes/StackNavigator';
 import api from '../services/api';
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const [showPassword, setShowPassword] = useState(false);
 
   // Função de login
   const login = async () => {
@@ -58,24 +60,32 @@ export default function LoginScreen() {
 
   return (
     <View style={styles.loginContainer}>
+
       <Text style={styles.projectName}>Bibliocanto</Text>
 
-      <Text style={styles.subtitle}>Login do Usuário</Text>
+      {/* <Text style={styles.subtitle}>Login do Usuário</Text> */}
 
-      <TextInput
-        style={styles.input}
-        placeholder='Email'
-        value={email}
-        onChangeText={setEmail}
-      />
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder='Email'
+          value={email}
+          onChangeText={setEmail}
+        />
+      </View>
 
-      <TextInput
-        style={styles.input}
-        placeholder='Senha'
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
+      <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Senha"
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry={!showPassword}
+          />
+          <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.eyeButton}>
+            <Icon name={showPassword ? "visibility" : "visibility-off"} size={24} color="gray" />
+          </TouchableOpacity>
+      </View>
 
       <TouchableOpacity style={styles.loginButton} onPress={login}>
         <Text style={styles.buttonText}>Entrar</Text>
@@ -84,83 +94,107 @@ export default function LoginScreen() {
       <TouchableOpacity style={styles.googleButton} onPress={handleGoogleLogin}>
         <Text style={styles.buttonText}>Entrar com Google</Text>
       </TouchableOpacity>
+      
+      <View style={styles.rowContainer}>
+        <TouchableOpacity onPress={handleForgotPassword}>
+          <Text style={styles.forgotPassword}>Esqueceu a senha?</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity onPress={handleForgotPassword}>
-        <Text style={styles.forgotPassword}>Esqueceu a senha?</Text>
-      </TouchableOpacity>
+        <Text style={styles.orText}>ou</Text>
 
-      <Text style={styles.orText}>Ou</Text>
-
-      <View style={styles.createUserContainer}>
-        <TouchableOpacity style={styles.createUserButton} onPress={handleCreateUser}>
-          <Text style={styles.buttonText}>Criar Usuário</Text>
+        <TouchableOpacity onPress={handleCreateUser}>
+            <Text style={styles.forgotPassword}>Criar Usuário</Text>
         </TouchableOpacity>
       </View>
+
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   loginContainer: {
-    padding: 20,
     flex: 1,
-    justifyContent: 'center',
-    backgroundColor: '#fff',
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+    backgroundColor: "#fff",
+  },
+  rowContainer: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    gap: 10,
   },
   projectName: {
     fontSize: 36,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 50,
+
+    color: "#333",
   },
   subtitle: {
     fontSize: 18,
-    marginBottom: 10,
-    textAlign: 'center',
+    marginBottom: 20,
+    textAlign: "center",
+    color: "#666",
+  },
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    width: "100%",
+    height: 50,
+    marginBottom: 15,
   },
   input: {
-    height: 50,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    marginBottom: 20,
-    paddingHorizontal: 10,
-    borderRadius: 5,
+    flex: 1,
+    height: "100%",
+  },
+  eyeButton: {
+    padding: 5,
   },
   loginButton: {
-    backgroundColor: '#007bff',
+    backgroundColor: "#007bff",
     paddingVertical: 12,
-    borderRadius: 5,
-    alignItems: 'center',
+    borderRadius: 8,
+    alignItems: "center",
+    width: "100%",
     marginBottom: 10,
   },
   googleButton: {
-    backgroundColor: '#db4437',
+    backgroundColor: "#db4437",
     paddingVertical: 12,
-    borderRadius: 5,
-    alignItems: 'center',
+    borderRadius: 8,
+    alignItems: "center",
+    width: "100%",
     marginBottom: 10,
   },
-  forgotPassword: {
-    color: '#007bff',
-    textAlign: 'center',
-    marginBottom: 20,
-  },
-  orText: {
-    textAlign: 'center',
-    fontSize: 16,
-    marginVertical: 10,
-  },
-  createUserContainer: {
-    alignItems: 'center',
-  },
   createUserButton: {
-    backgroundColor: '#28a745',
+    backgroundColor: "#28a745",
     paddingVertical: 12,
-    borderRadius: 5,
-    alignItems: 'center',
+    borderRadius: 8,
+    alignItems: "center",
+    width: "100%",
   },
   buttonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
+    fontWeight: "bold",
+  },
+  forgotPassword: {
+    color: "#007bff",
+    textAlign: "center",
+    marginTop: 10,
+    fontSize: 14,
+  },
+  orText: {
+    textAlign: "center",
+    fontSize: 14,
+    marginTop: 10,
+    color: "#888",
   },
 });
