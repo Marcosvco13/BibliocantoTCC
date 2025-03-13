@@ -4,6 +4,7 @@ import { RootStackParamList } from '../routes/StackNavigator';
 import { View, Text, Image, TouchableOpacity, ActivityIndicator, StyleSheet, FlatList } from "react-native";
 import api from "../services/api";
 
+
 // Definição do tipo para os livros
 interface Livro {
   id: number;
@@ -64,9 +65,12 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    display: "flex",
     alignItems: "center",
+    justifyContent: "center",
     padding: 16,
     backgroundColor: "#fff",
+
   },
   error: {
     color: "red",
@@ -76,6 +80,7 @@ const styles = StyleSheet.create({
   },
   livrosContainer: {
     justifyContent: "center",
+    paddingTop: 50,
   },
   livroCard: {
     width: 100,

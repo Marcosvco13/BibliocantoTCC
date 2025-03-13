@@ -30,7 +30,7 @@ export default function LoginScreen() {
       });
 
       // Armazenando o ID do usuário com SecureStore
-      await SecureStore.setItemAsync('Id', responseId.data.id);
+      await SecureStore.setItemAsync('IdUser', responseId.data.id);
 
       // Navegando para a tela principal
       navigation.navigate('Home');

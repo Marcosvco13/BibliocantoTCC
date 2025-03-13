@@ -162,6 +162,8 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         marginBottom: 15,
+        paddingTop:50,
+        paddingBottom: 20,
     },
     backButton: {
         fontSize: 16,
@@ -185,10 +187,11 @@ const styles = StyleSheet.create({
     },
     text: {
         marginBottom: 5,
+        textAlign:"justify",
     },
     footer: {
         flexDirection: "row",
-        justifyContent: "space-around",
+        justifyContent: "flex-start",
         marginTop: 15,
     },
     iconButton: {
