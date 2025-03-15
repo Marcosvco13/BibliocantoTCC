@@ -1995,6 +1995,37 @@
     ]
   },
   {
+    "ContainingType": "Bibliocanto.Controllers.MeusLivrosController",
+    "Method": "GetByUser",
+    "RelativePath": "api/MeusLivros/ConfirmaByUserLivro",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idLivro",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "idUser",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "Bibliocanto.Controllers.ResenhaController",
     "Method": "PostAsync",
     "RelativePath": "api/Resenha",

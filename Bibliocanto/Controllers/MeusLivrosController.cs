@@ -48,6 +48,13 @@ namespace Bibliocanto.Controllers
             }
         }
 
+        [HttpGet("ConfirmaByUserLivro")]
+        public async Task<bool> GetByUser(int idLivro, string idUser)
+        {
+            var retorno = await _meusLivrosService.GetByIdLivroIdUser(idLivro, idUser);
+            return retorno;
+        }
+
         [HttpGet("{id:int}", Name = "GetMeuLivroById")]
         public async Task<ActionResult<MeusLivrosResource>> GetById(int id)
         {

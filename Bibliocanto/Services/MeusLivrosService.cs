@@ -16,6 +16,10 @@ namespace Bibliocanto.Services
             _meusLivrosRepository = meusLivrosRepository;
             _unitOfWork = unitOfWork;
         }
+        public async Task<bool> GetByIdLivroIdUser( int idLivro, string idUser)
+        {
+            return await _meusLivrosRepository.GetByIdLivroIdUser(idLivro, idUser);
+        }
 
         public async Task<MeusLivros> GetById(int id)
         {
