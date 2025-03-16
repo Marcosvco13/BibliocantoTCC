@@ -302,28 +302,6 @@ function Livro() {
     }
   };
 
-  // Função para enviar a avaliação do usuário
-  const enviarAvaliacao = async (estrelas) => {
-    if (!idUser) {
-      alert("É necessário estar logado para avaliar.");
-      return;
-    }
-
-    try {
-      const DataAvaliacaoLivro = {
-        idLivro: idLivro,
-        idUser: idUser,
-        estrelas: estrelas
-      };
-
-      await api.AvaliarLivro(DataAvaliacaoLivro);
-      alert("Avaliação enviada com sucesso!");
-
-    } catch (error) {
-      console.error("Erro ao enviar avaliação:", error.response?.data || error);
-      alert("Erro ao enviar a avaliação. Tente novamente.");
-    }
-  };
 
   return (
     <Container>
@@ -367,20 +345,22 @@ function Livro() {
                   Escrever Resenha
                 </Button>
 
-                {/* Classificação do usuário */}
-            {idUser && (
-              <Box mt={2}>
-                <h5>Deixe sua avaliação:</h5>
-                <Rating
-                  name="user-rating"
-                  value={ratingValue}
-                  onChange={(event, newValue) => {
-                    setRatingValue(newValue);
-                    enviarAvaliacao(newValue);
-                  }}
-                />
-              </Box>
-            )}
+                <Box
+                  component="fieldset"
+                  mb={3}
+                  borderColor="transparent"
+                  className="box-avaliacao"
+                >
+                  <div className="rating-container">
+                    <Rating
+                      name="simple-controlled"
+                      value={ratingValue}
+                      onChange={(event, newValue) => {
+                        setRatingValue(newValue);
+                      }}
+                    />
+                  </div>
+                </Box>
 
                 <div className="icones-acoes-livro">
                   {livro?.linkCompra && (
