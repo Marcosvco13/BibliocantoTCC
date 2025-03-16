@@ -771,6 +771,21 @@ api.BibliotecaByUser = async function (idUser) {
     }
   };
 
+  // API para checar se o livro esta na biblioteca do usuario
+api.ConfirmaByUserLivro = async function (idUser, idLivro) {
+    try {
+      const response = await api.get(`/api/MeusLivros/ConfirmaByUserLivro?idLivro=${idLivro}&idUser=${idUser}`, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Erro ao checar se o livro esta na biblioteca do usario:", error);
+      throw error;
+    }
+  };
+
 // RequestsLike Comentario
 
 // API para dar like no comentario

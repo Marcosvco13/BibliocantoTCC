@@ -70,29 +70,39 @@ function Inicio() {
 
   const handleAddMeuLivro = async () => {
     const idUser = localStorage.getItem("Id");
-
+  
     if (!idUser) {
       alert("Usuário não encontrado");
       return;
     }
-
-    if (selectedLivro) {
-      const idLivro = selectedLivro.id;
-
-      const data = { idUser, idLivro };
-
-      try {
-        const response = await api.post("/api/MeusLivros", data);
-        console.log(response);
-        alert("Livro adicionado com sucesso!");
-      } catch (error) {
-        console.error(error);
-        alert("Falha ao salvar livro na biblioteca!: " + error.message);
-      }
-    } else {
+  
+    if (!selectedLivro) {
       alert("Nenhum livro selecionado");
+      return;
     }
-  };
+  
+    const idLivro = selectedLivro.id;
+  
+    try {
+      // Verifica se o livro já está na biblioteca do usuário
+      const jaPossuiLivro = await api.ConfirmaByUserLivro(idUser, idLivro);
+  
+      if (jaPossuiLivro) {
+        alert("Você já possui este livro na sua biblioteca!");
+        return;
+      }
+  
+      // Se não possuir, cadastra o livro
+      const data = { idUser, idLivro };
+      const response = await api.post("/api/MeusLivros", data);
+  
+      console.log(response);
+      alert("Livro adicionado com sucesso!");
+    } catch (error) {
+      console.error("Erro ao adicionar livro:", error);
+      alert("Falha ao salvar livro na biblioteca!: " + error.message);
+    }
+  };  
 
   return (
     <div className="inicio-linha-container">
