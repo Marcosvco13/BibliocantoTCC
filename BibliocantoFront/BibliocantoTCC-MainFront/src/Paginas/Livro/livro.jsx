@@ -16,7 +16,7 @@ import ResenhaItem from "../../Componentes/Resenha/ResenhaItem";
 function Livro() {
   const { id: idLivro } = useParams();
   const [livro, setLivro] = useState(null);
-  const [ratingValue, setRatingValue] = useState(2);
+  const [ratingValue, setRatingValue] = useState(0);
   const [resenha, setResenha] = useState("");
   const [mensagem, setMensagem] = useState("");
   const [resenhas, setResenhas] = useState([]);
@@ -302,28 +302,57 @@ function Livro() {
     }
   };
 
-  // Função para enviar a avaliação do usuário
-  const enviarAvaliacao = async (estrelas) => {
-    if (!idUser) {
-      alert("É necessário estar logado para avaliar.");
+  // Função para enviar ou atualizar a avaliação do usuário
+const enviarAvaliacao = async (estrelas) => {
+  if (!idUser) {
+    alert("É necessário estar logado para avaliar.");
+    return;
+  }
+
+  try {
+
+    // Se estrelas for null ou undefined, exibir erro
+    if (estrelas == null || isNaN(estrelas)) {
+      console.error("Erro: Número de estrelas inválido!", estrelas);
+      alert("Erro ao processar a avaliação. Número de estrelas inválido.");
       return;
     }
 
-    try {
+    // Verifica se o usuário já avaliou o livro
+    const avaliacaoExistente = await api.AvaliacaoByUserLivro(idLivro, idUser);
+
+    if (avaliacaoExistente && avaliacaoExistente.id) {
+      // Se já existe avaliação, faz um PUT para atualizar
+      const idAvaliacao = avaliacaoExistente.id;
+
+      // Garante que o novo objeto tenha o ID correto e o novo número de estrelas
+      const DataAvaliacaoLivro = {
+        idLivro: avaliacaoExistente.idLivro,
+        idUser: avaliacaoExistente.idUser, 
+        estrelas: parseInt(estrelas) 
+      };
+
+      await api.PutAvaliacao(idAvaliacao, DataAvaliacaoLivro);
+
+      alert("Avaliação atualizada com sucesso!");
+    } else {
+      // Se não existe avaliação, faz um POST para criar
+
       const DataAvaliacaoLivro = {
         idLivro: idLivro,
         idUser: idUser,
-        estrelas: estrelas
+        estrelas: parseInt(estrelas)
       };
 
       await api.AvaliarLivro(DataAvaliacaoLivro);
-      alert("Avaliação enviada com sucesso!");
 
-    } catch (error) {
-      console.error("Erro ao enviar avaliação:", error.response?.data || error);
-      alert("Erro ao enviar a avaliação. Tente novamente.");
+      alert("Avaliação enviada com sucesso!");
     }
-  };
+  } catch (error) {
+    alert("Erro ao enviar a avaliação. Tente novamente.");
+  }
+};
+
 
   return (
     <Container>

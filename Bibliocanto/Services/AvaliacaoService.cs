@@ -76,6 +76,8 @@ namespace Bibliocanto.Services
             if (avaliacaoExistente == null)
                 return new AvaliacaoResponse("Category not found.");
 
+            avaliacaoExistente.Estrelas = avaliacao.Estrelas;
+
             try
             {
                 _avaliacaoRepository.Update(avaliacaoExistente);
