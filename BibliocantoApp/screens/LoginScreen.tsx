@@ -5,6 +5,7 @@ import * as SecureStore from 'expo-secure-store';
 import { RootStackParamList } from '../routes/StackNavigator';
 import api from '../services/api';
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { AxiosError } from 'axios';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
@@ -12,48 +13,49 @@ export default function LoginScreen() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const [showPassword, setShowPassword] = useState(false);
 
-  // Função de login
   const login = async () => {
     const data = { email, password };
 
     try {
 
-      // Faz a requisição de login
       const response = await api.post('api/Account/LoginUser', data);
 
-      // Armazenando dados de login com SecureStore
       await SecureStore.setItemAsync('email', email);
       await SecureStore.setItemAsync('token', response.data.token);
       await SecureStore.setItemAsync('expiration', response.data.expiration);
 
-      // Buscando o ID do usuário pelo email
       const responseId = await api.get('api/Account/IdUserByEmail', {
         params: { email: email },
       });
 
-      // Armazenando o ID do usuário com SecureStore
       await SecureStore.setItemAsync('IdUser', responseId.data.id);
 
-      // Navegando para a tela principal
       navigation.navigate('Home');
 
-    } catch (error) {
-      Alert.alert('Erro', 'Falha no login.');
-    }
+    }catch (error) {
+  
+      let errorMessage = 'Erro desconhecido. Tente novamente.';
+      let responseBody = '';
+  
+      if (error instanceof AxiosError) {
+        responseBody = JSON.stringify(error.response?.data, null, 2);
+        errorMessage = error.response?.data?.message || 'Erro ao conectar com o servidor.';
+      } else if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+
+      Alert.alert(responseBody);
+  }
   };
 
-  // Função para redirecionar para a página de criação de usuário
   const handleCreateUser = () => {
-
     navigation.navigate('Register');
   };
 
-  // Função para redirecionar para a página de recuperação de senha
   const handleForgotPassword = () => {
     alert("Função de redefinir senha ainda não implementado!");
   };
 
-  // Simulação de login com o Google
   const handleGoogleLogin = () => {
     alert("Login com o Google ainda não implementado!");
   };
@@ -62,8 +64,6 @@ export default function LoginScreen() {
     <View style={styles.loginContainer}>
 
       <Text style={styles.projectName}>Bibliocanto</Text>
-
-      {/* <Text style={styles.subtitle}>Login do Usuário</Text> */}
 
       <View style={styles.inputContainer}>
         <TextInput

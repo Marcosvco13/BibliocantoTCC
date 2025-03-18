@@ -10,5 +10,9 @@ namespace Bibliocanto.IServices
         Task<IdentityUser> FindUserByEmail(string email);
         Task<IdentityUser> FindUserById(string idUser);
         Task Logout();
+        Task<string> GenerateEmailConfirmationToken(IdentityUser user);
+        Task<bool> ConfirmEmail(IdentityUser user, string token);
+        Task<bool> IsEmailConfirmed(IdentityUser user);
     }
 }
+

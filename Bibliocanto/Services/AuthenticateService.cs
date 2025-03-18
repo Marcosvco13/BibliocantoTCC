@@ -1,5 +1,6 @@
 ﻿using Bibliocanto.IServices;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace Bibliocanto.Services
 {
@@ -8,11 +9,12 @@ namespace Bibliocanto.Services
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public AuthenticateService(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager) 
+        public AuthenticateService(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
-            _signInManager = signInManager; 
             _userManager = userManager;
+            _signInManager = signInManager;
         }
+
         public async Task<bool> Authenticate(string email, string password)
         {
             var result = await _signInManager.PasswordSignInAsync(email, password, false, lockoutOnFailure: false);
@@ -59,6 +61,22 @@ namespace Bibliocanto.Services
         public async Task Logout()
         {
             await _signInManager.SignOutAsync();
+        }
+
+        public async Task<string> GenerateEmailConfirmationToken(IdentityUser user)
+        {
+            return await _userManager.GenerateEmailConfirmationTokenAsync(user);
+        }
+
+        public async Task<bool> ConfirmEmail(IdentityUser user, string token)
+        {
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+            return result.Succeeded;
+        }
+
+        public async Task<bool> IsEmailConfirmed(IdentityUser user)
+        {
+            return await _userManager.IsEmailConfirmedAsync(user);
         }
     }
 }

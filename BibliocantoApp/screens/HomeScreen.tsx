@@ -5,8 +5,6 @@ import { View, Text, Image, TouchableOpacity, ActivityIndicator, StyleSheet, Fla
 import api from "../services/api";
 import NavBar from "../components/NavBar";
 
-
-// Definição do tipo para os livros
 interface Livro {
   id: number;
   titulo: string;
@@ -32,7 +30,6 @@ export default function HomeScreen() {
     fetchData();
   }, []);
 
-  // Função para tratar clique na imagem
   const handleImageClick = (livro: Livro) => {
     navigation.navigate('Book', { idLivro: livro.id });
   };
@@ -45,7 +42,7 @@ export default function HomeScreen() {
           <FlatList
             data={livros}
             keyExtractor={(livro) => livro.id.toString()}
-            numColumns={3} // Exibe os livros em duas colunas
+            numColumns={3}
             renderItem={({ item }) => (
               <TouchableOpacity onPress={() => handleImageClick(item)}>
                 <Image source={{ uri: item.caminhoImagem }} style={styles.livroCard} />
@@ -59,7 +56,6 @@ export default function HomeScreen() {
             <Text style={styles.loadingText}>Carregando os livros...</Text>
           </View>
         )}
-
       <NavBar/>
     </View>
   );

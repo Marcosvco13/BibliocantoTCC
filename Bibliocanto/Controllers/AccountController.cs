@@ -2,11 +2,8 @@
 using System.Security.Claims;
 using System.Text;
 using Bibliocanto.IServices;
-using Bibliocanto.Models;
-using Bibliocanto.Resources;
 using Bibliocanto.Services;
 using Bibliocanto.ViewModels;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -19,11 +16,13 @@ namespace Bibliocanto.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly IAuthenticate _authentication;
+        private readonly IEmailService _emailService;
 
-        public AccountController(IAuthenticate authentication, IConfiguration configuration)
+        public AccountController(IAuthenticate authentication, IConfiguration configuration, IEmailService emailService)
         {
-            _authentication = authentication ?? throw new ArgumentNullException(nameof(configuration));
-            _configuration = configuration ?? throw new ArgumentNullException(nameof(authentication));
+            _authentication = authentication ?? throw new ArgumentNullException(nameof(authentication));
+            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+            _emailService = emailService ?? throw new ArgumentNullException(nameof(emailService));
         }
 
         private ActionResult<UserToken> GenerateToken(LoginModel userInfo)
@@ -68,14 +67,53 @@ namespace Bibliocanto.Controllers
 
             if (result)
             {
-                return Ok($"Usuário {model.Email} criado com sucesso");
+                // Buscar usuário recém-criado
+                var user = await _authentication.FindUserByEmail(model.Email);
+                if (user == null)
+                {
+                    return BadRequest("Erro ao buscar usuário.");
+                }
+
+                // Gerar token de confirmação de e-mail
+                var token = await _authentication.GenerateEmailConfirmationToken(user);
+
+                // Criar URL de confirmação
+                var confirmationLink = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, token }, Request.Scheme);
+
+                // Enviar e-mail com o link de confirmação (implemente no seu serviço de e-mail)
+                await _emailService.SendEmailAsync(model.Email, "Confirme seu e-mail", $"Clique no link para confirmar: {confirmationLink}");
+
+                return Ok("Usuário criado com sucesso. Verifique seu e-mail para confirmar a conta. O e-mail de confirmação pode estar na caixa de spam.");
             }
             else
             {
-                ModelState.AddModelError("CreateUser", "Registro inválido " + result);
+                ModelState.AddModelError("CreateUser", "Registro inválido.");
                 return BadRequest(ModelState);
             }
 
+        }
+
+        [HttpGet("ConfirmEmail")]
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        {
+            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(token))
+            {
+                return BadRequest("Parâmetros inválidos.");
+            }
+
+            var user = await _authentication.FindUserById(userId);
+            if (user == null)
+            {
+                return NotFound("Usuário não encontrado.");
+            }
+
+            var result = await _authentication.ConfirmEmail(user, token);
+            if (result)
+            {
+                return Ok("E-mail confirmado com sucesso.");
+            }
+
+            return BadRequest("Falha na confirmação do e-mail.");
         }
 
         [HttpGet("UserByEmail")]
@@ -133,7 +171,7 @@ namespace Bibliocanto.Controllers
             {
                 if (string.IsNullOrEmpty(idUser))
                 {
-                    return BadRequest("Email não pode estar vazio.");
+                    return BadRequest("IdUser não pode estar vazio.");
                 }
 
                 var result = await _authentication.FindUserById(idUser);
@@ -157,27 +195,33 @@ namespace Bibliocanto.Controllers
         [HttpPost("LoginUser")]
         public async Task<ActionResult<UserToken>> Login([FromBody] LoginModel userInfo)
         {
-            // Validate the user info
-            if (userInfo == null || string.IsNullOrEmpty(userInfo.Email) || string.IsNullOrEmpty(userInfo.Password))
+            if (string.IsNullOrEmpty(userInfo.Email) || string.IsNullOrEmpty(userInfo.Password))
             {
                 ModelState.AddModelError("LoginUser", "Email e senha são obrigatórios.");
                 return BadRequest(ModelState);
             }
 
-            // Authenticate user
-            var result = await _authentication.Authenticate(userInfo.Email, userInfo.Password);
-
-            if (result)
+            var user = await _authentication.FindUserByEmail(userInfo.Email);
+            if (user == null)
             {
-                // If authentication is successful, generate and return a token
-                return GenerateToken(userInfo);
-            }
-            else
-            {
-                // Add an error to the ModelState and return BadRequest in case of failure
-                ModelState.AddModelError("LoginUser", "Login inválido. Verifique suas credenciais.");
+                ModelState.AddModelError("LoginUser", "Usuário não encontrado.");
                 return BadRequest(ModelState);
             }
+
+            // Verificar se o e-mail está confirmado
+            if (!await _authentication.IsEmailConfirmed(user))
+            {
+                return BadRequest("Confirme seu e-mail antes de fazer login.");
+            }
+
+            var result = await _authentication.Authenticate(userInfo.Email, userInfo.Password);
+            if (result)
+            {
+                return GenerateToken(userInfo);
+            }
+
+            ModelState.AddModelError("LoginUser", "Login inválido. Verifique suas credenciais.");
+            return BadRequest(ModelState);
         }
     }
 }
