@@ -4,14 +4,13 @@ import { useParams } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Rating from "@mui/material/Rating";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import "./livro.css";
 import ResenhaItem from "../../Componentes/Resenha/ResenhaItem";
+import { Box, Rating } from "@mui/material";
 
 function Livro() {
   const { id: idLivro } = useParams();
@@ -31,82 +30,83 @@ function Livro() {
 
   useEffect(() => {
     const fetchData = async () => {
-      // Busca o id do usuário logado
       try {
+        // Busca o id do usuário logado
         const usuarioLogado = localStorage.getItem("Id");
-
         if (usuarioLogado) {
           setIdUser(usuarioLogado);
         }
-      } catch (error) {
-        console.error("Erro ao buscar o ID do usuário:", error);
-      }
-
-      // Busca resenhas do livro
-      if (idLivro) {
+  
+        // Aguarda `idUser` e `idLivro` estarem disponíveis
+        if (!usuarioLogado || !idLivro) return;
+  
+        // Busca resenhas do livro
         try {
           const response = await api.getResenhaByIdLivro(idLivro);
           setResenhas(response);
-
-          console.log("Resposta da API:", response);
-
+          //console.log("Resposta da API:", response);
+  
           // Verifica se o usuário já fez uma resenha
-          if (response.some((res) => res.idUser === idUser)) {
+          if (response.some((res) => res.idUser === usuarioLogado)) {
             setMensagem("Você já enviou uma resenha para este livro.");
           }
-
+  
           // Adiciona o email do usuário que escreveu a resenha
           const resenhasComEmail = await Promise.all(
             response.map(async (res) => {
-              const usuario = await api.EmailUserByID(res.idUser); // Busca o objeto do autor da resenha
-              const email = usuario.email; // Acessa o email do usuário
-              return { ...res, email }; // Retorna a resenha com o email adicionado
+              const usuario = await api.EmailUserByID(res.idUser);
+              return { ...res, email: usuario.email };
             })
           );
-
           setResenhas(resenhasComEmail);
         } catch (error) {
-          console.error(
-            "Erro ao buscar as resenhas:",
-            error.response?.data || error.message
-          );
+          console.error("Erro ao buscar as resenhas:", error.response?.data || error.message);
         }
-      }
-
-      try {
+  
         // Busca os dados do livro
-        const data = await api.getLivroById(idLivro);
-        setLivro(data);
+        try {
+          const data = await api.getLivroById(idLivro);
+          setLivro(data);
+  
+          // Busca os autores relacionados ao livro
+          const autorLivros = await api.buscarAutoresPorLivro(data.id);
+          const autoresDetalhados = await Promise.all(
+            autorLivros.map(async (autorLivro) => {
+              const autor = await api.buscarAutorPorId(autorLivro.idAutor);
+              return autor.nomeAutor;
+            })
+          );
+          setAutores(autoresDetalhados);
+  
+          // Busca os gêneros relacionados ao livro
+          const generoLivros = await api.buscarGenerosPorLivro(data.id);
+          const generosDetalhados = await Promise.all(
+            generoLivros.map(async (generoLivro) => {
+              const genero = await api.buscarGeneroPorId(generoLivro.idGenero);
+              return genero.nomegenero;
+            })
+          );
+          setGeneros(generosDetalhados);
+        } catch (error) {
+          console.error("Erro ao buscar dados do livro:", error.response?.data || error.message);
+        }
+  
+        // Busca a avaliação do usuário para o livro
+        try {
+          const avaliacaoExistente = await api.AvaliacaoByUserLivro(idLivro, usuarioLogado);
+          setRatingValue(avaliacaoExistente?.estrelas ?? 0);
+          //console.log("Avaliação carregada:", avaliacaoExistente?.estrelas);
+        } catch (error) {
+          console.error("Erro ao buscar avaliação:", error.response?.data || error.message);
+        }
+        
+    } catch (error) {
+      console.error("Erro geral no fetchData:", error);
+    }
+  };
 
-        // Busca os autores relacionados ao livro
-        const autorLivros = await api.buscarAutoresPorLivro(data.id);
-        const autoresDetalhados = await Promise.all(
-          autorLivros.map(async (autorLivro) => {
-            const autor = await api.buscarAutorPorId(autorLivro.idAutor);
-            return autor.nomeAutor;
-          })
-        );
-        setAutores(autoresDetalhados);
-
-        // Busca os gêneros relacionados ao livro
-        const generoLivros = await api.buscarGenerosPorLivro(data.id);
-        const generosDetalhados = await Promise.all(
-          generoLivros.map(async (generoLivro) => {
-            const genero = await api.buscarGeneroPorId(generoLivro.idGenero);
-            return genero.nomegenero;
-          })
-        );
-        setGeneros(generosDetalhados);
-      } catch (error) {
-        console.error(
-          "Erro ao buscar as resenhas:",
-          error.response?.data || error.message
-        );
-      }
-    };
-
-    fetchData();
-  }, [idLivro]);
+  fetchData();
+}, [idLivro]);
 
   // Função para enviar uma nova resenha
   const enviarResenha = async () => {
@@ -399,7 +399,6 @@ const enviarAvaliacao = async (estrelas) => {
                 {/* Classificação do usuário */}
             {idUser && (
               <Box mt={2}>
-                <h5>Deixe sua avaliação:</h5>
                 <Rating
                   name="user-rating"
                   value={ratingValue}
