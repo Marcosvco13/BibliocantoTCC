@@ -16,6 +16,11 @@ interface Livro {
     isbn: number;
   }
 
+interface Genero {
+    generos: string;
+    nomeGenero: string;
+}
+
 export default function BookScreen() {
     const route = useRoute();
     const { idLivro } = route.params as { idLivro: number };
@@ -39,17 +44,20 @@ export default function BookScreen() {
 
         const fetchData = async () => {
             setLoading(true);
-    
             try {
-                
                 const token = await getToken();
                 if (!token) throw new Error("Token não encontrado");
+        
                 const headers = { Authorization: `Bearer ${token}` };
-
-                const dadosLivro = await api.get(`/api/Livros/${idLivro}`)
-                setSelectedLivro(dadosLivro.data);
-    
-                const autorLivrosResponse = await api.get(`/api/AutorLivro/livro/${idLivro}`, { headers });
+        
+                const [dadosLivroResponse, autorLivrosResponse, generoLivrosResponse] = await Promise.all([
+                    api.get(`/api/Livros/${idLivro}`, { headers }),
+                    api.get(`/api/AutorLivro/livro/${idLivro}`, { headers }),
+                    api.get(`/api/GenerosLivro/livro/${idLivro}`, { headers })
+                ]);
+        
+                setSelectedLivro(dadosLivroResponse.data);
+        
                 const autoresDetalhados = await Promise.all(
                     autorLivrosResponse.data.map(async (autorLivro: any) => {
                         const autorResponse = await api.get(`/api/Autores/${autorLivro.idAutor}`, { headers });
@@ -57,18 +65,15 @@ export default function BookScreen() {
                     })
                 );
                 setAutores(autoresDetalhados);
-    
-                const generoLivrosResponse = await api.get(`/api/GenerosLivro/livro/${idLivro}`, { headers });
+        
                 const generosDetalhados = await Promise.all(
                     generoLivrosResponse.data.map(async (generoLivro: any) => {
-                        const generoResponse = await api.get(`/api/Generos/${generoLivro.idGenero}`, { headers });
+                        const generoResponse = await api.get(`/api/Generos/${generoLivro.idGenero}`);
                         return generoResponse.data.nomeGenero;
                     })
                 );
                 setGeneros(generosDetalhados);
-
-                console.log(generos);
-
+        
             } catch (err) {
                 setError("Erro ao carregar autores ou gêneros.");
                 console.error(err);
@@ -77,12 +82,10 @@ export default function BookScreen() {
             }
         };
         fetchData();
-
-        
     }, []);
 
     const handleAddMeuLivro = async () => {
-        const idUser = await SecureStore.getItemAsync("Id");
+        const idUser = await SecureStore.getItemAsync("IdUser");
     
         if (!idUser) {
           alert("Usuário não encontrado");

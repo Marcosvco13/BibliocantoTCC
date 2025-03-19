@@ -23,6 +23,10 @@ export default function NavBar() {
                 <Icon name="home" size={24} color="grey" />
                 <Text>Início</Text>
             </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('MyLibrary')} style={styles.button}>
+                <Icon name="book" size={24} color="grey" />
+                <Text>Minha Biblioteca</Text>
+            </TouchableOpacity>
             <TouchableOpacity onPress={handleLogout} style={styles.button}>
                 <Icon name="logout" size={24} color="grey" />
                 <Text>Sair</Text>
