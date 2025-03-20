@@ -785,6 +785,25 @@ api.ConfirmaByUserLivro = async function (idUser, idLivro) {
     }
   };
 
+  // API para atualizar o livro com as tags (lido, relido)
+  api.putMeusLivros = async function(idBiblioteca, MeusLivrosData) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${getToken()}`
+      }
+    };
+  
+    console.log("Dados enviados para atualização do da biblioteca:", MeusLivrosData); // Log dos dados
+    try {
+      const response = await api.put(`/api/MeusLivrosData/${idBiblioteca}`, MeusLivrosData, config);
+      console.log("Livro da Biblioteca atualizado com sucesso:", response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Erro ao atualizar o livro da biblioteca:", error);
+      throw error;
+    }
+  };  
+
 // RequestsLike Comentario
 
 // API para dar like no comentario

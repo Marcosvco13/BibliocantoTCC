@@ -28,6 +28,11 @@ function Livro() {
   const [mostrarEnviarResenha, setMostrarEnviarResenha] = useState(false);
   const [likesComentarios, setLikesComentarios] = useState({});
 
+  const [mediaEstrelas, setMediaEstrelas] = useState(null);
+  const [totalAvaliacoes, setTotalAvaliacoes] = useState(0);
+
+  const [estaNaBiblioteca, setEstaNaBiblioteca] = useState(null);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -39,6 +44,16 @@ function Livro() {
   
         // Aguarda `idUser` e `idLivro` estarem disponíveis
         if (!usuarioLogado || !idLivro) return;
+
+         // Verifica se o livro está na biblioteca do usuário
+      try {
+        console.log(`📤 Enviando para API -> idUser: ${usuarioLogado}, idLivro: ${idLivro}`);
+        const resultado = await api.ConfirmaByUserLivro(usuarioLogado, idLivro);
+        console.log("📡 Resposta da API:", resultado); // Loga o retorno da API
+        setEstaNaBiblioteca(resultado); // Atualiza o estado da biblioteca
+      } catch (error) {
+        console.error("❌ Erro ao verificar livro na biblioteca:", error);
+      }
   
         // Busca resenhas do livro
         try {
@@ -105,7 +120,34 @@ function Livro() {
     }
   };
 
+  
+
   fetchData();
+}, [idLivro]);
+
+useEffect(() => {
+  const fetchAvaliacoes = async () => {
+      try {
+          const avaliacoes = await api.AvaliacaoByLivro(idLivro);
+
+          if (avaliacoes.length > 0) {
+              const somaEstrelas = avaliacoes.reduce((acc, avaliacao) => acc + avaliacao.estrelas, 0);
+              const media = somaEstrelas / avaliacoes.length;
+
+              setMediaEstrelas(media.toFixed(1)); // uma casa decimal
+              setTotalAvaliacoes(avaliacoes.length);
+          } else {
+              setMediaEstrelas(0);
+              setTotalAvaliacoes(0);
+          }
+      } catch (error) {
+          console.error("Erro ao buscar avaliações:", error);
+          setMediaEstrelas(0);
+          setTotalAvaliacoes(0);
+      }
+  };
+
+  fetchAvaliacoes();
 }, [idLivro]);
 
   // Função para enviar uma nova resenha
@@ -353,7 +395,6 @@ const enviarAvaliacao = async (estrelas) => {
   }
 };
 
-
   return (
     <Container>
       <Row>
@@ -399,6 +440,8 @@ const enviarAvaliacao = async (estrelas) => {
                 {/* Classificação do usuário */}
             {idUser && (
               <Box mt={2}>
+                
+
                 <Rating
                   name="user-rating"
                   value={ratingValue}
@@ -407,6 +450,11 @@ const enviarAvaliacao = async (estrelas) => {
                     enviarAvaliacao(newValue);
                   }}
                 />
+                {totalAvaliacoes > 0 ? (
+                <p>Média de estrelas: {mediaEstrelas} ({totalAvaliacoes} avaliações)</p>
+            ) : (
+                <p>Ainda não há avaliações para este livro.</p>
+            )}
               </Box>
             )}
 
