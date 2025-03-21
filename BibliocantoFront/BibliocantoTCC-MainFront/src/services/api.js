@@ -368,6 +368,21 @@ api.buscarAutoresPorLivro = async function(idLivro) {
     }
 };
 
+//metodo get para buscar os autores do livro pelo idAutor
+api.buscarLivrosPorAutor = async function(idAutor) {
+    try {
+        const response = await api.get(`https://localhost:44331/api/AutorLivro/autor/${idAutor}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao buscar os livros do autor:", error);
+        throw error;
+    }
+};
+
 //metodo get para buscar o autor por id
 api.buscarAutorPorId = async function(idAutor) {
     try {

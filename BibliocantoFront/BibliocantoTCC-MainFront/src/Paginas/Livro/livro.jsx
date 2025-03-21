@@ -30,8 +30,11 @@ function Livro() {
 
   const [mediaEstrelas, setMediaEstrelas] = useState(null);
   const [totalAvaliacoes, setTotalAvaliacoes] = useState(0);
+  const [atualizarAvaliacoes, setAtualizarAvaliacoes] = useState(false);
 
   const [estaNaBiblioteca, setEstaNaBiblioteca] = useState(null);
+
+  const [IdsLivroAutor, setIdsLivroAutor] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,31 +44,36 @@ function Livro() {
         if (usuarioLogado) {
           setIdUser(usuarioLogado);
         }
-  
+
         // Aguarda `idUser` e `idLivro` estarem disponíveis
         if (!usuarioLogado || !idLivro) return;
 
-         // Verifica se o livro está na biblioteca do usuário
-      try {
-        console.log(`📤 Enviando para API -> idUser: ${usuarioLogado}, idLivro: ${idLivro}`);
-        const resultado = await api.ConfirmaByUserLivro(usuarioLogado, idLivro);
-        console.log("📡 Resposta da API:", resultado); // Loga o retorno da API
-        setEstaNaBiblioteca(resultado); // Atualiza o estado da biblioteca
-      } catch (error) {
-        console.error("❌ Erro ao verificar livro na biblioteca:", error);
-      }
-  
+        // Verifica se o livro está na biblioteca do usuário
+        try {
+          console.log(
+            `📤 Enviando para API -> idUser: ${usuarioLogado}, idLivro: ${idLivro}`
+          );
+          const resultado = await api.ConfirmaByUserLivro(
+            usuarioLogado,
+            idLivro
+          );
+          console.log("📡 Resposta da API:", resultado); // Loga o retorno da API
+          setEstaNaBiblioteca(resultado); // Atualiza o estado da biblioteca
+        } catch (error) {
+          console.error("❌ Erro ao verificar livro na biblioteca:", error);
+        }
+
         // Busca resenhas do livro
         try {
           const response = await api.getResenhaByIdLivro(idLivro);
           setResenhas(response);
           //console.log("Resposta da API:", response);
-  
+
           // Verifica se o usuário já fez uma resenha
           if (response.some((res) => res.idUser === usuarioLogado)) {
             setMensagem("Você já enviou uma resenha para este livro.");
           }
-  
+
           // Adiciona o email do usuário que escreveu a resenha
           const resenhasComEmail = await Promise.all(
             response.map(async (res) => {
@@ -75,16 +83,20 @@ function Livro() {
           );
           setResenhas(resenhasComEmail);
         } catch (error) {
-          console.error("Erro ao buscar as resenhas:", error.response?.data || error.message);
+          console.error(
+            "Erro ao buscar as resenhas:",
+            error.response?.data || error.message
+          );
         }
-  
+
         // Busca os dados do livro
         try {
           const data = await api.getLivroById(idLivro);
           setLivro(data);
-  
+
           // Busca os autores relacionados ao livro
           const autorLivros = await api.buscarAutoresPorLivro(data.id);
+          const autoresIds = autorLivros.map(autor => autor.idAutor);
           const autoresDetalhados = await Promise.all(
             autorLivros.map(async (autorLivro) => {
               const autor = await api.buscarAutorPorId(autorLivro.idAutor);
@@ -92,7 +104,29 @@ function Livro() {
             })
           );
           setAutores(autoresDetalhados);
-  
+
+          //funcao para buscar todos os livros do autor do livro em questao
+          try {
+            // Inicializa um array para armazenar os IDs dos livros dos autores
+            const allLivrosIds = [];
+        
+            // Itera sobre cada idAutor e faz a requisição para buscar os livros
+            for (let autorId of autoresIds) {
+                const LivrosDoAutor = await api.buscarLivrosPorAutor(autorId);
+
+                LivrosDoAutor.forEach(livro => {
+                  console.log(`idLivro: ${livro.idLivro}`);
+              });
+                const idsLivrosDoAutor = LivrosDoAutor.map(livro => livro.idLivro);
+                allLivrosIds.push(...idsLivrosDoAutor); // Adiciona os IDs dos livros ao array final
+            }
+        
+            // Atualiza o estado com todos os IDs de livros
+            setIdsLivroAutor(allLivrosIds);
+        } catch (error) {
+            console.error("Erro ao buscar livros do autor:", error);
+        }         
+
           // Busca os gêneros relacionados ao livro
           const generoLivros = await api.buscarGenerosPorLivro(data.id);
           const generosDetalhados = await Promise.all(
@@ -103,52 +137,61 @@ function Livro() {
           );
           setGeneros(generosDetalhados);
         } catch (error) {
-          console.error("Erro ao buscar dados do livro:", error.response?.data || error.message);
+          console.error(
+            "Erro ao buscar dados do livro:",
+            error.response?.data || error.message
+          );
         }
-  
+
         // Busca a avaliação do usuário para o livro
         try {
-          const avaliacaoExistente = await api.AvaliacaoByUserLivro(idLivro, usuarioLogado);
+          const avaliacaoExistente = await api.AvaliacaoByUserLivro(
+            idLivro,
+            usuarioLogado
+          );
           setRatingValue(avaliacaoExistente?.estrelas ?? 0);
           //console.log("Avaliação carregada:", avaliacaoExistente?.estrelas);
         } catch (error) {
-          console.error("Erro ao buscar avaliação:", error.response?.data || error.message);
+          console.error(
+            "Erro ao buscar avaliação:",
+            error.response?.data || error.message
+          );
         }
-        
-    } catch (error) {
-      console.error("Erro geral no fetchData:", error);
-    }
-  };
-
-  
-
-  fetchData();
-}, [idLivro]);
-
-useEffect(() => {
-  const fetchAvaliacoes = async () => {
-      try {
-          const avaliacoes = await api.AvaliacaoByLivro(idLivro);
-
-          if (avaliacoes.length > 0) {
-              const somaEstrelas = avaliacoes.reduce((acc, avaliacao) => acc + avaliacao.estrelas, 0);
-              const media = somaEstrelas / avaliacoes.length;
-
-              setMediaEstrelas(media.toFixed(1)); // uma casa decimal
-              setTotalAvaliacoes(avaliacoes.length);
-          } else {
-              setMediaEstrelas(0);
-              setTotalAvaliacoes(0);
-          }
       } catch (error) {
-          console.error("Erro ao buscar avaliações:", error);
+        console.error("Erro geral no fetchData:", error);
+      }
+    };
+
+    fetchData();
+  }, [idLivro]);
+
+  useEffect(() => {
+    const fetchAvaliacoes = async () => {
+      try {
+        const avaliacoes = await api.AvaliacaoByLivro(idLivro);
+
+        if (avaliacoes.length > 0) {
+          const somaEstrelas = avaliacoes.reduce(
+            (acc, avaliacao) => acc + avaliacao.estrelas,
+            0
+          );
+          const media = somaEstrelas / avaliacoes.length;
+
+          setMediaEstrelas(media.toFixed(1)); // uma casa decimal
+          setTotalAvaliacoes(avaliacoes.length);
+        } else {
           setMediaEstrelas(0);
           setTotalAvaliacoes(0);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar avaliações:", error);
+        setMediaEstrelas(0);
+        setTotalAvaliacoes(0);
       }
-  };
+    };
 
-  fetchAvaliacoes();
-}, [idLivro]);
+    fetchAvaliacoes();
+  }, [idLivro, atualizarAvaliacoes]);
 
   // Função para enviar uma nova resenha
   const enviarResenha = async () => {
@@ -345,55 +388,59 @@ useEffect(() => {
   };
 
   // Função para enviar ou atualizar a avaliação do usuário
-const enviarAvaliacao = async (estrelas) => {
-  if (!idUser) {
-    alert("É necessário estar logado para avaliar.");
-    return;
-  }
-
-  try {
-
-    // Se estrelas for null ou undefined, exibir erro
-    if (estrelas == null || isNaN(estrelas)) {
-      console.error("Erro: Número de estrelas inválido!", estrelas);
-      alert("Erro ao processar a avaliação. Número de estrelas inválido.");
+  const enviarAvaliacao = async (estrelas) => {
+    if (!idUser) {
+      alert("É necessário estar logado para avaliar.");
       return;
     }
 
-    // Verifica se o usuário já avaliou o livro
-    const avaliacaoExistente = await api.AvaliacaoByUserLivro(idLivro, idUser);
+    try {
+      // Se estrelas for null ou undefined, exibir erro
+      if (estrelas == null || isNaN(estrelas)) {
+        console.error("Erro: Número de estrelas inválido!", estrelas);
+        alert("Erro ao processar a avaliação. Número de estrelas inválido.");
+        return;
+      }
 
-    if (avaliacaoExistente && avaliacaoExistente.id) {
-      // Se já existe avaliação, faz um PUT para atualizar
-      const idAvaliacao = avaliacaoExistente.id;
+      // Verifica se o usuário já avaliou o livro
+      const avaliacaoExistente = await api.AvaliacaoByUserLivro(
+        idLivro,
+        idUser
+      );
 
-      // Garante que o novo objeto tenha o ID correto e o novo número de estrelas
-      const DataAvaliacaoLivro = {
-        idLivro: avaliacaoExistente.idLivro,
-        idUser: avaliacaoExistente.idUser, 
-        estrelas: parseInt(estrelas) 
-      };
+      if (avaliacaoExistente && avaliacaoExistente.id) {
+        // Se já existe avaliação, faz um PUT para atualizar
+        const idAvaliacao = avaliacaoExistente.id;
 
-      await api.PutAvaliacao(idAvaliacao, DataAvaliacaoLivro);
+        // Garante que o novo objeto tenha o ID correto e o novo número de estrelas
+        const DataAvaliacaoLivro = {
+          idLivro: avaliacaoExistente.idLivro,
+          idUser: avaliacaoExistente.idUser,
+          estrelas: parseInt(estrelas),
+        };
 
-      alert("Avaliação atualizada com sucesso!");
-    } else {
-      // Se não existe avaliação, faz um POST para criar
+        await api.PutAvaliacao(idAvaliacao, DataAvaliacaoLivro);
 
-      const DataAvaliacaoLivro = {
-        idLivro: idLivro,
-        idUser: idUser,
-        estrelas: parseInt(estrelas)
-      };
+        alert("Avaliação atualizada com sucesso!");
+      } else {
+        // Se não existe avaliação, faz um POST para criar
 
-      await api.AvaliarLivro(DataAvaliacaoLivro);
+        const DataAvaliacaoLivro = {
+          idLivro: idLivro,
+          idUser: idUser,
+          estrelas: parseInt(estrelas),
+        };
 
-      alert("Avaliação enviada com sucesso!");
+        await api.AvaliarLivro(DataAvaliacaoLivro);
+
+        alert("Avaliação enviada com sucesso!");
+      }
+
+      setAtualizarAvaliacoes((prev) => !prev);
+    } catch (error) {
+      alert("Erro ao enviar a avaliação. Tente novamente.");
     }
-  } catch (error) {
-    alert("Erro ao enviar a avaliação. Tente novamente.");
-  }
-};
+  };
 
   return (
     <Container>
@@ -429,45 +476,62 @@ const enviarAvaliacao = async (estrelas) => {
                 ) : (
                   <p>Carregando gêneros...</p>
                 )}
+              </div>
+
+              <div className="icone-linkcompra-livro">
+                  {livro?.linkCompra && (
+                    <button
+                      className="livro-btnCompra"
+                      onClick={() => window.open(livro.linkCompra, "_blank")}
+                    >
+                      <FontAwesomeIcon icon={faCartShopping} /> Comprar Livro
+                    </button>
+                  )}
+              </div>
+
+              <div className="avaliacao-livro">
+                {idUser && (
+                  <Box mt={2}>
+                    <Rating
+                      name="user-rating"
+                      value={ratingValue}
+                      onChange={(event, newValue) => {
+                        setRatingValue(newValue);
+                        enviarAvaliacao(newValue);
+                      }}
+                    />
+                    {totalAvaliacoes > 0 ? (
+                      <p>
+                        Média de estrelas: {mediaEstrelas} ({totalAvaliacoes}{" "}
+                        avaliações)
+                      </p>
+                    ) : (
+                      <p>Ainda não há avaliações para este livro.</p>
+                    )}
+                  </Box>
+                )}
 
                 <Button
                   variant="contained"
                   onClick={() => setMostrarEnviarResenha(true)}
                 >
-                  Escrever Resenha
+                  <i className="bi bi-pencil"></i> Escrever Resenha
                 </Button>
-
-                {/* Classificação do usuário */}
-            {idUser && (
-              <Box mt={2}>
-                
-
-                <Rating
-                  name="user-rating"
-                  value={ratingValue}
-                  onChange={(event, newValue) => {
-                    setRatingValue(newValue);
-                    enviarAvaliacao(newValue);
-                  }}
-                />
-                {totalAvaliacoes > 0 ? (
-                <p>Média de estrelas: {mediaEstrelas} ({totalAvaliacoes} avaliações)</p>
-            ) : (
-                <p>Ainda não há avaliações para este livro.</p>
-            )}
-              </Box>
-            )}
-
-                <div className="icones-acoes-livro">
-                  {livro?.linkCompra && (
-                    <button
-                      className="biblioteca-btnIcon"
-                      onClick={() => window.open(livro.linkCompra, "_blank")}
-                    >
-                      <FontAwesomeIcon icon={faCartShopping} />
-                    </button>
-                  )}
                 </div>
+
+                <div>
+                <div className="tag-lido-livro">
+                  <button className="btn-tag-lido-livro">
+                    <i className="bi bi-bookmark-check"></i> Lido
+                  </button>
+                </div>
+
+                <div className="tag-relido-livro">
+                  <button className="btn-tag-relido-livro">
+                    <i className="bi bi-bookmark-check"></i> Relido
+                  </button>
+                </div>
+
               </div>
             </>
           ) : (
@@ -556,9 +620,7 @@ const enviarAvaliacao = async (estrelas) => {
         </Col>
 
         <Col xs={12} md={3} className="livro-coluna-extra">
-          <p>
-            Recomendações de livros do(a) mesmo(a) autor(a)
-          </p>
+          <p>Recomendações de livros do(a) mesmo(a) autor(a)</p>
         </Col>
       </Row>
     </Container>
