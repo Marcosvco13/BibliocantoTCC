@@ -21,6 +21,10 @@ namespace Bibliocanto.Repository
         {
             return await _context.MeusLivros.AnyAsync(n => n.IdUser ==idUser && n.IdLivro == idLivro);
         }
+        public async Task<MeusLivros> GetMeuLivroByIdLivroIdUser(int idLivro, string idUser)
+        {
+            return await _context.MeusLivros.Include(p => p.Livros).FirstAsync(l => l.IdLivro == idLivro && l.IdUser == idUser);
+        }
 
         public async Task<MeusLivros> GetById(int id)
         {

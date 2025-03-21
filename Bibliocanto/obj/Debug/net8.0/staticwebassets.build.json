@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "Ispu19QVHbt8BZxMS8Vzbm1aA7X+VHKR26nzrD8bmAY=",
+  "Hash": "EbBbKiU6oaK48/4L2IWfwJ+n9Ko2of89UVTifrNsRG0=",
   "Source": "Bibliocanto",
   "BasePath": "_content/Bibliocanto",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }
