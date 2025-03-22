@@ -189,7 +189,8 @@
         ],
         "StatusCode": 200
       }
-    ]
+    ],
+    "EndpointName": "GetAutoresById"
   },
   {
     "ContainingType": "Bibliocanto.Controllers.AutoresController",
@@ -331,7 +332,8 @@
         ],
         "StatusCode": 200
       }
-    ]
+    ],
+    "EndpointName": "GetByIdAutor"
   },
   {
     "ContainingType": "Bibliocanto.Controllers.AutorLivroController",
@@ -383,7 +385,8 @@
         ],
         "StatusCode": 200
       }
-    ]
+    ],
+    "EndpointName": "GetByIdLivroAutor"
   },
   {
     "ContainingType": "Bibliocanto.Controllers.AvaliacaoController",
@@ -425,7 +428,8 @@
         ],
         "StatusCode": 200
       }
-    ]
+    ],
+    "EndpointName": "GetAvaliacaoById"
   },
   {
     "ContainingType": "Bibliocanto.Controllers.AvaliacaoController",
@@ -587,7 +591,8 @@
         ],
         "StatusCode": 200
       }
-    ]
+    ],
+    "EndpointName": "GetComentarioById"
   },
   {
     "ContainingType": "Bibliocanto.Controllers.ComentarioController",
@@ -749,7 +754,8 @@
         ],
         "StatusCode": 200
       }
-    ]
+    ],
+    "EndpointName": "GetdeslikeById"
   },
   {
     "ContainingType": "Bibliocanto.Controllers.DesDeslikeLivrosController",
@@ -931,7 +937,8 @@
         ],
         "StatusCode": 200
       }
-    ]
+    ],
+    "EndpointName": "GetEditoraById"
   },
   {
     "ContainingType": "Bibliocanto.Controllers.EditorasController",
@@ -1056,7 +1063,8 @@
         ],
         "StatusCode": 200
       }
-    ]
+    ],
+    "EndpointName": "GetGeneroById"
   },
   {
     "ContainingType": "Bibliocanto.Controllers.GenerosController",
@@ -1198,7 +1206,8 @@
         ],
         "StatusCode": 200
       }
-    ]
+    ],
+    "EndpointName": "GetByIdGenero"
   },
   {
     "ContainingType": "Bibliocanto.Controllers.GenerosLivroController",
@@ -1250,7 +1259,8 @@
         ],
         "StatusCode": 200
       }
-    ]
+    ],
+    "EndpointName": "GetByIdLivroGenero"
   },
   {
     "ContainingType": "Bibliocanto.Controllers.LikeComentarioController",
@@ -1292,7 +1302,8 @@
         ],
         "StatusCode": 200
       }
-    ]
+    ],
+    "EndpointName": "GetlikeoById"
   },
   {
     "ContainingType": "Bibliocanto.Controllers.LikeComentarioController",
@@ -1454,7 +1465,8 @@
         ],
         "StatusCode": 200
       }
-    ]
+    ],
+    "EndpointName": "GetlikeById"
   },
   {
     "ContainingType": "Bibliocanto.Controllers.LikeLivrosController",
@@ -1616,7 +1628,8 @@
         ],
         "StatusCode": 200
       }
-    ]
+    ],
+    "EndpointName": "GetResenhaById"
   },
   {
     "ContainingType": "Bibliocanto.Controllers.LikeResenhaController",
@@ -1798,7 +1811,8 @@
         ],
         "StatusCode": 200
       }
-    ]
+    ],
+    "EndpointName": "GetLivroById"
   },
   {
     "ContainingType": "Bibliocanto.Controllers.LivrosController",
@@ -1929,7 +1943,8 @@
         ],
         "StatusCode": 200
       }
-    ]
+    ],
+    "EndpointName": "GetMeuLivroById"
   },
   {
     "ContainingType": "Bibliocanto.Controllers.MeusLivrosController",
@@ -2026,6 +2041,37 @@
     ]
   },
   {
+    "ContainingType": "Bibliocanto.Controllers.MeusLivrosController",
+    "Method": "GetMeuLivroByIdLivroIdUser",
+    "RelativePath": "api/MeusLivros/GetMeuLivroByIdLivroIdUser",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idUser",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "idLivro",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Bibliocanto.Resources.MeusLivrosResource",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "Bibliocanto.Controllers.ResenhaController",
     "Method": "PostAsync",
     "RelativePath": "api/Resenha",
@@ -2065,7 +2111,8 @@
         ],
         "StatusCode": 200
       }
-    ]
+    ],
+    "EndpointName": "GetLikeResenhaById"
   },
   {
     "ContainingType": "Bibliocanto.Controllers.ResenhaController",

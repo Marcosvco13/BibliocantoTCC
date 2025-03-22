@@ -2,7 +2,6 @@
 using Bibliocanto.IRepository;
 using Bibliocanto.IServices;
 using Bibliocanto.Models;
-using Bibliocanto.Repository;
 
 namespace Bibliocanto.Services
 {
@@ -19,6 +18,10 @@ namespace Bibliocanto.Services
         public async Task<bool> GetByIdLivroIdUser( int idLivro, string idUser)
         {
             return await _meusLivrosRepository.GetByIdLivroIdUser(idLivro, idUser);
+        }
+        public async Task<MeusLivros> GetMeuLivroByIdLivroIdUser(int idLivro, string idUser)
+        {
+            return await _meusLivrosRepository.GetMeuLivroByIdLivroIdUser(idLivro, idUser);
         }
 
         public async Task<MeusLivros> GetById(int id)
@@ -62,7 +65,8 @@ namespace Bibliocanto.Services
             if (meuLivroExistente == null)
                 return new MeusLivrosResponse("Category not found.");
 
-            meuLivroExistente.Livros.Titulo = meus.Livros.Titulo;
+            meuLivroExistente.Relido = meus.Relido;
+            meuLivroExistente.Lido = meus.Lido;
 
             try
             {
