@@ -1,0 +1,28 @@
+.recomendacoes-container {
+    text-align: center;
+}
+
+.livros-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 3 colunas por linha */
+    gap: 2px;
+}
+
+.livro-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5;
+    padding: 3px;
+    border-radius: 8px;
+    transition: transform 0.2s;
+}
+
+.livro-card img {
+    width: 100px;  /* Ajusta o tamanho da imagem */
+    height: 150px;
+}
+
+.livro-card:hover {
+    transform: scale(1.05); /* Efeito ao passar o mouse */
+}

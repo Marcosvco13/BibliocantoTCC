@@ -785,6 +785,21 @@ api.BibliotecaByUser = async function (idUser) {
     }
   };
 
+  // API para buscar o id do livro na biblioteca do usuario
+api.GetMeuLivroByIdLivroIdUser = async function (idUser, idLivro) {
+    try {
+      const response = await api.get(`/api/MeusLivros/GetMeuLivroByIdLivroIdUser?idUser=${idUser}&idLivro=${idLivro}`, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      });
+      return response.data.id ?? null;
+    } catch (error) {
+      console.error("Erro ao buscar o registro do livro na biblioteca:", error);
+      throw error;
+    }
+  };
+
   // API para checar se o livro esta na biblioteca do usuario
 api.ConfirmaByUserLivro = async function (idUser, idLivro) {
     try {
@@ -801,7 +816,7 @@ api.ConfirmaByUserLivro = async function (idUser, idLivro) {
   };
 
   // API para atualizar o livro com as tags (lido, relido)
-  api.putMeusLivros = async function(idBiblioteca, MeusLivrosData) {
+  api.putMeusLivros = async function(RegistroLivroNaBiblioteca, MeusLivrosData) {
     const config = {
       headers: {
         Authorization: `Bearer ${getToken()}`
@@ -810,7 +825,7 @@ api.ConfirmaByUserLivro = async function (idUser, idLivro) {
   
     console.log("Dados enviados para atualização do da biblioteca:", MeusLivrosData); // Log dos dados
     try {
-      const response = await api.put(`/api/MeusLivrosData/${idBiblioteca}`, MeusLivrosData, config);
+      const response = await api.put(`/api/MeusLivrosData/${RegistroLivroNaBiblioteca}`, MeusLivrosData, config);
       console.log("Livro da Biblioteca atualizado com sucesso:", response.data);
       return response.data;
     } catch (error) {

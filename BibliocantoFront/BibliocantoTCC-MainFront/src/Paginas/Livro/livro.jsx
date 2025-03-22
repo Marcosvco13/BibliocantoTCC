@@ -12,6 +12,8 @@ import "./livro.css";
 import ResenhaItem from "../../Componentes/Resenha/ResenhaItem";
 import { Box, Rating } from "@mui/material";
 
+import Recomendacao from "../../Componentes/RecomendacaoLivro/recomendacao";
+
 function Livro() {
   const { id: idLivro } = useParams();
   const [livro, setLivro] = useState(null);
@@ -36,6 +38,9 @@ function Livro() {
 
   const [IdsLivroAutor, setIdsLivroAutor] = useState([]);
 
+  const [RegistroLivroNaBiblioteca, setRegistroLivroNaBiblioteca] = useState([]);
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -50,17 +55,32 @@ function Livro() {
 
         // Verifica se o livro está na biblioteca do usuário
         try {
-          console.log(
-            `📤 Enviando para API -> idUser: ${usuarioLogado}, idLivro: ${idLivro}`
-          );
-          const resultado = await api.ConfirmaByUserLivro(
+          //console.log(` Enviando para API -> idUser: ${usuarioLogado}, idLivro: ${idLivro}`);
+
+          const estaNaBiblioteca = await api.ConfirmaByUserLivro(
             usuarioLogado,
             idLivro
           );
-          console.log("📡 Resposta da API:", resultado); // Loga o retorno da API
-          setEstaNaBiblioteca(resultado); // Atualiza o estado da biblioteca
+          
+          //console.log("📡 Resposta da API (Está na biblioteca?):",estaNaBiblioteca);
+
+          setEstaNaBiblioteca(estaNaBiblioteca); // Atualiza o estado da biblioteca
+
+          // Se o livro estiver na biblioteca, busca o registro na API
+          if (estaNaBiblioteca) {
+
+            const registroLivro = await api.GetMeuLivroByIdLivroIdUser(
+              usuarioLogado,
+              idLivro
+            );
+
+            //console.log(" ID do livro na biblioteca:", registroLivro); // Mostra o ID extraído
+
+            // Aqui você pode armazenar o ID no estado ou usá-lo em outra lógica
+            setRegistroLivroNaBiblioteca(registroLivro);
+          }
         } catch (error) {
-          console.error("❌ Erro ao verificar livro na biblioteca:", error);
+          console.error(" Erro ao verificar livro na biblioteca:", error);
         }
 
         // Busca resenhas do livro
@@ -96,7 +116,7 @@ function Livro() {
 
           // Busca os autores relacionados ao livro
           const autorLivros = await api.buscarAutoresPorLivro(data.id);
-          const autoresIds = autorLivros.map(autor => autor.idAutor);
+          const autoresIds = autorLivros.map((autor) => autor.idAutor);
           const autoresDetalhados = await Promise.all(
             autorLivros.map(async (autorLivro) => {
               const autor = await api.buscarAutorPorId(autorLivro.idAutor);
@@ -109,23 +129,35 @@ function Livro() {
           try {
             // Inicializa um array para armazenar os IDs dos livros dos autores
             const allLivrosIds = [];
-        
+
             // Itera sobre cada idAutor e faz a requisição para buscar os livros
             for (let autorId of autoresIds) {
-                const LivrosDoAutor = await api.buscarLivrosPorAutor(autorId);
+              const LivrosDoAutor = await api.buscarLivrosPorAutor(autorId);
 
-                LivrosDoAutor.forEach(livro => {
-                  console.log(`idLivro: ${livro.idLivro}`);
+              LivrosDoAutor.forEach((livro) => {
+                //console.log(`idLivro: ${livro.idLivro}`);
               });
-                const idsLivrosDoAutor = LivrosDoAutor.map(livro => livro.idLivro);
-                allLivrosIds.push(...idsLivrosDoAutor); // Adiciona os IDs dos livros ao array final
+              const idsLivrosDoAutor = LivrosDoAutor.map(
+                (livro) => livro.idLivro
+              );
+              allLivrosIds.push(...idsLivrosDoAutor); // Adiciona os IDs dos livros ao array final
             }
-        
+
             // Atualiza o estado com todos os IDs de livros
             setIdsLivroAutor(allLivrosIds);
-        } catch (error) {
+          } catch (error) {
             console.error("Erro ao buscar livros do autor:", error);
-        }         
+          }
+
+          if (IdsLivroAutor.length > 0) {
+            Promise.all(IdsLivroAutor.map(id => api.getLivroById(id)))
+              .then(livros => {
+                //console.log("Livros encontrados:", livros);
+              })
+              .catch(error => {
+                console.error("Erro ao buscar livros:", error);
+              });
+          }
 
           // Busca os gêneros relacionados ao livro
           const generoLivros = await api.buscarGenerosPorLivro(data.id);
@@ -479,14 +511,14 @@ function Livro() {
               </div>
 
               <div className="icone-linkcompra-livro">
-                  {livro?.linkCompra && (
-                    <button
-                      className="livro-btnCompra"
-                      onClick={() => window.open(livro.linkCompra, "_blank")}
-                    >
-                      <FontAwesomeIcon icon={faCartShopping} /> Comprar Livro
-                    </button>
-                  )}
+                {livro?.linkCompra && (
+                  <button
+                    className="livro-btnCompra"
+                    onClick={() => window.open(livro.linkCompra, "_blank")}
+                  >
+                    <FontAwesomeIcon icon={faCartShopping} /> Comprar Livro
+                  </button>
+                )}
               </div>
 
               <div className="avaliacao-livro">
@@ -517,9 +549,9 @@ function Livro() {
                 >
                   <i className="bi bi-pencil"></i> Escrever Resenha
                 </Button>
-                </div>
+              </div>
 
-                <div>
+              <div>
                 <div className="tag-lido-livro">
                   <button className="btn-tag-lido-livro">
                     <i className="bi bi-bookmark-check"></i> Lido
@@ -531,7 +563,6 @@ function Livro() {
                     <i className="bi bi-bookmark-check"></i> Relido
                   </button>
                 </div>
-
               </div>
             </>
           ) : (
@@ -620,7 +651,7 @@ function Livro() {
         </Col>
 
         <Col xs={12} md={3} className="livro-coluna-extra">
-          <p>Recomendações de livros do(a) mesmo(a) autor(a)</p>
+          <Recomendacao IdsLivroAutor={IdsLivroAutor} />
         </Col>
       </Row>
     </Container>
