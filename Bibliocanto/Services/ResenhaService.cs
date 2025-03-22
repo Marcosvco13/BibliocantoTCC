@@ -77,6 +77,8 @@ namespace Bibliocanto.Services
             if (ResenhaExistente == null)
                 return new ResenhaResponse("Category not found.");
 
+            ResenhaExistente.TextoResenha = Resenha.TextoResenha;
+
             try
             {
                 _resenhaRepository.Update(ResenhaExistente);

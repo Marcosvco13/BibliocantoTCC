@@ -100,11 +100,12 @@ builder.Services.AddScoped<IResenhaService, ResenhaService>();
 builder.Services.AddScoped<IComentarioRepository, ComentariosRepository>();
 builder.Services.AddScoped<IComentarioService, ComentarioService>();
 
-builder.Services.AddScoped<ILikeComentarioRepository, LikeComentarioRepository>();
-builder.Services.AddScoped<ILikeComentarioService, LikeComentarioService>();
+builder.Services.AddScoped<EmailService>(sp =>
+    new EmailService(sp.GetRequiredService<IConfiguration>())
+); 
+builder.Services.AddScoped<IEmailService, EmailService>();
 
-builder.Services.AddScoped<ILikeResenhaRepository, LikeResenhaRespository>();
-builder.Services.AddScoped<ILikeResenhaService, LikeResenhaService>();
+
 
 
 builder.Services.AddScoped<IUnitOFWork, UnitOfWork>();
@@ -133,3 +134,8 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.SignIn.RequireConfirmedEmail = true;
+});

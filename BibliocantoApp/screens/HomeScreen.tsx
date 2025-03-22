@@ -3,8 +3,8 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { RootStackParamList } from '../routes/StackNavigator';
 import { View, Text, Image, TouchableOpacity, ActivityIndicator, StyleSheet, FlatList } from "react-native";
 import api from "../services/api";
+import NavBar from "../components/NavBar";
 
-// Definição do tipo para os livros
 interface Livro {
   id: number;
   titulo: string;
@@ -30,33 +30,33 @@ export default function HomeScreen() {
     fetchData();
   }, []);
 
-  // Função para tratar clique na imagem
   const handleImageClick = (livro: Livro) => {
     navigation.navigate('Book', { idLivro: livro.id });
   };
 
   return (
     <View style={styles.container}>
-      {error && <Text style={styles.error}>{error}</Text>}
+        {error && <Text style={styles.error}>{error}</Text>}
 
-      {livros.length > 0 ? (
-        <FlatList
-          data={livros}
-          keyExtractor={(livro) => livro.id.toString()}
-          numColumns={3} // Exibe os livros em duas colunas
-          renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => handleImageClick(item)}>
-              <Image source={{ uri: item.caminhoImagem }} style={styles.livroCard} />
-            </TouchableOpacity>
-          )}
-          contentContainerStyle={styles.livrosContainer}
-        />
-      ) : (
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#0000ff" />
-          <Text style={styles.loadingText}>Carregando os livros...</Text>
-        </View>
-      )}
+        {livros.length > 0 ? (
+          <FlatList
+            data={livros}
+            keyExtractor={(livro) => livro.id.toString()}
+            numColumns={3}
+            renderItem={({ item }) => (
+              <TouchableOpacity onPress={() => handleImageClick(item)}>
+                <Image source={{ uri: item.caminhoImagem }} style={styles.livroCard} />
+              </TouchableOpacity>
+            )}
+            contentContainerStyle={styles.livrosContainer}
+          />
+        ) : (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#0000ff" />
+            <Text style={styles.loadingText}>Carregando os livros...</Text>
+          </View>
+        )}
+      <NavBar/>
     </View>
   );
 }
@@ -64,9 +64,12 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    display: "flex",
     alignItems: "center",
+    justifyContent: "center",
     padding: 16,
     backgroundColor: "#fff",
+
   },
   error: {
     color: "red",
