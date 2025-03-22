@@ -793,7 +793,7 @@ api.GetMeuLivroByIdLivroIdUser = async function (idUser, idLivro) {
           Authorization: `Bearer ${getToken()}`,
         },
       });
-      return response.data.id ?? null;
+      return response.data;
     } catch (error) {
       console.error("Erro ao buscar o registro do livro na biblioteca:", error);
       throw error;
@@ -815,17 +815,17 @@ api.ConfirmaByUserLivro = async function (idUser, idLivro) {
     }
   };
 
-  // API para atualizar o livro com as tags (lido, relido)
-  api.putMeusLivros = async function(RegistroLivroNaBiblioteca, MeusLivrosData) {
+  // API para atualizar o livro com as tags (lido)
+  api.putMeusLivrosLidos = async function(RegistroLivroNaBiblioteca, MeusLivrosLidoData) {
     const config = {
       headers: {
         Authorization: `Bearer ${getToken()}`
       }
     };
   
-    console.log("Dados enviados para atualização do da biblioteca:", MeusLivrosData); // Log dos dados
+    console.log("Dados enviados para atualização do da biblioteca:", MeusLivrosLidoData); // Log dos dados
     try {
-      const response = await api.put(`/api/MeusLivrosData/${RegistroLivroNaBiblioteca}`, MeusLivrosData, config);
+      const response = await api.put(`/api/MeusLivros/lido/${RegistroLivroNaBiblioteca}`, MeusLivrosLidoData, config);
       console.log("Livro da Biblioteca atualizado com sucesso:", response.data);
       return response.data;
     } catch (error) {
@@ -833,6 +833,25 @@ api.ConfirmaByUserLivro = async function (idUser, idLivro) {
       throw error;
     }
   };  
+
+  // API para atualizar o livro com as tags (relido)
+  api.putMeusLivrosRelidos = async function(RegistroLivroNaBiblioteca, MeusLivrosRelidoData) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${getToken()}`
+      }
+    };
+  
+    console.log("Dados enviados para atualização do da biblioteca:", MeusLivrosRelidoData); // Log dos dados
+    try {
+      const response = await api.put(`/api/MeusLivros/relido/${RegistroLivroNaBiblioteca}`, MeusLivrosRelidoData, config);
+      console.log("Livro da Biblioteca atualizado com sucesso:", response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Erro ao atualizar o livro da biblioteca:", error);
+      throw error;
+    }
+  }; 
 
 // RequestsLike Comentario
 

@@ -77,7 +77,7 @@ function Livro() {
             //console.log(" ID do livro na biblioteca:", registroLivro); // Mostra o ID extraído
 
             // Aqui você pode armazenar o ID no estado ou usá-lo em outra lógica
-            setRegistroLivroNaBiblioteca(registroLivro);
+            setRegistroLivroNaBiblioteca(registroLivro.id);
           }
         } catch (error) {
           console.error(" Erro ao verificar livro na biblioteca:", error);
@@ -474,6 +474,48 @@ function Livro() {
     }
   };
 
+  const TagLido = async (RegistroLivroNaBiblioteca, idLivro, idUser) => {
+    
+    try {
+      // busca como esta no banco
+      const livroExistente = await api.GetMeuLivroByIdLivroIdUser(idUser, idLivro);
+  
+      // atualiza de acordo com o valor que estava
+      const novoValorLido = livroExistente.lido === 1 ? 0 : 1;
+    
+    const MeusLivrosLidoData = {
+      idLivro,
+      idUser,
+      Lido: novoValorLido,
+    };
+  
+      await api.putMeusLivrosLidos(RegistroLivroNaBiblioteca, MeusLivrosLidoData);
+    } catch (error) {
+      console.error("Erro ao marcar livro como lido:", error);
+    }
+  };
+
+  const TagRelido = async (RegistroLivroNaBiblioteca, idLivro, idUser) => {
+    
+    try {
+      // busca como esta no banco
+      const livroExistente = await api.GetMeuLivroByIdLivroIdUser(idUser, idLivro);
+  
+      // atualiza de acordo com o valor que estava
+      const novoValorRelido = livroExistente.lido === 1 ? 0 : 1;
+    
+    const MeusLivrosLidoData = {
+      idLivro,
+      idUser,
+      Relido: novoValorRelido,
+    };
+  
+      await api.putMeusLivrosRelidos(RegistroLivroNaBiblioteca, MeusLivrosLidoData);
+    } catch (error) {
+      console.error("Erro ao marcar livro como relido:", error);
+    }
+  };
+
   return (
     <Container>
       <Row>
@@ -553,13 +595,15 @@ function Livro() {
 
               <div>
                 <div className="tag-lido-livro">
-                  <button className="btn-tag-lido-livro">
+                  <button className="btn-tag-lido-livro"
+                  onClick={() => TagLido(RegistroLivroNaBiblioteca, idLivro, idUser)}>
                     <i className="bi bi-bookmark-check"></i> Lido
                   </button>
                 </div>
 
                 <div className="tag-relido-livro">
-                  <button className="btn-tag-relido-livro">
+                  <button className="btn-tag-relido-livro"
+                  onClick={() => TagRelido(RegistroLivroNaBiblioteca, idLivro, idUser)}>
                     <i className="bi bi-bookmark-check"></i> Relido
                   </button>
                 </div>
