@@ -58,15 +58,36 @@ namespace Bibliocanto.Services
             }
         }
 
-        public async Task<MeusLivrosResponse> Update(int id, MeusLivros meus)
+        public async Task<MeusLivrosResponse> UpdateLido(int id, int lido)
         {
             var meuLivroExistente = await _meusLivrosRepository.GetById(id);
 
             if (meuLivroExistente == null)
                 return new MeusLivrosResponse("Category not found.");
 
-            meuLivroExistente.Relido = meus.Relido;
-            meuLivroExistente.Lido = meus.Lido;
+            meuLivroExistente.Lido = lido;
+
+            try
+            {
+                _meusLivrosRepository.Update(meuLivroExistente);
+                await _unitOfWork.CompleteAsync();
+
+                return new MeusLivrosResponse(meuLivroExistente);
+            }
+            catch (Exception ex)
+            {
+                return new MeusLivrosResponse($"An error occurred when updating the category: {ex.Message}");
+            }
+        }
+
+        public async Task<MeusLivrosResponse> UpdateRelido(int id, int relido)
+        {
+            var meuLivroExistente = await _meusLivrosRepository.GetById(id);
+
+            if (meuLivroExistente == null)
+                return new MeusLivrosResponse("Category not found.");
+
+            meuLivroExistente.Relido = relido;
 
             try
             {

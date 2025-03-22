@@ -116,14 +116,30 @@ namespace Bibliocanto.Controllers
             return Ok(meuLivroResource);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutAsync(int id, [FromBody] SaveMeusLivrosResource recurso)
+        [HttpPut("lido/{id:int}")]
+        public async Task<IActionResult> PutLidoAsync(int id, [FromBody] SaveMeusLivrosResource recurso)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
 
             var meuLivro = _mapper.Map<SaveMeusLivrosResource, MeusLivros>(recurso);
-            var result = await _meusLivrosService.Update(id, meuLivro);
+            var result = await _meusLivrosService.UpdateLido(id, meuLivro.Lido);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            var meuLivroResource = _mapper.Map<MeusLivros, MeusLivrosResource>(result.MeuLivro);
+            return Ok(meuLivroResource);
+        }
+
+        [HttpPut("relido/{id:int}")]
+        public async Task<IActionResult> PutRelidoAsync(int id, [FromBody] SaveMeusLivrosResource recurso)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.GetErrorMessages());
+
+            var meuLivro = _mapper.Map<SaveMeusLivrosResource, MeusLivros>(recurso);
+            var result = await _meusLivrosService.UpdateRelido(id, meuLivro.Relido);
 
             if (!result.Success)
                 return BadRequest(result.Message);
