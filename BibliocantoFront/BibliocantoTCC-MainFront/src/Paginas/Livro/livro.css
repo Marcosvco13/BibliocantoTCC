@@ -112,10 +112,6 @@
   background: transparent;
 }
 
-.btn-tag-lido-livro i {
-  color: #4CAF50;
-}
-
 /* Estilo para a tag relido */
 .btn-tag-relido-livro {
   background: transparent;
@@ -133,7 +129,11 @@
   background: transparent;
 }
 
-.btn-tag-relido-livro i {
+.btn-tag-lido-livro.ativo{
+  color: green;
+}
+
+.btn-tag-relido-livro.ativo {
   color: #007BFF;
 }
 

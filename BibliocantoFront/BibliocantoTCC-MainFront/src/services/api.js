@@ -823,10 +823,10 @@ api.ConfirmaByUserLivro = async function (idUser, idLivro) {
       }
     };
   
-    console.log("Dados enviados para atualização do da biblioteca:", MeusLivrosLidoData); // Log dos dados
+    //console.log("Dados enviados para atualização do da biblioteca:", MeusLivrosLidoData); // Log dos dados
     try {
       const response = await api.put(`/api/MeusLivros/lido/${RegistroLivroNaBiblioteca}`, MeusLivrosLidoData, config);
-      console.log("Livro da Biblioteca atualizado com sucesso:", response.data);
+      //console.log("Livro da Biblioteca atualizado com sucesso:", response.data);
       return response.data;
     } catch (error) {
       console.error("Erro ao atualizar o livro da biblioteca:", error);
@@ -842,10 +842,10 @@ api.ConfirmaByUserLivro = async function (idUser, idLivro) {
       }
     };
   
-    console.log("Dados enviados para atualização do da biblioteca:", MeusLivrosRelidoData); // Log dos dados
+    //console.log("Dados enviados para atualização do da biblioteca:", MeusLivrosRelidoData); // Log dos dados
     try {
       const response = await api.put(`/api/MeusLivros/relido/${RegistroLivroNaBiblioteca}`, MeusLivrosRelidoData, config);
-      console.log("Livro da Biblioteca atualizado com sucesso:", response.data);
+      //console.log("Livro da Biblioteca atualizado com sucesso:", response.data);
       return response.data;
     } catch (error) {
       console.error("Erro ao atualizar o livro da biblioteca:", error);
@@ -979,10 +979,10 @@ api.PutAvaliacao = async function(idAvaliacao, AvaliacaoData) {
       }
     };
   
-    console.log("Dados enviados para atualização da avaliacao:", AvaliacaoData); // Log dos dados
+    //console.log("Dados enviados para atualização da avaliacao:", AvaliacaoData); // Log dos dados
     try {
       const response = await api.put(`/api/Avaliacao/${idAvaliacao}`, AvaliacaoData, config);
-      console.log("avaliacao atualizado com sucesso:", response.data);
+      //console.log("avaliacao atualizado com sucesso:", response.data);
       return response.data;
     } catch (error) {
       console.error("Erro ao atualizar a avaliacao:", error);

@@ -38,8 +38,12 @@ function Livro() {
 
   const [IdsLivroAutor, setIdsLivroAutor] = useState([]);
 
-  const [RegistroLivroNaBiblioteca, setRegistroLivroNaBiblioteca] = useState([]);
+  const [RegistroLivroNaBiblioteca, setRegistroLivroNaBiblioteca] = useState(
+    []
+  );
 
+  const [Lido, setTagLido] = useState(0);
+  const [Relido, setTagRelido] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,32 +59,26 @@ function Livro() {
 
         // Verifica se o livro está na biblioteca do usuário
         try {
-          //console.log(` Enviando para API -> idUser: ${usuarioLogado}, idLivro: ${idLivro}`);
-
           const estaNaBiblioteca = await api.ConfirmaByUserLivro(
             usuarioLogado,
             idLivro
           );
-          
-          //console.log("📡 Resposta da API (Está na biblioteca?):",estaNaBiblioteca);
-
-          setEstaNaBiblioteca(estaNaBiblioteca); // Atualiza o estado da biblioteca
+          setEstaNaBiblioteca(estaNaBiblioteca);
 
           // Se o livro estiver na biblioteca, busca o registro na API
           if (estaNaBiblioteca) {
-
             const registroLivro = await api.GetMeuLivroByIdLivroIdUser(
               usuarioLogado,
               idLivro
             );
-
-            //console.log(" ID do livro na biblioteca:", registroLivro); // Mostra o ID extraído
-
-            // Aqui você pode armazenar o ID no estado ou usá-lo em outra lógica
             setRegistroLivroNaBiblioteca(registroLivro.id);
+
+            // 🔹 Verifica o estado das tags "Lido" e "Relido" no banco
+            setTagLido(registroLivro.lido === 1);
+            setTagRelido(registroLivro.relido === 1);
           }
         } catch (error) {
-          console.error(" Erro ao verificar livro na biblioteca:", error);
+          console.error("Erro ao verificar livro na biblioteca:", error);
         }
 
         // Busca resenhas do livro
@@ -150,11 +148,11 @@ function Livro() {
           }
 
           if (IdsLivroAutor.length > 0) {
-            Promise.all(IdsLivroAutor.map(id => api.getLivroById(id)))
-              .then(livros => {
+            Promise.all(IdsLivroAutor.map((id) => api.getLivroById(id)))
+              .then((livros) => {
                 //console.log("Livros encontrados:", livros);
               })
-              .catch(error => {
+              .catch((error) => {
                 console.error("Erro ao buscar livros:", error);
               });
           }
@@ -475,46 +473,46 @@ function Livro() {
   };
 
   const TagLido = async (RegistroLivroNaBiblioteca, idLivro, idUser) => {
-    
     try {
-      // busca como esta no banco
-      const livroExistente = await api.GetMeuLivroByIdLivroIdUser(idUser, idLivro);
+      // Alterna o valor de Lido diretamente no estado
+      const novoValorLido = Lido === 1 ? 0 : 1;
   
-      // atualiza de acordo com o valor que estava
-      const novoValorLido = livroExistente.lido === 1 ? 0 : 1;
-    
-    const MeusLivrosLidoData = {
-      idLivro,
-      idUser,
-      Lido: novoValorLido,
-    };
+      const MeusLivrosLidoData = {
+        idLivro,
+        idUser,
+        Lido: novoValorLido,
+      };
   
+      // Atualiza a API
       await api.putMeusLivrosLidos(RegistroLivroNaBiblioteca, MeusLivrosLidoData);
+  
+      // Atualiza o estado localmente para refletir a mudança na interface
+      setTagLido(novoValorLido);
     } catch (error) {
       console.error("Erro ao marcar livro como lido:", error);
     }
   };
-
+  
   const TagRelido = async (RegistroLivroNaBiblioteca, idLivro, idUser) => {
-    
     try {
-      // busca como esta no banco
-      const livroExistente = await api.GetMeuLivroByIdLivroIdUser(idUser, idLivro);
+      // Alterna o valor de Relido diretamente no estado
+      const novoValorRelido = Relido === 1 ? 0 : 1;
   
-      // atualiza de acordo com o valor que estava
-      const novoValorRelido = livroExistente.lido === 1 ? 0 : 1;
-    
-    const MeusLivrosLidoData = {
-      idLivro,
-      idUser,
-      Relido: novoValorRelido,
-    };
+      const MeusLivrosLidoData = {
+        idLivro,
+        idUser,
+        Relido: novoValorRelido,
+      };
   
+      // Atualiza a API
       await api.putMeusLivrosRelidos(RegistroLivroNaBiblioteca, MeusLivrosLidoData);
+  
+      // Atualiza o estado localmente para refletir a mudança na interface
+      setTagRelido(novoValorRelido);
     } catch (error) {
       console.error("Erro ao marcar livro como relido:", error);
     }
-  };
+  };  
 
   return (
     <Container>
@@ -595,15 +593,23 @@ function Livro() {
 
               <div>
                 <div className="tag-lido-livro">
-                  <button className="btn-tag-lido-livro"
-                  onClick={() => TagLido(RegistroLivroNaBiblioteca, idLivro, idUser)}>
+                  <button
+                    className={`btn-tag-lido-livro ${Lido ? "ativo" : ""}`}
+                    onClick={() =>
+                      TagLido(RegistroLivroNaBiblioteca, idLivro, idUser)
+                    }
+                  >
                     <i className="bi bi-bookmark-check"></i> Lido
                   </button>
                 </div>
 
                 <div className="tag-relido-livro">
-                  <button className="btn-tag-relido-livro"
-                  onClick={() => TagRelido(RegistroLivroNaBiblioteca, idLivro, idUser)}>
+                  <button
+                    className={`btn-tag-relido-livro ${Relido ? "ativo" : ""}`}
+                    onClick={() =>
+                      TagRelido(RegistroLivroNaBiblioteca, idLivro, idUser)
+                    }
+                  >
                     <i className="bi bi-bookmark-check"></i> Relido
                   </button>
                 </div>
