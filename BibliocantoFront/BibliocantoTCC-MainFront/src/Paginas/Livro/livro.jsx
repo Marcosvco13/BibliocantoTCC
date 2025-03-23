@@ -4,19 +4,20 @@ import { useParams } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Rating from "@mui/material/Rating";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import "./livro.css";
 import ResenhaItem from "../../Componentes/Resenha/ResenhaItem";
+import { Box, Rating } from "@mui/material";
+
+import Recomendacao from "../../Componentes/RecomendacaoLivro/recomendacao";
 
 function Livro() {
   const { id: idLivro } = useParams();
   const [livro, setLivro] = useState(null);
-  const [ratingValue, setRatingValue] = useState(2);
+  const [ratingValue, setRatingValue] = useState(0);
   const [resenha, setResenha] = useState("");
   const [mensagem, setMensagem] = useState("");
   const [resenhas, setResenhas] = useState([]);
@@ -29,41 +30,75 @@ function Livro() {
   const [mostrarEnviarResenha, setMostrarEnviarResenha] = useState(false);
   const [likesComentarios, setLikesComentarios] = useState({});
 
+  const [mediaEstrelas, setMediaEstrelas] = useState(null);
+  const [totalAvaliacoes, setTotalAvaliacoes] = useState(0);
+  const [atualizarAvaliacoes, setAtualizarAvaliacoes] = useState(false);
+
+  const [estaNaBiblioteca, setEstaNaBiblioteca] = useState(null);
+
+  const [IdsLivroAutor, setIdsLivroAutor] = useState([]);
+
+  const [RegistroLivroNaBiblioteca, setRegistroLivroNaBiblioteca] = useState(
+    []
+  );
+
+  const [Lido, setTagLido] = useState(0);
+  const [Relido, setTagRelido] = useState(0);
+
   useEffect(() => {
     const fetchData = async () => {
-      // Busca o id do usuário logado
       try {
+        // Busca o id do usuário logado
         const usuarioLogado = localStorage.getItem("Id");
-
         if (usuarioLogado) {
           setIdUser(usuarioLogado);
         }
-      } catch (error) {
-        console.error("Erro ao buscar o ID do usuário:", error);
-      }
 
-      // Busca resenhas do livro
-      if (idLivro) {
+        // Aguarda `idUser` e `idLivro` estarem disponíveis
+        if (!usuarioLogado || !idLivro) return;
+
+        // Verifica se o livro está na biblioteca do usuário
+        try {
+          const estaNaBiblioteca = await api.ConfirmaByUserLivro(
+            usuarioLogado,
+            idLivro
+          );
+          setEstaNaBiblioteca(estaNaBiblioteca);
+
+          // Se o livro estiver na biblioteca, busca o registro na API
+          if (estaNaBiblioteca) {
+            const registroLivro = await api.GetMeuLivroByIdLivroIdUser(
+              usuarioLogado,
+              idLivro
+            );
+            setRegistroLivroNaBiblioteca(registroLivro.id);
+
+            // 🔹 Verifica o estado das tags "Lido" e "Relido" no banco
+            setTagLido(registroLivro.lido === 1);
+            setTagRelido(registroLivro.relido === 1);
+          }
+        } catch (error) {
+          console.error("Erro ao verificar livro na biblioteca:", error);
+        }
+
+        // Busca resenhas do livro
         try {
           const response = await api.getResenhaByIdLivro(idLivro);
           setResenhas(response);
-
-          console.log("Resposta da API:", response);
+          //console.log("Resposta da API:", response);
 
           // Verifica se o usuário já fez uma resenha
-          if (response.some((res) => res.idUser === idUser)) {
+          if (response.some((res) => res.idUser === usuarioLogado)) {
             setMensagem("Você já enviou uma resenha para este livro.");
           }
 
           // Adiciona o email do usuário que escreveu a resenha
           const resenhasComEmail = await Promise.all(
             response.map(async (res) => {
-              const usuario = await api.EmailUserByID(res.idUser); // Busca o objeto do autor da resenha
-              const email = usuario.email; // Acessa o email do usuário
-              return { ...res, email }; // Retorna a resenha com o email adicionado
+              const usuario = await api.EmailUserByID(res.idUser);
+              return { ...res, email: usuario.email };
             })
           );
-
           setResenhas(resenhasComEmail);
         } catch (error) {
           console.error(
@@ -71,42 +106,122 @@ function Livro() {
             error.response?.data || error.message
           );
         }
-      }
 
-      try {
         // Busca os dados do livro
-        const data = await api.getLivroById(idLivro);
-        setLivro(data);
+        try {
+          const data = await api.getLivroById(idLivro);
+          setLivro(data);
 
-        // Busca os autores relacionados ao livro
-        const autorLivros = await api.buscarAutoresPorLivro(data.id);
-        const autoresDetalhados = await Promise.all(
-          autorLivros.map(async (autorLivro) => {
-            const autor = await api.buscarAutorPorId(autorLivro.idAutor);
-            return autor.nomeAutor;
-          })
-        );
-        setAutores(autoresDetalhados);
+          // Busca os autores relacionados ao livro
+          const autorLivros = await api.buscarAutoresPorLivro(data.id);
+          const autoresIds = autorLivros.map((autor) => autor.idAutor);
+          const autoresDetalhados = await Promise.all(
+            autorLivros.map(async (autorLivro) => {
+              const autor = await api.buscarAutorPorId(autorLivro.idAutor);
+              return autor.nomeAutor;
+            })
+          );
+          setAutores(autoresDetalhados);
 
-        // Busca os gêneros relacionados ao livro
-        const generoLivros = await api.buscarGenerosPorLivro(data.id);
-        const generosDetalhados = await Promise.all(
-          generoLivros.map(async (generoLivro) => {
-            const genero = await api.buscarGeneroPorId(generoLivro.idGenero);
-            return genero.nomegenero;
-          })
-        );
-        setGeneros(generosDetalhados);
+          //funcao para buscar todos os livros do autor do livro em questao
+          try {
+            // Inicializa um array para armazenar os IDs dos livros dos autores
+            const allLivrosIds = [];
+
+            // Itera sobre cada idAutor e faz a requisição para buscar os livros
+            for (let autorId of autoresIds) {
+              const LivrosDoAutor = await api.buscarLivrosPorAutor(autorId);
+
+              LivrosDoAutor.forEach((livro) => {
+                //console.log(`idLivro: ${livro.idLivro}`);
+              });
+              const idsLivrosDoAutor = LivrosDoAutor.map(
+                (livro) => livro.idLivro
+              );
+              allLivrosIds.push(...idsLivrosDoAutor); // Adiciona os IDs dos livros ao array final
+            }
+
+            // Atualiza o estado com todos os IDs de livros
+            setIdsLivroAutor(allLivrosIds);
+          } catch (error) {
+            console.error("Erro ao buscar livros do autor:", error);
+          }
+
+          if (IdsLivroAutor.length > 0) {
+            Promise.all(IdsLivroAutor.map((id) => api.getLivroById(id)))
+              .then((livros) => {
+                //console.log("Livros encontrados:", livros);
+              })
+              .catch((error) => {
+                console.error("Erro ao buscar livros:", error);
+              });
+          }
+
+          // Busca os gêneros relacionados ao livro
+          const generoLivros = await api.buscarGenerosPorLivro(data.id);
+          const generosDetalhados = await Promise.all(
+            generoLivros.map(async (generoLivro) => {
+              const genero = await api.buscarGeneroPorId(generoLivro.idGenero);
+              return genero.nomegenero;
+            })
+          );
+          setGeneros(generosDetalhados);
+        } catch (error) {
+          console.error(
+            "Erro ao buscar dados do livro:",
+            error.response?.data || error.message
+          );
+        }
+
+        // Busca a avaliação do usuário para o livro
+        try {
+          const avaliacaoExistente = await api.AvaliacaoByUserLivro(
+            idLivro,
+            usuarioLogado
+          );
+          setRatingValue(avaliacaoExistente?.estrelas ?? 0);
+          //console.log("Avaliação carregada:", avaliacaoExistente?.estrelas);
+        } catch (error) {
+          console.error(
+            "Erro ao buscar avaliação:",
+            error.response?.data || error.message
+          );
+        }
       } catch (error) {
-        console.error(
-          "Erro ao buscar as resenhas:",
-          error.response?.data || error.message
-        );
+        console.error("Erro geral no fetchData:", error);
       }
     };
 
     fetchData();
   }, [idLivro]);
+
+  useEffect(() => {
+    const fetchAvaliacoes = async () => {
+      try {
+        const avaliacoes = await api.AvaliacaoByLivro(idLivro);
+
+        if (avaliacoes.length > 0) {
+          const somaEstrelas = avaliacoes.reduce(
+            (acc, avaliacao) => acc + avaliacao.estrelas,
+            0
+          );
+          const media = somaEstrelas / avaliacoes.length;
+
+          setMediaEstrelas(media.toFixed(1)); // uma casa decimal
+          setTotalAvaliacoes(avaliacoes.length);
+        } else {
+          setMediaEstrelas(0);
+          setTotalAvaliacoes(0);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar avaliações:", error);
+        setMediaEstrelas(0);
+        setTotalAvaliacoes(0);
+      }
+    };
+
+    fetchAvaliacoes();
+  }, [idLivro, atualizarAvaliacoes]);
 
   // Função para enviar uma nova resenha
   const enviarResenha = async () => {
@@ -302,6 +417,103 @@ function Livro() {
     }
   };
 
+  // Função para enviar ou atualizar a avaliação do usuário
+  const enviarAvaliacao = async (estrelas) => {
+    if (!idUser) {
+      alert("É necessário estar logado para avaliar.");
+      return;
+    }
+
+    try {
+      // Se estrelas for null ou undefined, exibir erro
+      if (estrelas == null || isNaN(estrelas)) {
+        console.error("Erro: Número de estrelas inválido!", estrelas);
+        alert("Erro ao processar a avaliação. Número de estrelas inválido.");
+        return;
+      }
+
+      // Verifica se o usuário já avaliou o livro
+      const avaliacaoExistente = await api.AvaliacaoByUserLivro(
+        idLivro,
+        idUser
+      );
+
+      if (avaliacaoExistente && avaliacaoExistente.id) {
+        // Se já existe avaliação, faz um PUT para atualizar
+        const idAvaliacao = avaliacaoExistente.id;
+
+        // Garante que o novo objeto tenha o ID correto e o novo número de estrelas
+        const DataAvaliacaoLivro = {
+          idLivro: avaliacaoExistente.idLivro,
+          idUser: avaliacaoExistente.idUser,
+          estrelas: parseInt(estrelas),
+        };
+
+        await api.PutAvaliacao(idAvaliacao, DataAvaliacaoLivro);
+
+        alert("Avaliação atualizada com sucesso!");
+      } else {
+        // Se não existe avaliação, faz um POST para criar
+
+        const DataAvaliacaoLivro = {
+          idLivro: idLivro,
+          idUser: idUser,
+          estrelas: parseInt(estrelas),
+        };
+
+        await api.AvaliarLivro(DataAvaliacaoLivro);
+
+        alert("Avaliação enviada com sucesso!");
+      }
+
+      setAtualizarAvaliacoes((prev) => !prev);
+    } catch (error) {
+      alert("Erro ao enviar a avaliação. Tente novamente.");
+    }
+  };
+
+  const TagLido = async (RegistroLivroNaBiblioteca, idLivro, idUser) => {
+    try {
+      // Alterna o valor de Lido diretamente no estado
+      const novoValorLido = Lido === 1 ? 0 : 1;
+  
+      const MeusLivrosLidoData = {
+        idLivro,
+        idUser,
+        Lido: novoValorLido,
+      };
+  
+      // Atualiza a API
+      await api.putMeusLivrosLidos(RegistroLivroNaBiblioteca, MeusLivrosLidoData);
+  
+      // Atualiza o estado localmente para refletir a mudança na interface
+      setTagLido(novoValorLido);
+    } catch (error) {
+      console.error("Erro ao marcar livro como lido:", error);
+    }
+  };
+  
+  const TagRelido = async (RegistroLivroNaBiblioteca, idLivro, idUser) => {
+    try {
+      // Alterna o valor de Relido diretamente no estado
+      const novoValorRelido = Relido === 1 ? 0 : 1;
+  
+      const MeusLivrosLidoData = {
+        idLivro,
+        idUser,
+        Relido: novoValorRelido,
+      };
+  
+      // Atualiza a API
+      await api.putMeusLivrosRelidos(RegistroLivroNaBiblioteca, MeusLivrosLidoData);
+  
+      // Atualiza o estado localmente para refletir a mudança na interface
+      setTagRelido(novoValorRelido);
+    } catch (error) {
+      console.error("Erro ao marcar livro como relido:", error);
+    }
+  };  
+
   return (
     <Container>
       <Row>
@@ -336,40 +548,70 @@ function Livro() {
                 ) : (
                   <p>Carregando gêneros...</p>
                 )}
+              </div>
+
+              <div className="icone-linkcompra-livro">
+                {livro?.linkCompra && (
+                  <button
+                    className="livro-btnCompra"
+                    onClick={() => window.open(livro.linkCompra, "_blank")}
+                  >
+                    <FontAwesomeIcon icon={faCartShopping} /> Comprar Livro
+                  </button>
+                )}
+              </div>
+
+              <div className="avaliacao-livro">
+                {idUser && (
+                  <Box mt={2}>
+                    <Rating
+                      name="user-rating"
+                      value={ratingValue}
+                      onChange={(event, newValue) => {
+                        setRatingValue(newValue);
+                        enviarAvaliacao(newValue);
+                      }}
+                    />
+                    {totalAvaliacoes > 0 ? (
+                      <p>
+                        Média de estrelas: {mediaEstrelas} ({totalAvaliacoes}{" "}
+                        avaliações)
+                      </p>
+                    ) : (
+                      <p>Ainda não há avaliações para este livro.</p>
+                    )}
+                  </Box>
+                )}
 
                 <Button
                   variant="contained"
                   onClick={() => setMostrarEnviarResenha(true)}
                 >
-                  Escrever Resenha
+                  <i className="bi bi-pencil"></i> Escrever Resenha
                 </Button>
+              </div>
 
-                <Box
-                  component="fieldset"
-                  mb={3}
-                  borderColor="transparent"
-                  className="box-avaliacao"
-                >
-                  <div className="rating-container">
-                    <Rating
-                      name="simple-controlled"
-                      value={ratingValue}
-                      onChange={(event, newValue) => {
-                        setRatingValue(newValue);
-                      }}
-                    />
-                  </div>
-                </Box>
+              <div>
+                <div className="tag-lido-livro">
+                  <button
+                    className={`btn-tag-lido-livro ${Lido ? "ativo" : ""}`}
+                    onClick={() =>
+                      TagLido(RegistroLivroNaBiblioteca, idLivro, idUser)
+                    }
+                  >
+                    <i className="bi bi-bookmark-check"></i> Lido
+                  </button>
+                </div>
 
-                <div className="icones-acoes-livro">
-                  {livro?.linkCompra && (
-                    <button
-                      className="biblioteca-btnIcon"
-                      onClick={() => window.open(livro.linkCompra, "_blank")}
-                    >
-                      <FontAwesomeIcon icon={faCartShopping} />
-                    </button>
-                  )}
+                <div className="tag-relido-livro">
+                  <button
+                    className={`btn-tag-relido-livro ${Relido ? "ativo" : ""}`}
+                    onClick={() =>
+                      TagRelido(RegistroLivroNaBiblioteca, idLivro, idUser)
+                    }
+                  >
+                    <i className="bi bi-bookmark-check"></i> Relido
+                  </button>
                 </div>
               </div>
             </>
@@ -459,9 +701,7 @@ function Livro() {
         </Col>
 
         <Col xs={12} md={3} className="livro-coluna-extra">
-          <p>
-            Recomendações de livros do(a) mesmo(a) autor(a)
-          </p>
+          <Recomendacao IdsLivroAutor={IdsLivroAutor} />
         </Col>
       </Row>
     </Container>

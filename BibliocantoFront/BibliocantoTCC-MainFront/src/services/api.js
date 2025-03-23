@@ -146,7 +146,7 @@ api.cadastrarAutoresEGêneros = async function(autoresArmazenados, generosArmaze
 
         console.log('Dados enviados para a API:', autorLivroData); // Log para verificar os dados
 
-        const response = await axios.post('http://localhost:5162/api/AutorLivro', autorLivroData, {
+        const response = await axios.post('https://localhost:44331/api/AutorLivro', autorLivroData, {
             headers: {
                 Authorization: `Bearer ${getToken()}` // Inclui o token de autorização
             }
@@ -170,7 +170,7 @@ api.cadastrarLivroGenero = async function (idLivro, generoIdSingle) {
 
         console.log('Dados enviados para a API:', generoLivroData); // Log para verificar os dados
 
-        const response = await axios.post('http://localhost:5162/api/GenerosLivro', generoLivroData, {
+        const response = await axios.post('https://localhost:44331/api/GenerosLivro', generoLivroData, {
             headers: {
                 Authorization: `Bearer ${getToken()}` // Inclui o token de autorização
             }
@@ -191,7 +191,7 @@ api.cadastrarEditora = async function (nomeEditora) {
 
         // Tenta verificar se a editora já existe
         try {
-            const verificaExistenciaResponse = await axios.get(`http://localhost:5162/api/Editoras/EditoraByName?name=${nomeEditora}`, {
+            const verificaExistenciaResponse = await axios.get(`https://localhost:44331/api/Editoras/EditoraByName?name=${nomeEditora}`, {
                 headers: {
                     Authorization: `Bearer ${getToken()}`
                 }
@@ -204,7 +204,7 @@ api.cadastrarEditora = async function (nomeEditora) {
 
         } catch (error) {
             if (error.response && error.response.status === 404) {
-                //console.log(`Editora com o nome "${nomeEditora}" não encontrada, procedendo com o cadastro.`);
+                console.log(`Editora com o nome "${nomeEditora}" não encontrada, procedendo com o cadastro.`);
             } else {
                 console.error('Erro ao verificar editora:', error);
                 throw error;
@@ -219,7 +219,7 @@ api.cadastrarEditora = async function (nomeEditora) {
 
         // Caso contrário, cadastra uma nova editora
         const response = await axios.post(
-            'http://localhost:5162/api/Editoras',
+            'https://localhost:44331/api/Editoras',
             { nomeEditora },
             {
                 headers: {
@@ -237,11 +237,10 @@ api.cadastrarEditora = async function (nomeEditora) {
 };
 
 
-
 api.PreCadastroLivro = async function (titulo, isbn, editoraId) {
     try {
 
-        const response = await axios.post('http://localhost:5162/api/Livros', 
+        const response = await axios.post('https://localhost:44331/api/Livros', 
             {
                 titulo: titulo,
                 isbn: isbn,
@@ -253,7 +252,7 @@ api.PreCadastroLivro = async function (titulo, isbn, editoraId) {
                 }
             }
         );
-        //console.log('Livro pré-cadastrado com sucesso:', response.data);
+        console.log('Livro pré-cadastrado com sucesso:', response.data);
         return response.data.id;
     } catch (error) {
         console.error('Erro ao pré-cadastrar livro:', error);
@@ -297,7 +296,7 @@ api.cadastrarGenero = async function(generoData) {
 // Método GET para buscar livros de um gênero específico
 api.getLivrosByGenero = async function(generoId) {
     try {
-        const response = await api.get(`/api/GenerosLivro/GetById?id=${generoId}`, {
+        const response = await api.get(`https://localhost:44331/api/GenerosLivro/GetById?id=${generoId}`, {
             headers: {
                 Authorization: `Bearer ${getToken()}`
             }
@@ -357,7 +356,7 @@ api.getGeneroByName = async function(nameGenero) {
 //metodo get para buscar os autores do livro
 api.buscarAutoresPorLivro = async function(idLivro) {
     try {
-        const response = await api.get(`/api/AutorLivro/livro/${idLivro}`, {
+        const response = await api.get(`https://localhost:44331/api/AutorLivro/livro/${idLivro}`, {
             headers: {
                 Authorization: `Bearer ${getToken()}`
             }
@@ -365,6 +364,21 @@ api.buscarAutoresPorLivro = async function(idLivro) {
         return response.data; // Retorna os IDs dos autores para esse livro
     } catch (error) {
         console.error("Erro ao buscar autores do livro:", error);
+        throw error;
+    }
+};
+
+//metodo get para buscar os autores do livro pelo idAutor
+api.buscarLivrosPorAutor = async function(idAutor) {
+    try {
+        const response = await api.get(`https://localhost:44331/api/AutorLivro/autor/${idAutor}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao buscar os livros do autor:", error);
         throw error;
     }
 };
@@ -771,6 +785,21 @@ api.BibliotecaByUser = async function (idUser) {
     }
   };
 
+  // API para buscar o id do livro na biblioteca do usuario
+api.GetMeuLivroByIdLivroIdUser = async function (idUser, idLivro) {
+    try {
+      const response = await api.get(`/api/MeusLivros/GetMeuLivroByIdLivroIdUser?idUser=${idUser}&idLivro=${idLivro}`, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Erro ao buscar o registro do livro na biblioteca:", error);
+      throw error;
+    }
+  };
+
   // API para checar se o livro esta na biblioteca do usuario
 api.ConfirmaByUserLivro = async function (idUser, idLivro) {
     try {
@@ -785,6 +814,44 @@ api.ConfirmaByUserLivro = async function (idUser, idLivro) {
       throw error;
     }
   };
+
+  // API para atualizar o livro com as tags (lido)
+  api.putMeusLivrosLidos = async function(RegistroLivroNaBiblioteca, MeusLivrosLidoData) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${getToken()}`
+      }
+    };
+  
+    //console.log("Dados enviados para atualização do da biblioteca:", MeusLivrosLidoData); // Log dos dados
+    try {
+      const response = await api.put(`/api/MeusLivros/lido/${RegistroLivroNaBiblioteca}`, MeusLivrosLidoData, config);
+      //console.log("Livro da Biblioteca atualizado com sucesso:", response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Erro ao atualizar o livro da biblioteca:", error);
+      throw error;
+    }
+  };  
+
+  // API para atualizar o livro com as tags (relido)
+  api.putMeusLivrosRelidos = async function(RegistroLivroNaBiblioteca, MeusLivrosRelidoData) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${getToken()}`
+      }
+    };
+  
+    //console.log("Dados enviados para atualização do da biblioteca:", MeusLivrosRelidoData); // Log dos dados
+    try {
+      const response = await api.put(`/api/MeusLivros/relido/${RegistroLivroNaBiblioteca}`, MeusLivrosRelidoData, config);
+      //console.log("Livro da Biblioteca atualizado com sucesso:", response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Erro ao atualizar o livro da biblioteca:", error);
+      throw error;
+    }
+  }; 
 
 // RequestsLike Comentario
 
@@ -852,3 +919,73 @@ api.LikeComentarioByComentario = async function (idComentario) {
         return [];
     }
 };
+
+// Método post para avaliacao em estrelas do livro
+api.AvaliarLivro = async function (DataAvaliacaoLivro) {
+    try {
+        const response = await api.post(`/api/Avaliacao/`, DataAvaliacaoLivro, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.status === 404) {
+            return []; // Suppresses error logs
+        }
+        return [];
+    }
+};
+
+// Método get para buscar as avaliacoes do livro
+api.AvaliacaoByLivro = async function (idLivro) {
+    try {
+        const response = await api.get(`/api/Avaliacao/AvaliacaoByLivro?idLivro=${idLivro}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.status === 404) {
+            return []; // Suppresses error logs
+        }
+        return [];
+    }
+};
+
+// Método get para buscar as avaliacoes do usuario do livro
+api.AvaliacaoByUserLivro = async function (idLivro, idUser) {
+    try {
+        const response = await api.get(`/api/Avaliacao/AvaliacaoByUserLivro?idLivro=${idLivro}&idUser=${idUser}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.status === 404) {
+            return []; // Suppresses error logs
+        }
+        return [];
+    }
+};
+
+// Método get para atualizar as avaliacoes dos usuario
+api.PutAvaliacao = async function(idAvaliacao, AvaliacaoData) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${getToken()}`
+      }
+    };
+  
+    //console.log("Dados enviados para atualização da avaliacao:", AvaliacaoData); // Log dos dados
+    try {
+      const response = await api.put(`/api/Avaliacao/${idAvaliacao}`, AvaliacaoData, config);
+      //console.log("avaliacao atualizado com sucesso:", response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Erro ao atualizar a avaliacao:", error);
+      throw error;
+    }
+  };  

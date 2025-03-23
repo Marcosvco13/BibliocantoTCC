@@ -107,6 +107,8 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 
 
 
+builder.Services.AddScoped<IAvaliacaoRepository, AvaliacaoRepository>();
+builder.Services.AddScoped<IAvaliacaoService, AvaliacaoService>();
 
 builder.Services.AddScoped<IUnitOFWork, UnitOfWork>();
 

@@ -29,7 +29,7 @@ namespace Bibliocanto.Services
         public async Task<IEnumerable<Avaliacao>> GetByLivro(int idLivro)
         {
             IEnumerable<Avaliacao> baseAvaliacao;
-            if (idLivro == null)
+            if (idLivro != null)
             {
                 baseAvaliacao = await _avaliacaoRepository.GetByLivro(idLivro);
             }

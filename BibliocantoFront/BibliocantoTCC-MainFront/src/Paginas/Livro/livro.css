@@ -20,7 +20,11 @@
 
 .div-info {
   width: 100%; /* Faz a div ocupar toda a largura do contêiner */
-  padding: 5px; /* Adiciona espaço interno */
+}
+
+.div-info p {
+  margin: 4px 0 !important; /* Remove quase todo o espaçamento entre os parágrafos */
+  padding: 2px !important;
 }
 
 .box-avaliacao {
@@ -74,4 +78,79 @@
   border-radius: 20px;
   font-weight: bold;
   text-transform: none;
+}
+
+/* Estiliza o botão de compra do livro */
+.livro-btnCompra {
+  color: #47211c; /* Define a cor para o ícone de edição */
+  background: none; /* Remove o fundo do botão */
+  border: none; /* Remove a borda do botão */
+  cursor: pointer;
+  font-size: 17px; /* Aumenta o tamanho do ícone */
+  padding: 3px;
+}
+
+.livro-btnCompra:hover {
+  color: #7a3e36; /* Opcional: tom mais claro no hover */
+  background: none;
+}
+
+/* Estilo para a tag lido */
+.btn-tag-lido-livro {
+  background: transparent;
+  color: black;
+  padding: 7px;
+  font-size: 19px;
+  border: none;
+  cursor: pointer;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-tag-lido-livro:hover{
+  color: #4CAF50;
+  background: transparent;
+}
+
+/* Estilo para a tag relido */
+.btn-tag-relido-livro {
+  background: transparent;
+  color: black;
+  padding: 7px;
+  font-size: 19px;
+  border: none;
+  cursor: pointer;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-tag-relido-livro:hover{
+  color: #007BFF;
+  background: transparent;
+}
+
+.btn-tag-lido-livro.ativo{
+  color: green;
+}
+
+.btn-tag-relido-livro.ativo {
+  color: #007BFF;
+}
+
+.avaliacao-livro button {
+  background: transparent;
+  color: #47211c;
+  border: none;
+  box-shadow: none;
+  font-size: 16px;
+  cursor: pointer;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 12px;
+}
+
+.avaliacao-livro button:hover {
+  color: #7a3e36;
+  background: transparent;
+  box-shadow: none;
 }
