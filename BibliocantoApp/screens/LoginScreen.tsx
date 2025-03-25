@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Alert, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Alert, TouchableOpacity, StyleSheet,ActivityIndicator } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
 import { RootStackParamList } from '../routes/StackNavigator';
@@ -12,9 +12,17 @@ export default function LoginScreen() {
   const [password, setPassword] = useState('');
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setLoading] = useState(false);
 
   const login = async () => {
     const data = { email, password };
+
+    if (!email || !password) {
+      Alert.alert('Atenção!', 'Por favor, preencha todos os campos para continuar.');
+      return;
+    }
+
+    setLoading(true);
 
     try {
 
@@ -33,7 +41,7 @@ export default function LoginScreen() {
       navigation.navigate('Home');
 
     }catch (error) {
-  
+      setLoading(false);
       let errorMessage = 'Erro desconhecido. Tente novamente.';
       let responseBody = '';
   
@@ -44,7 +52,7 @@ export default function LoginScreen() {
         errorMessage = error.message;
       }
 
-      Alert.alert(responseBody);
+      Alert.alert('Atenção!', responseBody);
   }
   };
 
@@ -88,7 +96,11 @@ export default function LoginScreen() {
       </View>
 
       <TouchableOpacity style={styles.loginButton} onPress={login}>
-        <Text style={styles.buttonText}>Entrar</Text>
+        {isLoading ?  (
+        <ActivityIndicator size="small" color="#fff" />
+        ) : (
+          <Text style={styles.buttonText}>Entrar</Text>
+        )}
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.googleButton} onPress={handleGoogleLogin}>
@@ -130,7 +142,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 50,
-
+    fontFamily: "Merriweather",
     color: "#333",
   },
   subtitle: {

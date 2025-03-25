@@ -45,43 +45,9 @@ export default function NewUser() {
             });
 
             if (!verificaEmail.data) {
-
                 const response = await api.post('/api/Account/CreateUser', data);
-                
-                console.log(response);
-
-                const loginResponse = await api.post('/api/Account/LoginUser', {
-                    email,
-                    password
-                });
-
-                if (loginResponse.data) {
-                    console.log('User logged in successfully:', loginResponse.data);
-
-                    localStorage.setItem('email', email);
-                    localStorage.setItem('token', loginResponse.data.token);
-                    localStorage.setItem('expiration', loginResponse.data.expiration);
-
-                    try{
-                
-                        const responseId = await api.get('/api/Account/IdUserByEmail', {
-                            params: {
-                              email: email,
-                            },
-                        });
-                        
-                        localStorage.setItem('Id', responseId.data.id);
-                        
-                    }catch (erroe){
-                        alert('O login falhou ' + error);
-                    }
-        
-                    navigate('/');
-                    window.location.reload();
-                } else {
-                    alert('Erro ao efetuar o login. Tente novamente.');
-                }
-
+                alert(response.data);
+                navigate('/login');
             } else {
                 alert('Usuário já cadastrado no sistema!');
             }
@@ -101,12 +67,14 @@ export default function NewUser() {
                     <h2>Criar Usuário</h2>
 
                     <input
+                        name='email'
                         placeholder='E-mail'
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                     />
 
                     <input
+                        name='password'
                         type="password"
                         placeholder='Senha'
                         value={password}

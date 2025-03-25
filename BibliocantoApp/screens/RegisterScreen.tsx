@@ -22,18 +22,18 @@ export default function RegisterScreen(){
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
-            alert("Por favor, insira um e-mail válido.");
+            Alert.alert('Atenção!', "Por favor, insira um e-mail válido.");
             return;
         }
 
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
         if (!passwordRegex.test(password)) {
-            alert("A senha deve conter pelo menos 8 caracteres, incluindo uma letra maiúscula, uma minúscula, um número e um caractere especial.");
+          Alert.alert('Atenção!', "A senha deve conter pelo menos 8 caracteres, incluindo uma letra maiúscula, uma minúscula, um número e um caractere especial.");
             return;
         }
 
         if (password !== confirmPassword) {
-            alert("As senhas não coincidem.");
+          Alert.alert('Atenção!', "As senhas não coincidem, tente novamente.");
             return;
         }
 
@@ -44,14 +44,14 @@ export default function RegisterScreen(){
 
             if (!verificaEmail.data) {
               const response = await api.post('api/Account/CreateUser', data);
-              Alert.alert(response.data);        
+              Alert.alert('Atenção!', response.data);        
               navigation.navigate('Login');
             } else {
-              Alert.alert('Usuário já cadastrado no sistema!');
+              Alert.alert('Atenção!', 'Usuário já cadastrado no sistema!');
             }
         } catch (error) {
             console.error('Erro ao criar usuário:', error);
-            Alert.alert('Erro ao criar usuário. Tente novamente.');
+            Alert.alert('Erro!', 'Erro ao criar usuário. Tente novamente.');
         }
 
     }

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, Alert, Image, TouchableOpacity, StyleSheet, ScrollView } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import * as SecureStore from "expo-secure-store";
 import { useRoute } from '@react-navigation/native';
 import api from "../services/api";
 import NavBar from "../components/NavBar";
+import { faBookmark, faFlag, faSquarePlus } from "@fortawesome/free-regular-svg-icons"; 
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
 interface Livro {
     id: number;
@@ -85,8 +87,9 @@ export default function BookScreen() {
     }, []);
 
     const handleAddMeuLivro = async () => {
+
         const idUser = await SecureStore.getItemAsync("IdUser");
-    
+
         if (!idUser) {
           alert("Usuário não encontrado");
           return;
@@ -94,64 +97,79 @@ export default function BookScreen() {
     
         if (selectedLivro) {
           const idLivro = selectedLivro.id;
-    
-          const data = { idUser, idLivro };
-    
-          try {
-            const response = await api.post("/api/MeusLivros", data);
-            console.log(response);
-            alert("Livro adicionado com sucesso!");
+          const dados = { idUser, idLivro };
 
-          } catch (error) {
-            console.error(error);
-            alert("Falha ao salvar livro na biblioteca!");
+          try{
+            const verifica = await api.get("api/MeusLivros/GetMeuLivroByIdLivroIdUser", { params: { idUser, idLivro } });
+            const id = verifica.data.id;
+            try{
+                await api.delete(`/api/MeusLivros/${id}`)
+                Alert.alert('Sucesso!', "Livro removido da biblioteca!");
+            }catch{
+                Alert.alert('Erro!', "Falha ao remover livro na biblioteca!");
+            }
+          }catch{
+            try {
+                const response = await api.post("/api/MeusLivros", dados);
+                Alert.alert('Sucesso!', "Livro adicionado com sucesso!");
+    
+            } catch (error) {
+                Alert.alert('Erro!', "Falha ao salvar livro na biblioteca!");
+            }
           }
         } else {
-          alert("Nenhum livro selecionado");
+            Alert.alert('Erro!', "Nenhum livro selecionado");
         }
-      };
+    };
+
+    const handleAddLido = async () => {};
+
+    const handleAddRelido = async () => {};
 
 
     return (
         <View style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.title}>{selectedLivro ? selectedLivro.titulo : "Livro"}</Text>
-            </View>
-
-            <View style={styles.body}>
-                <Image
-                    source={{ uri: selectedLivro?.caminhoImagem || "https://via.placeholder.com/150" }}
-                    style={styles.image}
-                />
-                <View style={styles.infoContainer}>
-                    <Text style={styles.text}>{selectedLivro ? selectedLivro.descricao : "Descrição do livro"}</Text>
-                    <Text style={styles.text}>Autor(es): {autores.length > 0 ? autores.join(", ") : "Autor do livro"}</Text>
-                    <Text style={styles.text}>Gênero(s): {generos.length > 0 ? generos.join(", ") : "Gênero do livro"}</Text>
-                    <Text style={styles.text}>Editora: {selectedLivro?.nomeEditora || "Editora do livro"}</Text>
-                    <Text style={styles.text}>ISBN: {selectedLivro ? selectedLivro.isbn : "ISBN"}</Text>
+            <ScrollView 
+                contentContainerStyle={{ flexGrow: 10, paddingBottom: 80 }} 
+                keyboardShouldPersistTaps="handled"
+                showsVerticalScrollIndicator={false}
+            >
+                
+                <View style={styles.header}>
+                    <Text style={styles.title}>{selectedLivro ? selectedLivro.titulo : "Livro"}</Text>
                 </View>
-            </View>
 
-            {email && (
-                <View style={styles.footer}>
+                <View style={styles.body}>
+                    <Image
+                        source={{ uri: selectedLivro?.caminhoImagem || "https://via.placeholder.com/150" }}
+                        style={styles.image}
+                    />
 
-                    {/* <TouchableOpacity style={styles.iconButton} onPress={handleEditClick}>
-                        <FontAwesome name="edit" size={24} color="black" />
-                    </TouchableOpacity> */}
+                    <View style={styles.iconContainer}>
 
-                    {/* {selectedLivro?.linkCompra && (
-                        <TouchableOpacity style={styles.iconButton} onPress={() => Linking.openURL(selectedLivro.linkCompra)}>
-                            <FontAwesome name="shopping-cart" size={24} color="black" />
+                        <TouchableOpacity style={styles.iconButton} onPress={handleAddMeuLivro}>
+                            <FontAwesomeIcon icon={faSquarePlus} size={20} color="black" />
+                            <Text style={styles.texto}>Adicionar</Text>
                         </TouchableOpacity>
-                    )} */}
+                        <TouchableOpacity style={styles.iconButton} onPress={handleAddLido}>
+                            <FontAwesomeIcon icon={faBookmark} size={20} color="black" />
+                            <Text style={styles.texto}>Lido</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.iconButton} onPress={handleAddRelido}>
+                            <FontAwesomeIcon icon={faFlag} size={20} color="black" />
+                            <Text style={styles.texto}>Relido</Text>
+                        </TouchableOpacity>
+                    </View>
 
-                    <TouchableOpacity style={styles.iconButton} onPress={handleAddMeuLivro}>
-                        <FontAwesome name="bookmark" size={24} color="black" />
-                    </TouchableOpacity>
-
+                    <View style={styles.infoContainer}>
+                        <Text style={styles.text}>{selectedLivro ? selectedLivro.descricao : "Descrição do livro"}</Text>
+                        <Text style={styles.text}>Autor(es): {autores.length > 0 ? autores.join(", ") : "Autor do livro"}</Text>
+                        <Text style={styles.text}>Gênero(s): {generos.length > 0 ? generos.join(", ") : "Gênero do livro"}</Text>
+                        <Text style={styles.text}>Editora: {selectedLivro?.nomeEditora || "Editora do livro"}</Text>
+                        <Text style={styles.text}>ISBN: {selectedLivro ? selectedLivro.isbn : "ISBN"}</Text>
+                    </View>
                 </View>
-            )}
-
+            </ScrollView>
             <NavBar/>
         </View>
     );
@@ -164,41 +182,47 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     header: {
-        flexDirection: "row",
-        justifyContent: "space-between",
         alignItems: "center",
         marginBottom: 15,
     },
-    backButton: {
-        fontSize: 16,
-        color: "blue",
-    },
     title: {
-        fontSize: 20,
+        fontSize: 22,
         fontWeight: "bold",
+        textAlign: "center",
     },
     body: {
-        flexDirection: "row",
-        alignItems: "flex-start",
+        alignItems: "center",
     },
     image: {
-        width: 100,
-        height: 150,
-        marginRight: 15,
+        width: 150,
+        height: 220,
+        marginBottom: 10,
     },
-    infoContainer: {
-        flex: 1,
-    },
-    text: {
-        marginBottom: 5,
-        textAlign:"justify",
-    },
-    footer: {
+    iconContainer: {
         flexDirection: "row",
-        justifyContent: "flex-start",
-        marginTop: 15,
+        justifyContent: "center",
+        marginBottom: 15,
+        marginTop: 10, // Ajustado para ficar abaixo da capa do livro
     },
     iconButton: {
         padding: 10,
+        marginHorizontal: 10,
+        alignItems:'center'
     },
+    infoContainer: {
+        width: "100%",
+        paddingHorizontal: 20,
+    },
+    text: {
+        marginBottom: 5,
+        textAlign: "justify",
+    },
+    footer: {
+        position: "relative", // Alterado para não ficar fixo na parte inferior
+        marginTop: 20, // Espaçamento para separar das informações
+    },
+    texto:{
+        fontSize: 10,
+        color: "black",
+    }
 });

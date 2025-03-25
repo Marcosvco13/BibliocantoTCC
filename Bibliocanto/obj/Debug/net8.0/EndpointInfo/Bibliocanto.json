@@ -3302,6 +3302,98 @@
         }
       }
     },
+    "/api/MeusLivros/ConfirmaByUserLivro": {
+      "get": {
+        "tags": [
+          "MeusLivros"
+        ],
+        "parameters": [
+          {
+            "name": "idLivro",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idUser",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/MeusLivros/GetMeuLivroByIdLivroIdUser": {
+      "get": {
+        "tags": [
+          "MeusLivros"
+        ],
+        "parameters": [
+          {
+            "name": "idUser",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idLivro",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeusLivrosResource"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeusLivrosResource"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeusLivrosResource"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/MeusLivros/{id}": {
       "get": {
         "tags": [
@@ -3342,6 +3434,60 @@
           }
         }
       },
+      "delete": {
+        "tags": [
+          "MeusLivros"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MeusLivros": {
+      "post": {
+        "tags": [
+          "MeusLivros"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveMeusLivrosResource"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveMeusLivrosResource"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveMeusLivrosResource"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MeusLivros/lido/{id}": {
       "put": {
         "tags": [
           "MeusLivros"
@@ -3381,8 +3527,10 @@
             "description": "OK"
           }
         }
-      },
-      "delete": {
+      }
+    },
+    "/api/MeusLivros/relido/{id}": {
+      "put": {
         "tags": [
           "MeusLivros"
         ],
@@ -3396,18 +3544,6 @@
               "format": "int32"
             }
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/MeusLivros": {
-      "post": {
-        "tags": [
-          "MeusLivros"
         ],
         "requestBody": {
           "content": {

@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import './styles.css';
-import logo from '../../assets/BibliocantoTCC-mainlogo.png';
 import api from '../../services/api';
 import { useNavigate } from 'react-router-dom';
+import { AxiosError } from 'axios';
 
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
     const navigate = useNavigate();
 
     async function login(event) {
@@ -26,17 +25,28 @@ export default function Login() {
                 const responseId = await api.get('/api/Account/IdUserByEmail', {
                     params: { email: email },
                 });
-                
                 localStorage.setItem('Id', responseId.data.id);
-                
             } catch (error) {
-                alert('O login falhou ' + error);
+                alert(`Erro ao buscar ID do usuário: ${error.message}`);
+                return; // Importante: encerra a função se falhar
             }
             
             navigate('/');
             window.location.reload();
         } catch (error) {
-            alert('O login falhou ' + error);
+            let errorMessage = 'Erro desconhecido. Tente novamente.';
+
+            console.log(error);
+            
+            if (error instanceof AxiosError && error.response) {
+                // Se a API retornar uma mensagem de erro, usa ela
+                errorMessage = error.response.data || 'Erro na autenticação';
+            } else if (error instanceof Error) {
+                errorMessage = error.message;
+            }
+
+            alert(`Falha no login: ${errorMessage}`); // Alert corrigido
+            console.error("Erro completo:", error); // Para debug
         }
     };
 
@@ -57,53 +67,42 @@ export default function Login() {
 
     return (
         <div className='login-container'>
-            <section className='form'>
-                {/* <img src={logo} alt="login" id='imgLogo' /> */}
-                
-                <h1 className='h1NomeProjeto'>Bibliocanto</h1>
+          <section className='form'>
+            <h1 className='h1NomeProjeto'>Bibliocanto</h1>
+    
+            <form onSubmit={login}>
+              <input 
+                name='email'
+                placeholder='Email' 
+                value={email} 
+                onChange={(e) => setEmail(e.target.value)} 
+              />
+              
+              <input 
 
-                <form onSubmit={login}>
-                    
-                    <h2>Login do Usuário</h2>
-
-                    <input 
-                        placeholder='Email' 
-                        value={email} 
-                        onChange={e => setEmail(e.target.value)} 
-                    />
-                    
-                    <input 
-                        type="password" 
-                        placeholder='Senha' 
-                        value={password} 
-                        onChange={e => setPassword(e.target.value)} 
-                    />
-
-                    <button className="buttonLogin" type='submit'>Entrar</button>
-
-                </form>
-
-                <form>
-                <button className="google-button" onClick={handleGoogleLogin}>
-                        Entrar com Google
-                    </button>
-
-                    <a href="#" onClick={handleForgotPassword} className="forgot-password">
-                        Esqueceu a senha?
-                    </a>
-                </form>
-                
-                <br/>
-                <h4 className='h4Login'>Ou</h4>
-                <hr className='hrLogin'></hr>
-
-                <div className='NewUser-container'>
-                    <button className="buttonCriar" onClick={handleCreateUser}>
-                        Criar Usuário
-                    </button>
-                </div>
-
-            </section>
+                type="password" 
+                placeholder='Senha' 
+                value={password} 
+                onChange={(e) => setPassword(e.target.value)} 
+              />
+    
+              <button className="buttonLogin" type='submit'>Entrar</button>
+            </form>
+    
+            <button className="google-button" onClick={handleGoogleLogin}>
+              Entrar com Google
+            </button>
+    
+            <div className='login-options'>
+              <a href="#" onClick={handleForgotPassword} className="forgot-password">
+                Esqueceu a senha?
+              </a>
+              <span className="divider">Ou</span>
+              <button onClick={handleCreateUser} className="create-account">
+                Criar Usuário
+              </button>
+            </div>
+          </section>
         </div>
-    );
+      );
 }

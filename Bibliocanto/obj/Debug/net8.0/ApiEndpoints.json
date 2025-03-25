@@ -1969,27 +1969,6 @@
   },
   {
     "ContainingType": "Bibliocanto.Controllers.MeusLivrosController",
-    "Method": "PutAsync",
-    "RelativePath": "api/MeusLivros/{id}",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "recurso",
-        "Type": "Bibliocanto.Resources.SaveMeusLivrosResource",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Bibliocanto.Controllers.MeusLivrosController",
     "Method": "DeleteAsync",
     "RelativePath": "api/MeusLivros/{id}",
     "HttpMethod": "DELETE",
@@ -2029,6 +2008,110 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "Bibliocanto.Controllers.MeusLivrosController",
+    "Method": "GetByUser",
+    "RelativePath": "api/MeusLivros/ConfirmaByUserLivro",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idLivro",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "idUser",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Bibliocanto.Controllers.MeusLivrosController",
+    "Method": "GetMeuLivroByIdLivroIdUser",
+    "RelativePath": "api/MeusLivros/GetMeuLivroByIdLivroIdUser",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idUser",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "idLivro",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Bibliocanto.Resources.MeusLivrosResource",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Bibliocanto.Controllers.MeusLivrosController",
+    "Method": "PutLidoAsync",
+    "RelativePath": "api/MeusLivros/lido/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "recurso",
+        "Type": "Bibliocanto.Resources.SaveMeusLivrosResource",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Bibliocanto.Controllers.MeusLivrosController",
+    "Method": "PutRelidoAsync",
+    "RelativePath": "api/MeusLivros/relido/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "recurso",
+        "Type": "Bibliocanto.Resources.SaveMeusLivrosResource",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "Bibliocanto.Controllers.ResenhaController",

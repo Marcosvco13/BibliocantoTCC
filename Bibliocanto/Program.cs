@@ -105,7 +105,11 @@ builder.Services.AddScoped<EmailService>(sp =>
 ); 
 builder.Services.AddScoped<IEmailService, EmailService>();
 
+builder.Services.AddScoped<ILikeResenhaRepository, LikeResenhaRespository>();
+builder.Services.AddScoped<ILikeResenhaService, LikeResenhaService>();
 
+builder.Services.AddScoped<ILikeComentarioRepository, LikeComentarioRepository>();
+builder.Services.AddScoped<ILikeComentarioService, LikeComentarioService>();
 
 builder.Services.AddScoped<IAvaliacaoRepository, AvaliacaoRepository>();
 builder.Services.AddScoped<IAvaliacaoService, AvaliacaoService>();
