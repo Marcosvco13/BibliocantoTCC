@@ -49,10 +49,9 @@
 .nav-links a {
     color: white;
     text-decoration: none;
-    font-size: 18px;
-    padding: 15px;
+    font-size: 16px;
+    padding: 10px;
     text-align: center;
-    display: block;
     transition: 0.3s;
 }
 
@@ -86,6 +85,9 @@
     font-weight: bold;
     color: #ff6600; /* Cor de destaque */
     background-color: #5a2a24;
-    border-radius: 40px; /* Deixa as bordas arredondadas */
-    transition: background-color 0.3s ease, color 0.3s ease; /* Suaviza a transição */
+    padding: 3px 8px; /* Reduz o tamanho interno do destaque */
+    border-radius: 20px; /* Mantém bordas arredondadas */
+    margin: 5px 15px; /* Adiciona espaçamento acima e abaixo */
+    display: inline-block; /* Mantém o tamanho ajustado ao conteúdo */
+    transition: background-color 0.3s ease, color 0.3s ease;
 }

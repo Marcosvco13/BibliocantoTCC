@@ -34,7 +34,15 @@ export default function Nav() {
         <h5>Procure seu livro</h5>
         <Link to="/" className={location.pathname === "/" ? "active-link" : ""}><i className="bi bi-house"></i> Acervo de Livros</Link>
         <Link to="/NavegarPorGenero" className={location.pathname === "/NavegarPorGenero" ? "active-link" : ""}>Navegar por Gêneros</Link>
-        {email && (<Link to="/BuscaISBN"className={location.pathname === "/BuscaISBN" ? "active-link" : ""}><i className="bi bi-journal-plus"></i> Cadastrar Livro</Link>)}
+        {email && (
+  <Link 
+    to="/BuscaISBN" 
+    className={["/BuscaISBN", "/PreCadastrar", "/FinalizarCadastro"].includes(location.pathname) ? "active-link" : ""}
+  >
+    <i className="bi bi-journal-plus"></i> Cadastrar Livro
+  </Link>
+)}
+
       </div>
 
       <div className="nav-links">
@@ -45,12 +53,12 @@ export default function Nav() {
           </Link>
         )}
         {email && (
-          <Link to="/MinhaBiblioteca" className={location.pathname === "/MinhaBiblioteca" ? "active-link" : ""}>
+          <Link to="/MinhaBiblioteca" className={location.pathname === "/Lidos" ? "active-link" : ""}>
             <i class="bi bi-bookmark-star"></i> Lidos
           </Link>
         )}
         {email && (
-          <Link to="/MinhaBiblioteca" className={location.pathname === "/MinhaBiblioteca" ? "active-link" : ""}>
+          <Link to="/MinhaBiblioteca" className={location.pathname === "/Relidos" ? "active-link" : ""}>
             <i class="bi bi-bookmark-heart"></i> Relidos
           </Link>
         )}
