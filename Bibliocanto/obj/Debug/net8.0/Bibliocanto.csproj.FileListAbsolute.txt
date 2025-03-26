@@ -443,3 +443,8 @@ D:\Projetos\BibliocantoTCC\Bibliocanto\bin\Debug\net8.0\runtimes\win\lib\net8.0\
 D:\Projetos\BibliocantoTCC\Bibliocanto\obj\Debug\net8.0\staticwebassets.build.endpoints.json
 D:\Projetos\BibliocantoTCC\Bibliocanto\obj\Debug\net8.0\staticwebassets\msbuild.Bibliocanto.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
 D:\Projetos\BibliocantoTCC\Bibliocanto\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+D:\Sistemas de informação\TCC\BibliocantoTCC\Bibliocanto\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+D:\Sistemas de informação\TCC\BibliocantoTCC\Bibliocanto\bin\Debug\net8.0\MailKit.dll
+D:\Sistemas de informação\TCC\BibliocantoTCC\Bibliocanto\bin\Debug\net8.0\MimeKit.dll
+D:\Sistemas de informação\TCC\BibliocantoTCC\Bibliocanto\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+D:\Sistemas de informação\TCC\BibliocantoTCC\Bibliocanto\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll

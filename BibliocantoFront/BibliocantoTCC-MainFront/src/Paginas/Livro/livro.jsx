@@ -466,7 +466,6 @@ function Livro() {
         alert("Avaliação enviada com sucesso!");
       }
 
-      setAtualizarAvaliacoes((prev) => !prev);
     } catch (error) {
       alert("Erro ao enviar a avaliação. Tente novamente.");
     }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Bibliocanto - Backup")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+faedb9921a87421d757b291869a63c6f62f61795")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8b8de6f03a36b468ee2407d3ce692a2c86a6d291")]
 [assembly: System.Reflection.AssemblyProductAttribute("Bibliocanto - Backup")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Bibliocanto - Backup")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

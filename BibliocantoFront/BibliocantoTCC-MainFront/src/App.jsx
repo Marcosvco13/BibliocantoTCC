@@ -5,7 +5,6 @@ import api from "./services/api";
 
 //componentes
 import Nav from "./Componentes/Nav/Nav";
-import Footer from "./Componentes/Footer/index";
 
 //paginas
 import Login from "./Paginas/Login";
@@ -47,9 +46,7 @@ export default function App() {
           <Route path="/FinalizarCadastro" element={<CadastroLivro />} />
           <Route path="/NavegarPorGenero" element={<NavegarGenero />} />
           <Route path="/Livro/:id" element={<Livro />} />
-
         </Routes>
-        <Footer />
       </BrowserRouter>
     </div>
   );

@@ -1,9 +1,11 @@
 .App {
     background-color: #f9f9f9;
     min-height: 100vh; /* Garante que o fundo cubra toda a altura da tela */
-    padding-top: 100px; /* Espaço no topo para o conteúdo não colidir com o Nav */
     display: flex; /* Permite o uso de flexbox para alinhamento */
     flex-direction: column; /* Organiza os filhos em coluna (vertical) */
+    margin-left: 250px; /* Mesma largura da navbar */
+    padding: 20px;
+  
   }
   
   footer {
