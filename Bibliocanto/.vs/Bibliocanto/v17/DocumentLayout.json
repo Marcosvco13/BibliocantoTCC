@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\projetos\\bibliocantotcc\\bibliocanto\\models\\livros.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:models\\livros.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\projetos\\bibliocantotcc\\bibliocanto\\controllers\\meuslivroscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:controllers\\meuslivroscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -30,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,7 +46,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
+              "Title": "Livros.cs",
+              "DocumentMoniker": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Models\\Livros.cs",
+              "RelativeDocumentMoniker": "Models\\Livros.cs",
+              "ToolTip": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Models\\Livros.cs",
+              "RelativeToolTip": "Models\\Livros.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-25T22:48:20.629Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "MeusLivrosRepository.cs",
               "DocumentMoniker": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Repository\\MeusLivrosRepository.cs",
               "RelativeDocumentMoniker": "Repository\\MeusLivrosRepository.cs",
@@ -50,12 +67,11 @@
               "RelativeToolTip": "Repository\\MeusLivrosRepository.cs",
               "ViewState": "AgIAAAgAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-25T00:18:40.717Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-25T00:18:40.717Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "MeusLivrosController.cs",
               "DocumentMoniker": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Controllers\\MeusLivrosController.cs",
               "RelativeDocumentMoniker": "Controllers\\MeusLivrosController.cs",
@@ -68,7 +84,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "IMeusLivrosService.cs",
               "DocumentMoniker": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\IServices\\IMeusLivrosService.cs",
               "RelativeDocumentMoniker": "IServices\\IMeusLivrosService.cs",
@@ -76,12 +92,11 @@
               "RelativeToolTip": "IServices\\IMeusLivrosService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-15T01:07:10.902Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-15T01:07:10.902Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "MeusLivrosService.cs",
               "DocumentMoniker": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Services\\MeusLivrosService.cs",
               "RelativeDocumentMoniker": "Services\\MeusLivrosService.cs",
@@ -89,12 +104,11 @@
               "RelativeToolTip": "Services\\MeusLivrosService.cs",
               "ViewState": "AgIAAAgAAAAAAAAAAAAAwBMAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-15T01:08:43.196Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-15T01:08:43.196Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "IMeusLivrosRepository.cs",
               "DocumentMoniker": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\IRepository\\IMeusLivrosRepository.cs",
               "RelativeDocumentMoniker": "IRepository\\IMeusLivrosRepository.cs",
@@ -102,8 +116,7 @@
               "RelativeToolTip": "IRepository\\IMeusLivrosRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-15T01:07:55.936Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-15T01:07:55.936Z"
             }
           ]
         }

@@ -8,6 +8,9 @@
     height: 100vh;
 }
 
+.titulo{
+    font-size: 25px;
+}
 .sobre-site-section {
     background-color: white;
     padding: 40px;

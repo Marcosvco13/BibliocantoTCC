@@ -251,7 +251,7 @@ function Livro() {
 
       // Chamada à função cadastrarResenha da API
       await api.cadastrarResenha(resenhaData);
-
+      window.location.reload();
       setMensagem("Resenha enviada com sucesso!");
       setResenha(""); // Limpa o campo de resenha
       setMostrarEnviarResenha(false);

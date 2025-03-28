@@ -34,7 +34,7 @@ const Recomendacao = ({ IdsLivroAutor }) => {
 
     return (
         <div className="recomendacoes-container">
-            <h2>Recomendações</h2>
+            <h2 className="titulo">Livros do mesmo autor.</h2>
             <div className="livros-grid">
                 {livros.map((livro) => (
                     <div key={livro.id} className="livro-card">
