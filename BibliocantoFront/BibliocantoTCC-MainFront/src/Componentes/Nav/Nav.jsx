@@ -49,17 +49,17 @@ export default function Nav() {
         <h5>Seus Livros</h5>
         {email && (
           <Link to="/MinhaBiblioteca" className={location.pathname === "/MinhaBiblioteca" ? "active-link" : ""}>
-            <i class="bi bi-book"></i> Minha Biblioteca
+            <i className="bi bi-book"></i> Minha Biblioteca
           </Link>
         )}
         {email && (
           <Link to="/MinhaBiblioteca" className={location.pathname === "/Lidos" ? "active-link" : ""}>
-            <i class="bi bi-bookmark-star"></i> Lidos
+            <i className="bi bi-bookmark-star"></i> Lidos
           </Link>
         )}
         {email && (
           <Link to="/MinhaBiblioteca" className={location.pathname === "/Relidos" ? "active-link" : ""}>
-            <i class="bi bi-bookmark-heart"></i> Relidos
+            <i className="bi bi-bookmark-heart"></i> Relidos
           </Link>
         )}
       </div>
@@ -68,12 +68,12 @@ export default function Nav() {
         <h5>Bibliocanto</h5>
         {email && (
           <Link to="/privacy-policy" className={location.pathname === "/privacy-policy" ? "active-link" : ""}>
-            <i class="bi bi-info-circle"></i> Política de Privacidade
+            <i className="bi bi-info-circle"></i> Política de Privacidade
           </Link>
         )}
         {email && (
           <Link to="/about" className={location.pathname === "/about" ? "active-link" : ""}>
-            <i class="bi bi-globe2"></i> Sobre o Site
+            <i className="bi bi-globe2"></i> Sobre o Site
           </Link>
         )}
       </div>
