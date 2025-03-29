@@ -1,4 +1,5 @@
-﻿using Bibliocanto.IServices;
+﻿using System.Security.Claims;
+using Bibliocanto.IServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 
@@ -8,11 +9,80 @@ namespace Bibliocanto.Services
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly Dictionary<string, string> _resetCodes = new();
 
         public AuthenticateService(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+        }
+        public async Task<bool> StoreResetCode(string email, string code)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+                return false;
+
+            // Remover qualquer código antigo antes de salvar um novo
+            var existingClaim = (await _userManager.GetClaimsAsync(user))
+                .FirstOrDefault(c => c.Type == "ResetCode");
+
+            if (existingClaim != null)
+                await _userManager.RemoveClaimAsync(user, existingClaim);
+
+            // Adicionar novo código como claim
+            await _userManager.AddClaimAsync(user, new Claim("ResetCode", code));
+
+            return true;
+        }
+
+        public async Task<bool> ValidateResetCode(string email, string code)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+                return false;
+
+            var claim = (await _userManager.GetClaimsAsync(user))
+                .FirstOrDefault(c => c.Type == "ResetCode");
+
+            return claim != null && claim.Value == code;
+        }
+
+        public async Task<string?> GetResetCode(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+                return null;
+
+            var claim = (await _userManager.GetClaimsAsync(user))
+                .FirstOrDefault(c => c.Type == "ResetCode");
+
+            return claim?.Value;
+        }
+
+        public async Task<bool> ResetPasswordWithCode(string email, string code, string newPassword)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+                return false;
+
+            if (!await ValidateResetCode(email, code))
+                return false;
+
+            var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var result = await _userManager.ResetPasswordAsync(user, resetToken, newPassword);
+
+            if (result.Succeeded)
+            {
+                // Remover o código após o uso
+                var claim = (await _userManager.GetClaimsAsync(user))
+                    .FirstOrDefault(c => c.Type == "ResetCode");
+                if (claim != null)
+                    await _userManager.RemoveClaimAsync(user, claim);
+
+                return true;
+            }
+
+            return false;
         }
 
         public async Task<bool> Authenticate(string email, string password)
@@ -43,7 +113,7 @@ namespace Bibliocanto.Services
         public async Task<bool> FindByEmail(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
-            return user != null; // Retorna true se o usuário foi encontrado, false caso contrário
+            return user != null;
         }
 
         public async Task<IdentityUser> FindUserByEmail(string email)

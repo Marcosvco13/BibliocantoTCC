@@ -126,6 +126,38 @@
   },
   {
     "ContainingType": "Bibliocanto.Controllers.AccountController",
+    "Method": "RequestPasswordResetCode",
+    "RelativePath": "api/Account/RequestPasswordResetCode",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Bibliocanto.ViewModels.ForgotPasswordRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Bibliocanto.Controllers.AccountController",
+    "Method": "ResetPasswordWithCode",
+    "RelativePath": "api/Account/ResetPasswordWithCode",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Bibliocanto.ViewModels.ResetPasswordRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Bibliocanto.Controllers.AccountController",
     "Method": "GetByEmail",
     "RelativePath": "api/Account/UserByEmail",
     "HttpMethod": "GET",
@@ -149,6 +181,22 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "Bibliocanto.Controllers.AccountController",
+    "Method": "ValidateResetCode",
+    "RelativePath": "api/Account/ValidateResetCode",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Bibliocanto.ViewModels.ValidateCodeRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "Bibliocanto.Controllers.AutoresController",

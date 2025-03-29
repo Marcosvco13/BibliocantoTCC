@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Alert, TouchableOpacity, StyleSheet,ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, Alert, TouchableOpacity, StyleSheet, ActivityIndicator, Image } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
 import { RootStackParamList } from '../routes/StackNavigator';
@@ -61,15 +61,20 @@ export default function LoginScreen() {
   };
 
   const handleForgotPassword = () => {
-    alert("Função de redefinir senha ainda não implementado!");
+    navigation.navigate('CodeRequest');
   };
 
-  const handleGoogleLogin = () => {
-    alert("Login com o Google ainda não implementado!");
-  };
+  // const handleGoogleLogin = () => {
+  //   alert("Login com o Google ainda não implementado!");
+  // };
 
   return (
     <View style={styles.loginContainer}>
+
+      <Image 
+        source={require('../assets/BibliocantoTCC-mainlogo.png')} 
+        style={{ width: 100, height: 100, marginBottom: 15 }} 
+      />
 
       <Text style={styles.projectName}>Bibliocanto</Text>
 
@@ -103,9 +108,9 @@ export default function LoginScreen() {
         )}
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.googleButton} onPress={handleGoogleLogin}>
+      {/* <TouchableOpacity style={styles.googleButton} onPress={handleGoogleLogin}>
         <Text style={styles.buttonText}>Entrar com Google</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       
       <View style={styles.rowContainer}>
         <TouchableOpacity onPress={handleForgotPassword}>
@@ -129,7 +134,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
-    backgroundColor: "#fff",
+    backgroundColor: "#f9f9f9",
   },
   rowContainer: {
     flexDirection: "row",
@@ -141,9 +146,9 @@ const styles = StyleSheet.create({
     fontSize: 36,
     fontWeight: "bold",
     textAlign: "center",
-    marginBottom: 50,
+    marginBottom: 20,
     fontFamily: "Merriweather",
-    color: "#333",
+    color: "black",
   },
   subtitle: {
     fontSize: 18,

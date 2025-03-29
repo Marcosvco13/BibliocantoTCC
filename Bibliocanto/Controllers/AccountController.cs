@@ -5,6 +5,7 @@ using Bibliocanto.IServices;
 using Bibliocanto.Services;
 using Bibliocanto.ViewModels;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 
@@ -223,5 +224,94 @@ namespace Bibliocanto.Controllers
             ModelState.AddModelError("LoginUser", "Login inválido. Verifique suas credenciais.");
             return BadRequest(ModelState);
         }
+
+        [HttpPost("RequestPasswordResetCode")]
+        public async Task<IActionResult> RequestPasswordResetCode([FromBody] ViewModels.ForgotPasswordRequest request)
+        {
+            if (string.IsNullOrEmpty(request.Email))
+            {
+                return BadRequest("O e-mail é obrigatório.");
+            }
+
+            var user = await _authentication.FindUserByEmail(request.Email);
+            if (user == null)
+            {
+                return BadRequest("Usuário não encontrado.");
+            }
+
+            // Gerar um código numérico de 5 dígitos
+            var random = new Random();
+            var resetCode = random.Next(10000, 99999).ToString();
+
+            // Armazenar o código temporariamente no banco (ou em cache)
+            var codeStored = await _authentication.StoreResetCode(user.Email, resetCode);
+            if (!codeStored)
+            {
+                return BadRequest("Erro ao gerar o código.");
+            }
+
+            // Enviar o código para o e-mail do usuário
+            await _emailService.SendEmailAsync(user.Email, "Código de Redefinição de Senha",
+                $"Seu código de redefinição de senha é: {resetCode}. Ele expira em 10 minutos.");
+
+            return Ok("Se o e-mail estiver registrado, um código foi enviado.");
+        }
+
+        [HttpPost("ValidateResetCode")]
+        public async Task<IActionResult> ValidateResetCode([FromBody] ValidateCodeRequest request)
+        {
+            if (string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.Code))
+            {
+                return BadRequest("E-mail e código são obrigatórios.");
+            }
+
+            var user = await _authentication.FindUserByEmail(request.Email);
+            if (user == null)
+            {
+                return BadRequest("Usuário não encontrado.");
+            }
+
+            // Validar o código armazenado
+            var isValid = await _authentication.ValidateResetCode(user.Email, request.Code);
+            if (!isValid)
+            {
+                return BadRequest("Código inválido ou expirado.");
+            }
+
+            return Ok("Código validado com sucesso.");
+        }
+
+
+        [HttpPost("ResetPasswordWithCode")]
+        public async Task<IActionResult> ResetPasswordWithCode([FromBody] ViewModels.ResetPasswordRequest request)
+        {
+            if (string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.Code) || string.IsNullOrEmpty(request.NewPassword))
+            {
+                return BadRequest("Todos os campos são obrigatórios.");
+            }
+
+            var user = await _authentication.FindUserByEmail(request.Email);
+            if (user == null)
+            {
+                return BadRequest("Usuário não encontrado.");
+            }
+
+            // Validar código antes de permitir a redefinição da senha
+            var isValid = await _authentication.ValidateResetCode(user.Email, request.Code);
+            if (!isValid)
+            {
+                return BadRequest("Código inválido ou expirado.");
+            }
+
+            // Redefinir a senha
+            var result = await _authentication.ResetPasswordWithCode(user.Email, request.Code, request.NewPassword);
+            if (!result)
+            {
+                return BadRequest("Erro ao redefinir a senha.");
+            }
+
+            return Ok("Senha redefinida com sucesso.");
+        }
+
     }
 }

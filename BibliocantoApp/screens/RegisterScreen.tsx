@@ -22,36 +22,39 @@ export default function RegisterScreen(){
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
-            Alert.alert('Atenção!', "Por favor, insira um e-mail válido.");
-            return;
+          Alert.alert('Atenção!', "Por favor, insira um e-mail válido.");
+          setIsLoading(false);
+          return;
         }
 
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$/;
         if (!passwordRegex.test(password)) {
-          Alert.alert('Atenção!', "A senha deve conter pelo menos 8 caracteres, incluindo uma letra maiúscula, uma minúscula, um número e um caractere especial.");
-            return;
+          Alert.alert('Atenção!', "A senha deve conter pelo menos 10 caracteres, incluindo uma letra maiúscula, uma minúscula, um número e um caractere especial.");
+          setIsLoading(false);
+          return;
         }
 
         if (password !== confirmPassword) {
           Alert.alert('Atenção!', "As senhas não coincidem, tente novamente.");
-            return;
+          setIsLoading(false);
+          return;
         }
 
         try {
-            const verificaEmail = await api.get('api/Account/UserByEmail', {
-                params: { email }
-            });
+          const verificaEmail = await api.get('api/Account/UserByEmail', {
+            params: { email }
+          });
 
-            if (!verificaEmail.data) {
-              const response = await api.post('api/Account/CreateUser', data);
-              Alert.alert('Atenção!', response.data);        
-              navigation.navigate('Login');
-            } else {
-              Alert.alert('Atenção!', 'Usuário já cadastrado no sistema!');
-            }
+          if (!verificaEmail.data) {
+            const response = await api.post('api/Account/CreateUser', data);
+            Alert.alert('Atenção!', response.data);        
+            navigation.navigate('Login');
+          } else {
+            Alert.alert('Atenção!', 'Usuário já cadastrado no sistema!');
+          }
         } catch (error) {
-            console.error('Erro ao criar usuário:', error);
-            Alert.alert('Erro!', 'Erro ao criar usuário. Tente novamente.');
+          setIsLoading(false); 
+          Alert.alert('Erro!', 'Erro ao criar usuário. Tente novamente.');
         }
 
     }
@@ -145,8 +148,9 @@ const styles = StyleSheet.create({
     },
     title: {
       fontSize: 40,
+      fontWeight: 'bold',
       fontFamily: 'Merriweather, serif',
-      color: '#47211c',
+      color: 'black',
       marginBottom: 20,
       textAlign: 'center',
     },
