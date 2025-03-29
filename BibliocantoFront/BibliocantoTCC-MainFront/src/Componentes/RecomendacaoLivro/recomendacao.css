@@ -1,3 +1,22 @@
+.recomendacao-titulo {
+    font-size: 23px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  
+  .recomendacao-titulo::after {
+    content: '';
+    display: block;
+    width: 120px;
+    height: 4px;
+    background-color: #5a2a24;
+    margin: 10px auto;
+    margin-bottom: 20px;
+  }
+
 .recomendacoes-container {
     text-align: center;
 }

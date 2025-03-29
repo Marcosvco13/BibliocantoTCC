@@ -738,19 +738,20 @@ api.DeleteLikeResenha = async function(idLikeResenha) {
 
 // API para buscar comentários em uma resenha
 api.ComentarioByResenha = async function(idResenha) {
-    try {
-        const response = await api.get(`/api/Comentario/ComentarioByResenha?idResenha=${idResenha}`, {
-            headers: {
-                Authorization: `Bearer ${getToken()}`
-            }
-        });
-        //console.log('Comentários obtidos com sucesso:', response.data);
-        return response.data;
-    } catch (error) {
-        console.error("Erro ao buscar comentários:", error);
-        throw error;
+    const response = await api.get(`/api/Comentario/ComentarioByResenha?idResenha=${idResenha}`, {
+        headers: {
+            Authorization: `Bearer ${getToken()}`
+        }
+    });
+
+    if (!response || !response.data) {
+        console.warn("Nenhum comentário encontrado.");
+        return;
     }
+
+    return response.data;
 };
+
 
 // API para submeter um comentário em uma resenha
 api.CadastrarComentario = async function(ComentarioData) {

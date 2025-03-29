@@ -1,156 +1,199 @@
+.titulo-livro {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-top: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.titulo-livro::after {
+  content: '';
+  display: block;
+  width: 300px;
+  height: 4px;
+  background-color: #5a2a24;
+  margin: 10px auto;
+  margin-bottom: 40px;
+}
+
 .livro-coluna {
-  display: flex; /* Torna o contêiner um flex container */
-  flex-direction: column; /* Organiza os itens verticalmente */
-  align-items: center; /* Centraliza os itens horizontalmente */
-  justify-content: flex-start; /* Garante que os itens começam no topo */
-  text-align: center; /* Centraliza o texto dentro dos elementos */
-  height: 100%; /* Garante que a altura ocupe todo o espaço */
-  padding: 10px; /* Adiciona espaçamento interno */
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
 }
 
 .livro-imagem {
-  width: 280px;
-  height: auto; /* Mantém a proporção da imagem */
-  object-fit: cover; /* Ajusta a imagem sem distorcer */
-  border: 1px solid rgba(0, 0, 0, 0.1); /* Borda discreta */
-  border-radius: 5px; /* Bordas arredondadas */
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para destaque */
-  margin-bottom: 20px; /* Espaço inferior para separar da descrição */
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
 }
 
 .div-info {
-  width: 100%; /* Faz a div ocupar toda a largura do contêiner */
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #333;
+  letter-spacing: 1px;
 }
 
 .div-info p {
-  margin: 4px 0 !important; /* Remove quase todo o espaçamento entre os parágrafos */
-  padding: 2px !important;
+  margin: 2px 0;
 }
 
-.box-avaliacao {
-  display: flex; /* Centraliza a avaliação */
-  justify-content: center;
-  align-items: center;
-}
-
-.rating-container {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.livro-coluna-texto {
+.icone-linkcompra-livro {
   display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  text-align: justify; /* Justifica o texto */
-  padding: 15px; /* Adiciona espaçamento interno */
+  justify-content: center;
 }
 
-.livro-coluna-texto h1 {
-  text-align: center; /* Centraliza o título */
-  margin-bottom: 20px; /* Adiciona espaço abaixo do título */
-}
-
-.livro-coluna-texto p {
-  text-align: justify; /* Justifica o texto */
-  margin-bottom: 20px; /* Adiciona espaço entre parágrafos */
-}
-
-.lista-resenhas {
-  width: 100%;
-  padding: 0;
-  list-style: none;
-}
-
-/* Estilo para a área de resenha */
-.escrever-resenha {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  max-width: 100%;
-  gap: 15px;
-}
-
-/* Estilo para os botões */
-.escrever-resenha .MuiButton-root {
-  border-radius: 20px;
-  font-weight: bold;
-  text-transform: none;
-}
-
-/* Estiliza o botão de compra do livro */
 .livro-btnCompra {
-  color: #47211c; /* Define a cor para o ícone de edição */
-  background: none; /* Remove o fundo do botão */
-  border: none; /* Remove a borda do botão */
+  color: #5a2a24;
+  border: none;
+  background-color:#ffffff00;
   cursor: pointer;
-  font-size: 17px; /* Aumenta o tamanho do ícone */
-  padding: 3px;
+  transition: color 0.3s, border-color 0.3s;
 }
 
 .livro-btnCompra:hover {
-  color: #7a3e36; /* Opcional: tom mais claro no hover */
-  background: none;
+  color: white;
 }
 
-/* Estilo para a tag lido */
-.btn-tag-lido-livro {
-  background: transparent;
-  color: black;
-  padding: 7px;
-  font-size: 19px;
+.avaliacao-livro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.escrever-resenha-livro {
+  display: flex;
+  flex-direction: column; /* Empilha os botões verticalmente */
+  align-items: center;
+  gap: 8px; /* Espaçamento entre os botões */
+}
+
+.escrever-resenha-livro button {
   border: none;
+  background-color: transparent;
+  color: #5a2a24;
   cursor: pointer;
+  transition: color 0.3s ease;
+  display: flex;
   align-items: center;
   gap: 5px;
 }
 
-.btn-tag-lido-livro:hover{
-  color: #4CAF50;
-  background: transparent;
+.escrever-resenha-livro button:hover {
+  color: #7c3b32;
+  background-color:#ffffff00;
 }
 
-/* Estilo para a tag relido */
+.avaliacao-livro p {
+  font-size: 13px;
+  color: #a1a1a1;
+}
+
+.btn-tag-lido-livro,
 .btn-tag-relido-livro {
-  background: transparent;
-  color: black;
-  padding: 7px;
-  font-size: 19px;
   border: none;
+  background-color: #ffffff00;
   cursor: pointer;
-  align-items: center;
-  gap: 5px;
+  transition: color 0.3s, border-color 0.3s;
+  margin-right: 10px;
 }
 
-.btn-tag-relido-livro:hover{
-  color: #007BFF;
-  background: transparent;
+.btn-tag-lido-livro:hover,
+.btn-tag-relido-livro:hover {
+  color: #5a2a24;
+  background-color: #ffffff00;
 }
 
-.btn-tag-lido-livro.ativo{
-  color: green;
-}
-
+.btn-tag-lido-livro.ativo,
 .btn-tag-relido-livro.ativo {
-  color: #007BFF;
+  color: #007bff;
+  border-color: #007bff;
 }
 
-.avaliacao-livro button {
-  background: transparent;
-  color: #47211c;
-  border: none;
-  box-shadow: none;
-  font-size: 16px;
-  cursor: pointer;
+.btn-tag-lido-livro.ativo:hover,
+.btn-tag-relido-livro.ativo:hover {
+  color: #5a2a24;
+  background-color: #ffffff00;
+}
+
+/*css segunda coluna*/
+
+.lista-resenhas-titulo {
+  font-size: 25px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-top: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.lista-resenhas-titulo::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 4px;
+  background-color: #5a2a24;
+  margin: 10px auto;
+  margin-bottom: 20px;
+}
+
+.livro-coluna-texto {
+  flex-direction: column;
   align-items: center;
-  gap: 5px;
-  padding: 8px 12px;
+  justify-content: flex-start;
+  padding: 20px;
+  text-align: justify;
+  box-sizing: border-box; /* Garante que padding não afete a largura total */
 }
 
-.avaliacao-livro button:hover {
-  color: #7a3e36;
-  background: transparent;
-  box-shadow: none;
+
+.livro-info {
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.resenha-container {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.escrever-resenha {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px; /* Espaço entre os elementos */
+}
+
+.lista-resenhas {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.lista-resenhas li {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.lista-resenhas h3 {
+  font-size: 1.2rem;
+  color: #5a2a24;
+  margin-bottom: 10px;
+}
+
+.lista-resenhas p {
+  font-size: 0.9rem;
+  color: #666;
 }
