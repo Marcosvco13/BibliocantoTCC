@@ -187,16 +187,19 @@ function Livro() {
   useEffect(() => {
     const fetchAvaliacao = async () => {
       if (!idLivro || !idUser) return;
-  
+
       try {
         const avaliacao = await api.AvaliacaoByUserLivro(idLivro, idUser);
         setAvaliacaoExistente(avaliacao);
         setRatingValue(avaliacao?.estrelas ?? 0);
       } catch (error) {
-        console.error("Erro ao buscar avaliação:", error.response?.data || error.message);
+        console.error(
+          "Erro ao buscar avaliação:",
+          error.response?.data || error.message
+        );
       }
     };
-  
+
     fetchAvaliacao();
   }, [idLivro, idUser]);
 
@@ -433,49 +436,47 @@ function Livro() {
   };
 
   // Função para enviar ou atualizar a avaliação do usuário
-const enviarAvaliacao = async (estrelas) => {
-  if (!idUser) {
-    alert("É necessário estar logado para avaliar.");
-    return;
-  }
-
-  try {
-    if (estrelas == null || isNaN(estrelas)) {
-      console.error("Erro: Número de estrelas inválido!", estrelas);
-      alert("Erro ao processar a avaliação. Número de estrelas inválido.");
+  const enviarAvaliacao = async (estrelas) => {
+    if (!idUser) {
+      alert("É necessário estar logado para avaliar.");
       return;
     }
 
-    if (avaliacaoExistente && avaliacaoExistente.id) {
-      // Atualiza a avaliação existente (PUT)
-      const DataAvaliacaoLivro = {
-        idLivro: avaliacaoExistente.idLivro,
-        idUser: avaliacaoExistente.idUser,
-        estrelas: parseInt(estrelas),
-      };
+    try {
+      if (estrelas == null || isNaN(estrelas)) {
+        console.error("Erro: Número de estrelas inválido!", estrelas);
+        alert("Erro ao processar a avaliação. Número de estrelas inválido.");
+        return;
+      }
 
-      await api.PutAvaliacao(avaliacaoExistente.id, DataAvaliacaoLivro);
-      alert("Avaliação atualizada com sucesso!");
-    } else {
-      // Cria uma nova avaliação (POST)
-      const DataAvaliacaoLivro = {
-        idLivro,
-        idUser,
-        estrelas: parseInt(estrelas),
-      };
+      if (avaliacaoExistente && avaliacaoExistente.id) {
+        // Atualiza a avaliação existente (PUT)
+        const DataAvaliacaoLivro = {
+          idLivro: avaliacaoExistente.idLivro,
+          idUser: avaliacaoExistente.idUser,
+          estrelas: parseInt(estrelas),
+        };
 
-      await api.AvaliarLivro(DataAvaliacaoLivro);
-      alert("Avaliação enviada com sucesso!");
+        await api.PutAvaliacao(avaliacaoExistente.id, DataAvaliacaoLivro);
+      } else {
+        // Cria uma nova avaliação (POST)
+        const DataAvaliacaoLivro = {
+          idLivro,
+          idUser,
+          estrelas: parseInt(estrelas),
+        };
+
+        await api.AvaliarLivro(DataAvaliacaoLivro);
+        //alert("Avaliação enviada com sucesso!");
+      }
+
+      // Atualiza os estados locais após enviar a avaliação
+      setAvaliacaoExistente({ idLivro, idUser, estrelas: parseInt(estrelas) });
+      setRatingValue(parseInt(estrelas));
+    } catch (error) {
+      alert("Erro ao enviar a avaliação. Tente novamente.");
     }
-
-    // Atualiza os estados locais após enviar a avaliação
-    setAvaliacaoExistente({ idLivro, idUser, estrelas: parseInt(estrelas) });
-    setRatingValue(parseInt(estrelas));
-
-  } catch (error) {
-    alert("Erro ao enviar a avaliação. Tente novamente.");
-  }
-};
+  };
 
   const TagLido = async (RegistroLivroNaBiblioteca, idLivro, idUser) => {
     try {
@@ -549,31 +550,20 @@ const enviarAvaliacao = async (estrelas) => {
                   <p>Carregando editora...</p>
                 )}
 
-                {livro.autores && livro.autores.length > 0 ? (
-                  <p>Autor(es): {livro.autores.join(", ")}</p>
+                {autores && autores.length > 0 ? (
+                  <p>Autor(es): {autores.join(", ")}</p>
                 ) : (
                   <p>Carregando autores...</p>
                 )}
 
-                {livro.generos && livro.generos.length > 0 ? (
-                  <p>Gênero(s): {livro.generos.join(", ")}</p>
+                {generos && generos.length > 0 ? (
+                  <p>Gênero(s): {generos.join(", ")}</p>
                 ) : (
                   <p>Carregando gêneros...</p>
                 )}
               </div>
 
               <div className="opcoes-livro">
-                <div className="icone-linkcompra-livro">
-                  {livro?.linkCompra && (
-                    <button
-                      className="livro-btnCompra"
-                      onClick={() => window.open(livro.linkCompra, "_blank")}
-                    >
-                      <FontAwesomeIcon icon={faCartShopping} /> Comprar Livro
-                    </button>
-                  )}
-                </div>
-
                 <div className="avaliacao-livro">
                   {idUser && (
                     <Box mt={2}>
@@ -597,6 +587,17 @@ const enviarAvaliacao = async (estrelas) => {
                   )}
                 </div>
 
+                <div className="icone-linkcompra-livro">
+                  {livro?.linkCompra && (
+                    <button
+                      className="livro-btnCompra"
+                      onClick={() => window.open(livro.linkCompra, "_blank")}
+                    >
+                      <FontAwesomeIcon icon={faCartShopping} /> Comprar Livro
+                    </button>
+                  )}
+                </div>
+
                 <div className="escrever-resenha-livro">
                   <button
                     variant="contained"
@@ -604,30 +605,28 @@ const enviarAvaliacao = async (estrelas) => {
                   >
                     <i className="bi bi-pencil"></i> Escrever Resenha
                   </button>
+                </div>
 
-                  <div className="tag-lido-livro">
-                    <button
-                      className={`btn-tag-lido-livro ${Lido ? "ativo" : ""}`}
-                      onClick={() =>
-                        TagLido(RegistroLivroNaBiblioteca, idLivro, idUser)
-                      }
-                    >
-                      <i className="bi bi-bookmark-check"></i> Lido
-                    </button>
-                  </div>
+                <div className="tag-lido-livro">
+                  <button
+                    className={`btn-tag-lido-livro ${Lido ? "ativo" : ""}`}
+                    onClick={() =>
+                      TagLido(RegistroLivroNaBiblioteca, idLivro, idUser)
+                    }
+                  >
+                    <i className="bi bi-bookmark-check"></i> Lido
+                  </button>
+                </div>
 
-                  <div className="tag-relido-livro">
-                    <button
-                      className={`btn-tag-relido-livro ${
-                        Relido ? "ativo" : ""
-                      }`}
-                      onClick={() =>
-                        TagRelido(RegistroLivroNaBiblioteca, idLivro, idUser)
-                      }
-                    >
-                      <i className="bi bi-bookmark-check"></i> Relido
-                    </button>
-                  </div>
+                <div className="tag-relido-livro">
+                  <button
+                    className={`btn-tag-relido-livro ${Relido ? "ativo" : ""}`}
+                    onClick={() =>
+                      TagRelido(RegistroLivroNaBiblioteca, idLivro, idUser)
+                    }
+                  >
+                    <i className="bi bi-bookmark-check"></i> Relido
+                  </button>
                 </div>
               </div>
             </>
@@ -644,6 +643,9 @@ const enviarAvaliacao = async (estrelas) => {
               </div>
 
               <div className="resenha-container">
+                <h3 className="lista-resenhas-titulo">Resenhas</h3>
+
+                {/* escrever resenha */}
                 {mostrarEnviarResenha && (
                   <div className="escrever-resenha">
                     <TextField
@@ -682,8 +684,7 @@ const enviarAvaliacao = async (estrelas) => {
                   </div>
                 )}
 
-                {/* Listagem de Resenhas */}
-                <h3 className="lista-resenhas-titulo">Resenhas</h3>
+                {/* listagem das resenhas */}
                 {Array.isArray(resenhas) && resenhas.length > 0 ? (
                   <ul className="lista-resenhas">
                     {resenhas.map((res) => {

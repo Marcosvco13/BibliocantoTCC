@@ -19,11 +19,12 @@
 
 .recomendacoes-container {
     text-align: center;
+    background-color: #ffffff00;
 }
 
 .livros-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 3 colunas por linha */
+    grid-template-columns: repeat(2, 1fr); 
     gap: 2px;
 }
 
@@ -31,10 +32,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f5f5f5;
     padding: 3px;
     border-radius: 8px;
     transition: transform 0.2s;
+    background-color: #ffffff00;
+    cursor: pointer;
 }
 
 .livro-card img {

@@ -19,7 +19,6 @@
 }
 
 .livro-coluna {
-  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -34,7 +33,6 @@
 }
 
 .div-info {
-  margin-bottom: 10px;
   font-size: 14px;
   color: #333;
   letter-spacing: 1px;
@@ -44,82 +42,82 @@
   margin: 2px 0;
 }
 
-.icone-linkcompra-livro {
-  display: flex;
-  justify-content: center;
-}
-
 .livro-btnCompra {
   color: #5a2a24;
   border: none;
-  background-color:#ffffff00;
-  cursor: pointer;
-  transition: color 0.3s, border-color 0.3s;
+  background-color: #ffffff00;
+  transition: transform 0.2s ease-in-out;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
 }
 
 .livro-btnCompra:hover {
-  color: white;
-}
-
-.avaliacao-livro {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  color: #5a2a24;
+  background-color: #ffffff00;
+  transform: scale(1.1);
 }
 
 .escrever-resenha-livro {
   display: flex;
-  flex-direction: column; /* Empilha os botões verticalmente */
+  flex-direction: column;
   align-items: center;
-  gap: 8px; /* Espaçamento entre os botões */
+  margin-bottom: 10px;
 }
 
 .escrever-resenha-livro button {
   border: none;
   background-color: transparent;
   color: #5a2a24;
-  cursor: pointer;
-  transition: color 0.3s ease;
   display: flex;
   align-items: center;
   gap: 5px;
+  transition: transform 0.2s ease-in-out;
+  letter-spacing: 1px;
 }
 
 .escrever-resenha-livro button:hover {
-  color: #7c3b32;
+  color: #5a2a24;
   background-color:#ffffff00;
+  transform: scale(1.1);
 }
 
 .avaliacao-livro p {
   font-size: 13px;
   color: #a1a1a1;
+  letter-spacing: 1px;
+}
+
+.btn-tag-lido-livro{
+  margin-bottom: 10px;
+}
+
+.btn-tag-relido-livro{
+  margin-bottom: 10px;
 }
 
 .btn-tag-lido-livro,
 .btn-tag-relido-livro {
+  color: #a1a1a1;
   border: none;
   background-color: #ffffff00;
   cursor: pointer;
   transition: color 0.3s, border-color 0.3s;
-  margin-right: 10px;
+  transition: transform 0.2s ease-in-out;
+  letter-spacing: 1px;
+  
+  font-weight: bold;
 }
 
 .btn-tag-lido-livro:hover,
 .btn-tag-relido-livro:hover {
-  color: #5a2a24;
+  color: #120e44;
   background-color: #ffffff00;
+  transform: scale(1.1);
 }
 
 .btn-tag-lido-livro.ativo,
 .btn-tag-relido-livro.ativo {
-  color: #007bff;
-  border-color: #007bff;
-}
-
-.btn-tag-lido-livro.ativo:hover,
-.btn-tag-relido-livro.ativo:hover {
-  color: #5a2a24;
-  background-color: #ffffff00;
+  color: #120e44;
 }
 
 /*css segunda coluna*/
@@ -153,7 +151,6 @@
   box-sizing: border-box; /* Garante que padding não afete a largura total */
 }
 
-
 .livro-info {
   font-size: 1rem;
   color: #333;
@@ -164,13 +161,6 @@
 .resenha-container {
   width: 100%;
   margin-top: 20px;
-}
-
-.escrever-resenha {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px; /* Espaço entre os elementos */
 }
 
 .lista-resenhas {

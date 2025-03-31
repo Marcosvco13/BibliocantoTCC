@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import api from "../../services/api";
+import { useNavigate } from "react-router-dom";
+
 import "./Recomendacao.css";
 
 const Recomendacao = ({ IdsLivroAutor }) => {
     const [livros, setLivros] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchLivros = async () => {
@@ -38,7 +41,7 @@ const Recomendacao = ({ IdsLivroAutor }) => {
             <div className="livros-grid">
                 {livros.map((livro) => (
                     <div key={livro.id} className="livro-card">
-                        <img src={livro.caminhoImagem} alt={livro.titulo} />
+                        <img src={livro.caminhoImagem} alt={livro.titulo} onClick={() => navigate(`/Livro/${livro.id}`)}/>
                     </div>
                 ))}
             </div>
