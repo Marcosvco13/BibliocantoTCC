@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import api from "../../services/api";
+import BuscaLivro from "../../Componentes/BuscaLivro/BuscaLivro";
 import "./style.css";
 
 function Inicio() {
@@ -11,7 +12,11 @@ function Inicio() {
   const [error, setError] = useState(null);
   const [email] = useState(localStorage.getItem("email") || null);
   const [hoveredLivro, setHoveredLivro] = useState(null);
-  const [idBiblioteca , setIdLivroBiblioteca] = useState([]);
+  const [idBiblioteca, setIdLivroBiblioteca] = useState([]);
+
+  const [livrosBuscados, setLivrosBuscados] = useState([]); // Estado para os livros buscados
+  const [buscando, setBuscando] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,8 +39,7 @@ function Inicio() {
       try {
         const LivrosBiblioteca = await api.BibliotecaByUser(idUser);
         setLivrosBiblioteca(LivrosBiblioteca);
-      } catch (err) {
-      }
+      } catch (err) {}
     };
 
     fetchData();
@@ -68,17 +72,20 @@ function Inicio() {
   //funcao para remover o livro da biblioteca do usuario
   const handleDeleteMeuLivro = async (idLivro) => {
     const idUser = localStorage.getItem("Id");
-  
+
     try {
       // Buscar o ID do livro na biblioteca do usuário
-      const livroBiblioteca = await api.GetMeuLivroByIdLivroIdUser(idUser, idLivro);
-  
+      const livroBiblioteca = await api.GetMeuLivroByIdLivroIdUser(
+        idUser,
+        idLivro
+      );
+
       const idBiblioteca = livroBiblioteca.id;
       setIdLivroBiblioteca(idBiblioteca);
-  
+
       // Excluir o livro da biblioteca
       await api.DeleteMeuLivro(idBiblioteca);
-  
+
       // Atualizar a lista removendo o livro excluído
       setLivrosBiblioteca((prevLivros) =>
         prevLivros.filter((livro) => livro.id !== idBiblioteca)
@@ -87,14 +94,35 @@ function Inicio() {
       console.error("Erro ao excluir o livro da biblioteca:", error);
       alert("Falha ao remover o livro da biblioteca.");
     }
-  };  
+  };
 
   return (
     <div className="inicio-linha-container">
       <h1 className="titulo-inicio">Acervo de Livros</h1>
 
+      {/* Componente de busca */}
+      <BuscaLivro onResultado={setLivrosBuscados} onBuscaAtiva={setBuscando} />
+
       {error && <p className="error">{error}</p>}
-      {livros.length > 0 ? (
+
+      {/* Exibir os livros encontrados antes da biblioteca */}
+      {livrosBuscados.length > 0 && !buscando && (
+        <div className="biblioteca-livros-container">
+          {livrosBuscados.map((livro) => (
+            <div key={livro.id} className="biblioteca-livro-wrapper">
+              <img
+                className="biblioteca-livro-card"
+                src={livro.caminhoImagem}
+                alt={livro.titulo}
+                onClick={() => navigate(`/Livro/${livro.id}`)}
+              />
+            </div>
+          ))}
+        </div>
+      )}
+
+      {error && <p className="error">{error}</p>}
+      {!buscando && livros.length > 0 ? (
         <div className="inicio-livros-container">
           {livros.map((livro) => (
             <div

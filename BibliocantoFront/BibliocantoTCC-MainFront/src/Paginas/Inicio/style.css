@@ -30,7 +30,6 @@
   height: 4px;
   background-color: #5a2a24;
   margin: 10px auto;
-  margin-bottom: 40px;
 }
 
 .inicio-livro-wrapper {
@@ -99,4 +98,33 @@
   color: white;
   font-size: 18px;
   cursor: pointer;
+}
+
+/*css da busca por livro*/
+
+.biblioteca-livros-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.biblioteca-livro-wrapper {
+  position: relative;
+  display: inline-block;
+  margin: 10px;
+  transition: transform 0.3s ease-in-out;
+  text-align: center;
+}
+
+.biblioteca-livro-card {
+  width: 160px;
+  height: 230px;
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.biblioteca-livro-wrapper:hover {
+  transform: scale(1.3);
+  z-index: 10;
 }

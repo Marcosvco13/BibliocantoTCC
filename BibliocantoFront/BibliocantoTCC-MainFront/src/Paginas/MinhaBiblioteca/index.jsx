@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 
 import "./MinhaBiblioteca.css";
 import "bootstrap/dist/css/bootstrap.min.css";

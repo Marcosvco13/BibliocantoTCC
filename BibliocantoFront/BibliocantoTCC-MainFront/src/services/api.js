@@ -468,6 +468,25 @@ api.getAutorByName = async function(nameAutor) {
     }
 };
 
+// Métodos GET para detalhes do livro pelo nome
+api.getLivroByNomeLivro = async function(NomeLivro) {
+    try {
+        const response = await api.get(`/api/Livros/LivroByName?nome=${NomeLivro}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        if (response && response.data) {
+            return response.data;
+        } else {
+            console.error("No data in response");
+        }
+    } catch (error) {
+        console.error("Erro ao buscar o livro:", error);
+        throw error;
+    }
+};
+
 // Métodos GET para detalhes do livro
 api.getLivroById = async function(id) {
     try {
