@@ -174,8 +174,8 @@ function CadastroLivro() {
 
   return (
     <div className="PagFinalizarCad">
-      <div className="TituloFinalizarCad">
-        <h2>Finalizar Cadastro</h2>
+      <div>
+        <h2 className="TituloFinalizarCad">Finalizar Cadastro</h2>
       </div>
     <Form className="formFinalizarCad">
       <Row className="mb-3">

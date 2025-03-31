@@ -258,12 +258,12 @@ export default function BuscaLivroIsbn() {
       {/* Instruções sobre o ISBN, exibidas quando nenhum livro foi selecionado */}
       {!selectedLivro && (
         <div className="forminstrucaoisbn">
-          <h6>
+          <p>
             O ISBN (International Standard Book Number) é um código numérico que
             identifica livros, e pode ser encontrado em: Verso da página de
             rosto, Páginas de direitos autorais, Parte inferior da contracapa,
             Rodapé da capa protetora, Código de barras
-          </h6>
+          </p>
 
           <img
             className="isbn_instrucao"

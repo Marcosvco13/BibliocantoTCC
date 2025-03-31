@@ -66,6 +66,7 @@
   text-align: center; /* Garante que tudo dentro fique centralizado */
   text-transform: uppercase;
   letter-spacing: 2px;
+  font-size: 15px;
 }
 
 .isbnBusca {

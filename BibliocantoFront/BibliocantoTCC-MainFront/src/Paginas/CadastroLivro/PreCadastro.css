@@ -7,7 +7,7 @@
 
 .TituloPreCad {
   text-align: center;
-  margin-top: 40px;
+  margin-top: 60px;
   margin-bottom: 20px;
   font-size: 2.5rem;
   font-weight: bold;
@@ -42,9 +42,11 @@
     display: block; /* Garante que o label ocupe toda a largura */
     font-weight: bold; /* Destaca o texto do label */
     font-size: 16px; /* Define um tamanho de fonte consistente */
-    color: #333; /* Escolha uma cor neutra e fácil de ler */
     margin-bottom: 8px; /* Adiciona espaçamento abaixo do label */
-}
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
 
 .formprecadastro .form-control {
     width: 100%; /* Garante que ocupe toda a largura disponível */
@@ -85,7 +87,6 @@
     background-color: #5a251d; /* Cor mais saturada */
     color: white;
     border: none;
-    border-radius: 5px;
     padding: 10px 20px;
     font-size: 16px; /* Tamanho da fonte */
     cursor: pointer; /* Aponta para o cursor */
@@ -95,19 +96,12 @@
   }
   
   .btn-pre-cadastrar-livro:hover {
-    background-color: #47211c; /* Cor de fundo ao passar o mouse */
-    transform: scale(1.05); /* Aumenta um pouco o tamanho ao passar o mouse */
+    background-color: #8a4d41; 
+  transform: scale(1.05);
   }
   
   .btn-pre-cadastrar-livro:focus {
-    outline: none; /* Remove a borda de foco padrão */
-  }
-  
-  .btn-pre-cadastrar-livro:active {
-    background-color: #3d1c18 !important;
-    box-shadow: 0 5px #666 !important;
-    transform: translateY(4px) !important;
+    outline: none !important; 
+    background-color: #8a4d41 !important;
     border: none !important;
-    border-radius: 5px !important;
   }
-  
