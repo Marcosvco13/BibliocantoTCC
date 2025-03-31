@@ -15,7 +15,6 @@ function Inicio() {
   const [idBiblioteca, setIdLivroBiblioteca] = useState([]);
 
   const [livrosBuscados, setLivrosBuscados] = useState([]); // Estado para os livros buscados
-  const [buscando, setBuscando] = useState(false);
 
   const navigate = useNavigate();
 
@@ -101,46 +100,30 @@ function Inicio() {
       <h1 className="titulo-inicio">Acervo de Livros</h1>
 
       {/* Componente de busca */}
-      <BuscaLivro onResultado={setLivrosBuscados} onBuscaAtiva={setBuscando} />
+      <BuscaLivro onResultado={setLivrosBuscados} />
 
       {error && <p className="error">{error}</p>}
 
-      {/* Exibir os livros encontrados antes da biblioteca */}
-      {livrosBuscados.length > 0 && !buscando && (
-        <div className="biblioteca-livros-container">
+      {/* Exibir os livros buscados */}
+      {livrosBuscados.length > 0 && (
+        <div className="livros-buscados">
           {livrosBuscados.map((livro) => (
-            <div key={livro.id} className="biblioteca-livro-wrapper">
-              <img
-                className="biblioteca-livro-card"
-                src={livro.caminhoImagem}
-                alt={livro.titulo}
-                onClick={() => navigate(`/Livro/${livro.id}`)}
-              />
-            </div>
-          ))}
-        </div>
-      )}
-
-      {error && <p className="error">{error}</p>}
-      {!buscando && livros.length > 0 ? (
-        <div className="inicio-livros-container">
-          {livros.map((livro) => (
             <div
               key={livro.id}
-              className="inicio-livro-wrapper"
-              onMouseEnter={() => setHoveredLivro(livro.id)}
-              onMouseLeave={() => setHoveredLivro(null)}
+              className="livro-buscado-wrapper"
+              onMouseEnter={() => setHoveredLivro(livro.id)} // Define o livro como o ativo
+              onMouseLeave={() => setHoveredLivro(null)} // Limpa o estado ao sair do livro
             >
               <img
-                className={`inicio-livro-card ${
+                className={`livro-buscado-card ${
                   hoveredLivro === livro.id ? "hover" : ""
-                }`}
+                }`} // Aplica a classe hover caso o livro esteja no estado hovered
                 src={livro.caminhoImagem}
                 alt={livro.titulo}
                 onClick={() => navigate(`/Livro/${livro.id}`)}
               />
               {hoveredLivro === livro.id && (
-                <div className="inicio-livro-overlay">
+                <div className="livro-buscado-overlay">
                   <p>{livro.descricao}</p>
                   <div className="inicio-livro-actions">
                     {livro.linkCompra && (
@@ -177,18 +160,81 @@ function Inicio() {
             </div>
           ))}
         </div>
-      ) : (
-        <button className="btn btn-load" type="button" disabled>
-          <span
-            className="inicio-container spinner-border spinner-border-sm"
-            role="status"
-            aria-hidden="true"
-          ></span>
-          Carregando os livros...
-        </button>
+      )}
+
+      {error && <p className="error">{error}</p>}
+
+      {/* Se nenhum livro foi buscado, exibir os livros do acervo */}
+      {livrosBuscados.length === 0 && (
+        <div className="inicio-livros-container">
+          {livros.length > 0 ? (
+            livros.map((livro) => (
+              <div
+                key={livro.id}
+                className="inicio-livro-wrapper"
+                onMouseEnter={() => setHoveredLivro(livro.id)}
+                onMouseLeave={() => setHoveredLivro(null)}
+              >
+                <img
+                  className={`inicio-livro-card ${
+                    hoveredLivro === livro.id ? "hover" : ""
+                  }`}
+                  src={livro.caminhoImagem}
+                  alt={livro.titulo}
+                  onClick={() => navigate(`/Livro/${livro.id}`)}
+                />
+                {hoveredLivro === livro.id && (
+                  <div className="inicio-livro-overlay">
+                    <p>{livro.descricao}</p>
+                    <div className="inicio-livro-actions">
+                      {livro.linkCompra && (
+                        <button
+                          className="inicio-btnIcon"
+                          onClick={() =>
+                            window.open(livro.linkCompra, "_blank")
+                          }
+                          title="Comprar livro"
+                        >
+                          <FontAwesomeIcon icon={faCartShopping} />
+                        </button>
+                      )}
+
+                      {email &&
+                        (!isLivroNaBiblioteca(livro.id) ? (
+                          <button
+                            className="inicio-btnIcon"
+                            onClick={() => handleAddMeuLivro(livro)}
+                            title="Adicionar à Biblioteca"
+                          >
+                            <i className="bi bi-bookmark-plus"></i>
+                          </button>
+                        ) : (
+                          <button
+                            className="inicio-btnIcon"
+                            onClick={() => handleDeleteMeuLivro(livro.id)}
+                            title="Remover da Biblioteca"
+                          >
+                            <i className="bi bi-bookmark-x"></i>
+                          </button>
+                        ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))
+          ) : (
+            <button className="btn btn-load" type="button" disabled>
+              <span
+                className="inicio-container spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+              ></span>
+              Carregando os livros...
+            </button>
+          )}
+        </div>
       )}
     </div>
   );
 }
-
 export default Inicio;
