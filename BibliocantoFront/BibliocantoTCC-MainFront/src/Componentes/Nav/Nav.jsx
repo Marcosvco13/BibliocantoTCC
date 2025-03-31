@@ -31,34 +31,51 @@ export default function Nav() {
       </div>
 
       <div className="nav-links">
-        <h5>Procure seu livro</h5>
-        <Link to="/" className={location.pathname === "/" ? "active-link" : ""}><i className="bi bi-house"></i> Acervo de Livros</Link>
-        <Link to="/NavegarPorGenero" className={location.pathname === "/NavegarPorGenero" ? "active-link" : ""}>Navegar por Gêneros</Link>
+        <h5>Encontre seu livro</h5>
+        <Link to="/" className={location.pathname === "/" ? "active-link" : ""}>
+          <i className="bi bi-house"></i> Acervo de Livros
+        </Link>
         {email && (
-  <Link 
-    to="/BuscaISBN" 
-    className={["/BuscaISBN", "/PreCadastrar", "/FinalizarCadastro"].includes(location.pathname) ? "active-link" : ""}
-  >
-    <i className="bi bi-journal-plus"></i> Cadastrar Livro
-  </Link>
-)}
-
+          <Link
+            to="/BuscaISBN"
+            className={
+              ["/BuscaISBN", "/PreCadastrar", "/FinalizarCadastro"].includes(
+                location.pathname
+              )
+                ? "active-link"
+                : ""
+            }
+          >
+            <i className="bi bi-journal-plus"></i> Cadastrar Livro
+          </Link>
+        )}
       </div>
 
       <div className="nav-links">
         <h5>Seus Livros</h5>
         {email && (
-          <Link to="/MinhaBiblioteca" className={location.pathname === "/MinhaBiblioteca" ? "active-link" : ""}>
+          <Link
+            to="/MinhaBiblioteca"
+            className={
+              location.pathname === "/MinhaBiblioteca" ? "active-link" : ""
+            }
+          >
             <i className="bi bi-book"></i> Minha Biblioteca
           </Link>
         )}
         {email && (
-          <Link to="/MinhaBiblioteca" className={location.pathname === "/Lidos" ? "active-link" : ""}>
+          <Link
+            to="/Lidos"
+            className={location.pathname === "/Lidos" ? "active-link" : ""}
+          >
             <i className="bi bi-bookmark-star"></i> Lidos
           </Link>
         )}
         {email && (
-          <Link to="/MinhaBiblioteca" className={location.pathname === "/Relidos" ? "active-link" : ""}>
+          <Link
+            to="/Relidos"
+            className={location.pathname === "/Relidos" ? "active-link" : ""}
+          >
             <i className="bi bi-bookmark-heart"></i> Relidos
           </Link>
         )}
@@ -67,12 +84,20 @@ export default function Nav() {
       <div className="nav-links">
         <h5>Bibliocanto</h5>
         {email && (
-          <Link to="/privacy-policy" className={location.pathname === "/privacy-policy" ? "active-link" : ""}>
+          <Link
+            to="/privacy-policy"
+            className={
+              location.pathname === "/privacy-policy" ? "active-link" : ""
+            }
+          >
             <i className="bi bi-info-circle"></i> Política de Privacidade
           </Link>
         )}
         {email && (
-          <Link to="/about" className={location.pathname === "/about" ? "active-link" : ""}>
+          <Link
+            to="/about"
+            className={location.pathname === "/about" ? "active-link" : ""}
+          >
             <i className="bi bi-globe2"></i> Sobre o Site
           </Link>
         )}

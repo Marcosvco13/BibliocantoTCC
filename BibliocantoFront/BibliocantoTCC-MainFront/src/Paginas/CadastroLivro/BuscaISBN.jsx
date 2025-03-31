@@ -123,7 +123,7 @@ export default function BuscaLivroIsbn() {
     <div className="divBuscaIsbn">
       <div className="divTituloBuscaIsbn">
         {/* Título dinâmico baseado no estado do livro selecionado */}
-        <h2>
+        <h2 className="TituloBuscaIsbn">
           {selectedLivro
             ? isFromBrasilAPI
               ? "Cadastrar Livro"

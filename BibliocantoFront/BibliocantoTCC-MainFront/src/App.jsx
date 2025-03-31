@@ -17,17 +17,11 @@ import Biblioteca from "./Paginas/MinhaBiblioteca";
 import PreCadastro from "./Paginas/CadastroLivro/PreCadastro";
 import BuscaIsbn from "./Paginas/CadastroLivro/BuscaISBN";
 import CadastroLivro from "./Paginas/CadastroLivro/CadastroLivro";
-import NavegarGenero from "./Paginas/Navegar Por Generos";
 import Livro from "./Paginas/Livro/livro";
+import Lidos from "./Paginas/TagLidos/Lidos";
+import Relidos from "./Paginas/TagRelidos/Relidos";
 
 export default function App() {
-  const [generos, setGeneros] = useState([]);
-  const [livros, setLivros] = useState([]);
-
-  useEffect(() => {
-    api.getGeneros(setGeneros);
-    api.getLivros(setLivros);
-  }, []);
 
   return (
     <div className="App">
@@ -44,8 +38,9 @@ export default function App() {
           <Route path="/BuscaISBN" element={<BuscaIsbn />} />
           <Route path="/PreCadastrar" element={<PreCadastro />} />
           <Route path="/FinalizarCadastro" element={<CadastroLivro />} />
-          <Route path="/NavegarPorGenero" element={<NavegarGenero />} />
           <Route path="/Livro/:id" element={<Livro />} />
+          <Route path="/Lidos" element={<Lidos />} />
+          <Route path="/Relidos" element={<Relidos />} />
         </Routes>
       </BrowserRouter>
     </div>

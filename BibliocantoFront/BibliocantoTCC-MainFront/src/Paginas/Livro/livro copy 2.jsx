@@ -658,11 +658,11 @@ function Livro() {
                       onChange={(e) => setResenha(e.target.value)}
                       style={{ marginTop: "20px" }}
                     />
-                    <div className="botoes-container">
                     <Button
                       variant="contained"
                       color="primary"
                       onClick={enviarResenha}
+                      style={{ marginTop: "10px" }}
                     >
                       Enviar Resenha
                     </Button>
@@ -671,10 +671,11 @@ function Livro() {
                       variant="contained"
                       color="primary"
                       onClick={() => setMostrarEnviarResenha(false)}
+                      style={{ marginTop: "10px" }}
                     >
                       Cancelar Resenha
                     </Button>
-                    </div>
+
                     {mensagem && (
                       <p style={{ marginTop: "10px", color: "red" }}>
                         {mensagem}
