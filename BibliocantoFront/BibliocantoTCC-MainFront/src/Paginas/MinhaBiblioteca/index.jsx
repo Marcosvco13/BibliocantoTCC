@@ -12,6 +12,7 @@ export default function Linha() {
   const [livros, setLivros] = useState([]);
   const [error, setError] = useState(null);
   const [hoveredLivro, setHoveredLivro] = useState(null);
+  const [idBiblioteca , setIdLivroBiblioteca] = useState([]);
 
   const navigate = useNavigate();
 
@@ -38,6 +39,30 @@ export default function Linha() {
   const handleImageClick = (livro) => {
     navigate(`/Livro/${livro.livros.id}`);
   };
+
+//funcao para remover o livro da biblioteca do usuario
+const handleDeleteMeuLivro = async (idLivro) => {
+  const idUser = localStorage.getItem("Id");
+
+  try {
+    // Buscar o ID do livro na biblioteca do usuário
+    const livroBiblioteca = await api.GetMeuLivroByIdLivroIdUser(idUser, idLivro);
+
+    const idBiblioteca = livroBiblioteca.id;
+
+    // Excluir o livro da biblioteca
+    await api.DeleteMeuLivro(idBiblioteca);
+
+    // Atualizar a lista removendo o livro excluído
+    setLivros((prevLivros) =>
+      prevLivros.filter((livro) => livro.livros.id !== idLivro)
+    );
+
+  } catch (error) {
+    console.error("Erro ao excluir o livro da biblioteca:", error);
+    alert("Falha ao remover o livro da biblioteca.");
+  }
+};
 
   return (
     <div className="biblioteca-container">
@@ -75,7 +100,7 @@ export default function Linha() {
                                   <FontAwesomeIcon icon={faCartShopping} />
                                 </button>
                               )}
-                              <button className="biblioteca-btnIcon" onClick={() => handleAddMeuLivro(livro)} title="Remover da Biblioteca">
+                              <button className="biblioteca-btnIcon" onClick={() => handleDeleteMeuLivro(livro.livros.id)} title="Remover da Biblioteca">
                                 <i className="bi bi-bookmark-x"></i>
                               </button>
                             </div>

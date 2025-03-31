@@ -786,6 +786,22 @@ api.BibliotecaByUser = async function (idUser) {
     }
   };
 
+  // Método delete para excluir livro da minha biblioteca
+api.DeleteMeuLivro = async function(idBiblioteca) {
+    try {
+        const response = await api.delete(`/api/MeusLivros/${idBiblioteca}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        //console.log('Livro na biblioteca excluido com sucesso:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao excluir o Livro na biblioteca:", error);
+        throw error;
+    }
+};
+
   // API para buscar o id do livro na biblioteca do usuario
 api.GetMeuLivroByIdLivroIdUser = async function (idUser, idLivro) {
     try {

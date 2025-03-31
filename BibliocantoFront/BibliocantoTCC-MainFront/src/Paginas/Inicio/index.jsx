@@ -11,6 +11,7 @@ function Inicio() {
   const [error, setError] = useState(null);
   const [email] = useState(localStorage.getItem("email") || null);
   const [hoveredLivro, setHoveredLivro] = useState(null);
+  const [idBiblioteca , setIdLivroBiblioteca] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,17 +30,11 @@ function Inicio() {
   useEffect(() => {
     const fetchData = async () => {
       const idUser = localStorage.getItem("Id");
-      if (!idUser) {
-        setError("Usuário não encontrado.");
-        return;
-      }
 
       try {
         const LivrosBiblioteca = await api.BibliotecaByUser(idUser);
         setLivrosBiblioteca(LivrosBiblioteca);
       } catch (err) {
-        setError("Erro ao carregar os dados.");
-        console.error(err);
       }
     };
 
@@ -69,6 +64,30 @@ function Inicio() {
   const isLivroNaBiblioteca = (livroId) => {
     return livrosBiblioteca.some((livro) => livro.livros.id === livroId);
   };
+
+  //funcao para remover o livro da biblioteca do usuario
+  const handleDeleteMeuLivro = async (idLivro) => {
+    const idUser = localStorage.getItem("Id");
+  
+    try {
+      // Buscar o ID do livro na biblioteca do usuário
+      const livroBiblioteca = await api.GetMeuLivroByIdLivroIdUser(idUser, idLivro);
+  
+      const idBiblioteca = livroBiblioteca.id;
+      setIdLivroBiblioteca(idBiblioteca);
+  
+      // Excluir o livro da biblioteca
+      await api.DeleteMeuLivro(idBiblioteca);
+  
+      // Atualizar a lista removendo o livro excluído
+      setLivrosBiblioteca((prevLivros) =>
+        prevLivros.filter((livro) => livro.id !== idBiblioteca)
+      );
+    } catch (error) {
+      console.error("Erro ao excluir o livro da biblioteca:", error);
+      alert("Falha ao remover o livro da biblioteca.");
+    }
+  };  
 
   return (
     <div className="inicio-linha-container">
@@ -118,7 +137,7 @@ function Inicio() {
                       ) : (
                         <button
                           className="inicio-btnIcon"
-                          onClick={() => handleRemoveMeuLivro(livro)}
+                          onClick={() => handleDeleteMeuLivro(livro.id)}
                           title="Remover da Biblioteca"
                         >
                           <i className="bi bi-bookmark-x"></i>
