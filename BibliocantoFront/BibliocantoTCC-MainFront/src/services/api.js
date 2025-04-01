@@ -685,6 +685,78 @@ api.getResenhaByIdLivro = async function(id) {
     }
 };
 
+// Método delete excluir resenha
+api.DeleteResenha = async function (idResenha) {
+    try {
+        console.log(`Iniciando exclusão da resenha com ID ${idResenha}`);
+        
+        // Verifica se há comentários para a resenha
+        let comentarios = [];
+        try {
+            comentarios = await api.ComentarioByResenha(idResenha);
+            console.log('Comentários encontrados:', comentarios);
+        } catch (error) {
+            if (error.response && error.response.status === 404) {
+                console.log("Nenhum comentário encontrado para essa resenha. Prosseguindo com a exclusão.");
+            } else {
+                // Lidar com outros tipos de erro
+                console.error("Erro ao buscar comentários:", error);
+                throw error;
+            }
+        }
+
+        // Se houver comentários, perguntar ao usuário se deseja excluir
+        if (comentarios && comentarios.length > 0) {
+            const confirmar = window.confirm(
+                `Esta resenha possui ${comentarios.length} comentário(s). Deseja realmente excluí-la?`
+            );
+
+            if (!confirmar) {
+                console.log("Exclusão cancelada pelo usuário.");
+                return; // Sai da função se o usuário cancelar
+            }
+
+            // Exclui os likes de cada comentário
+            for (let comentario of comentarios) {
+                const likes = await api.LikeComentarioByComentario(comentario.id);
+                console.log(`Likes encontrados para o comentário ID ${comentario.id}:`, likes);
+                
+                if (likes && likes.length > 0) {
+                    // Excluir os likes de cada comentário
+                    for (let like of likes) {
+                        await api.DeleteLikeComentario(like.id);
+                    }
+                }
+            }
+        }
+
+        // Verifica se há likes para a resenha
+        const likesResenha = await api.LikeResenhaByResenha(idResenha);
+        console.log(`Likes encontrados para a resenha ID ${idResenha}:`, likesResenha);
+
+        if (likesResenha && likesResenha.length > 0) {
+            // Excluir os likes da resenha
+            for (let likeResenha of likesResenha) {
+                await api.DeleteLikeResenha(likeResenha.id);
+            }
+        }
+
+        // Prossegue com a exclusão da resenha, independente de haver ou não comentários
+        console.log(`Prosseguindo com a exclusão da resenha ID ${idResenha}`);
+        const response = await api.delete(`/api/Resenha/${idResenha}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+
+        console.log("Resenha excluída com sucesso:", response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao excluir a resenha:", error);
+        throw error; // Lança o erro novamente para que possa ser tratado em outro lugar
+    }
+};
+
 //metodos like resenha
 
 // Método post para dar like na resenha

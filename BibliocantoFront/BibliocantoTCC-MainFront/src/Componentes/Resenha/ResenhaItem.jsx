@@ -17,6 +17,8 @@ const ResenhaItem = ({
   handleLikeComentario,
   likesComentarios,
   setLikesComentarios,
+  idUser,
+  deleteResenha,
 }) => {
   const [listaComentarios, setListaComentarios] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -103,6 +105,12 @@ const ResenhaItem = ({
                 <span>{likesResenha}</span>
                 <i className="bi bi-chat" onClick={handleShow}></i>
                 <span>{QtdcomentariosResenha}</span>
+              </div>
+              <div className="icones-direita">
+                {/* Exibe o ícone de lixeira somente se o usuário logado for o dono da resenha */}
+                {idUser === res.idUser && (
+                  <i className="bi bi-trash icone-excluir" onClick={() => deleteResenha(res.id)}></i>
+                )}
               </div>
             </div>
           </div>

@@ -95,14 +95,16 @@
     color: #555;
   }
   
-  .icone-direita {
+  .icones-direita {
     font-size: 1.2rem;
     color: #555;
     cursor: pointer;
     transition: color 0.3s;
+    gap: 5px; /* Espaço entre os ícones à esquerda */
+    font-size: 1.2rem;
   }
   
-  .icone-direita:hover,
+  .icones-direita:hover,
   .icones-esquerda i:hover {
     color: red; /* Muda de cor ao passar o mouse */
   }

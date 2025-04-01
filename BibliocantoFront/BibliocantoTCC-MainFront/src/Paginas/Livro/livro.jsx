@@ -526,6 +526,23 @@ function Livro() {
     }
   };
 
+  const deleteResenha = async (idResenha) => {
+  
+    try {
+      // Chamada à API para excluir a resenha
+      await api.DeleteResenha(idResenha);
+  
+      // Remove a resenha excluída do estado local
+      setResenhas((prevResenhas) => prevResenhas.filter(resenha => resenha.idResenha !== idResenha));
+  
+      // Mensagem de sucesso
+      setMensagem("Resenha excluída com sucesso!");
+    } catch (error) {
+      console.error("Erro ao excluir a resenha:", error.response?.data || error);
+      setMensagem("Erro ao excluir a resenha. Tente novamente.");
+    }
+  };  
+
   return (
     <Container>
       {livro && <h1 className="titulo-livro">{livro.titulo}</h1>}
@@ -701,6 +718,8 @@ function Livro() {
                           handleLikeComentario={handleLikeComentario}
                           likesComentarios={likesComentarios}
                           setLikesComentarios={setLikesComentarios}
+                          idUser={idUser}
+                          deleteResenha={deleteResenha}
                         />
                       );
                     })}
