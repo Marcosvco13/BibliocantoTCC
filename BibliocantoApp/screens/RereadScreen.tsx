@@ -21,12 +21,11 @@ interface BibliotecaLivro {
   livros: Livro;
 }
 
-export default function MyLibraryScreen() {
+export default function ReadScreen() {
   const [livros, setLivros] = useState<BibliotecaLivro[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const [filtro, setFiltro] = useState('Todos');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,10 +36,11 @@ export default function MyLibraryScreen() {
           throw new Error("O ID do usuário não pode estar vazio.");
         }
 
-        const response = await api.get("api/MeusLivros/BibliotecaByUser", { params: { idUser } });
+        const response = await api.get("api/MeusLivros/RelidosByUser", { params: { idUser } });
         setLivros(response.data);
+        
       } catch (err) {
-        setError("Erro ao carregar os dados.");
+        setError("Você não possui livros relidos ou houve um erro ao carregar os dados.");
         console.error(err);
       } finally {
         setLoading(false);
@@ -58,7 +58,7 @@ export default function MyLibraryScreen() {
     <View style={styles.container}>
 
       <View style={{ width: "100%"}}>
-        <TabBar currentScreen="Todos"/>
+        <TabBar currentScreen="Relidos"/>
       </View>
 
       {error && <Text style={styles.error}>{error}</Text>}
@@ -102,7 +102,6 @@ const styles = StyleSheet.create({
   },
   livrosContainer: {
     justifyContent: "center",
-    width: "100%",
   },
   livroCard: {
     width: 100,

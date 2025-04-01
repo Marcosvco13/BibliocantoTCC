@@ -43,6 +43,34 @@ namespace Bibliocanto.Services
             return baseMeusLivros;
         }
 
+        public async Task<IEnumerable<MeusLivros>> GetLivrosLidosByUser(string idUser)
+        {
+            IEnumerable<MeusLivros> baseMeusLivros;
+            if (!string.IsNullOrWhiteSpace(idUser))
+            {
+                baseMeusLivros = await _meusLivrosRepository.GetLivrosLidosByUser(idUser);
+            }
+            else
+            {
+                baseMeusLivros = null;
+            }
+            return baseMeusLivros;
+        }
+
+        public async Task<IEnumerable<MeusLivros>> GetLivrosRelidosByUser(string idUser)
+        {
+            IEnumerable<MeusLivros> baseMeusLivros;
+            if (!string.IsNullOrWhiteSpace(idUser))
+            {
+                baseMeusLivros = await _meusLivrosRepository.GetLivrosRelidosByUser(idUser);
+            }
+            else
+            {
+                baseMeusLivros = null;
+            }
+            return baseMeusLivros;
+        }
+
         public async Task<MeusLivrosResponse> CreateMyLibrary(MeusLivros meus)
         {
             try

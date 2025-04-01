@@ -48,6 +48,52 @@ namespace Bibliocanto.Controllers
             }
         }
 
+        [HttpGet("LidosByUser")]
+        public async Task<ActionResult<IEnumerable<MeusLivrosResource>>> GetLidosByUser([FromQuery] string idUser)
+        {
+            try
+            {
+                var biblioteca = await _meusLivrosService.GetLivrosLidosByUser(idUser);
+                var recursos = _mapper.Map<IEnumerable<MeusLivros>, IEnumerable<MeusLivrosResource>>(biblioteca);
+
+                if (recursos.Count() == 0)
+                {
+                    return NotFound($"Você não tem livros na biblioteca.");
+                }
+                else
+                {
+                    return Ok(recursos);
+                }
+            }
+            catch
+            {
+                return BadRequest("Request Inválido");
+            }
+        }
+
+        [HttpGet("RelidosByUser")]
+        public async Task<ActionResult<IEnumerable<MeusLivrosResource>>> GetRelidosByUser([FromQuery] string idUser)
+        {
+            try
+            {
+                var biblioteca = await _meusLivrosService.GetLivrosRelidosByUser(idUser);
+                var recursos = _mapper.Map<IEnumerable<MeusLivros>, IEnumerable<MeusLivrosResource>>(biblioteca);
+
+                if (recursos.Count() == 0)
+                {
+                    return NotFound($"Você não tem livros na biblioteca.");
+                }
+                else
+                {
+                    return Ok(recursos);
+                }
+            }
+            catch
+            {
+                return BadRequest("Request Inválido");
+            }
+        }
+
         [HttpGet("ConfirmaByUserLivro")]
         public async Task<bool> GetByUser(int idLivro, string idUser)
         {

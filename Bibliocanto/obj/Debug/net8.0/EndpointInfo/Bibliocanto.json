@@ -3395,6 +3395,100 @@
         }
       }
     },
+    "/api/MeusLivros/LidosByUser": {
+      "get": {
+        "tags": [
+          "MeusLivros"
+        ],
+        "parameters": [
+          {
+            "name": "idUser",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MeusLivrosResource"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MeusLivrosResource"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MeusLivrosResource"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/MeusLivros/RelidosByUser": {
+      "get": {
+        "tags": [
+          "MeusLivros"
+        ],
+        "parameters": [
+          {
+            "name": "idUser",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MeusLivrosResource"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MeusLivrosResource"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MeusLivrosResource"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/MeusLivros/ConfirmaByUserLivro": {
       "get": {
         "tags": [

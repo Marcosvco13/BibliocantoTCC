@@ -8,6 +8,8 @@ import MyLibrary from '../screens/MyLibraryScreen';
 import CodeRequest from '../screens/CodeRequestPasswordScreen';
 import CodeValidation from '../screens/CodeValidationScreen';
 import ResetPassword from '../screens/ResetPasswordScreen';
+import Lidos from '../screens/ReadScreen';
+import Relidos from '../screens/RereadScreen';
 import { Image } from 'react-native';
 
 export type RootStackParamList = {
@@ -19,6 +21,8 @@ export type RootStackParamList = {
   CodeRequest : undefined;
   CodeValidation: { email: string };
   ResetPassword: { email: string; code: string };
+  Lidos: undefined;
+  Relidos: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -42,11 +46,13 @@ export default function StackNavigator() {
           ),
         }} 
       />
-      <Stack.Screen name="Book" component={BookScreen} options={{ title: 'Sobre o livro' }} />
+      <Stack.Screen name="Book" component={BookScreen} options={{ title: 'Detalhes do livro', headerTitleAlign: 'center' }} />
       <Stack.Screen name="CodeValidation" component={CodeValidation} options={{ title: 'Validar Código', headerBackVisible: true }} />
       <Stack.Screen name="ResetPassword" component={ResetPassword} options={{ title: 'Redefinir Senha', headerBackVisible: true }} />
       <Stack.Screen name="CodeRequest" component={CodeRequest} options={{ title: 'Recuperar Senha', headerBackVisible: true }} />
-      <Stack.Screen name="MyLibrary" component={MyLibrary} options={{ title: 'Minha Biblioteca', headerBackVisible: true  }} />
+      <Stack.Screen name="MyLibrary" component={MyLibrary} options={{ title: 'Seu Acervo', headerTitleAlign: 'center', headerBackVisible: false  }} />
+      <Stack.Screen name="Lidos" component={Lidos} options={{ title: 'Seu Acervo', headerTitleAlign: 'center', headerBackVisible: false }} />
+      <Stack.Screen name="Relidos" component={Relidos} options={{ title: 'Seu Acervo', headerTitleAlign: 'center', headerBackVisible: false }} />
     </Stack.Navigator>
   );
 }

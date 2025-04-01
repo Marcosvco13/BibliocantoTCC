@@ -4,6 +4,7 @@ import * as SecureStore from 'expo-secure-store';
 import { RootStackParamList } from '../routes/StackNavigator';
 import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { text } from '@fortawesome/fontawesome-svg-core';
 
 export default function NavBar() {
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -20,16 +21,16 @@ export default function NavBar() {
     return (
         <View style={styles.navbar}>
             <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.button}>
-                <Icon name="home" size={24} color="grey" />
-                <Text>Início</Text>
+                <Icon name="home" size={24} color="black" />
+                <Text style={styles.text}>Início</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('MyLibrary')} style={styles.button}>
-                <Icon name="book" size={24} color="grey" />
-                <Text>Minha Biblioteca</Text>
+                <Icon name="book" size={24} color="black" />
+                <Text style={styles.text}>Seu Acervo</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleLogout} style={styles.button}>
-                <Icon name="logout" size={24} color="grey" />
-                <Text>Sair</Text>
+                <Icon name="logout" size={24} color="black" />
+                <Text style={styles.text}>Sair</Text>
             </TouchableOpacity>
         </View>
     );
@@ -55,5 +56,11 @@ const styles = StyleSheet.create({
     button: {
         padding: 10,
         alignItems:'center',
+    },
+    text: {
+        fontSize: 16,
+        color: '#757575',
+        fontWeight: '500',
     }
+
 });

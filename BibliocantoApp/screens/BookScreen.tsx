@@ -87,7 +87,6 @@ export default function BookScreen() {
     }, []);
 
     const handleAddMeuLivro = async () => {
-
         const idUser = await SecureStore.getItemAsync("IdUser");
 
         if (!idUser) {
@@ -122,9 +121,71 @@ export default function BookScreen() {
         }
     };
 
-    const handleAddLido = async () => {};
+    const handleAddLido = async () => {
+        try {
+            const idUser = await SecureStore.getItemAsync("IdUser");
+            if (!idUser) {
+                Alert.alert("Erro!", "Usuário não encontrado");
+                return;
+            }
+    
+            if (!selectedLivro) return;
+    
+            const idLivro = selectedLivro.id;
+    
+            // Verifica se o livro está na biblioteca do usuário
+            const { data } = await api.get("api/MeusLivros/GetMeuLivroByIdLivroIdUser", {
+                params: { idUser, idLivro },
+            });
+    
+            const { id, lido } = data;
+            const novoStatus = lido === 1 ? 0 : 1;
+            const mensagem = novoStatus === 1 ? "Livro marcado como lido!" : "Livro desmarcado como lido!";
+    
+            const dataAtualizado = { idLivro, idUser, lido: novoStatus };
+    
+            await api.put(`api/MeusLivros/lido/${id}`, dataAtualizado, {
+                headers: { "Content-Type": "application/json" },
+            });
+    
+            Alert.alert("Sucesso!", mensagem);
+        } catch (error) {
+            Alert.alert("Erro!", "Ocorreu um problema ao atualizar o status do livro.");
+        }
+    };
 
-    const handleAddRelido = async () => {};
+    const handleAddRelido = async () => {
+        try {
+            const idUser = await SecureStore.getItemAsync("IdUser");
+            if (!idUser) {
+                Alert.alert("Erro!", "Usuário não encontrado");
+                return;
+            }
+    
+            if (!selectedLivro) return;
+    
+            const idLivro = selectedLivro.id;
+    
+            // Verifica se o livro está na biblioteca do usuário
+            const { data } = await api.get("api/MeusLivros/GetMeuLivroByIdLivroIdUser", {
+                params: { idUser, idLivro },
+            });
+    
+            const { id, relido } = data;
+            const novoStatus = relido === 1 ? 0 : 1;
+            const mensagem = novoStatus === 1 ? "Livro marcado como relido!" : "Livro desmarcado como relido!";
+    
+            const dataAtualizado = { idLivro, idUser, relido: novoStatus };
+    
+            await api.put(`api/MeusLivros/relido/${id}`, dataAtualizado, {
+                headers: { "Content-Type": "application/json" },
+            });
+    
+            Alert.alert("Sucesso!", mensagem);
+        } catch (error) {
+            Alert.alert("Erro!", "Ocorreu um problema ao atualizar o status do livro.");
+        }
+    };
 
 
     return (
