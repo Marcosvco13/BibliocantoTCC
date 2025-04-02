@@ -1,26 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Alert, Image, TouchableOpacity, StyleSheet, ScrollView } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
 import * as SecureStore from "expo-secure-store";
 import { useRoute } from '@react-navigation/native';
 import api from "../services/api";
 import NavBar from "../components/NavBar";
 import { faBookmark, faFlag, faSquarePlus } from "@fortawesome/free-regular-svg-icons"; 
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import StarRating from "react-native-star-rating-widget";
 
 interface Livro {
     id: number;
     titulo: string;
     caminhoImagem: string;
     descricao: string;
-    editoras: string;
-    nomeEditora: string;
+    editoras: Editora;
     isbn: number;
-  }
+}
 
-interface Genero {
-    generos: string;
-    nomeGenero: string;
+interface Editora {
+    nomeEditora: string;
+}
+
+interface Avaliacao {
+    estrelas: number;
+    idUsuario?: number;
 }
 
 export default function BookScreen() {
@@ -31,15 +34,13 @@ export default function BookScreen() {
     const [autores, setAutores] = useState<string[]>([]);
     const [generos, setGeneros] = useState<string[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
-    const [email, setEmail] = useState<string | null>(null);
+    const [mediaEstrelas, setMediaEstrelas] = useState(0);
+    const [totalAvaliacoes, setTotalAvaliacoes] = useState(0);
+    const [atualizarAvaliacoes, setAtualizarAvaliacoes] = useState(false);
+    const [tempRating, setTempRating] = useState(0);
+    const [finalRating, setFinalRating] = useState(0);
 
     useEffect(() => {
-        const fetchEmail = async () => {
-            const storedEmail = await SecureStore.getItemAsync("email");
-            setEmail(storedEmail);
-        };
-        fetchEmail();
-
         const getToken = async () => {
             return await SecureStore.getItemAsync("token");
         };
@@ -59,6 +60,8 @@ export default function BookScreen() {
                 ]);
         
                 setSelectedLivro(dadosLivroResponse.data);
+
+                console.log(dadosLivroResponse.data)
         
                 const autoresDetalhados = await Promise.all(
                     autorLivrosResponse.data.map(async (autorLivro: any) => {
@@ -70,21 +73,70 @@ export default function BookScreen() {
         
                 const generosDetalhados = await Promise.all(
                     generoLivrosResponse.data.map(async (generoLivro: any) => {
-                        const generoResponse = await api.get(`/api/Generos/${generoLivro.idGenero}`);
-                        return generoResponse.data.nomeGenero;
+                        const generoResponse = await api.get(`/api/Generos/${generoLivro.idGenero}`, { headers });
+                        return generoResponse.data.nomegenero;
                     })
                 );
+
                 setGeneros(generosDetalhados);
         
             } catch (err) {
                 setError("Erro ao carregar autores ou gêneros.");
-                console.error(err);
+                console.error(err, ': ' , error);
             } finally {
                 setLoading(false);
             }
         };
         fetchData();
     }, []);
+
+    useEffect(() => {
+        const fetchAvaliacoes = async () => {
+            try {
+                const response = await api.get<Avaliacao[]>('api/Avaliacao/AvaliacaoByLivro', {
+                    params: { idLivro }
+                  });
+                const avaliacoes = response.data;
+                processarAvaliacoes(avaliacoes);
+            } catch (error) {
+                resetarAvaliacoes();
+            }
+        };
+
+        const fetchAvaliacoesUser = async () => {
+            const idUser = await SecureStore.getItemAsync("IdUser");
+            try {
+                const response = await api.get('api/Avaliacao/AvaliacaoByUserLivro', { 
+                    params: { idUser, idLivro } 
+                });
+                const avaliacaoExistente = response.data.estrelas;
+
+                setTempRating(avaliacaoExistente);
+            } catch (error: any) {
+                if (error?.response?.status !== 404) {
+                    throw error;
+                }
+            }
+        };
+        
+        const processarAvaliacoes = (avaliacoes: Avaliacao[]) => {
+            if (avaliacoes.length > 0) {
+                const somaEstrelas = avaliacoes.reduce((acc, { estrelas }) => acc + estrelas, 0);
+                setMediaEstrelas(Number((somaEstrelas / avaliacoes.length).toFixed(1)));
+                setTotalAvaliacoes(avaliacoes.length);
+            } else {
+                resetarAvaliacoes();
+            }
+        };
+        
+        const resetarAvaliacoes = () => {
+            setMediaEstrelas(0);
+            setTotalAvaliacoes(0);
+        };
+        
+        fetchAvaliacoes();
+        fetchAvaliacoesUser();
+    }, [idLivro, atualizarAvaliacoes]);
 
     const handleAddMeuLivro = async () => {
         const idUser = await SecureStore.getItemAsync("IdUser");
@@ -187,6 +239,62 @@ export default function BookScreen() {
         }
     };
 
+    const handleStarPress = (newRating: number) => {
+        setTempRating(newRating); // Atualiza visualmente em tempo real
+    };
+
+    const handleRatingComplete = async (newRating: number) => {
+
+        if (newRating === finalRating) return;
+
+        try {
+            const idUser = await SecureStore.getItemAsync("IdUser");
+            if (!idUser) {
+                Alert.alert("Erro", "Você precisa estar logado para avaliar");
+                return;
+            }
+    
+            const avaliacaoData = {
+                idLivro,
+                idUser,
+                estrelas: newRating
+            };
+
+            console.log(avaliacaoData);
+
+            let avaliacaoExistente = null;
+            
+            try {
+                const response = await api.get('api/Avaliacao/AvaliacaoByUserLivro', { 
+                    params: { idUser, idLivro } 
+                });
+                avaliacaoExistente = response.data;
+            } catch (error: any) {
+                if (error?.response?.status !== 404) {
+                    throw error;
+                }
+            }
+   
+            if (avaliacaoExistente) {
+                await api.put(`api/Avaliacao/${avaliacaoExistente.id}`, avaliacaoData, {
+                    headers: { "Content-Type": "application/json" },
+                });
+            } else {
+                await api.post("api/Avaliacao", avaliacaoData);
+            }
+    
+            setFinalRating(newRating);
+            setAtualizarAvaliacoes(prev => !prev);
+            
+        } catch (error: any) {
+            let errorMessage = "Não foi possível registrar sua avaliação";
+            if (error?.response) {
+                errorMessage = error?.response?.data?.message || errorMessage;
+            }
+            
+            Alert.alert("Erro", errorMessage);
+        }
+    };
 
     return (
         <View style={styles.container}>
@@ -207,7 +315,6 @@ export default function BookScreen() {
                     />
 
                     <View style={styles.iconContainer}>
-
                         <TouchableOpacity style={styles.iconButton} onPress={handleAddMeuLivro}>
                             <FontAwesomeIcon icon={faSquarePlus} size={20} color="black" />
                             <Text style={styles.texto}>Adicionar</Text>
@@ -222,11 +329,34 @@ export default function BookScreen() {
                         </TouchableOpacity>
                     </View>
 
+                    <View style={styles.ratingContainer}>
+                        <View style={styles.starRatingContainer}>
+                            <StarRating
+                                rating={tempRating}
+                                onChange={handleStarPress}
+                                onRatingEnd={handleRatingComplete}
+                                maxStars={5}
+                                starSize={32}
+                                color="#FFD700"
+                                animationConfig={{ scale: 1.1 }}
+                            />
+                        </View>
+                    </View>
+
+                    <View style={styles.ratingInfo}>
+                            <Text style={styles.ratingText}>
+                                {mediaEstrelas > 0 ? `Média: ${mediaEstrelas} ⭐` : "Sem avaliações"}
+                            </Text>
+                            <Text style={styles.ratingText}>
+                                {totalAvaliacoes > 0 ? `(${totalAvaliacoes} avaliações)` : ""}
+                            </Text>
+                    </View>
+
                     <View style={styles.infoContainer}>
                         <Text style={styles.text}>{selectedLivro ? selectedLivro.descricao : "Descrição do livro"}</Text>
                         <Text style={styles.text}>Autor(es): {autores.length > 0 ? autores.join(", ") : "Autor do livro"}</Text>
                         <Text style={styles.text}>Gênero(s): {generos.length > 0 ? generos.join(", ") : "Gênero do livro"}</Text>
-                        <Text style={styles.text}>Editora: {selectedLivro?.nomeEditora || "Editora do livro"}</Text>
+                        <Text style={styles.text}>Editora: {selectedLivro?.editoras?.nomeEditora || "Editora do livro"}</Text>
                         <Text style={styles.text}>ISBN: {selectedLivro ? selectedLivro.isbn : "ISBN"}</Text>
                     </View>
                 </View>
@@ -239,7 +369,7 @@ export default function BookScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "white",
+        backgroundColor: "#F0F2F5",
         padding: 20,
     },
     header: {
@@ -262,7 +392,7 @@ const styles = StyleSheet.create({
     iconContainer: {
         flexDirection: "row",
         justifyContent: "center",
-        marginBottom: 15,
+        //marginBottom: 5,
         marginTop: 10, // Ajustado para ficar abaixo da capa do livro
     },
     iconButton: {
@@ -285,5 +415,24 @@ const styles = StyleSheet.create({
     texto:{
         fontSize: 10,
         color: "black",
-    }
+    },
+    ratingContainer: {
+        width: '100%',
+        alignItems: 'center',
+        marginBottom: 5,
+    },
+    starRatingContainer: {
+        alignItems: 'center',
+    },
+    ratingInfo: {
+        width: '50%',
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: 'space-evenly',
+        paddingBottom: 10,
+    },
+    ratingText: {
+        fontSize: 14,
+        color: '#666',
+    },
 });

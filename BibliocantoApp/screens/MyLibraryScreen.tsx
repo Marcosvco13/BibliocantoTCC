@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#fff",
+    backgroundColor: "#F0F2F5",
   },
   error: {
     color: "red",

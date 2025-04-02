@@ -37,7 +37,7 @@ export default function LoginScreen() {
       });
 
       await SecureStore.setItemAsync('IdUser', responseId.data.id);
-
+      setLoading(false);
       navigation.navigate('Home');
 
     }catch (error) {
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "#F0F2F5",
   },
   rowContainer: {
     flexDirection: "row",

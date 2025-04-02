@@ -50,8 +50,7 @@
               "RelativeToolTip": "Services\\MeusLivrosService.cs",
               "ViewState": "AgIAAB4AAAAAAAAAAAAowDkAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-31T23:50:51.398Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-31T23:50:51.398Z"
             },
             {
               "$type": "Document",
@@ -63,8 +62,7 @@
               "RelativeToolTip": "IServices\\IMeusLivrosService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-31T23:50:42.987Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-31T23:50:42.987Z"
             },
             {
               "$type": "Document",
@@ -76,8 +74,7 @@
               "RelativeToolTip": "Repository\\MeusLivrosRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAABJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-31T23:45:56.822Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-31T23:45:56.822Z"
             },
             {
               "$type": "Document",
@@ -89,8 +86,7 @@
               "RelativeToolTip": "IRepository\\IMeusLivrosRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-31T23:45:03.146Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-31T23:45:03.146Z"
             },
             {
               "$type": "Document",
@@ -100,7 +96,7 @@
               "RelativeDocumentMoniker": "Controllers\\MeusLivrosController.cs",
               "ToolTip": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Controllers\\MeusLivrosController.cs",
               "RelativeToolTip": "Controllers\\MeusLivrosController.cs",
-              "ViewState": "AgIAADMAAAAAAAAAAAAswFYAAAARAAAAAAAAAA==",
+              "ViewState": "AgIAAEQAAAAAAAAAAAAwwFYAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-29T14:59:16.248Z",
               "EditorCaption": ""

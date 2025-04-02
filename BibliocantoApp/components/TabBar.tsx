@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: '#F8F9FA',
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderColor: '#e0e0e0',
     height: 50,
