@@ -1,4 +1,6 @@
-﻿namespace Bibliocanto.Resources
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace Bibliocanto.Resources
 {
     public class ResenhaResource
     {
@@ -6,5 +8,6 @@
         public int IdLivro { get; set; }
         public string IdUser { get; set; }
         public string TextoResenha { get; set; }
+        public IdentityUser Usuario { get; set; }
     }
 }

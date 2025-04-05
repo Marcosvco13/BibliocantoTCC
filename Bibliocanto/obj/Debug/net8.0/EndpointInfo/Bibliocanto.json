@@ -3780,25 +3780,19 @@
               "text/plain": {
                 "schema": {
                   "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ResenhaResource"
-                  }
+                  "items": { }
                 }
               },
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ResenhaResource"
-                  }
+                  "items": { }
                 }
               },
               "text/json": {
                 "schema": {
                   "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ResenhaResource"
-                  }
+                  "items": { }
                 }
               }
             }
@@ -3827,25 +3821,19 @@
               "text/plain": {
                 "schema": {
                   "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ResenhaResource"
-                  }
+                  "items": { }
                 }
               },
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ResenhaResource"
-                  }
+                  "items": { }
                 }
               },
               "text/json": {
                 "schema": {
                   "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ResenhaResource"
-                  }
+                  "items": { }
                 }
               }
             }
@@ -3877,24 +3865,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResenhaResource"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResenhaResource"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResenhaResource"
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       }
@@ -3918,24 +3889,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResenhaResource"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResenhaResource"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResenhaResource"
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       },
@@ -4410,28 +4364,6 @@
           "confirmPassword": {
             "type": "string",
             "format": "password",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ResenhaResource": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "idLivro": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "idUser": {
-            "type": "string",
-            "nullable": true
-          },
-          "textoResenha": {
-            "type": "string",
             "nullable": true
           }
         },

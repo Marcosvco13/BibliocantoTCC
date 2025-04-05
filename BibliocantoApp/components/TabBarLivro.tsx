@@ -10,20 +10,20 @@ type TabItem = {
 };
 
 type TabBarProps = {
-  currentScreen: 'Todos' | 'Lidos' | 'Relidos'; // Adicione todas as opções aqui
+  currentScreen: 'Book' | 'Resenha'; // Adicione todas as opções aqui
+  idLivro: number;
 };
 
 const TAB_ITEMS: TabItem[] = [
-  { name: 'Todos', route: 'MyLibrary', label: 'Todos' },
-  { name: 'Lidos', route: 'Lidos', label: 'Lidos' },
-  { name: 'Relidos', route: 'Relidos', label: 'Relidos' },
+  { name: 'Book', route: 'Book', label: 'Visão geral' },
+  { name: 'Resenha', route: 'Resenha', label: 'Resenhas' }
 ];
 
-const TabBar = ({ currentScreen }: TabBarProps) => {
+const TabBarLivro = ({ currentScreen, idLivro }: TabBarProps) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const handleTabPress = (tab: TabItem) => {
-    navigation.navigate(tab.route as never);
+    navigation.navigate(tab.route, {idLivro} as never);
     // Não precisa mais do estado interno, pois é controlado pelo parâmetro
   };
 
@@ -77,10 +77,10 @@ const styles = StyleSheet.create({
   activeUnderline: {
     height: 3,
     backgroundColor: '#47211c',
-    width: '70%',
+    width: '50%',
     marginTop: 4,
     borderRadius: 2,
   },
 });
 
-export default TabBar;
+export default TabBarLivro;

@@ -1,4 +1,5 @@
-﻿using Bibliocanto.Models;
+﻿using System.Reflection.Emit;
+using Bibliocanto.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -145,6 +146,7 @@ namespace Bibliocanto.Context
             builder.Entity<Resenha>().Property(p => p.IdLivro).IsRequired();
             builder.Entity<Resenha>().Property(p => p.IdUser).IsRequired().HasMaxLength(450);
             builder.Entity<Resenha>().Property(p => p.TextoResenha).HasMaxLength(2000);
+            builder.Entity<Resenha>().HasOne(r => r.Usuario).WithMany().HasForeignKey(r => r.IdUser);
 
             builder.Entity<LikeResenha>().ToTable("LikeResenha");
             builder.Entity<LikeResenha>().HasKey(p => p.Id);

@@ -14,23 +14,23 @@ namespace Bibliocanto.Repository
 
         public async Task<IEnumerable<Resenha>> GetByUser(string idUser)
         {
-            return await _context.Resenha.Where(n => n.IdUser.Contains(idUser)).ToListAsync();
+            return await _context.Resenha.Where(n => n.IdUser.Contains(idUser)).Include(n => n.Usuario).ToListAsync();
         }
 
         public async Task<IEnumerable<Resenha>> GetByLivro(int idLivro)
         {
-            return await _context.Resenha.Where(n => n.IdLivro.Equals(idLivro)).ToListAsync();
+            return await _context.Resenha.Where(n => n.IdLivro == idLivro).Include(n => n.Usuario).ToListAsync();
         }
 
 
         public async Task<Resenha> GetByLivroUser(string idUser, int idLivro)
         {
-            return await _context.Resenha.FirstOrDefaultAsync(l => l.IdLivro == idLivro && l.IdUser == idUser);
+            return await _context.Resenha.Include(n => n.Usuario).FirstOrDefaultAsync(l => l.IdLivro == idLivro && l.IdUser == idUser);
         }
 
         public async Task<Resenha> GetById(int id)
         {
-            return await _context.Resenha.FirstOrDefaultAsync(l => l.Id == id); ;
+            return await _context.Resenha.Include(n => n.Usuario).FirstOrDefaultAsync(l => l.Id == id);
         }
 
         public async Task Create(Resenha resenha)

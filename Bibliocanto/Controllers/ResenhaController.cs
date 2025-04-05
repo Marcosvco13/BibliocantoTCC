@@ -23,94 +23,134 @@ namespace Bibliocanto.Controllers
         }
 
         [HttpGet("ResenhaByLivro")]
-        public async Task<ActionResult<IEnumerable<ResenhaResource>>> GetByLivro([FromQuery] int idLivro)
+        public async Task<ActionResult<IEnumerable<object>>> GetByLivro([FromQuery] int idLivro)
         {
             try
             {
-                var resenha = await _resenhaService.GetByLivro(idLivro);
-                var recursos = _mapper.Map<IEnumerable<Resenha>, IEnumerable<ResenhaResource>>(resenha);
+                var resenhas = await _resenhaService.GetByLivro(idLivro);
 
-                if (recursos.Count() == 0)
+                var resultado = resenhas.Select(r => new
                 {
-                    return NotFound($"Não foi encontrada nenhuma resenha para esse livro.");
-                }
-                else
-                {
-                    return Ok(recursos);
-                }
+                    r.Id,
+                    r.IdLivro,
+                    r.IdUser,
+                    r.TextoResenha,
+                    Usuario = new
+                    {
+                        r.Usuario.Id,
+                        r.Usuario.Email,
+                    }
+                });
+
+                return Ok(resultado);
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 return BadRequest("Request Inválido");
             }
         }
 
 
         [HttpGet("ResenhaByUser")]
-        public async Task<ActionResult<IEnumerable<ResenhaResource>>> GetByUser([FromQuery] string idUser)
+        public async Task<ActionResult<IEnumerable<object>>> GetByUser([FromQuery] string idUser)
         {
             try
             {
-                var resenha = await _resenhaService.GetByUser(idUser);
-                var recursos = _mapper.Map<IEnumerable<Resenha>, IEnumerable<ResenhaResource>>(resenha);
+                var resenhas = await _resenhaService.GetByUser(idUser);
 
-                if (recursos.Count() == 0)
+                if (resenhas == null || !resenhas.Any())
                 {
-                    return NotFound($"Não foi encontrada nenhuma resenha desse usuário usuários.");
+                    return NotFound("Não foi encontrada nenhuma resenha desse usuário.");
                 }
-                else
+
+                var resultado = resenhas.Select(r => new
                 {
-                    return Ok(recursos);
-                }
+                    r.Id,
+                    r.IdLivro,
+                    r.IdUser,
+                    r.TextoResenha,
+                    Usuario = new
+                    {
+                        r.Usuario.Id,
+                        r.Usuario.Email
+                    }
+                });
+
+                return Ok(resultado);
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest("Request Inválido");
+                Console.WriteLine(ex.Message); // Ajuda a debugar
+                return BadRequest("Request inválido");
             }
         }
 
         [HttpGet("ResenhaByUserLivro")]
-        public async Task<ActionResult<ResenhaResource>> GetByUser(string idUser, int idLivro)
+        public async Task<ActionResult<object>> GetByUser([FromQuery] string idUser, [FromQuery] int idLivro)
         {
             try
             {
-                var resenha = await _resenhaService.GetByLivroUser(idUser, idLivro);
-                var recursos = _mapper.Map<Resenha, ResenhaResource>(resenha);
+                var r = await _resenhaService.GetByLivroUser(idUser, idLivro);
 
-                if (recursos is null)
+                if (r == null)
                 {
-                    return NotFound($"Não foi encontrada avaliações para os seus usuários.");
+                    return NotFound("Não foi encontrada avaliação para esse usuário.");
                 }
-                else
+
+                var resultado = new
                 {
-                    return Ok(recursos);
-                }
+                    r.Id,
+                    r.IdLivro,
+                    r.IdUser,
+                    r.TextoResenha,
+                    Usuario = new
+                    {
+                        r.Usuario.Id,
+                        r.Usuario.Email
+                    }
+                };
+
+                return Ok(resultado);
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message); // Para debug
                 return BadRequest("Request Inválido");
             }
         }
 
         [HttpGet("{id:int}", Name = "GetLikeResenhaById")]
-        public async Task<ActionResult<ResenhaResource>> GetById(int id)
+        public async Task<ActionResult<object>> GetById(int id)
         {
-
             try
             {
-                var resenha = await _resenhaService.GetById(id);
-                var recurso = _mapper.Map<Resenha, ResenhaResource>(resenha);
+                var r = await _resenhaService.GetById(id);
 
-                if (resenha == null)
+                if (r == null)
                 {
-                    return NotFound("avaliação não encontrado");
+                    return NotFound("Avaliação não encontrada.");
                 }
 
-                return recurso;
+                var resultado = new
+                {
+                    r.Id,
+                    r.IdLivro,
+                    r.IdUser,
+                    r.TextoResenha,
+                    Usuario = new
+                    {
+                        r.Usuario?.Id,
+                        r.Usuario?.Email
+                    }
+                };
+
+                return Ok(resultado);
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest("Request Inválido");
+                Console.WriteLine(ex.Message); // para debugging
+                return BadRequest("Request inválido.");
             }
         }
 

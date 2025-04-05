@@ -15,7 +15,7 @@ namespace Bibliocanto.Mapping
             CreateMap<MeusLivros, MeusLivrosResource>();
             CreateMap<AutoresLivros, AutorLivroResource>();
             CreateMap<GeneroLivro, GeneroLivroResource>();
-            CreateMap<Resenha, ResenhaResource>();
+            CreateMap<Resenha, ResenhaResource>().ForMember(dest => dest.Usuario, opt => opt.MapFrom(src => src.Usuario));
             CreateMap<Avaliacao, AvaliacaoResource>();
             CreateMap<Comentarios, ComentariosResource>();
             CreateMap<LikeResenha, LikeResenhaResource>();

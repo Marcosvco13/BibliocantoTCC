@@ -7,6 +7,7 @@ import NavBar from "../components/NavBar";
 import { faBookmark, faFlag, faSquarePlus } from "@fortawesome/free-regular-svg-icons"; 
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import StarRating from "react-native-star-rating-widget";
+import TabBarLivro from "../components/TabBarLivro";
 
 interface Livro {
     id: number;
@@ -303,6 +304,9 @@ export default function BookScreen() {
                 keyboardShouldPersistTaps="handled"
                 showsVerticalScrollIndicator={false}
             >
+                <View style={{ width: "100%" }}>
+                    <TabBarLivro currentScreen="Book" idLivro={idLivro} />
+                </View> 
                 
                 <View style={styles.header}>
                     <Text style={styles.title}>{selectedLivro ? selectedLivro.titulo : "Livro"}</Text>
@@ -370,11 +374,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#F0F2F5",
-        padding: 20,
     },
     header: {
         alignItems: "center",
         marginBottom: 15,
+        marginTop: 10,
     },
     title: {
         fontSize: 22,

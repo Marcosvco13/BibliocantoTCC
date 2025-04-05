@@ -10,6 +10,7 @@ import CodeValidation from '../screens/CodeValidationScreen';
 import ResetPassword from '../screens/ResetPasswordScreen';
 import Lidos from '../screens/ReadScreen';
 import Relidos from '../screens/RereadScreen';
+import Resenhas from '../screens/ResenhaScreen';
 import { Image } from 'react-native';
 
 export type RootStackParamList = {
@@ -17,6 +18,7 @@ export type RootStackParamList = {
   Login: undefined;
   Home: undefined;
   Book: { idLivro: number };
+  Resenha: { idLivro: number };
   MyLibrary: undefined;
   CodeRequest : undefined;
   CodeValidation: { email: string };
@@ -46,7 +48,8 @@ export default function StackNavigator() {
           ),
         }} 
       />
-      <Stack.Screen name="Book" component={BookScreen} options={{ title: 'Detalhes do livro', headerTitleAlign: 'center' }} />
+      <Stack.Screen name="Book" component={BookScreen} options={{ title: 'Detalhes do livro', headerTitleAlign: 'center', headerBackVisible: false }} />
+      <Stack.Screen name="Resenha" component={Resenhas} options={{ title: '', headerBackVisible: false }} />
       <Stack.Screen name="CodeValidation" component={CodeValidation} options={{ title: 'Validar Código', headerBackVisible: true }} />
       <Stack.Screen name="ResetPassword" component={ResetPassword} options={{ title: 'Redefinir Senha', headerBackVisible: true }} />
       <Stack.Screen name="CodeRequest" component={CodeRequest} options={{ title: 'Recuperar Senha', headerBackVisible: true }} />
