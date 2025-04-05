@@ -28,6 +28,10 @@ const ResenhaItem = ({
   const [showEditResenhaModal, setShowEditResenhaModal] = useState(false);
   const [resenhaEditada, setResenhaEditada] = useState(res.textoResenha);
 
+  const [comentarioSelecionado, setComentarioSelecionado] = useState(null);
+  const [comentarioEditado, setComentarioEditado] = useState("");
+  const [showEditComentarioModal, setShowEditComentarioModal] = useState(false);
+
   useEffect(() => {
     const fetchResenhaData = async () => {
       try {
@@ -79,6 +83,18 @@ const ResenhaItem = ({
 
   const handleCloseEditResenhaModal = () => setShowEditResenhaModal(false);
 
+  const handleShowEditComentarioModal = (comentario) => {
+    setComentarioSelecionado(comentario);
+    setComentarioEditado(comentario.textoComent);
+    setShowModal(false);
+    setShowEditComentarioModal(true);
+  };
+
+  const handleCloseEditComentarioModal = () => {
+    setShowEditComentarioModal(false);
+    setShowModal(true);
+  };  
+
   const handleEnviarComentario = useCallback(async () => {
     await enviarComentario(res.id);
     const comentariosAtualizados = await buscarComentarios(res.id);
@@ -125,15 +141,38 @@ const ResenhaItem = ({
         idUser: res.idUser,
         textoResenha: resenhaEditada,
       };
-  
+
       await api.putResenha(res.id, payload);
-  
+
       setShowEditResenhaModal(false);
     } catch (error) {
       console.error("Erro ao atualizar a resenha:", error);
       alert("Erro ao atualizar a resenha. Tente novamente.");
     }
-  };  
+  };
+
+  const handleAtualizarComentario = async () => {
+    try {
+      const payload = {
+        idResenha: comentarioSelecionado.idResenha,
+        idUser: comentarioSelecionado.idUser,
+        textoComent: comentarioEditado,
+      };
+
+      await api.putComentario(comentarioSelecionado.id, payload);
+
+      setShowEditComentarioModal(false);
+      setShowModal(true);
+
+      const atualizados = await buscarComentarios(
+        comentarioSelecionado.idResenha
+      );
+      setListaComentarios(atualizados);
+    } catch (error) {
+      console.error("Erro ao atualizar o comentario:", error);
+      alert("Erro ao atualizar o comentário. Tente novamente.");
+    }
+  };
 
   return (
     <>
@@ -208,11 +247,20 @@ const ResenhaItem = ({
                     ></i>
                     <span>{likesComentarios[comentario.id] || 0}</span>
                     <div className="icones-direita">
-                      {idUser === comentario.idUser && (
-                        <i
-                          className="bi bi-trash icone-excluir-comentario"
-                          onClick={() => deleteComentario(comentario.id)}
-                        ></i>
+                      {idUser === res.idUser && (
+                        <>
+                          <i
+                            className="bi bi-pencil icone-editar-comentario"
+                            onClick={() =>
+                              handleShowEditComentarioModal(comentario)
+                            }
+                          />
+
+                          <i
+                            className="bi bi-trash icone-excluir-comentario"
+                            onClick={() => deleteComentario(comentario.id)}
+                          ></i>
+                        </>
                       )}
                     </div>
                   </div>
@@ -275,7 +323,7 @@ const ResenhaItem = ({
       <Modal
         show={showEditResenhaModal}
         onHide={handleCloseEditResenhaModal}
-        centered
+        className="modal-editar-resenha"
       >
         <Modal.Header closeButton>
           <Modal.Title>Editar Resenha</Modal.Title>
@@ -297,11 +345,45 @@ const ResenhaItem = ({
           />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseEditResenhaModal}>
+          <Button className="btn-cancelar-editResenha" onClick={handleCloseEditResenhaModal}>
             Cancelar
           </Button>
-          <Button variant="primary" onClick={handleAtualizarResenha}>
+          <Button className="btn-atualizar-editResenha" onClick={handleAtualizarResenha}>
             Atualizar Resenha
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal
+        show={showEditComentarioModal}
+        onHide={handleCloseEditComentarioModal}
+        className="modal-editar-comentario"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Editar Comentario</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>
+            <strong>Comentario atual:</strong>
+          </p>
+          <p>{comentarioSelecionado?.textoComent}</p>
+          <TextField
+            label="Novo Comentario"
+            multiline
+            fullWidth
+            rows={4}
+            variant="outlined"
+            value={comentarioEditado}
+            onChange={(e) => setComentarioEditado(e.target.value)}
+            style={{ marginTop: "10px" }}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button className="btn-cancelar-editComentario" onClick={handleCloseEditComentarioModal}>
+            Cancelar
+          </Button>
+          <Button className="btn-atualizar-editComentario" onClick={handleAtualizarComentario}>
+            Atualizar Comentario
           </Button>
         </Modal.Footer>
       </Modal>

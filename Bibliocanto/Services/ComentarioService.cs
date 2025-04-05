@@ -77,6 +77,10 @@ namespace Bibliocanto.Services
             if (ComentariosExistente == null)
                 return new ComentarioResponse("Category not found.");
 
+            ComentariosExistente.TextoComent = Comentarios.TextoComent;
+            ComentariosExistente.IdResenha = Comentarios.IdResenha;
+            ComentariosExistente.IdUser = Comentarios.IdUser;
+
             try
             {
                 _comentarioRepository.Update(ComentariosExistente);

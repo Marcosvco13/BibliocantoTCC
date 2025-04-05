@@ -857,6 +857,21 @@ api.ComentarioByResenha = async function(idResenha) {
     return response.data;
 };
 
+// API para atualizar o comentario
+api.putComentario = async function(idComentario, AtualizacaoComentarioData) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${getToken()}`
+      }
+    };
+    try {
+      const response = await api.put(`/api/Comentario/${idComentario}`, AtualizacaoComentarioData, config);
+      return response.data;
+    } catch (error) {
+      console.error("Erro ao atualizar o comentario:", error);
+      throw error;
+    }
+  };  
 
 // API para submeter um comentário em uma resenha
 api.CadastrarComentario = async function(ComentarioData) {
