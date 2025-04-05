@@ -94,20 +94,30 @@
     font-size: 1.2rem;
     color: #555;
   }
+
+  .icones-esquerda i:hover {
+    color: red; /* Muda de cor ao passar o mouse */
+  }
   
   .icones-direita {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     font-size: 1.2rem;
     color: #555;
     cursor: pointer;
     transition: color 0.3s;
-    gap: 5px; /* Espaço entre os ícones à esquerda */
-    font-size: 1.2rem;
   }
   
-  .icones-direita:hover,
-  .icones-esquerda i:hover {
-    color: red; /* Muda de cor ao passar o mouse */
+  /* Hover específico para o ícone de excluir */
+  .icone-excluir-resenha:hover {
+    color: red; /* vermelho Bootstrap */
   }
+  
+  /* Hover específico para o ícone de editar */
+  .icone-editar-resenha:hover {
+    color: red; /* azul Bootstrap */
+  }  
   
   /* Estiliza a modal de comentários */
 .modal-comentarios {

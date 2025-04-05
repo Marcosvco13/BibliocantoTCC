@@ -541,7 +541,7 @@ function Livro() {
       console.error("Erro ao excluir a resenha:", error.response?.data || error);
       setMensagem("Erro ao excluir a resenha. Tente novamente.");
     }
-  };  
+  };
 
   return (
     <Container>

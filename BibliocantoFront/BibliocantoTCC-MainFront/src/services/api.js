@@ -647,6 +647,22 @@ api.cadastrarResenha = async function(resenhaData) {
     }
 };
 
+// API para atualizar a resenha
+api.putResenha = async function(idResenha, AtualizacaoResenhaData) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${getToken()}`
+      }
+    };
+    try {
+      const response = await api.put(`/api/Resenha/${idResenha}`, AtualizacaoResenhaData, config);
+      return response.data;
+    } catch (error) {
+      console.error("Erro ao atualizar a resenha:", error);
+      throw error;
+    }
+  };  
+
 // Métodos GET para resenhas pelo id do livro e id do usuario
 api.getResenhaByUserLivro = async function(idUser, id) {
     try {
@@ -688,6 +704,13 @@ api.getResenhaByIdLivro = async function(id) {
 // Método delete excluir resenha
 api.DeleteResenha = async function (idResenha) {
     try {
+        // Primeira confirmação antes de iniciar qualquer processo
+        const confirmarInicial = window.confirm("Você tem certeza que deseja excluir esta resenha?");
+        if (!confirmarInicial) {
+            console.log("Exclusão cancelada pelo usuário na primeira confirmação.");
+            return; // Interrompe se o usuário cancelar
+        }
+
         console.log(`Iniciando exclusão da resenha com ID ${idResenha}`);
         
         // Verifica se há comentários para a resenha
@@ -699,34 +722,26 @@ api.DeleteResenha = async function (idResenha) {
             if (error.response && error.response.status === 404) {
                 console.log("Nenhum comentário encontrado para essa resenha. Prosseguindo com a exclusão.");
             } else {
-                // Lidar com outros tipos de erro
                 console.error("Erro ao buscar comentários:", error);
                 throw error;
             }
         }
 
-        // Se houver comentários, perguntar ao usuário se deseja excluir
+        // Segunda confirmação: Se houver comentários, perguntar novamente ao usuário
         if (comentarios && comentarios.length > 0) {
-            const confirmar = window.confirm(
-                `Esta resenha possui ${comentarios.length} comentário(s). Deseja realmente excluí-la?`
+            const confirmarComentarios = window.confirm(
+                `Esta resenha possui ${comentarios.length} comentário(s). Isso também excluirá os comentários e seus likes. Deseja continuar?`
             );
 
-            if (!confirmar) {
-                console.log("Exclusão cancelada pelo usuário.");
-                return; // Sai da função se o usuário cancelar
+            if (!confirmarComentarios) {
+                console.log("Exclusão cancelada pelo usuário após ver comentários.");
+                return; // Interrompe se o usuário cancelar
             }
 
-            // Exclui os likes de cada comentário
+            // Exclui os próprios comentários (os likes são tratados dentro da DeleteComentario)
             for (let comentario of comentarios) {
-                const likes = await api.LikeComentarioByComentario(comentario.id);
-                console.log(`Likes encontrados para o comentário ID ${comentario.id}:`, likes);
-                
-                if (likes && likes.length > 0) {
-                    // Excluir os likes de cada comentário
-                    for (let like of likes) {
-                        await api.DeleteLikeComentario(like.id);
-                    }
-                }
+                await api.DeleteComentario(comentario.id);
+                console.log(`Comentário ID ${comentario.id} excluído.`);
             }
         }
 
@@ -735,13 +750,12 @@ api.DeleteResenha = async function (idResenha) {
         console.log(`Likes encontrados para a resenha ID ${idResenha}:`, likesResenha);
 
         if (likesResenha && likesResenha.length > 0) {
-            // Excluir os likes da resenha
             for (let likeResenha of likesResenha) {
                 await api.DeleteLikeResenha(likeResenha.id);
             }
         }
 
-        // Prossegue com a exclusão da resenha, independente de haver ou não comentários
+        // Prossegue com a exclusão da resenha
         console.log(`Prosseguindo com a exclusão da resenha ID ${idResenha}`);
         const response = await api.delete(`/api/Resenha/${idResenha}`, {
             headers: {
@@ -753,7 +767,7 @@ api.DeleteResenha = async function (idResenha) {
         return response.data;
     } catch (error) {
         console.error("Erro ao excluir a resenha:", error);
-        throw error; // Lança o erro novamente para que possa ser tratado em outro lugar
+        throw error;
     }
 };
 
@@ -856,6 +870,39 @@ api.CadastrarComentario = async function(ComentarioData) {
         return response.data;
     } catch (error) {
         console.error("Erro ao cadastrar o comentário:", error);
+        throw error;
+    }
+};
+
+// API para excluir um comentário de uma resenha
+api.DeleteComentario = async function(idComentario) {
+    try {
+        console.log(`Iniciando exclusão do comentário com ID ${idComentario}`);
+
+        // Verifica se há likes no comentário
+        const likes = await api.LikeComentarioByComentario(idComentario);
+        console.log(`Likes encontrados para o comentário ID ${idComentario}:`, likes);
+
+        // Se houver likes, exclui cada um deles
+        if (likes && likes.length > 0) {
+            for (let like of likes) {
+                await api.DeleteLikeComentario(like.id);
+                console.log(`Like ID ${like.id} excluído.`);
+            }
+        }
+
+        // Agora exclui o comentário
+        const response = await api.delete(`/api/Comentario/${idComentario}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+
+        console.log('Comentário excluído com sucesso:', response.data);
+        return response.data;
+
+    } catch (error) {
+        console.error("Erro ao excluir o comentário:", error);
         throw error;
     }
 };

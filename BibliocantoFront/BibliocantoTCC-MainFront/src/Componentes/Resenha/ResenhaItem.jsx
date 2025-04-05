@@ -25,6 +25,9 @@ const ResenhaItem = ({
   const [likesResenha, setLikesResenha] = useState(0);
   const [QtdcomentariosResenha, setQtdComentariosResenha] = useState(0);
 
+  const [showEditResenhaModal, setShowEditResenhaModal] = useState(false);
+  const [resenhaEditada, setResenhaEditada] = useState(res.textoResenha);
+
   useEffect(() => {
     const fetchResenhaData = async () => {
       try {
@@ -69,6 +72,13 @@ const ResenhaItem = ({
 
   const handleClose = () => setShowModal(false);
 
+  const handleShowEditResenhaModal = () => {
+    setResenhaEditada(res.textoResenha);
+    setShowEditResenhaModal(true);
+  };
+
+  const handleCloseEditResenhaModal = () => setShowEditResenhaModal(false);
+
   const handleEnviarComentario = useCallback(async () => {
     await enviarComentario(res.id);
     const comentariosAtualizados = await buscarComentarios(res.id);
@@ -83,6 +93,47 @@ const ResenhaItem = ({
       console.error("Erro ao atualizar likes da resenha:", error);
     }
   }, [res.id]);
+
+  const deleteComentario = async (idComentario) => {
+    try {
+      // Chamada à API para excluir o comentário
+      await api.DeleteComentario(idComentario);
+
+      // Remove o comentário excluído do estado local
+      setListaComentarios((prev) =>
+        Array.isArray(prev) ? prev.filter((c) => c.id !== idComentario) : []
+      );
+
+      // Atualiza a contagem de comentários
+      setQtdComentariosResenha((prev) => prev - 1);
+
+      // Se quiser exibir mensagens, você pode usar alert ou outro state (opcional):
+      // alert("Comentário excluído com sucesso!");
+    } catch (error) {
+      console.error(
+        "Erro ao excluir o comentário:",
+        error.response?.data || error
+      );
+      // alert("Erro ao excluir o comentário. Tente novamente.");
+    }
+  };
+
+  const handleAtualizarResenha = async () => {
+    try {
+      const payload = {
+        idLivro: res.idLivro,
+        idUser: res.idUser,
+        textoResenha: resenhaEditada,
+      };
+  
+      await api.putResenha(res.id, payload);
+  
+      setShowEditResenhaModal(false);
+    } catch (error) {
+      console.error("Erro ao atualizar a resenha:", error);
+      alert("Erro ao atualizar a resenha. Tente novamente.");
+    }
+  };  
 
   return (
     <>
@@ -107,9 +158,18 @@ const ResenhaItem = ({
                 <span>{QtdcomentariosResenha}</span>
               </div>
               <div className="icones-direita">
-                {/* Exibe o ícone de lixeira somente se o usuário logado for o dono da resenha */}
                 {idUser === res.idUser && (
-                  <i className="bi bi-trash icone-excluir" onClick={() => deleteResenha(res.id)}></i>
+                  <>
+                    <i
+                      className="bi bi-pencil icone-editar-resenha"
+                      onClick={handleShowEditResenhaModal}
+                    />
+
+                    <i
+                      className="bi bi-trash icone-excluir-resenha"
+                      onClick={() => deleteResenha(res.id)}
+                    ></i>
+                  </>
                 )}
               </div>
             </div>
@@ -147,6 +207,14 @@ const ResenhaItem = ({
                       onClick={() => handleLikeComentario(comentario.id)}
                     ></i>
                     <span>{likesComentarios[comentario.id] || 0}</span>
+                    <div className="icones-direita">
+                      {idUser === comentario.idUser && (
+                        <i
+                          className="bi bi-trash icone-excluir-comentario"
+                          onClick={() => deleteComentario(comentario.id)}
+                        ></i>
+                      )}
+                    </div>
                   </div>
                 </li>
               ))}
@@ -201,6 +269,40 @@ const ResenhaItem = ({
               {resenhaSelecionada ? "Cancelar" : "Comentar"}
             </Button>
           )}
+        </Modal.Footer>
+      </Modal>
+
+      <Modal
+        show={showEditResenhaModal}
+        onHide={handleCloseEditResenhaModal}
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Editar Resenha</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>
+            <strong>Resenha atual:</strong>
+          </p>
+          <p>{res.textoResenha}</p>
+          <TextField
+            label="Nova resenha"
+            multiline
+            fullWidth
+            rows={4}
+            variant="outlined"
+            value={resenhaEditada}
+            onChange={(e) => setResenhaEditada(e.target.value)}
+            style={{ marginTop: "10px" }}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseEditResenhaModal}>
+            Cancelar
+          </Button>
+          <Button variant="primary" onClick={handleAtualizarResenha}>
+            Atualizar Resenha
+          </Button>
         </Modal.Footer>
       </Modal>
     </>
