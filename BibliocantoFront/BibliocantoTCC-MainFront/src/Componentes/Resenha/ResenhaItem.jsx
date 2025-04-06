@@ -123,8 +123,6 @@ const ResenhaItem = ({
       // Atualiza a contagem de comentários
       setQtdComentariosResenha((prev) => prev - 1);
 
-      // Se quiser exibir mensagens, você pode usar alert ou outro state (opcional):
-      // alert("Comentário excluído com sucesso!");
     } catch (error) {
       console.error(
         "Erro ao excluir o comentário:",
@@ -143,6 +141,8 @@ const ResenhaItem = ({
       };
 
       await api.putResenha(res.id, payload);
+
+      res.textoResenha = resenhaEditada;
 
       setShowEditResenhaModal(false);
     } catch (error) {
@@ -247,7 +247,7 @@ const ResenhaItem = ({
                     ></i>
                     <span>{likesComentarios[comentario.id] || 0}</span>
                     <div className="icones-direita">
-                      {idUser === res.idUser && (
+                      {idUser === comentario.idUser && (
                         <>
                           <i
                             className="bi bi-pencil icone-editar-comentario"

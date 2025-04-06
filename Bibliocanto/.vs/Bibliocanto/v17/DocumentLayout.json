@@ -7,10 +7,6 @@
       "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:services\\comentarioservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\sistemas de informa\u00E7\u00E3o\\tcc\\bibliocantotcc\\bibliocanto\\controllers\\comentariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:controllers\\comentariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\sistemas de informa\u00E7\u00E3o\\tcc\\bibliocantotcc\\bibliocanto\\resources\\savecomentariosresource.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:resources\\savecomentariosresource.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -19,12 +15,16 @@
       "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:resources\\savelikecomentarioresource.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\sistemas de informa\u00E7\u00E3o\\tcc\\bibliocantotcc\\bibliocanto\\models\\comentarios.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:models\\comentarios.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\sistemas de informa\u00E7\u00E3o\\tcc\\bibliocantotcc\\bibliocanto\\resources\\comentariosresource.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:resources\\comentariosresource.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\sistemas de informa\u00E7\u00E3o\\tcc\\bibliocantotcc\\bibliocanto\\models\\comentarios.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:models\\comentarios.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\sistemas de informa\u00E7\u00E3o\\tcc\\bibliocantotcc\\bibliocanto\\controllers\\comentariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:controllers\\comentariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\sistemas de informa\u00E7\u00E3o\\tcc\\bibliocantotcc\\bibliocanto\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -64,14 +64,14 @@
               "RelativeDocumentMoniker": "Services\\ComentarioService.cs",
               "ToolTip": "D:\\Sistemas de informa\u00E7\u00E3o\\TCC\\BibliocantoTCC\\Bibliocanto\\Services\\ComentarioService.cs",
               "RelativeToolTip": "Services\\ComentarioService.cs",
-              "ViewState": "AQIAAEIAAAAAAAAAAAAmwE8AAABHAAAA",
+              "ViewState": "AQIAAEIAAAAAAAAAAAAmwFIAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-05T20:59:50.174Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "SaveComentariosResource.cs",
               "DocumentMoniker": "D:\\Sistemas de informa\u00E7\u00E3o\\TCC\\BibliocantoTCC\\Bibliocanto\\Resources\\SaveComentariosResource.cs",
               "RelativeDocumentMoniker": "Resources\\SaveComentariosResource.cs",
@@ -79,12 +79,11 @@
               "RelativeToolTip": "Resources\\SaveComentariosResource.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-05T20:58:51.851Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-05T20:58:51.851Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "SaveLikeComentarioResource.cs",
               "DocumentMoniker": "D:\\Sistemas de informa\u00E7\u00E3o\\TCC\\BibliocantoTCC\\Bibliocanto\\Resources\\SaveLikeComentarioResource.cs",
               "RelativeDocumentMoniker": "Resources\\SaveLikeComentarioResource.cs",
@@ -92,12 +91,11 @@
               "RelativeToolTip": "Resources\\SaveLikeComentarioResource.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-05T20:58:42.655Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-05T20:58:42.655Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 3,
               "Title": "Comentarios.cs",
               "DocumentMoniker": "D:\\Sistemas de informa\u00E7\u00E3o\\TCC\\BibliocantoTCC\\Bibliocanto\\Models\\Comentarios.cs",
               "RelativeDocumentMoniker": "Models\\Comentarios.cs",
@@ -105,8 +103,7 @@
               "RelativeToolTip": "Models\\Comentarios.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-05T20:57:58.237Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-05T20:57:58.237Z"
             },
             {
               "$type": "Document",
@@ -118,12 +115,11 @@
               "RelativeToolTip": "Resources\\ComentariosResource.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-05T20:57:19.139Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-05T20:57:19.139Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "ComentarioController.cs",
               "DocumentMoniker": "D:\\Sistemas de informa\u00E7\u00E3o\\TCC\\BibliocantoTCC\\Bibliocanto\\Controllers\\ComentarioController.cs",
               "RelativeDocumentMoniker": "Controllers\\ComentarioController.cs",
@@ -131,8 +127,7 @@
               "RelativeToolTip": "Controllers\\ComentarioController.cs",
               "ViewState": "AQIAAHoAAAAAAAAAAAAwwIIAAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-05T20:55:51.533Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-05T20:55:51.533Z"
             },
             {
               "$type": "Document",
@@ -144,8 +139,7 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AQIAAC0AAAAAAAAAAAAAADYAAABUAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-24T23:15:04.017Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-24T23:15:04.017Z"
             },
             {
               "$type": "Document",
@@ -157,8 +151,7 @@
               "RelativeToolTip": "Bibliocanto.http",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
-              "WhenOpened": "2025-03-24T23:15:02.677Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-24T23:15:02.677Z"
             },
             {
               "$type": "Document",

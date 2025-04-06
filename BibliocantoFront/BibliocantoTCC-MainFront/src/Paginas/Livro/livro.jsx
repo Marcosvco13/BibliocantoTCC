@@ -42,6 +42,7 @@ function Livro() {
   const [resenhaSelecionada, setResenhaSelecionada] = useState(null);
   const [mostrarEnviarResenha, setMostrarEnviarResenha] = useState(false);
   const [mensagem, setMensagem] = useState("");
+  const [refreshResenhas, setRefreshResenhas] = useState(false);
 
   const [IdsLivroAutor, setIdsLivroAutor] = useState([]);
 
@@ -182,7 +183,7 @@ function Livro() {
     };
 
     fetchResenhas();
-  }, [idLivro, idUser]);
+  }, [idLivro, idUser, refreshResenhas]);
 
   useEffect(() => {
     const fetchAvaliacao = async () => {
@@ -393,6 +394,8 @@ function Livro() {
       // Chamada à função cadastrarResenha da API
       await api.cadastrarResenha(resenhaData);
 
+      setRefreshResenhas((prev) => !prev);
+
       setMensagem("Resenha enviada com sucesso!");
       setResenha(""); // Limpa o campo de resenha
       setMostrarEnviarResenha(false);
@@ -441,42 +444,67 @@ function Livro() {
       alert("É necessário estar logado para avaliar.");
       return;
     }
-
+  
     try {
       if (estrelas == null || isNaN(estrelas)) {
         console.error("Erro: Número de estrelas inválido!", estrelas);
         alert("Erro ao processar a avaliação. Número de estrelas inválido.");
         return;
       }
-
+  
+      const estrelasNumerico = parseInt(estrelas);
+  
       if (avaliacaoExistente && avaliacaoExistente.id) {
         // Atualiza a avaliação existente (PUT)
         const DataAvaliacaoLivro = {
           idLivro: avaliacaoExistente.idLivro,
           idUser: avaliacaoExistente.idUser,
-          estrelas: parseInt(estrelas),
+          estrelas: estrelasNumerico,
         };
-
+  
         await api.PutAvaliacao(avaliacaoExistente.id, DataAvaliacaoLivro);
+  
+        // Atualiza o estado com a nova nota
+        setAvaliacaoExistente(prev => ({
+          ...prev,
+          estrelas: estrelasNumerico
+        }));
       } else {
         // Cria uma nova avaliação (POST)
         const DataAvaliacaoLivro = {
           idLivro,
           idUser,
-          estrelas: parseInt(estrelas),
+          estrelas: estrelasNumerico,
         };
-
-        await api.AvaliarLivro(DataAvaliacaoLivro);
-        //alert("Avaliação enviada com sucesso!");
+  
+        const novaAvaliacao = await api.AvaliarLivro(DataAvaliacaoLivro);
+  
+        if (novaAvaliacao && novaAvaliacao.id) {
+          setAvaliacaoExistente({
+            id: novaAvaliacao.id,
+            idLivro: novaAvaliacao.idLivro,
+            idUser: novaAvaliacao.idUser,
+            estrelas: novaAvaliacao.estrelas,
+          });
+        } else {
+          // Caso a API não retorne o objeto corretamente
+          console.warn("Avaliação enviada, mas resposta inesperada da API.");
+          setAvaliacaoExistente({
+            idLivro,
+            idUser,
+            estrelas: estrelasNumerico,
+          });
+        }
       }
-
-      // Atualiza os estados locais após enviar a avaliação
-      setAvaliacaoExistente({ idLivro, idUser, estrelas: parseInt(estrelas) });
-      setRatingValue(parseInt(estrelas));
+  
+      setRatingValue(estrelasNumerico);
+      setAtualizarAvaliacoes(prev => !prev); // Força atualização da média
     } catch (error) {
+      console.error("Erro ao enviar a avaliação:", error);
       alert("Erro ao enviar a avaliação. Tente novamente.");
     }
   };
+  
 
   const TagLido = async (RegistroLivroNaBiblioteca, idLivro, idUser) => {
     try {
@@ -534,7 +562,7 @@ function Livro() {
   
       // Remove a resenha excluída do estado local
       setResenhas((prevResenhas) => prevResenhas.filter(resenha => resenha.idResenha !== idResenha));
-  
+      setRefreshResenhas((prev) => !prev);
       // Mensagem de sucesso
       setMensagem("Resenha excluída com sucesso!");
     } catch (error) {
