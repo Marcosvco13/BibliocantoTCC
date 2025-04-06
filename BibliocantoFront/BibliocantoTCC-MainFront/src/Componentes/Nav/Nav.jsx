@@ -3,93 +3,118 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import api from "../../services/api";
 import "./Nav.css";
 
 export default function Nav() {
-  const [show, setShow] = useState(false);
   const [email, setEmail] = useState(localStorage.getItem("email") || null);
-
   const location = useLocation();
-  const isOnRestrictedPage =
-    location.pathname === "/BuscaIsbn" ||
-    location.pathname.includes("/CadastrarLivro");
-
   const history = useNavigate();
 
   const handleLogout = () => {
-    // Remove o token de autenticação do localStorage
     localStorage.removeItem("token");
     localStorage.removeItem("email");
     localStorage.removeItem("expiration");
     localStorage.removeItem("Id");
-
-    // Redireciona o usuário para a página de login ou inicial
     history("/login");
-
-    // Atualiza a tela após o redirecionamento
     window.location.reload();
   };
 
-  useEffect(() => {
-    // Listener para mudar a navbar quando rolar a página
-    window.addEventListener("scroll", () => {
-      setShow(window.scrollY > 100);
-    });
-
-    return () => {
-      window.removeEventListener("scroll", () => setShow(window.scrollY > 100));
-    };
-  }, []);
-
   return (
-    <div className={`nav-container ${show && "nav-container-black"}`}>
-      <img
-        className="nav-logo"
-        src="src/assets/BibliocantoTCC-mainlogo.png"
-        alt="Bibliocanto"
-      />
-
-      <div className="nav-options-left">
-        <a href="/">Acervo de Livros</a>
+    <div className="nav-container">
+      <div className="nav-titulo">
+        <img
+          className="nav-logo"
+          src="src/assets/BibliocantoTCC-mainlogo.png"
+          alt="Bibliocanto"
+        />
+        <h3>Bibliocanto</h3>
       </div>
 
-      <div className="nav-options-left-2">
-        {email && !isOnRestrictedPage && (
-          <>
-            <a href="/BuscaISBN">Cadastrar Livro</a>
-          </>
-        )}
-
-        {email ? (
-          <span>
-            <a href="/NavegarPorGenero">Navegar Por Gêneros</a>
-          </span>
-        ) : (
-          ""
+      <div className="nav-links">
+        <h5>Encontre seu livro</h5>
+        <Link to="/" className={location.pathname === "/" ? "active-link" : ""}>
+          <i className="bi bi-house"></i> Acervo de Livros
+        </Link>
+        {email && (
+          <Link
+            to="/BuscaISBN"
+            className={
+              ["/BuscaISBN", "/PreCadastrar", "/FinalizarCadastro"].includes(
+                location.pathname
+              )
+                ? "active-link"
+                : ""
+            }
+          >
+            <i className="bi bi-journal-plus"></i> Cadastrar Livro
+          </Link>
         )}
       </div>
 
-      <div className="nav-options-right">
-        {email ? (
-          <span>
-            <a href="/MinhaBiblioteca">Minha Biblioteca</a>
-          </span>
-        ) : (
-          ""
+      <div className="nav-links">
+        <h5>Seus Livros</h5>
+        {email && (
+          <Link
+            to="/MinhaBiblioteca"
+            className={
+              location.pathname === "/MinhaBiblioteca" ? "active-link" : ""
+            }
+          >
+            <i className="bi bi-book"></i> Minha Biblioteca
+          </Link>
         )}
+        {email && (
+          <Link
+            to="/Lidos"
+            className={location.pathname === "/Lidos" ? "active-link" : ""}
+          >
+            <i className="bi bi-bookmark-star"></i> Lidos
+          </Link>
+        )}
+        {email && (
+          <Link
+            to="/Relidos"
+            className={location.pathname === "/Relidos" ? "active-link" : ""}
+          >
+            <i className="bi bi-bookmark-heart"></i> Relidos
+          </Link>
+        )}
+      </div>
 
+      <div className="nav-links">
+        <h5>Bibliocanto</h5>
+        {email && (
+          <Link
+            to="/privacy-policy"
+            className={
+              location.pathname === "/privacy-policy" ? "active-link" : ""
+            }
+          >
+            <i className="bi bi-info-circle"></i> Política de Privacidade
+          </Link>
+        )}
+        {email && (
+          <Link
+            to="/about"
+            className={location.pathname === "/about" ? "active-link" : ""}
+          >
+            <i className="bi bi-globe2"></i> Sobre o Site
+          </Link>
+        )}
+      </div>
+
+      <div className="nav-footer">
         {email ? (
-          <span>
+          <span className="user-info">
             {email}
             <FontAwesomeIcon
               icon={faArrowRightFromBracket}
-              style={{ marginLeft: "10px", cursor: "pointer" }}
+              className="logout-icon"
               onClick={handleLogout}
             />
           </span>
         ) : (
-          <a href="/login">Entrar</a>
+          <Link to="/login">Entrar</Link>
         )}
       </div>
     </div>

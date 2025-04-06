@@ -5,7 +5,6 @@ import api from "./services/api";
 
 //componentes
 import Nav from "./Componentes/Nav/Nav";
-import Footer from "./Componentes/Footer/index";
 
 //paginas
 import Login from "./Paginas/Login";
@@ -18,20 +17,11 @@ import Biblioteca from "./Paginas/MinhaBiblioteca";
 import PreCadastro from "./Paginas/CadastroLivro/PreCadastro";
 import BuscaIsbn from "./Paginas/CadastroLivro/BuscaISBN";
 import CadastroLivro from "./Paginas/CadastroLivro/CadastroLivro";
-import NavegarGenero from "./Paginas/Navegar Por Generos";
 import Livro from "./Paginas/Livro/livro";
-import RequestCode from "./Paginas/RequestCode";
-import ValidateResetCode from "./Paginas/CodeValidation";
-import ResetPassword from "./Paginas/ResetPassword";
+import Lidos from "./Paginas/TagLidos/Lidos";
+import Relidos from "./Paginas/TagRelidos/Relidos";
 
 export default function App() {
-  const [generos, setGeneros] = useState([]);
-  const [livros, setLivros] = useState([]);
-
-  useEffect(() => {
-    api.getGeneros(setGeneros);
-    api.getLivros(setLivros);
-  }, []);
 
   return (
     <div className="App">
@@ -48,14 +38,10 @@ export default function App() {
           <Route path="/BuscaISBN" element={<BuscaIsbn />} />
           <Route path="/PreCadastrar" element={<PreCadastro />} />
           <Route path="/FinalizarCadastro" element={<CadastroLivro />} />
-          <Route path="/NavegarPorGenero" element={<NavegarGenero />} />
           <Route path="/Livro/:id" element={<Livro />} />
-          <Route path="/RequestCode" element={<RequestCode />} />
-          <Route path="/code-validation/:email" element={<ValidateResetCode />} />
-          <Route path="/reset-password/:email/:code" element={<ResetPassword />} />
-
+          <Route path="/Lidos" element={<Lidos />} />
+          <Route path="/Relidos" element={<Relidos />} />
         </Routes>
-        <Footer />
       </BrowserRouter>
     </div>
   );

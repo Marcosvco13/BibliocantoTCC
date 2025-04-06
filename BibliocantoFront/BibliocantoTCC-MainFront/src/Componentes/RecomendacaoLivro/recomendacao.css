@@ -1,10 +1,30 @@
+.recomendacao-titulo {
+    font-size: 23px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  
+  .recomendacao-titulo::after {
+    content: '';
+    display: block;
+    width: 120px;
+    height: 4px;
+    background-color: #5a2a24;
+    margin: 10px auto;
+    margin-bottom: 20px;
+  }
+
 .recomendacoes-container {
     text-align: center;
+    background-color: #ffffff00;
 }
 
 .livros-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 3 colunas por linha */
+    grid-template-columns: repeat(2, 1fr); 
     gap: 2px;
 }
 
@@ -12,10 +32,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f5f5f5;
     padding: 3px;
     border-radius: 8px;
     transition: transform 0.2s;
+    background-color: #ffffff00;
+    cursor: pointer;
 }
 
 .livro-card img {

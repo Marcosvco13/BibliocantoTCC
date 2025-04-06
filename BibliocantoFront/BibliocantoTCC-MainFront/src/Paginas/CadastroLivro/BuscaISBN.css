@@ -1,165 +1,121 @@
 .divBuscaIsbn {
-    padding: 100px;
-    background-color: #f9f9f9;
+  padding: 100px;
+  background-color: #f9f9f9;
 }
 
-.divTituloBuscaIsbn {
-    text-align: center;
-    margin-bottom: 20px;
+.TituloBuscaIsbn {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.TituloBuscaIsbn::after {
+  content: "";
+  display: block;
+  width: 300px;
+  height: 4px;
+  background-color: #5a2a24;
+  margin: 10px auto;
+  margin-bottom: 40px;
+}
+
+.row{
+  text-align: center;
+  font-size: 15px;
+  color: #333;
+  text-align: center;
+  letter-spacing: 1px;
 }
 
 .divInputBuscaIsbn {
-    display: flex;
-    justify-content: center;  /* Centraliza o input e o botão juntos */
-    align-items: center;      /* Centraliza verticalmente */
-    margin-bottom: 20px;
-    gap: 10px;  /* Espaço entre o input e o botão */
+  display: flex;
+  justify-content: center; /* Centraliza o input e o botão juntos */
+  align-items: center; /* Centraliza verticalmente */
+  margin-bottom: 20px;
+  gap: 10px; /* Espaço entre o input e o botão */
 }
 
 .formBuscaIsbn {
-    margin-top: 20px;
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px;  /* Define uma largura máxima para o formulário */
-    margin: 0 auto;    /* Centraliza o formulário na página */
-    text-align: center;  /* Garante que tudo dentro fique centralizado */
-    margin-bottom: 20px; /* Adiciona espaço entre os dois elementos */
+  margin-top: 20px;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 600px; /* Define uma largura máxima para o formulário */
+  margin: 0 auto; /* Centraliza o formulário na página */
+  text-align: center; /* Garante que tudo dentro fique centralizado */
+  margin-bottom: 20px; /* Adiciona espaço entre os dois elementos */
 }
 
-.isbn_instrucao{
-    width: 450px;
+.isbn_instrucao {
+  width: 450px;
 }
 
 .forminstrucaoisbn {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px;  /* Define uma largura máxima para o formulário */
-    margin: 0 auto;    /* Centraliza o formulário na página */
-    text-align: center;  /* Garante que tudo dentro fique centralizado */
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 600px; /* Define uma largura máxima para o formulário */
+  margin: 0 auto; /* Centraliza o formulário na página */
+  text-align: center; /* Garante que tudo dentro fique centralizado */
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 15px;
 }
 
 .isbnBusca {
-    padding: 10px;
-    font-size: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 60%;  /* Ajusta a largura para ficar proporcional */
+  padding: 10px;
+  font-size: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 60%; /* Ajusta a largura para ficar proporcional */
 }
 
 .isbnBusca:focus {
-    border-color: #5a251d; /* Cor mais saturada */
-    box-shadow: 0 0 8px rgba(90, 37, 29, 0.25);
+  border-color: #5a251d; /* Cor mais saturada */
+  box-shadow: 0 0 8px rgba(90, 37, 29, 0.25);
 }
 
-button.btnBuscaIsbn {
-    background-color: #5a251d; /* Cor mais saturada */
-    color: white;
-    font-size: 16px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 30%;  /* Ajusta a largura do botão para se alinhar melhor com o input */
-}
-
-button.btnBuscaIsbn:hover {
-    background-color: #47211c;
-}
-
-button.btnBuscaIsbn:active {
-    background-color: #3d1c18;
-    box-shadow: 0 5px #666;
-    transform: translateY(4px);
-}
-
-
-button.btnRetornar {
-    background-color: #5a251d; /* Cor mais saturada */
-    color: white;
-    font-size: 16px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    margin-top: 20px;
-    cursor: pointer;
-    width: 40%;  /* Ajusta a largura do botão para se alinhar melhor com o input */
-    margin-right: 10px;
-}
-
-button.btnRetornar:hover {
-    background-color: #47211c;
-}
-
-button.btnRetornar:active {
-    background-color: #3d1c18;
-    box-shadow: 0 5px #666;
-    transform: translateY(4px);
-}
-
-button.btnBuscaIsbn:hover {
-    background-color: #47211c;
-}
-
-button.btnBuscaIsbn:active {
-    background-color: #3d1c18;
-    box-shadow: 0 5px #666;
-    transform: translateY(4px);
-}
-
-
-button.btnVoltarInicio {
-    background-color: #5a251d; /* Cor mais saturada */
-    color: white;
-    font-size: 16px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    margin-top: 20px;
-    cursor: pointer;
-    width: 40%;  /* Ajusta a largura do botão para se alinhar melhor com o input */
-    margin-left: 10px;
-}
-
-button.btnVoltarInicio:hover {
-    background-color: #47211c;
-}
-
-button.btnVoltarInicio:active {
-    background-color: #3d1c18;
-    box-shadow: 0 5px #666;
-    transform: translateY(4px);
-}
-
+button.btnBuscaIsbn,
+button.btnRetornar,
+button.btnVoltarInicio,
 button.btnCadastrarLivro {
-    background-color: #5a251d; /* Cor mais saturada */
-    color: white;
-    font-size: 16px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    margin-top: 20px;
-    cursor: pointer;
-    width: 40%;  /* Ajusta a largura do botão para se alinhar melhor com o input */
-    margin-left: 10px;
+  background-color: #5a251d; /* Cor mais saturada */
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+  letter-spacing: 1px;
 }
 
+button.btnBuscaIsbn:hover,
+button.btnRetornar:hover,
+button.btnVoltarInicio:hover,
 button.btnCadastrarLivro:hover {
-    background-color: #47211c;
-}
-
-button.btnCadastrarLivro:active {
-    background-color: #3d1c18;
-    box-shadow: 0 5px #666;
-    transform: translateY(4px);
+  background-color: #8a4d41; 
+  transform: scale(1.05);
 }
 
 .divBotoes {
-    display: flex;
-    justify-content: center;  /* Centraliza os botões horizontalmente */
-    gap: 10px;                /* Espaço entre os botões */
-    margin-top: 20px;         /* Espaço acima dos botões */
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.divBotoes button {
+  transition: background-color 0.3s, transform 0.3s ease-in-out;
+}
+
+.divBotoes button:hover {
+  transform: scale(1.05);
 }

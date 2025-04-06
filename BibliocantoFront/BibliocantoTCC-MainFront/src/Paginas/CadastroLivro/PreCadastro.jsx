@@ -123,8 +123,8 @@ const handleAdicionarGenero = () => {
 
   return (
     <div className="PagPreCad">
-      <div className="TituloPreCad">
-        <h2>Pré-Cadastro</h2>
+      <div>
+        <h2 className="TituloPreCad">Pré-Cadastro</h2>
       </div>
     <Form className="formprecadastro">
       <Row className="mb-3">

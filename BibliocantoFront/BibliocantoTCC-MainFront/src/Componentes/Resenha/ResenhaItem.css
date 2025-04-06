@@ -94,18 +94,31 @@
     font-size: 1.2rem;
     color: #555;
   }
+
+  .icones-esquerda i:hover {
+    color: red; /* Muda de cor ao passar o mouse */
+  }
   
-  .icone-direita {
+  .icones-direita {
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    gap: 10px;
     font-size: 1.2rem;
     color: #555;
     cursor: pointer;
     transition: color 0.3s;
   }
   
-  .icone-direita:hover,
-  .icones-esquerda i:hover {
-    color: red; /* Muda de cor ao passar o mouse */
+  /* Hover específico para o ícone de excluir */
+  .icone-excluir-resenha:hover {
+    color: red; /* vermelho Bootstrap */
   }
+  
+  /* Hover específico para o ícone de editar */
+  .icone-editar-resenha:hover {
+    color: red; /* azul Bootstrap */
+  }  
   
   /* Estiliza a modal de comentários */
 .modal-comentarios {
@@ -193,4 +206,160 @@
 /* Resenha com estilo normal (sem negrito) */
 .texto-resenha {
   font-weight: normal;
+}
+
+/*css para modal edit resenha*/
+
+.modal-editar-resenha {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-editar-resenha .modal-dialog {
+  max-width: 600px;
+  width: 90%;
+}
+
+.modal-editar-resenha .modal-content {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.modal-editar-resenha .modal-header {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.modal-editar-resenha .modal-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #5a2a24;
+  text-align: center;
+  letter-spacing: 1px;
+  width: 100%;
+}
+
+.modal-editar-resenha .modal-body {
+  margin-top: 15px;
+  color: #333;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+}
+
+.modal-editar-resenha .modal-body p {
+  margin-bottom: 8px;
+}
+
+.modal-editar-resenha .MuiTextField-root {
+  margin-top: 30px !important;
+}
+
+.modal-editar-resenha .modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  border-top: none;
+  padding-top: 0;
+  margin-top: 10px;
+}
+
+/* Botões com estilo da classe .escrever-resenha-livro button */
+.modal-editar-resenha .btn-cancelar-editResenha,
+.modal-editar-resenha .btn-atualizar-editResenha {
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: transform 0.2s ease-in-out;
+  letter-spacing: 1px;
+  background-color: #5a2a24; 
+  color: white;
+}
+
+.modal-editar-resenha .btn-cancelar-editResenha:hover,
+.modal-editar-resenha .btn-atualizar-editResenha:hover {
+  transform: scale(1.1);
+  background-color: #421d1a;
+  color: white;
+}
+
+/*css para modal edit comentario*/
+
+.modal-editar-comentario {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-editar-comentario .modal-dialog {
+  max-width: 600px;
+  width: 90%;
+}
+
+.modal-editar-comentario .modal-content {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.modal-editar-comentario .modal-header {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.modal-editar-comentario .modal-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #5a2a24;
+  text-align: center;
+  letter-spacing: 1px;
+  width: 100%;
+}
+
+.modal-editar-comentario .modal-body {
+  margin-top: 15px;
+  color: #333;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+}
+
+.modal-editar-comentario .modal-body p {
+  margin-bottom: 8px;
+}
+
+.modal-editar-comentario .MuiTextField-root {
+  margin-top: 30px !important;
+}
+
+.modal-editar-comentario .modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  border-top: none;
+  padding-top: 0;
+  margin-top: 10px;
+}
+
+/* Botões com estilo da classe .escrever-comentario-livro button */
+.modal-editar-comentario .btn-cancelar-editComentario,
+.modal-editar-comentario .btn-atualizar-editComentario {
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: transform 0.2s ease-in-out;
+  letter-spacing: 1px;
+  background-color: #5a2a24; 
+  color: white;
+}
+
+.modal-editar-resenha .btn-cancelar-editComentario:hover,
+.modal-editar-resenha .btn-atualizar-editComentario:hover {
+  transform: scale(1.1);
+  background-color: #421d1a;
+  color: white;
 }

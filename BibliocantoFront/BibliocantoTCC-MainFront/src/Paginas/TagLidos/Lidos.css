@@ -1,0 +1,99 @@
+.biblioteca-lidos-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 5px;
+}
+
+.biblioteca-livros-lidos-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.titulo-lidos {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-top: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.titulo-lidos::after {
+  content: "";
+  display: block;
+  width: 300px;
+  height: 4px;
+  background-color: #5a2a24;
+  margin: 10px auto 40px;
+}
+
+.biblioteca-livro-lido-wrapper {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+  margin: 10px;
+}
+
+.biblioteca-livro-lido-card {
+  width: 160px;
+  height: 230px;
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.biblioteca-livro-lido-wrapper:hover {
+  transform: scale(1.3);
+  z-index: 10;
+}
+
+.biblioteca-livro-lido-overlay {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-width: 200px;
+  background: #58888c;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  color: white;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.biblioteca-livro-lido-overlay p {
+  font-size: 10px;
+
+  display: -webkit-box; /* For WebKit browsers */
+  -webkit-line-clamp: 5; /* Limit the text to 4 lines in WebKit browsers */
+  -webkit-box-orient: vertical; /* For WebKit browsers */
+  overflow: hidden; /* Hide the text beyond the specified lines */
+  text-overflow: ellipsis; /* Add ellipsis (...) at the end */
+
+  /* Standard property for line clamping */
+  display: box; /* Standard box model */
+  line-clamp: 5; /* Limit the text to 4 lines in modern browsers */
+  box-orient: vertical; /* For non-WebKit browsers */
+
+  line-height: 1.5;
+}
+
+.biblioteca-livro-lido-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.biblioteca-lido-btnIcon {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}

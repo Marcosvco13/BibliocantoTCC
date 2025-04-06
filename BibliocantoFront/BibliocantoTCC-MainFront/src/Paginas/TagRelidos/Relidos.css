@@ -1,19 +1,19 @@
-.biblioteca-linha-container {
+.biblioteca-relidos-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 0 5px;
   }
   
-  .biblioteca-livros-container {
+  .biblioteca-livros-relidos-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; /* Alinha os livros ao centro */
-    gap: 20px; /* Espaçamento entre os livros */
+    justify-content: center;
+    gap: 20px;
     width: 100%;
   }
   
-  .titulo-biblioteca {
+  .titulo-relidos {
     font-size: 2.5rem;
     font-weight: bold;
     color: #333;
@@ -23,53 +23,50 @@
     letter-spacing: 2px;
   }
   
-  .titulo-biblioteca::after {
-    content: '';
+  .titulo-relidos::after {
+    content: "";
     display: block;
     width: 300px;
     height: 4px;
     background-color: #5a2a24;
-    margin: 10px auto;
-    margin-bottom: 40px;
+    margin: 10px auto 40px;
   }
   
-  .biblioteca-livro-wrapper {
+  .biblioteca-livro-relido-wrapper {
     position: relative;
     display: inline-block;
     text-align: center;
     transition: transform 0.3s ease-in-out;
-    margin: 10px; /* Para dar espaço entre os livros */
+    margin: 10px;
   }
   
-  .biblioteca-livro-card {
+  .biblioteca-livro-relido-card {
     width: 160px;
     height: 230px;
     transition: transform 0.3s ease-in-out;
     cursor: pointer;
   }
   
-  .biblioteca-livro-wrapper:hover {
-    transform: scale(1.3); /* Aumenta o livro proporcionalmente */
+  .biblioteca-livro-relido-wrapper:hover {
+    transform: scale(1.3);
     z-index: 10;
   }
   
-  .biblioteca-livro-overlay {
+  .biblioteca-livro-relido-overlay {
     position: absolute;
     top: 100%;
     left: 0;
-    width: 100%; /* Largura completa do card */
+    width: 100%;
     max-width: 200px;
     background: #58888c;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
     padding: 10px;
     color: white;
-    
-    /* Aplicar o border-radius apenas na parte inferior */
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
   }
   
-  .biblioteca-livro-overlay p {
+  .biblioteca-livro-relido-overlay p {
     font-size: 10px;
   
     display: -webkit-box; /* For WebKit browsers */
@@ -77,26 +74,27 @@
     -webkit-box-orient: vertical; /* For WebKit browsers */
     overflow: hidden; /* Hide the text beyond the specified lines */
     text-overflow: ellipsis; /* Add ellipsis (...) at the end */
-    
+  
     /* Standard property for line clamping */
     display: box; /* Standard box model */
     line-clamp: 5; /* Limit the text to 4 lines in modern browsers */
     box-orient: vertical; /* For non-WebKit browsers */
-    
-    line-height: 1.5; /* Adjust the line height for better readability */
+  
+    line-height: 1.5;
   }
   
-  .biblioteca-livro-actions {
+  .biblioteca-livro-relido-actions {
     display: flex;
     justify-content: center;
     gap: 10px;
     margin-top: 10px;
   }
   
-  .biblioteca-btnIcon, .biblioteca-btnIcon {
+  .biblioteca-relido-btnIcon {
     background: none;
     border: none;
     color: white;
     font-size: 18px;
     cursor: pointer;
   }
+  

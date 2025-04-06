@@ -468,6 +468,25 @@ api.getAutorByName = async function(nameAutor) {
     }
 };
 
+// Métodos GET para detalhes do livro pelo nome
+api.getLivroByNomeLivro = async function(NomeLivro) {
+    try {
+        const response = await api.get(`/api/Livros/LivroByName?nome=${NomeLivro}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        if (response && response.data) {
+            return response.data;
+        } else {
+            console.error("No data in response");
+        }
+    } catch (error) {
+        console.error("Erro ao buscar o livro:", error);
+        throw error;
+    }
+};
+
 // Métodos GET para detalhes do livro
 api.getLivroById = async function(id) {
     try {
@@ -628,6 +647,22 @@ api.cadastrarResenha = async function(resenhaData) {
     }
 };
 
+// API para atualizar a resenha
+api.putResenha = async function(idResenha, AtualizacaoResenhaData) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${getToken()}`
+      }
+    };
+    try {
+      const response = await api.put(`/api/Resenha/${idResenha}`, AtualizacaoResenhaData, config);
+      return response.data;
+    } catch (error) {
+      console.error("Erro ao atualizar a resenha:", error);
+      throw error;
+    }
+  };  
+
 // Métodos GET para resenhas pelo id do livro e id do usuario
 api.getResenhaByUserLivro = async function(idUser, id) {
     try {
@@ -662,6 +697,76 @@ api.getResenhaByIdLivro = async function(id) {
         }
     } catch (error) {
         console.error("Erro ao buscar o livro:", error);
+        throw error;
+    }
+};
+
+// Método delete excluir resenha
+api.DeleteResenha = async function (idResenha) {
+    try {
+        // Primeira confirmação antes de iniciar qualquer processo
+        const confirmarInicial = window.confirm("Você tem certeza que deseja excluir esta resenha?");
+        if (!confirmarInicial) {
+            console.log("Exclusão cancelada pelo usuário na primeira confirmação.");
+            return; // Interrompe se o usuário cancelar
+        }
+
+        console.log(`Iniciando exclusão da resenha com ID ${idResenha}`);
+        
+        // Verifica se há comentários para a resenha
+        let comentarios = [];
+        try {
+            comentarios = await api.ComentarioByResenha(idResenha);
+            console.log('Comentários encontrados:', comentarios);
+        } catch (error) {
+            if (error.response && error.response.status === 404) {
+                console.log("Nenhum comentário encontrado para essa resenha. Prosseguindo com a exclusão.");
+            } else {
+                console.error("Erro ao buscar comentários:", error);
+                throw error;
+            }
+        }
+
+        // Segunda confirmação: Se houver comentários, perguntar novamente ao usuário
+        if (comentarios && comentarios.length > 0) {
+            const confirmarComentarios = window.confirm(
+                `Esta resenha possui ${comentarios.length} comentário(s). Isso também excluirá os comentários e seus likes. Deseja continuar?`
+            );
+
+            if (!confirmarComentarios) {
+                console.log("Exclusão cancelada pelo usuário após ver comentários.");
+                return; // Interrompe se o usuário cancelar
+            }
+
+            // Exclui os próprios comentários (os likes são tratados dentro da DeleteComentario)
+            for (let comentario of comentarios) {
+                await api.DeleteComentario(comentario.id);
+                console.log(`Comentário ID ${comentario.id} excluído.`);
+            }
+        }
+
+        // Verifica se há likes para a resenha
+        const likesResenha = await api.LikeResenhaByResenha(idResenha);
+        console.log(`Likes encontrados para a resenha ID ${idResenha}:`, likesResenha);
+
+        if (likesResenha && likesResenha.length > 0) {
+            for (let likeResenha of likesResenha) {
+                await api.DeleteLikeResenha(likeResenha.id);
+            }
+        }
+
+        // Prossegue com a exclusão da resenha
+        console.log(`Prosseguindo com a exclusão da resenha ID ${idResenha}`);
+        const response = await api.delete(`/api/Resenha/${idResenha}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+
+        console.log("Resenha excluída com sucesso:", response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao excluir a resenha:", error);
         throw error;
     }
 };
@@ -738,19 +843,35 @@ api.DeleteLikeResenha = async function(idLikeResenha) {
 
 // API para buscar comentários em uma resenha
 api.ComentarioByResenha = async function(idResenha) {
-    try {
-        const response = await api.get(`/api/Comentario/ComentarioByResenha?idResenha=${idResenha}`, {
-            headers: {
-                Authorization: `Bearer ${getToken()}`
-            }
-        });
-        //console.log('Comentários obtidos com sucesso:', response.data);
-        return response.data;
-    } catch (error) {
-        console.error("Erro ao buscar comentários:", error);
-        throw error;
+    const response = await api.get(`/api/Comentario/ComentarioByResenha?idResenha=${idResenha}`, {
+        headers: {
+            Authorization: `Bearer ${getToken()}`
+        }
+    });
+
+    if (!response || !response.data) {
+        console.warn("Nenhum comentário encontrado.");
+        return;
     }
+
+    return response.data;
 };
+
+// API para atualizar o comentario
+api.putComentario = async function(idComentario, AtualizacaoComentarioData) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${getToken()}`
+      }
+    };
+    try {
+      const response = await api.put(`/api/Comentario/${idComentario}`, AtualizacaoComentarioData, config);
+      return response.data;
+    } catch (error) {
+      console.error("Erro ao atualizar o comentario:", error);
+      throw error;
+    }
+  };  
 
 // API para submeter um comentário em uma resenha
 api.CadastrarComentario = async function(ComentarioData) {
@@ -764,6 +885,39 @@ api.CadastrarComentario = async function(ComentarioData) {
         return response.data;
     } catch (error) {
         console.error("Erro ao cadastrar o comentário:", error);
+        throw error;
+    }
+};
+
+// API para excluir um comentário de uma resenha
+api.DeleteComentario = async function(idComentario) {
+    try {
+        console.log(`Iniciando exclusão do comentário com ID ${idComentario}`);
+
+        // Verifica se há likes no comentário
+        const likes = await api.LikeComentarioByComentario(idComentario);
+        console.log(`Likes encontrados para o comentário ID ${idComentario}:`, likes);
+
+        // Se houver likes, exclui cada um deles
+        if (likes && likes.length > 0) {
+            for (let like of likes) {
+                await api.DeleteLikeComentario(like.id);
+                console.log(`Like ID ${like.id} excluído.`);
+            }
+        }
+
+        // Agora exclui o comentário
+        const response = await api.delete(`/api/Comentario/${idComentario}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+
+        console.log('Comentário excluído com sucesso:', response.data);
+        return response.data;
+
+    } catch (error) {
+        console.error("Erro ao excluir o comentário:", error);
         throw error;
     }
 };
@@ -784,6 +938,22 @@ api.BibliotecaByUser = async function (idUser) {
       throw error;
     }
   };
+
+  // Método delete para excluir livro da minha biblioteca
+api.DeleteMeuLivro = async function(idBiblioteca) {
+    try {
+        const response = await api.delete(`/api/MeusLivros/${idBiblioteca}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        //console.log('Livro na biblioteca excluido com sucesso:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao excluir o Livro na biblioteca:", error);
+        throw error;
+    }
+};
 
   // API para buscar o id do livro na biblioteca do usuario
 api.GetMeuLivroByIdLivroIdUser = async function (idUser, idLivro) {

@@ -1,0 +1,44 @@
+.busca-container {
+  display: flex;
+  flex-direction: column; /* Organiza os elementos em coluna */
+  align-items: center; /* Centraliza horizontalmente */
+  justify-content: center; /* Centraliza verticalmente */
+  gap: 10px;
+  margin-bottom: 40px;
+}
+
+.busca-input {
+  padding: 10px;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.busca-botao {
+  background-color: #5a2a24;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.busca-botao:hover {
+  background-color: #8a4d41;
+  transform: scale(1.05);
+}
+
+.busca-botao:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+.busca-erro {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}
