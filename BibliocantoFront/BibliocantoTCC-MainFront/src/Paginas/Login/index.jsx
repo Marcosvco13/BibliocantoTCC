@@ -3,11 +3,15 @@ import './styles.css';
 import api from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
+import { Eye, EyeOff } from 'lucide-react';
 
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
     const navigate = useNavigate();
+    const [showPassword, setShowPassword] = useState(false);
+    const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
     async function login(event) {
         event.preventDefault();
@@ -57,13 +61,13 @@ export default function Login() {
 
     // Função para redirecionar para a página de recuperação de senha
     const handleForgotPassword = () => {
-        alert("Função de redefinir senha ainda não implementado!");
+      navigate('/RequestCode');
     };
 
     // Simulação de login com o Google
-    const handleGoogleLogin = () => {
-        alert("Login com o Google ainda não implementado!");
-    };
+    // const handleGoogleLogin = () => {
+    //     alert("Login com o Google ainda não implementado!");
+    // };
 
     return (
         <div className='login-container'>
@@ -78,27 +82,27 @@ export default function Login() {
                 onChange={(e) => setEmail(e.target.value)} 
               />
               
-              <input 
-
-                type="password" 
-                placeholder='Senha' 
-                value={password} 
-                onChange={(e) => setPassword(e.target.value)} 
-              />
+              <div className="input-group">
+                <input 
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder='Senha' 
+                  value={password} 
+                  onChange={(e) => setPassword(e.target.value)} 
+                />
+                <button type="button" className="eye-button" onClick={togglePasswordVisibility}>
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
     
               <button className="buttonLogin" type='submit'>Entrar</button>
             </form>
-    
-            <button className="google-button" onClick={handleGoogleLogin}>
-              Entrar com Google
-            </button>
-    
+        
             <div className='login-options'>
               <a href="#" onClick={handleForgotPassword} className="forgot-password">
                 Esqueceu a senha?
               </a>
               <span className="divider">Ou</span>
-              <button onClick={handleCreateUser} className="create-account">
+              <button href="#" onClick={handleCreateUser} className="create-account">
                 Criar Usuário
               </button>
             </div>

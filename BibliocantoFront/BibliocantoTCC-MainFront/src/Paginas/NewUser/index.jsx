@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import './styles.css';
-import logo from '../../assets/BibliocantoTCC-mainlogo.png';
 import api from '../../services/api';
 import { useNavigate } from 'react-router-dom';
-import Login from '../Login/index';
+import { Eye, EyeOff } from 'lucide-react';
+
 
 export default function NewUser() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+
+    const [showPassword, setShowPassword] = useState(false);
+    const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
     const navigate = useNavigate();
 
@@ -64,7 +67,7 @@ export default function NewUser() {
                 <h1 className='h1TituloCriar'>Bibliocanto</h1>
 
                 <form onSubmit={createLogin}>
-                    <h2>Criar Usuário</h2>
+                    <text className='texto'>Cadastre-se para gerenciar seus livros.</text>
 
                     <input
                         name='email'
@@ -73,20 +76,30 @@ export default function NewUser() {
                         onChange={e => setEmail(e.target.value)}
                     />
 
-                    <input
-                        name='password'
-                        type="password"
-                        placeholder='Senha'
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                    />
+                    <div className="input-group">
+                        <input
+                            name='password'
+                            type={showPassword ? 'text' : 'password'}
+                            placeholder='Senha'
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                        />
+                        <button type="button" className="eye-button" onClick={togglePasswordVisibility}>
+                        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                        </button>
+                    </div>
 
-                    <input
-                        type="password"
-                        placeholder='Confirme a senha'
-                        value={confirmPassword}
-                        onChange={e => setConfirmPassword(e.target.value)}
-                    />
+                    <div className="input-group">
+                        <input
+                            type={showPassword ? 'text' : 'password'}
+                            placeholder='Confirme a senha'
+                            value={password}
+                            onChange={e => setConfirmPassword(e.target.value)}
+                        />
+                        <button type="button" className="eye-button" onClick={togglePasswordVisibility}>
+                        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                        </button>
+                    </div>
 
                     <button className="buttonCriarUser" type='submit'>Criar</button>
                 </form>

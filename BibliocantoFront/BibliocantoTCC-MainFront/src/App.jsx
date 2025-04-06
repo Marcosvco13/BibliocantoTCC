@@ -20,6 +20,9 @@ import BuscaIsbn from "./Paginas/CadastroLivro/BuscaISBN";
 import CadastroLivro from "./Paginas/CadastroLivro/CadastroLivro";
 import NavegarGenero from "./Paginas/Navegar Por Generos";
 import Livro from "./Paginas/Livro/livro";
+import RequestCode from "./Paginas/RequestCode";
+import ValidateResetCode from "./Paginas/CodeValidation";
+import ResetPassword from "./Paginas/ResetPassword";
 
 export default function App() {
   const [generos, setGeneros] = useState([]);
@@ -47,6 +50,9 @@ export default function App() {
           <Route path="/FinalizarCadastro" element={<CadastroLivro />} />
           <Route path="/NavegarPorGenero" element={<NavegarGenero />} />
           <Route path="/Livro/:id" element={<Livro />} />
+          <Route path="/RequestCode" element={<RequestCode />} />
+          <Route path="/code-validation/:email" element={<ValidateResetCode />} />
+          <Route path="/reset-password/:email/:code" element={<ResetPassword />} />
 
         </Routes>
         <Footer />

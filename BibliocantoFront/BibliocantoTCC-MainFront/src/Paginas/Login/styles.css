@@ -8,6 +8,17 @@
   background-color: #f9f9f9;
 }
 
+.input-group {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 0 10px;
+  margin-bottom: 15px;
+  background-color: white;
+}
+
+
 .form {
   background-color: white;
   width: 100%;
@@ -45,7 +56,7 @@ input {
   box-sizing: border-box;
 }
 
-.buttonLogin, .google-button {
+.buttonLogin {
   width: 100%;
   padding: 12px;
   border: none;
@@ -63,15 +74,6 @@ input {
 
 .buttonLogin:hover {
   background-color: #0056b3;
-}
-
-.google-button {
-  background-color: #DB4437;
-  color: white;
-}
-
-.google-button:hover {
-  background-color: #c33d2e;
 }
 
 .login-options {

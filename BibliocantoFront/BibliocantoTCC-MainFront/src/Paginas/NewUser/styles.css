@@ -24,9 +24,6 @@ form input:last-child {
 form input[name="email"] {
   margin-bottom: 10px; /* Espaçamento maior apenas após o email */
 }
-form input[name="password"] {
-  margin-bottom: 10px; /* Espaçamento maior apenas após o email */
-}
 
 .h1TituloCriar {
   font-family: 'Merriweather', serif;
@@ -46,16 +43,6 @@ form input[name="password"] {
   font-weight: 400; /* Peso regular (não negrito) */
   opacity: 0.9; /* Leve transparência para suavizar */
   line-height: 1.4; /* Melhora a legibilidade */
-}
-
-input {
-  width: 100%;
-  padding: 12px 16px;
-  margin-bottom: 30px; /* Aumentei o espaçamento entre os inputs */
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 1rem;
-  box-sizing: border-box;
 }
 
 .buttonCriarUser {
@@ -127,4 +114,24 @@ form {
     font-size: 1.8rem; /* Tamanho ligeiramente menor em mobile */
     margin-bottom: 1.2rem;
   }
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 0 10px;
+  margin-bottom: 15px;
+  background-color: white;
+}
+
+.texto {
+  font-family: 'Merriweather', serif;
+  font-size: 1rem;
+  color: #47211c;
+  font-weight: 400;
+  opacity: 0.9;
+  line-height: 1.4;
+  margin-bottom: 10px;
 }
