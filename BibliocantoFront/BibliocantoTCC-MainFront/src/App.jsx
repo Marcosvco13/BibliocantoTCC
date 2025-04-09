@@ -20,6 +20,9 @@ import CadastroLivro from "./Paginas/CadastroLivro/CadastroLivro";
 import Livro from "./Paginas/Livro/livro";
 import Lidos from "./Paginas/TagLidos/Lidos";
 import Relidos from "./Paginas/TagRelidos/Relidos";
+import RequestCode from "./Paginas/RequestCode";
+import CodeValidation from "./Paginas/CodeValidation"; 
+import ResetPassword from "./Paginas/ResetPassword";
 
 export default function App() {
 
@@ -41,6 +44,10 @@ export default function App() {
           <Route path="/Livro/:id" element={<Livro />} />
           <Route path="/Lidos" element={<Lidos />} />
           <Route path="/Relidos" element={<Relidos />} />
+          <Route path="/RequestCode" element={<RequestCode />} />
+          <Route path="/code-validation/:email" element={<CodeValidation />} />
+          <Route path="/reset-password/:email/:code" element={<ResetPassword />} />
+
         </Routes>
       </BrowserRouter>
     </div>
