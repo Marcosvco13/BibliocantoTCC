@@ -34,7 +34,6 @@ const Lidos = () => {
 
   return (
     <div className="biblioteca-lidos-container">
-      <h1 className="titulo-lidos">Livros Lidos</h1>
       {error && <p className="error">{error}</p>}
       {loading ? (
         <button className="btn btn-load" type="button" disabled>

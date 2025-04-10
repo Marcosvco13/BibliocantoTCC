@@ -93,7 +93,7 @@ export default function NewUser() {
                         <input
                             type={showPassword ? 'text' : 'password'}
                             placeholder='Confirme a senha'
-                            value={password}
+                            value={confirmPassword}
                             onChange={e => setConfirmPassword(e.target.value)}
                         />
                         <button type="button" className="eye-button" onClick={togglePasswordVisibility}>

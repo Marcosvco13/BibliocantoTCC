@@ -97,7 +97,6 @@ function Inicio() {
 
   return (
     <div className="inicio-linha-container">
-      <h1 className="titulo-inicio">Acervo de Livros</h1>
 
       {/* Componente de busca */}
       <BuscaLivro onResultado={setLivrosBuscados} />

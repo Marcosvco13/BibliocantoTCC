@@ -8,28 +8,8 @@
 .inicio-livros-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center; /* Alinha os livros ao centro */
   gap: 20px; /* Espaçamento entre os livros */
   width: 100%;
-}
-
-.titulo-inicio {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: #333;
-  text-align: center;
-  margin-top: 20px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
-.titulo-inicio::after {
-  content: '';
-  display: block;
-  width: 300px;
-  height: 4px;
-  background-color: #5a2a24;
-  margin: 10px auto;
 }
 
 .inicio-livro-wrapper {
@@ -37,7 +17,6 @@
   display: inline-block;
   text-align: center;
   transition: transform 0.3s ease-in-out;
-  margin: 10px; /* Para dar espaço entre os livros */
 }
 
 .inicio-livro-card {
@@ -62,7 +41,7 @@
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
   padding: 10px;
   color: white;
-  
+
   /* Aplicar o border-radius apenas na parte inferior */
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
@@ -76,12 +55,12 @@
   -webkit-box-orient: vertical; /* For WebKit browsers */
   overflow: hidden; /* Hide the text beyond the specified lines */
   text-overflow: ellipsis; /* Add ellipsis (...) at the end */
-  
+
   /* Standard property for line clamping */
   display: box; /* Standard box model */
   line-clamp: 5; /* Limit the text to 4 lines in modern browsers */
   box-orient: vertical; /* For non-WebKit browsers */
-  
+
   line-height: 1.5; /* Adjust the line height for better readability */
 }
 
@@ -92,7 +71,8 @@
   margin-top: 10px;
 }
 
-.inicio-btnIcon, .biblioteca-btnIcon {
+.inicio-btnIcon,
+.biblioteca-btnIcon {
   background: none;
   border: none;
   color: white;
@@ -106,18 +86,20 @@
   display: flex;
   flex-wrap: wrap; /* Permite que os livros que não cabem na linha sejam movidos para a linha seguinte */
   justify-content: center; /* Alinha os livros ao centro */
+  gap: 10px 30px;
 }
 
 .livro-buscado-wrapper {
   position: relative;
   display: inline-block;
-  margin: 10px;
   transition: transform 0.3s ease-in-out;
   text-align: center;
+  margin-bottom: 15px;
 }
 
 .livro-buscado-card {
-  width: 65%;
+  width: 190px;
+  height: 285px;
   transition: transform 0.3s ease-in-out;
   cursor: pointer;
 }
@@ -127,7 +109,7 @@
   top: 100%;
   left: 50%;
   transform: translateX(-50%); /* Centraliza o overlay com relação ao card */
-  width: 65%; /* Agora a largura do overlay será a mesma do card */
+  width: 190px;
   min-width: 120px; /* Evita que fique muito pequeno */
   background: #58888c;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
@@ -139,18 +121,17 @@
 
 .livro-buscado-overlay p {
   font-size: 10px;
-
   display: -webkit-box; /* For WebKit browsers */
   -webkit-line-clamp: 5; /* Limit the text to 4 lines in WebKit browsers */
   -webkit-box-orient: vertical; /* For WebKit browsers */
   overflow: hidden; /* Hide the text beyond the specified lines */
   text-overflow: ellipsis; /* Add ellipsis (...) at the end */
-  
+
   /* Standard property for line clamping */
   display: box; /* Standard box model */
   line-clamp: 5; /* Limit the text to 4 lines in modern browsers */
   box-orient: vertical; /* For non-WebKit browsers */
-  
+
   line-height: 1.5; /* Adjust the line height for better readability */
 }
 

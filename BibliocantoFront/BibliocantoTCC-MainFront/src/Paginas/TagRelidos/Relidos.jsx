@@ -34,7 +34,6 @@ const Relidos = () => {
 
   return (
     <div className="biblioteca-relidos-container">
-      <h1 className="titulo-relidos">Livros Relidos</h1>
       {error && <p className="error">{error}</p>}
       {loading ? (
         <button className="btn btn-load" type="button" disabled>

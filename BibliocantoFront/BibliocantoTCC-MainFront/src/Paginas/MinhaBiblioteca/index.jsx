@@ -67,8 +67,6 @@ const handleDeleteMeuLivro = async (idLivro) => {
   return (
     <div className="biblioteca-container">
 
-      <h1 className="titulo-biblioteca">Minha Biblioteca</h1>
-
       {error && <p className="error">{error}</p>}
       {livros.length > 0 ? (
         <div className="biblioteca-livros-container">
