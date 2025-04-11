@@ -91,6 +91,7 @@ export default function NewUser() {
 
                     <div className="input-group">
                         <input
+                            name='confirmPassword'
                             type={showPassword ? 'text' : 'password'}
                             placeholder='Confirme a senha'
                             value={confirmPassword}
