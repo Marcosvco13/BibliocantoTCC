@@ -1,126 +1,126 @@
 .resenha-item {
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 15px;
-    margin: 10px 0;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .resenha-item p {
-    margin: 5px 0;
-    color: #333;
-  }
-  
-  .resenha-item strong {
-    color: #007bff; /* Cor do texto em destaque */
-  }
-  
-  .comentario-box {
-    margin-top: 10px;
-    padding: 10px;
-    border: 1px solid #e0e0e0;
-    border-radius: 5px;
-    background-color: #f1f1f1;
-  }
-  
-  .comentario-box .MuiTextField-root {
-    margin-top: 5px;
-  }
-  
-  .modal-content {
-    border-radius: 8px;
-  }
-  
-  .modal-header {
-    border-bottom: 1px solid #e0e0e0;
-  }
-  
-  .modal-title {
-    color: #007bff; /* Cor do título da modal */
-  }
-  
-  .modal-footer {
-    border-top: 1px solid #e0e0e0;
-  }
-  
-  button {
-    transition: background-color 0.3s, color 0.3s; /* Efeito de transição */
-  }
-  
-  button:hover {
-    background-color: #007bff; /* Cor ao passar o mouse sobre o botão */
-    color: white; /* Texto branco ao passar o mouse */
-  }
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 10px 0;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
-  .comentario-container {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    width: 100%;
-  }
-  
-  .icone {
-    font-size: 2rem;
-  }
-  
-  .comentario-texto {
-    display:list-item;
-    flex-direction: column;
-    flex: 1; /* Faz com que o texto ocupe todo o espaço disponível */
-    max-width: calc(100% - 40px); /* Ajusta considerando o ícone ao lado */
-  }
-  
-  .email {
-    margin: 0;
-    font-weight: bold;
-  }
-  
-  .resenha {
-    margin: 5px 0;
-  }
-  
-  .comentario-acoes {
-    border-top: 1px solid #ccc; /* Linha separadora */
-    padding-top: 5px;
-    display: flex;
-    justify-content: space-between; /* Mantém os ícones separados */
-    align-items: center;
-  }
-  
-  .icones-esquerda {
-    display: flex;
-    gap: 5px; /* Espaço entre os ícones à esquerda */
-    font-size: 1.2rem;
-    color: #555;
-  }
+.resenha-item p {
+  margin: 5px 0;
+  color: #333;
+}
 
-  .icones-esquerda i:hover {
-    color: red; /* Muda de cor ao passar o mouse */
-  }
-  
-  .icones-direita {
-    display: flex;
-    align-items: center;
-    padding-left: 10px;
-    gap: 10px;
-    font-size: 1.2rem;
-    color: #555;
-    cursor: pointer;
-    transition: color 0.3s;
-  }
-  
-  /* Hover específico para o ícone de excluir */
-  .icone-excluir-resenha:hover {
-    color: red; /* vermelho Bootstrap */
-  }
-  
-  /* Hover específico para o ícone de editar */
-  .icone-editar-resenha:hover {
-    color: red; /* azul Bootstrap */
-  }  
-  
-  /* Estiliza a modal de comentários */
+.resenha-item strong {
+  color: #007bff; /* Cor do texto em destaque */
+}
+
+.comentario-box {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  background-color: #f1f1f1;
+}
+
+.comentario-box .MuiTextField-root {
+  margin-top: 5px;
+}
+
+.modal-content {
+  border-radius: 8px;
+}
+
+.modal-header {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.modal-title {
+  color: #007bff; /* Cor do título da modal */
+}
+
+.modal-footer {
+  border-top: 1px solid #e0e0e0;
+}
+
+button {
+  transition: background-color 0.3s, color 0.3s; /* Efeito de transição */
+}
+
+button:hover {
+  background-color: #007bff; /* Cor ao passar o mouse sobre o botão */
+  color: white; /* Texto branco ao passar o mouse */
+}
+
+.comentario-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+}
+
+.icone {
+  font-size: 2rem;
+}
+
+.comentario-texto {
+  display: list-item;
+  flex-direction: column;
+  flex: 1; /* Faz com que o texto ocupe todo o espaço disponível */
+  max-width: calc(100% - 40px); /* Ajusta considerando o ícone ao lado */
+}
+
+.email {
+  margin: 0;
+  font-weight: bold;
+}
+
+.resenha {
+  margin: 5px 0;
+}
+
+.comentario-acoes {
+  border-top: 1px solid #ccc; /* Linha separadora */
+  padding-top: 5px;
+  display: flex;
+  justify-content: space-between; /* Mantém os ícones separados */
+  align-items: center;
+}
+
+.icones-esquerda {
+  display: flex;
+  gap: 5px; /* Espaço entre os ícones à esquerda */
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.icones-esquerda i:hover {
+  color: red; /* Muda de cor ao passar o mouse */
+}
+
+.icones-direita {
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  gap: 10px;
+  font-size: 1.2rem;
+  color: #555;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+/* Hover específico para o ícone de excluir */
+.icone-excluir-resenha:hover {
+  color: red; /* vermelho Bootstrap */
+}
+
+/* Hover específico para o ícone de editar */
+.icone-editar-resenha:hover {
+  color: red; /* azul Bootstrap */
+}
+
+/* Estiliza a modal de comentários */
 .modal-comentarios {
   max-width: 100%; /* Define a largura máxima da modal */
   background: #fff; /* Fundo branco */
@@ -131,14 +131,32 @@
 }
 
 /* Conteúdo do comentário (ícone + email + texto) */
-.comentario-conteudo {
+.comentario-grupo {
   display: flex;
-  align-items: center;
-  gap: 8px; /* Espaçamento entre os elementos */
+  align-items: flex-start; /* Mantém os dois no topo */
+  gap: 10px;
 }
 
-.comentario-conteudo i {
-  font-size: 25px !important; /* Força o tamanho maior do ícone */
+.comentario-grupo i {
+  font-size: 25px !important;
+  line-height: 1;
+}
+
+.comentario-conteudo {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.email-comentario {
+  margin-top: 3px !important;
+  margin-bottom: 3px !important;
+  font-weight: bold !important;
+}
+
+.comentario-comentario {
+  margin: 5px 0;
+  letter-spacing: 1px;
 }
 
 /* Estiliza cada comentário dentro da lista */
@@ -157,9 +175,8 @@
   align-items: center;
   color: #555;
   gap: 5px; /* Espaço entre os ícones à esquerda */
-    font-size: 1.2rem;
+  font-size: 1.2rem;
 }
-
 
 /* Ícone do coração no canto direito */
 .icone-like {
@@ -188,24 +205,95 @@
 
 /* Estiliza o título da modal (resenha original) */
 .modal-title-resenha {
-  display: flex; /* Alinha o ícone e o texto na mesma linha */
-  align-items: center; /* Centraliza verticalmente */
-  font-size: 18px; /* Tamanho do texto normal */
-  gap: 10px; /* Adiciona espaçamento entre o ícone e o texto */
-  font-weight: bold; /* Deixa o título em negrito */
-  color: #262626; /* Cor padrão do Instagram para textos */
-  padding: 2px 15px; /* Adiciona espaçamento interno */
-  background: #fff; /* Fundo branco para manter um visual limpo */
+  display: flex;
+  flex-direction: column;
+  padding: 2px 15px;
+  background: #fff;
+  font-size: 18px;
+  color: #262626;
+}
+
+.resenha-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.resenha-cabecalho i {
+  font-size: 24px;
+  color: #333;
+}
+
+.email-resenha-comentario {
+  font-weight: bold;
+  margin: 0;
+}
+
+.texto-resenha {
+  margin-top: 5px;
+  font-size: 15px;
+  letter-spacing: 1px;
+}
+
+.modal-header .btn-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+  box-shadow: none;
+  border: none;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+/* Hover: fica preto */
+.modal-header .btn-close:hover {
+  box-shadow: none;
+}
+
+/* Active (clicado): cresce */
+.modal-header .btn-close:active {
+  box-shadow: none;
+  transform: scale(1.2);
 }
 
 /* Aumenta o tamanho do ícone */
 .modal-title-resenha i {
-  font-size: 32px !important; /* Força o tamanho maior do ícone */
+  font-size: 30px !important; /* Força o tamanho maior do ícone */
 }
 
 /* Resenha com estilo normal (sem negrito) */
 .texto-resenha {
   font-weight: normal;
+}
+
+/* Garante limite de tamanho para a modal inteira */
+.resenha-modal .modal-dialog {
+  max-width: 800px; /* ou ajuste como quiser */
+  max-height: 80vh;  /* altura máxima */
+}
+
+/* Faz o conteúdo da modal respeitar os limites */
+.resenha-modal .modal-content {
+  max-height: 80vh; /* mesma altura da dialog */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* impede rolagem no container principal */
+}
+
+/* Header da modal fixo no topo */
+.resenha-modal .modal-header {
+  flex-shrink: 0;
+}
+
+/* Footer da modal fixo no fundo */
+.resenha-modal .modal-footer {
+  flex-shrink: 0;
+}
+
+/* Só o Body rola */
+.resenha-modal .modal-body {
+  overflow-y: auto;
+  flex-grow: 1;
 }
 
 /*css para modal edit resenha*/
@@ -275,7 +363,7 @@
   gap: 5px;
   transition: transform 0.2s ease-in-out;
   letter-spacing: 1px;
-  background-color: #5a2a24; 
+  background-color: #5a2a24;
   color: white;
 }
 
@@ -353,7 +441,7 @@
   gap: 5px;
   transition: transform 0.2s ease-in-out;
   letter-spacing: 1px;
-  background-color: #5a2a24; 
+  background-color: #5a2a24;
   color: white;
 }
 

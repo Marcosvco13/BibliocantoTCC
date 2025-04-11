@@ -93,7 +93,7 @@ const ResenhaItem = ({
   const handleCloseEditComentarioModal = () => {
     setShowEditComentarioModal(false);
     setShowModal(true);
-  };  
+  };
 
   const handleEnviarComentario = useCallback(async () => {
     await enviarComentario(res.id);
@@ -122,7 +122,6 @@ const ResenhaItem = ({
 
       // Atualiza a contagem de comentários
       setQtdComentariosResenha((prev) => prev - 1);
-
     } catch (error) {
       console.error(
         "Erro ao excluir o comentário:",
@@ -225,9 +224,11 @@ const ResenhaItem = ({
       >
         <Modal.Header closeButton>
           <Modal.Title className="modal-title-resenha">
-            <i className="bi bi-person-circle fs-3"></i>
-            <strong>{res.email}</strong>
-            <span className="texto-resenha">{res.textoResenha}</span>
+            <div className="resenha-cabecalho">
+              <i className="bi bi-person-circle"></i>
+              <p className="email-resenha-comentario">{res.email}</p>
+            </div>
+            <p className="texto-resenha">{res.textoResenha}</p>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className="modal-comentarios">
@@ -235,10 +236,12 @@ const ResenhaItem = ({
             <ul>
               {listaComentarios.map((comentario) => (
                 <li key={comentario.id} className="lista-comentarios">
-                  <div className="comentario-conteudo">
+                  <div className="comentario-grupo">
                     <i className="bi bi-person-circle"></i>
-                    <strong>{comentario.emailUsuario}</strong>{" "}
-                    {comentario.textoComent}
+                    <div className="comentario-conteudo">
+                      <p className="email-comentario">{comentario.emailUsuario}</p>
+                      <p className="comentario-comentario">{comentario.textoComent}</p>
+                    </div>
                   </div>
                   <div className="like-container">
                     <i
@@ -345,10 +348,16 @@ const ResenhaItem = ({
           />
         </Modal.Body>
         <Modal.Footer>
-          <Button className="btn-cancelar-editResenha" onClick={handleCloseEditResenhaModal}>
+          <Button
+            className="btn-cancelar-editResenha"
+            onClick={handleCloseEditResenhaModal}
+          >
             Cancelar
           </Button>
-          <Button className="btn-atualizar-editResenha" onClick={handleAtualizarResenha}>
+          <Button
+            className="btn-atualizar-editResenha"
+            onClick={handleAtualizarResenha}
+          >
             Atualizar Resenha
           </Button>
         </Modal.Footer>
@@ -379,10 +388,16 @@ const ResenhaItem = ({
           />
         </Modal.Body>
         <Modal.Footer>
-          <Button className="btn-cancelar-editComentario" onClick={handleCloseEditComentarioModal}>
+          <Button
+            className="btn-cancelar-editComentario"
+            onClick={handleCloseEditComentarioModal}
+          >
             Cancelar
           </Button>
-          <Button className="btn-atualizar-editComentario" onClick={handleAtualizarComentario}>
+          <Button
+            className="btn-atualizar-editComentario"
+            onClick={handleAtualizarComentario}
+          >
             Atualizar Comentario
           </Button>
         </Modal.Footer>
