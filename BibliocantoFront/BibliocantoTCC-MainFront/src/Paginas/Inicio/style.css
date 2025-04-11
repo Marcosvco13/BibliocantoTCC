@@ -45,6 +45,8 @@
   height: 230px;
   transition: transform 0.3s ease-in-out;
   cursor: pointer;
+  border-radius: 8px;
+  border-color: #333;
 }
 
 .inicio-livro-wrapper:hover {
@@ -105,7 +107,7 @@
 .livros-buscados {
   display: flex;
   flex-wrap: wrap; /* Permite que os livros que não cabem na linha sejam movidos para a linha seguinte */
-  justify-content: center; /* Alinha os livros ao centro */
+  justify-content: flex-start; /* Alinha os livros ao centro */
 }
 
 .livro-buscado-wrapper {
