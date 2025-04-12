@@ -49,7 +49,7 @@ export default function StackNavigator() {
         }} 
       />
       <Stack.Screen name="Book" component={BookScreen} options={{ title: 'Detalhes do livro', headerTitleAlign: 'center', headerBackVisible: false }} />
-      <Stack.Screen name="Resenha" component={Resenhas} options={{ title: '', headerBackVisible: false }} />
+      <Stack.Screen name="Resenha" component={Resenhas} options={{ title: 'Detalhes do livro', headerTitleAlign: 'center', headerBackVisible: false }} />
       <Stack.Screen name="CodeValidation" component={CodeValidation} options={{ title: 'Validar Código', headerBackVisible: true }} />
       <Stack.Screen name="ResetPassword" component={ResetPassword} options={{ title: 'Redefinir Senha', headerBackVisible: true }} />
       <Stack.Screen name="CodeRequest" component={CodeRequest} options={{ title: 'Recuperar Senha', headerBackVisible: true }} />

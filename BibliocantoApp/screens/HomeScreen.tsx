@@ -36,6 +36,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
+      <View style={{ flex: 1, marginBottom: 60 }}>
         {error && <Text style={styles.error}>{error}</Text>}
 
         {livros.length > 0 ? (
@@ -49,6 +50,7 @@ export default function HomeScreen() {
               </TouchableOpacity>
             )}
             contentContainerStyle={styles.livrosContainer}
+            showsVerticalScrollIndicator={false}
           />
         ) : (
           <View style={styles.loadingContainer}>
@@ -56,6 +58,8 @@ export default function HomeScreen() {
             <Text style={styles.loadingText}>Carregando os livros...</Text>
           </View>
         )}
+
+      </View>
       <NavBar/>
     </View>
   );
@@ -67,9 +71,8 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    padding: 16,
+    padding: 10,
     backgroundColor: "#F0F2F5",
-
   },
   error: {
     color: "red",
