@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, Text, TextInput, ActivityIndicator, Alert, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, ActivityIndicator, Alert, TouchableOpacity, StyleSheet,ToastAndroid } from 'react-native';
 import { RootStackParamList } from '../routes/StackNavigator';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import api from '../services/api';
@@ -47,7 +47,13 @@ export default function RegisterScreen(){
 
           if (!verificaEmail.data) {
             const response = await api.post('api/Account/CreateUser', data);
-            Alert.alert('Atenção!', response.data);        
+            ToastAndroid.showWithGravityAndOffset(
+              response.data,
+              ToastAndroid.SHORT,
+              ToastAndroid.BOTTOM,
+              25,
+              50,
+            );
             navigation.navigate('Login');
           } else {
             Alert.alert('Atenção!', 'Usuário já cadastrado no sistema!');

@@ -56,33 +56,33 @@ export default function MyLibraryScreen() {
 
   return (
     <View style={styles.container}>
-
-      <View style={{ width: "100%"}}>
-        <TabBar currentScreen="Todos"/>
-      </View>
-
-      {error && <Text style={styles.error}>{error}</Text>}
-
-      {loading ? (
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#0000ff" />
-          <Text style={styles.loadingText}>Carregando os livros...</Text>
+        <View style={{ width: "100%"}}>
+          <TabBar currentScreen="Todos"/>
         </View>
-      ) : (
-        <FlatList
-          data={livros}
-          keyExtractor={(item) => item.id.toString()}
-          numColumns={3}
-          renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => handleImageClick(item.livros)}>
-              <Image source={{ uri: item.livros.caminhoImagem }} style={styles.livroCard} />
-            </TouchableOpacity>
-          )}
-          contentContainerStyle={styles.livrosContainer}
-        />
-      )}
+        <View style={{ flex: 1, marginBottom: 60 }}>
+          {error && <Text style={styles.error}>{error}</Text>}
 
-      <NavBar />
+          {loading ? (
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size="large" color="#0000ff" />
+              <Text style={styles.loadingText}>Carregando os livros...</Text>
+            </View>
+          ) : (
+            <FlatList
+              data={livros}
+              keyExtractor={(item) => item.id.toString()}
+              numColumns={3}
+              renderItem={({ item }) => (
+                <TouchableOpacity onPress={() => handleImageClick(item.livros)}>
+                  <Image source={{ uri: item.livros.caminhoImagem }} style={styles.livroCard} />
+                </TouchableOpacity>
+              )}
+              contentContainerStyle={styles.livrosContainer}
+              showsVerticalScrollIndicator={false}
+            />
+          )}
+        </View>
+        <NavBar />
     </View>
   );
 }
