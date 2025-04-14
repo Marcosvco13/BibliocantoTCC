@@ -135,3 +135,12 @@ form {
   line-height: 1.4;
   margin-bottom: 10px;
 }
+
+.voltar {
+  background: none;
+  border: none;
+  color: #47211c;
+  font-size: 16px;
+  margin-bottom: 20px;
+  text-align: left;
+}

@@ -61,41 +61,43 @@ export default function ResetPassword() {
 
   return (
     <div className="reset-password-container">
-      <button className="voltar" onClick={() => navigate(-1)}>
-        ← Voltar
-      </button>
-
-      <h1 className="title">Escolha uma nova senha!</h1>
-
-      <label className="label">Nova senha:</label>
-      <div className="input-group">
-        <input
-          type={showPassword ? 'text' : 'password'}
-          placeholder="Senha"
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-        />
-        <button type="button" className="eye-button" onClick={togglePasswordVisibility}>
-          {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+      <section className="form">
+        <button className="voltar" onClick={() => navigate(-1)}>
+          ← Voltar
         </button>
-      </div>
 
-      <label className="label">Confirme sua nova senha:</label>
-      <div className="input-group">
-        <input
-          type={showPassword ? 'text' : 'password'}
-          placeholder="Confirme a senha"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-        />
-        <button type="button" className="eye-button" onClick={togglePasswordVisibility}>
-          {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+        <h1 className="title">Escolha uma nova senha!</h1>
+
+        <label className="label">Nova senha:</label>
+        <div className="input-group">
+          <input
+            type={showPassword ? 'text' : 'password'}
+            placeholder="Senha"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+          />
+          <button type="button" className="eye-button" onClick={togglePasswordVisibility}>
+            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+          </button>
+        </div>
+
+        <label className="label">Confirme sua nova senha:</label>
+        <div className="input-group">
+          <input
+            type={showPassword ? 'text' : 'password'}
+            placeholder="Confirme a senha"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+          <button type="button" className="eye-button" onClick={togglePasswordVisibility}>
+            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+          </button>
+        </div>
+
+        <button className="solicitar" onClick={resetPassword} disabled={isLoading}>
+          {isLoading ? 'Redefinindo...' : 'Redefinir a senha'}
         </button>
-      </div>
-
-      <button className="solicitar" onClick={resetPassword} disabled={isLoading}>
-        {isLoading ? 'Redefinindo...' : 'Redefinir a senha'}
-      </button>
+      </section>
     </div>
   );
 }

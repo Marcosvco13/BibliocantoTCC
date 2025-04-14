@@ -63,6 +63,9 @@ export default function NewUser() {
     return (
         <div className='Criar-container'>
             <section className='formCriarUser'>
+                <button className="voltar" onClick={() => navigate(-1)}>
+                    ← Voltar
+                </button>
 
                 <h1 className='h1TituloCriar'>Bibliocanto</h1>
 
@@ -85,7 +88,7 @@ export default function NewUser() {
                             onChange={e => setPassword(e.target.value)}
                         />
                         <button type="button" className="eye-button" onClick={togglePasswordVisibility}>
-                        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                         </button>
                     </div>
 
@@ -98,7 +101,7 @@ export default function NewUser() {
                             onChange={e => setConfirmPassword(e.target.value)}
                         />
                         <button type="button" className="eye-button" onClick={togglePasswordVisibility}>
-                        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                         </button>
                     </div>
 

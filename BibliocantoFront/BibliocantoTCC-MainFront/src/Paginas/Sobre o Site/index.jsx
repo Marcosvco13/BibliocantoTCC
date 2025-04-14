@@ -20,7 +20,7 @@ export default function SobreSite() {
                         Essa interação contribui para o fomento da leitura crítica e a troca de conhecimentos, criando um espaço rico para o debate literário.
                     </p>
                     <p>
-                        Através de funcionalidades inovadoras, o Bibliocanto visa não apenas a organização pessoal dos acervos, mas também a construção de um ambiente colaborativo, 
+                        O Bibliocanto visa não apenas a organização pessoal dos acervos, mas também a construção de um ambiente colaborativo, 
                         onde o acesso à informação é facilitado. A plataforma promove a educação de qualidade e incentiva a disseminação de conhecimento, alinhando-se aos objetivos 
                         da Agenda 2030 para o Desenvolvimento Sustentável, em especial no que se refere ao estímulo à leitura e à educação inclusiva.
                     </p>

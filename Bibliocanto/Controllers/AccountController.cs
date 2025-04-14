@@ -254,7 +254,7 @@ namespace Bibliocanto.Controllers
             await _emailService.SendEmailAsync(user.Email, "Código de Redefinição de Senha",
                 $"Seu código de redefinição de senha é: {resetCode}. Ele expira em 10 minutos.");
 
-            return Ok("Se o e-mail estiver registrado, um código foi enviado.");
+            return Ok("Um código foi enviado para o e-mail informado.");
         }
 
         [HttpPost("ValidateResetCode")]
