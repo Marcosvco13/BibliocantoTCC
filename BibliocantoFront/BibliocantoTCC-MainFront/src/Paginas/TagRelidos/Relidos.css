@@ -7,11 +7,12 @@
   
   .biblioteca-livros-relidos-container {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
+    justify-content: left;
+    flex-wrap:wrap;
     width: 100%;
-  margin-top: 20px;
+    margin-top: 20px;
+    padding-right: 50px;
+    padding-left: 95px;
   }
   
   .biblioteca-livro-relido-wrapper {
@@ -27,6 +28,9 @@
     height: 230px;
     transition: transform 0.3s ease-in-out;
     cursor: pointer;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border: 1px solid #58888c;
   }
   
   .biblioteca-livro-relido-wrapper:hover {

@@ -7,10 +7,12 @@
   
   .biblioteca-livros-container {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center; /* Alinha os livros ao centro */
+    justify-content: left;
+    flex-wrap:wrap;
     width: 100%;
     margin-top: 20px;
+    padding-right: 50px;
+    padding-left: 95px;
   }
   
   .biblioteca-livro-wrapper {
@@ -26,6 +28,9 @@
     height: 230px;
     transition: transform 0.3s ease-in-out;
     cursor: pointer;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border: 1px solid #58888c;
   }
   
   .biblioteca-livro-wrapper:hover {

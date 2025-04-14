@@ -7,9 +7,12 @@
 
 .inicio-livros-container {
   display: flex;
-  flex-wrap: wrap;
-  gap: 20px; /* Espaçamento entre os livros */
+  justify-content: left;
+  flex-wrap:wrap;
+  gap: 25px; /* Espaçamento entre os livros */
   width: 100%;
+  padding-right: 50px;
+  padding-left: 70px;
 }
 
 .inicio-livro-wrapper {
@@ -24,6 +27,9 @@
   height: 230px;
   transition: transform 0.3s ease-in-out;
   cursor: pointer;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border: 1px solid #58888c; /* Borda do card */
 }
 
 .inicio-livro-wrapper:hover {
