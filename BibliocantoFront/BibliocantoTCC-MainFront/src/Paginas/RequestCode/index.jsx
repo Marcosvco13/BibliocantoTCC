@@ -29,12 +29,13 @@ export default function RequestResetCode() {
   
     return (
       <div className="request-reset-container">
+        <section className='form-request-code'>
         <button className="voltar" onClick={() => navigate('/Login')}>
-          ← Voltar
+          Voltar
         </button>
   
-        <h1 className="title">Problemas para entrar?</h1>
-        <p className="subtitle">
+        <h1 className="title-request-code">Problemas para entrar?</h1>
+        <p className="subtitle-request-code">
           Digite seu e-mail para receber o código de redefinição de senha:
         </p>
         <input
@@ -47,6 +48,7 @@ export default function RequestResetCode() {
         <button className="solicitar" onClick={requestCode} disabled={isLoading}>
           {isLoading ? 'Enviando...' : 'Solicitar código'}
         </button>
+        </section>
       </div>
     );
   }

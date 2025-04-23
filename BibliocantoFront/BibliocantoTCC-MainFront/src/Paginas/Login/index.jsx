@@ -72,8 +72,9 @@ export default function Login() {
     return (
         <div className='login-container'>
           <section className='form'>
-            <h1 className='h1NomeProjeto'>Bibliocanto</h1>
-    
+          <img src="/src/assets/BibliocantoTCC-mainlogo.png" alt="Logo Bibliocanto" className="logoBibliocanto"/>
+            <h1 className='h1MensagemLogin'>Seja bem-vindo ao Bibliocanto !</h1>
+            <p className='h2MensagemLogin'>Para continuar, digite seu e-mail e senha.</p>
             <form onSubmit={login}>
               <input 
                 name='email'
@@ -102,9 +103,9 @@ export default function Login() {
                 Esqueceu a senha?
               </a>
               <span className="divider">Ou</span>
-              <button href="#" onClick={handleCreateUser} className="create-account">
+              <a href="#" onClick={handleCreateUser} className="create-account">
                 Criar Usuário
-              </button>
+              </a>
             </div>
           </section>
         </div>

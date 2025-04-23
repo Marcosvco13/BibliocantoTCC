@@ -32,13 +32,14 @@ export default function ValidateResetCode() {
 
   return (
     <div className="validate-code-container">
+      <section className='form-code-validation'>
       {/* Botão de voltar */}
       <button className="voltar" onClick={() => navigate(-1)}>
-        ← Voltar
+        Voltar
       </button>
 
-      <h1 className="title">Quase lá!</h1>
-      <p className="subtitle">Digite o código enviado para seu e-mail:</p>
+      <h1 className="title-code-validation">Quase lá!</h1>
+      <p className="subtitle-code-validation">Digite o código enviado para seu e-mail:</p>
       <input
         type="text"
         placeholder="Código"
@@ -47,9 +48,10 @@ export default function ValidateResetCode() {
         className="input"
         inputMode="numeric"
       />
-      <button className="solicitar" onClick={validateCode} disabled={isLoading}>
+      <button className="btn-validar-codigo" onClick={validateCode} disabled={isLoading}>
         {isLoading ? 'Validando...' : 'Validar o código'}
       </button>
+      </section>
     </div>
   );
 }
