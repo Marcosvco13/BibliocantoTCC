@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import api from "../../services/api";
 import BuscaLivro from "../../Componentes/BuscaLivro/BuscaLivro";
+import CarrosselLivros from '../../Componentes/CarrosselLivros/CarrosselLivros';
 import "./style.css";
 
 function Inicio() {
@@ -102,6 +103,9 @@ function Inicio() {
       <BuscaLivro onResultado={setLivrosBuscados} />
 
       {error && <p className="error">{error}</p>}
+
+      {/* Componente de carrossel de livros */}
+      {livrosBuscados.length === 0 && <CarrosselLivros livros={livros} />}
 
       {/* Exibir os livros buscados */}
       {livrosBuscados.length > 0 && (
