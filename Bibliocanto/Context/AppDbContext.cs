@@ -26,6 +26,7 @@ namespace Bibliocanto.Context
         public DbSet<LikeComentario> LikeComentario { get; set; }
         public DbSet<LikeLivros> LikeLivros { get; set; }
         public DbSet<DeslikeLivros> DeslikeLivros { get; set; }
+        public DbSet<Perfil> Perfil { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -182,6 +183,16 @@ namespace Bibliocanto.Context
             builder.Entity<DeslikeLivros>().Property(p => p.IdLivro).IsRequired();
             builder.Entity<DeslikeLivros>().Property(p => p.IdUser).IsRequired().HasMaxLength(450);
             builder.Entity<DeslikeLivros>().Property(p => p.Deslike);
+
+            builder.Entity<Perfil>().ToTable("Perfil");
+            builder.Entity<Perfil>().HasKey(p => p.Id);
+            builder.Entity<Perfil>().Property(p => p.IdUser).IsRequired().HasMaxLength(450);
+            builder.Entity<Perfil>().Property(p => p.Nome).HasMaxLength(250);
+            builder.Entity<Perfil>().Property(p => p.Apelido).HasMaxLength(30);
+            builder.Entity<Perfil>().Property(p => p.Nome).HasMaxLength(455);
+            builder.Entity<Perfil>().Property(p => p.DataNasc)
+            builder.Entity<Perfil>().Property(p => p.FotoPerfil).HasMaxLength(455);
+
         }
     }
 }
