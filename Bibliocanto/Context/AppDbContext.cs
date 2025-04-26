@@ -27,6 +27,8 @@ namespace Bibliocanto.Context
         public DbSet<LikeLivros> LikeLivros { get; set; }
         public DbSet<DeslikeLivros> DeslikeLivros { get; set; }
         public DbSet<Perfil> Perfil { get; set; }
+        public DbSet<Preferencias> Preferencias { get; set; }
+        public DbSet<Denuncias> Denuncias { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -189,9 +191,22 @@ namespace Bibliocanto.Context
             builder.Entity<Perfil>().Property(p => p.IdUser).IsRequired().HasMaxLength(450);
             builder.Entity<Perfil>().Property(p => p.Nome).HasMaxLength(250);
             builder.Entity<Perfil>().Property(p => p.Apelido).HasMaxLength(30);
-            builder.Entity<Perfil>().Property(p => p.Nome).HasMaxLength(455);
-            builder.Entity<Perfil>().Property(p => p.DataNasc)
+            builder.Entity<Perfil>().Property(p => p.Descricao).HasMaxLength(455);
+            builder.Entity<Perfil>().Property(p => p.DataNasc);
             builder.Entity<Perfil>().Property(p => p.FotoPerfil).HasMaxLength(455);
+
+            builder.Entity<Preferencias>().ToTable("Preferencias");
+            builder.Entity<Preferencias>().HasKey(p => p.Id);
+            builder.Entity<Preferencias>().Property(p => p.IdUser).IsRequired().HasMaxLength(450);
+            builder.Entity<Preferencias>().Property(p => p.IdGenero).IsRequired();
+
+            builder.Entity<Denuncias>().ToTable("Denuncias");
+            builder.Entity<Denuncias>().HasKey(p => p.Id);
+            builder.Entity<Denuncias>().Property(p => p.IdUser).IsRequired().HasMaxLength(450);
+            builder.Entity<Denuncias>().Property(p => p.IdResenha);
+            builder.Entity<Denuncias>().Property(p => p.IdComentario);
+            builder.Entity<Denuncias>().Property(p => p.Descricao).HasMaxLength(250);
+            builder.Entity<Denuncias>().Property(p => p.DataDenuncia);
 
         }
     }

@@ -24,6 +24,8 @@ namespace Bibliocanto.Mapping
             CreateMap<SaveLikeLivrosResource, LikeLivros>();
             CreateMap<SaveDeslikeLivrosResource, DeslikeLivros>();
             CreateMap<SavePerfilResource, Perfil>();
+            CreateMap<SavePreferenciasResource, Preferencias>();
+            CreateMap<SaveDenunciasResource, Denuncias>();
         }
     }
 }
