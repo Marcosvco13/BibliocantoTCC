@@ -47,7 +47,6 @@ function CadastroLivro() {
     }
   }, [livro]);
 
-
   // Função para carregar os dados do livro
   const carregarDadosLivro = async () => {
     try {

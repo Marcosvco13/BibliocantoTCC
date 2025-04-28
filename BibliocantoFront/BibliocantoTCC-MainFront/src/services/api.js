@@ -97,8 +97,8 @@ api.buscarGeneroPorNomeAjustado = async (nomeGenero) => {
     }
   };
   
-  // Função para cadastrar múltiplos autores e gêneros armazenados com verificação de duplicidade
-api.cadastrarAutoresEGêneros = async function(autoresArmazenados, generosArmazenados) {
+// Função para cadastrar múltiplos autores armazenados com verificação de duplicidade
+api.cadastrarAutores = async function(autoresArmazenados) {
     try {
       const autorIds = await Promise.all(autoresArmazenados.map(async (autor) => {
         const autorExistente = await api.buscarAutorPorNomeAjustado(autor.nome);
@@ -112,29 +112,14 @@ api.cadastrarAutoresEGêneros = async function(autoresArmazenados, generosArmaze
         }
       }));
   
-      // Cadastro de gêneros com verificação de duplicidade
-      const generoIds = await Promise.all(generosArmazenados.map(async (genero) => {
-        const nomeNormalizado = normalizarNome(genero.nome);
-        const generoExistente = await api.buscarGeneroPorNomeAjustado(genero.nome);
-        
-        if (generoExistente) {
-          //console.log(`Gênero já existe: ${genero.nome} com ID ${generoExistente.id}`);
-          return generoExistente.id; // Retorna o ID do gênero existente
-        } else {
-          //console.log(`Cadastrando novo gênero: ${genero.nome}`);
-          const novoGenero = await api.cadastrarGenero({ NomeGenero: genero.nome });
-          return novoGenero.id; // Retorna o ID do novo gênero
-        }
-      }));
-  
-      //console.log('Autores e gêneros cadastrados com sucesso:', { autorIds, generoIds });
-      return { autorIds, generoIds };
+      //console.log('Autores cadastrados com sucesso:', autorIds);
+      return { autorIds };
   
     } catch (error) {
-      console.error('Erro ao cadastrar autores e gêneros:', error);
+      console.error('Erro ao cadastrar autores:', error);
       throw error;
     }
-  };
+  };  
 
   // cadastrar na tabela LivroAutor
   api.cadastrarLivroAutor = async function (idLivro, autorIdSingle) {
@@ -257,39 +242,6 @@ api.PreCadastroLivro = async function (titulo, isbn, editoraId) {
     } catch (error) {
         console.error('Erro ao pré-cadastrar livro:', error);
         throw error; 
-    }
-};
-
-
-// Cadastro de autor
-api.cadastrarAutor = async function(autorData) {
-    try {
-        const response = await api.post('/api/Autores', autorData, {
-            headers: {
-                Authorization: `Bearer ${getToken()}`
-            }
-        });
-        console.log('Autor cadastrado com sucesso:', response.data);
-        return response.data;
-    } catch (error) {
-        console.error("Erro ao cadastrar o autor:", error);
-        throw error;
-    }
-};
-
-// Cadastro de gênero
-api.cadastrarGenero = async function(generoData) {
-    try {
-        const response = await api.post('/api/Generos', generoData, {
-            headers: {
-                Authorization: `Bearer ${getToken()}`
-            }
-        });
-        console.log('Gênero cadastrado com sucesso:', response.data);
-        return response.data;
-    } catch (error) {
-        console.error("Erro ao cadastrar o gênero:", error);
-        throw error;
     }
 };
 

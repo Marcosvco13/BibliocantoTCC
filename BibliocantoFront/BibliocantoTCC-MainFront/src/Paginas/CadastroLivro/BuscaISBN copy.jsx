@@ -63,7 +63,7 @@ export default function BuscaLivroIsbn() {
       setSelectedLivro(normalizeLivroData(livroBrasilAPI, "brasilapi"));
       setIsFromBrasilAPI(true);
       setAutores(livroBrasilAPI.authors || []);
-      setGeneros([]);
+      setGeneros(livroBrasilAPI.subjects || []);
 
       console.log(livroBrasilAPI);
     } catch (error) {
@@ -196,11 +196,9 @@ export default function BuscaLivroIsbn() {
                 <div className="modal-text">
                   Autor: {autores.join(", ") || "Autor não disponível"}
                 </div>
-                {!isFromBrasilAPI && (
-                  <div className="modal-text">
-                    Gênero: {generos.join(", ") || "Gênero não disponível"}
-                  </div>
-                )}
+                <div className="modal-text">
+                  Gênero: {generos.join(", ") || "Gênero não disponível"}
+                </div>
                 <div className="modal-text">
                   Editora:{" "}
                   {isFromBrasilAPI
@@ -244,7 +242,7 @@ export default function BuscaLivroIsbn() {
                     className="btnCadastrarLivro"
                     onClick={() =>
                       navigate(`/PreCadastrar`, {
-                        state: { livroData: selectedLivro, isbn },
+                        state: { livroData: selectedLivro, isbn  },
                       })
                     }
                   >
