@@ -23,18 +23,17 @@ function CadastroLivro() {
   // Acessa os dados passados da pag pre cadastro
   const location = useLocation();
   const livro = location.state?.livroData;
-
+  
   useEffect(() => {
-
-    // Recupera os dados do localStorage da pag pre cadastro
     const autoresCriados = JSON.parse(localStorage.getItem("autoresCriados")) || [];
+    console.log("Autores recuperados do localStorage:", autoresCriados);
     setAutores(autoresCriados);
-    //console.log("Autores no localStorage:", autoresCriados);
-
+  
     const generosCriados = JSON.parse(localStorage.getItem("generosCriados")) || [];
+    console.log("Gêneros recuperados do localStorage:", generosCriados);
     setGeneros(generosCriados);
-    //console.log("Gêneros do localStorage:", generosCriados);
   }, []);
+  
 
   useEffect(() => {
     if (livro) {
@@ -264,7 +263,7 @@ function CadastroLivro() {
           <Form.Control
             key={`subject-${index}`}
             type="text"
-            defaultValue={subject.nome}
+            defaultValue={subject.nomegenero}
             placeholder={`Subject ${index + 1}`}
             className="mb-2"
             readOnly

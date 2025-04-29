@@ -188,27 +188,27 @@ export default function BuscaLivroIsbn() {
               <div className="col-md">
                 {/* Exibe os dados do livro */}
                 <div className="modal-text">
-                  Título: {selectedLivro.titulo || selectedLivro.title}
+                  <strong>Título:</strong> {selectedLivro.titulo || selectedLivro.title}
                 </div>
                 <div className="modal-text">
-                  Sinopse: {selectedLivro.descricao || selectedLivro.synopsis}
+                 <strong>Sinopse:</strong>  {selectedLivro.descricao || selectedLivro.synopsis}
                 </div>
                 <div className="modal-text">
-                  Autor: {autores.join(", ") || "Autor não disponível"}
+                 <strong>Autor:</strong> {autores.join(", ") || "Autor não disponível"}
                 </div>
                 {!isFromBrasilAPI && (
                   <div className="modal-text">
-                    Gênero: {generos.join(", ") || "Gênero não disponível"}
+                   <strong>Gênero:</strong>  {generos.join(", ") || "Gênero não disponível"}
                   </div>
                 )}
                 <div className="modal-text">
-                  Editora:{" "}
+                  <strong>Editora:</strong>{" "}
                   {isFromBrasilAPI
                     ? selectedLivro.publisher
                     : selectedLivro?.editoras?.nomeEditora ||
                       "Editora não disponível"}
                 </div>
-                <div className="modal-text">ISBN: {selectedLivro.isbn}</div>
+                <div className="modal-text"> <strong>ISBN:</strong> {selectedLivro.isbn}</div>
               </div>
             </div>
 

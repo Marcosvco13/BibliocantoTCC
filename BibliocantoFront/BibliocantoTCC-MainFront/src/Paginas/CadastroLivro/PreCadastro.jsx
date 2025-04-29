@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import Select from 'react-select';
+import Select from "react-select";
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
@@ -17,7 +17,6 @@ function PreCadastro() {
   const [novosAutores, setNovosAutores] = useState([]);
   const [novoAutor, setNovoAutor] = useState("");
 
-  const [novosGeneros, setNovosGeneros] = useState([]);
   const [generosDisponiveis, setGenerosDisponiveis] = useState([]);
   const [generosSelecionados, setGenerosSelecionados] = useState([]);
 
@@ -25,26 +24,29 @@ function PreCadastro() {
     async function buscarGeneros() {
       try {
         const resposta = await api.getGeneros();
-  
+
         const generosFormatados = resposta.map((g) => ({
           value: g.id,
           label: g.nomegenero,
         }));
-  
+
         setGenerosDisponiveis(generosFormatados);
       } catch (error) {
-        console.error('Erro ao buscar gêneros:', error);
+        console.error("Erro ao buscar gêneros:", error);
       }
     }
-  
+
     buscarGeneros();
   }, []);
 
   // Armazenar os gêneros selecionados no localStorage quando houver mudança
   useEffect(() => {
     if (generosSelecionados.length > 0) {
-      const selectedGeneros = generosSelecionados.map(g => g.value);
-      localStorage.setItem('generosSelecionados', JSON.stringify(selectedGeneros));
+      const selectedGeneros = generosSelecionados.map((g) => g.value);
+      localStorage.setItem(
+        "generosSelecionados",
+        JSON.stringify(selectedGeneros)
+      );
     }
   }, [generosSelecionados]);
 
@@ -55,27 +57,27 @@ function PreCadastro() {
   const handleCadastrarAutores = async () => {
     try {
       const todosAutores = [...autores, ...novosAutores];
-  
+
       const autorIds = await api.cadastrarAutores(
-        todosAutores.map((nome) => ({ nome }))
+        todosAutores.map((nomeAutor) => ({ nomeAutor }))
       );
-  
-      const autoresCompletos = autorIds.map((id, index) => ({
+
+      const autoresCompletos = autorIds?.autorIds.map((id, index) => ({
         id,
-        nome: todosAutores[index],
-      }));
-  
+        nomeAutor: todosAutores[index],
+      }));      
+
       setAutorIdsCadastrados(autoresCompletos);
-  
+
       localStorage.setItem("autoresCriados", JSON.stringify(autoresCompletos));
-  
+
       alert("Autores cadastrados com sucesso!");
     } catch (error) {
       console.error("Erro ao cadastrar autores:", error);
       alert("Erro ao cadastrar autores.");
     }
   };
-  
+
   const handleAdicionarAutor = () => {
     if (novoAutor.trim() === "") {
       alert("Por favor, insira o nome do autor.");
@@ -83,12 +85,6 @@ function PreCadastro() {
     }
     setNovosAutores([...novosAutores, novoAutor]);
     setNovoAutor("");
-  };
-
-  const handleSelecionarGeneros = (event) => {
-    const selectedOptions = Array.from(event.target.selectedOptions);
-    const selectedIds = selectedOptions.map((option) => Number(option.value));
-    setNovosGeneros(selectedIds);
   };
 
   return (
@@ -145,10 +141,20 @@ function PreCadastro() {
               ))
             ) : (
               <>
-                <p className="alerta-vermelho">Nenhum autor encontrado. Adicione manualmente abaixo:</p>
+                <p className="alerta-vermelho">
+                  Nenhum autor encontrado. Adicione manualmente abaixo:
+                </p>
                 {novosAutores.map((autor, index) => (
-                  <div key={`new-author-${index}`} className="mb-2 d-flex align-items-center">
-                    <Form.Control type="text" value={autor} readOnly className="me-2" />
+                  <div
+                    key={`new-author-${index}`}
+                    className="mb-2 d-flex align-items-center"
+                  >
+                    <Form.Control
+                      type="text"
+                      value={autor}
+                      readOnly
+                      className="me-2"
+                    />
                   </div>
                 ))}
                 <div className="d-flex align-items-center gap-2">
@@ -159,7 +165,11 @@ function PreCadastro() {
                     placeholder="Novo autor"
                     className="input-align"
                   />
-                  <Button variant="success" onClick={handleAdicionarAutor} className="button-align">
+                  <Button
+                    variant="success"
+                    onClick={handleAdicionarAutor}
+                    className="button-align"
+                  >
                     Adicionar
                   </Button>
                 </div>
@@ -170,13 +180,13 @@ function PreCadastro() {
           <Form.Group as={Col} controlId="formGridSubjects">
             <Form.Label>Gêneros</Form.Label>
             <Select
-        options={generosDisponiveis}
-        value={generosSelecionados}
-        onChange={setGenerosSelecionados}
-        isMulti
-        placeholder="Selecione os gêneros..."
-        noOptionsMessage={() => "Nenhum gênero encontrado"}
-      />
+              options={generosDisponiveis}
+              value={generosSelecionados}
+              onChange={setGenerosSelecionados}
+              isMulti
+              placeholder="Selecione os gêneros..."
+              noOptionsMessage={() => "Nenhum gênero encontrado"}
+            />
           </Form.Group>
         </Row>
 
@@ -188,9 +198,21 @@ function PreCadastro() {
             try {
               const editoraId = await api.cadastrarEditora(livro.publisher);
               const titulo = livro.title || livro.titulo;
-              const livroId = await api.PreCadastroLivro(titulo, isbn, editoraId);
+              const livroId = await api.PreCadastroLivro(
+                titulo,
+                isbn,
+                editoraId
+              );
 
               await handleCadastrarAutores();
+
+              // Salvar os gêneros selecionados no localStorage
+              const selectedGeneros = generosSelecionados.map((g) => ({
+                id: g.value,
+                nomegenero: g.label,
+              }));
+              localStorage.setItem("generosCriados", JSON.stringify(selectedGeneros));
+
 
               navigate(`/FinalizarCadastro`, {
                 state: {

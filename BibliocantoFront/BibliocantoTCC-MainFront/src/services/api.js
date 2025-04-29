@@ -112,8 +112,8 @@ api.cadastrarAutores = async function(autoresArmazenados) {
         }
       }));
   
-      //console.log('Autores cadastrados com sucesso:', autorIds);
-      return { autorIds };
+      console.log('Autores cadastrados com sucesso:', autorIds);
+      return autorIds;
   
     } catch (error) {
       console.error('Erro ao cadastrar autores:', error);
