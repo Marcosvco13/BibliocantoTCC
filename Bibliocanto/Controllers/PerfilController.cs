@@ -41,7 +41,7 @@ namespace Bibliocanto.Controllers
             }
         }
 
-        [HttpGet("{id:int}", Name = "GetById")]
+        [HttpGet("{id:int}")]
         public async Task<ActionResult<PerfilResource>> GetById(int id)
         {
             try

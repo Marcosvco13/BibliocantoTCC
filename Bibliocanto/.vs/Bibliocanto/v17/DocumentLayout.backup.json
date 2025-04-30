@@ -3,36 +3,24 @@
   "WorkspaceRootPath": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\projetos\\bibliocantotcc\\bibliocanto\\context\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:context\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\projetos\\bibliocantotcc\\bibliocanto\\resources\\perfilresource.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:resources\\perfilresource.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\projetos\\bibliocantotcc\\bibliocanto\\iservices\\iperfilservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:iservices\\iperfilservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\projetos\\bibliocantotcc\\bibliocanto\\controllers\\preferenciascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:controllers\\preferenciascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\projetos\\bibliocantotcc\\bibliocanto\\controllers\\perfilcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:controllers\\perfilcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\projetos\\bibliocantotcc\\bibliocanto\\services\\perfilservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:services\\perfilservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\projetos\\bibliocantotcc\\bibliocanto\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\projetos\\bibliocantotcc\\bibliocanto\\controllers\\meuslivroscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:controllers\\meuslivroscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\projetos\\bibliocantotcc\\bibliocanto\\controllers\\denunciascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:controllers\\denunciascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\projetos\\bibliocantotcc\\bibliocanto\\communication\\saveperfilresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:communication\\saveperfilresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\projetos\\bibliocantotcc\\bibliocanto\\resources\\saveperfilresource.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:resources\\saveperfilresource.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\projetos\\bibliocantotcc\\bibliocanto\\services\\denunciasservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:services\\denunciasservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -55,106 +43,66 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "AppDbContext.cs",
-              "DocumentMoniker": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Context\\AppDbContext.cs",
-              "RelativeDocumentMoniker": "Context\\AppDbContext.cs",
-              "ToolTip": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Context\\AppDbContext.cs",
-              "RelativeToolTip": "Context\\AppDbContext.cs",
-              "ViewState": "AgIAAKgAAAAAAAAAAAAhwMYAAAAAAAAAAAAAAA==",
+              "Title": "PreferenciasController.cs",
+              "DocumentMoniker": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Controllers\\PreferenciasController.cs",
+              "RelativeDocumentMoniker": "Controllers\\PreferenciasController.cs",
+              "ToolTip": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Controllers\\PreferenciasController.cs",
+              "RelativeToolTip": "Controllers\\PreferenciasController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-25T00:32:26.555Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "MeusLivrosController.cs",
-              "DocumentMoniker": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Controllers\\MeusLivrosController.cs",
-              "RelativeDocumentMoniker": "Controllers\\MeusLivrosController.cs",
-              "ToolTip": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Controllers\\MeusLivrosController.cs",
-              "RelativeToolTip": "Controllers\\MeusLivrosController.cs",
-              "ViewState": "AgIAAK4AAAAAAAAAAAAIwLQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-25T00:08:41.734Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "PerfilController.cs",
-              "DocumentMoniker": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Controllers\\PerfilController.cs",
-              "RelativeDocumentMoniker": "Controllers\\PerfilController.cs",
-              "ToolTip": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Controllers\\PerfilController.cs",
-              "RelativeToolTip": "Controllers\\PerfilController.cs",
-              "ViewState": "AgIAAEkAAAAAAAAAAAAkwFQAAABKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-25T00:08:20.969Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "SavePerfilResponse.cs",
-              "DocumentMoniker": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Communication\\SavePerfilResponse.cs",
-              "RelativeDocumentMoniker": "Communication\\SavePerfilResponse.cs",
-              "ToolTip": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Communication\\SavePerfilResponse.cs",
-              "RelativeToolTip": "Communication\\SavePerfilResponse.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-24T23:49:14.427Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "SavePerfilResource.cs",
-              "DocumentMoniker": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Resources\\SavePerfilResource.cs",
-              "RelativeDocumentMoniker": "Resources\\SavePerfilResource.cs",
-              "ToolTip": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Resources\\SavePerfilResource.cs",
-              "RelativeToolTip": "Resources\\SavePerfilResource.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-24T23:50:18.777Z",
+              "WhenOpened": "2025-04-30T00:02:38.054Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "PerfilResource.cs",
-              "DocumentMoniker": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Resources\\PerfilResource.cs",
-              "RelativeDocumentMoniker": "Resources\\PerfilResource.cs",
-              "ToolTip": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Resources\\PerfilResource.cs",
-              "RelativeToolTip": "Resources\\PerfilResource.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
+              "Title": "PerfilController.cs",
+              "DocumentMoniker": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Controllers\\PerfilController.cs",
+              "RelativeDocumentMoniker": "Controllers\\PerfilController.cs",
+              "ToolTip": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Controllers\\PerfilController.cs",
+              "RelativeToolTip": "Controllers\\PerfilController.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAQwCsAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-24T23:49:33.234Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "PerfilService.cs",
-              "DocumentMoniker": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Services\\PerfilService.cs",
-              "RelativeDocumentMoniker": "Services\\PerfilService.cs",
-              "ToolTip": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Services\\PerfilService.cs",
-              "RelativeToolTip": "Services\\PerfilService.cs",
-              "ViewState": "AgIAACYAAAAAAAAAAAA5wEEAAAA2AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-24T23:35:48.906Z",
+              "WhenOpened": "2025-04-30T00:02:23.737Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "IPerfilService.cs",
-              "DocumentMoniker": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\IServices\\IPerfilService.cs",
-              "RelativeDocumentMoniker": "IServices\\IPerfilService.cs",
-              "ToolTip": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\IServices\\IPerfilService.cs",
-              "RelativeToolTip": "IServices\\IPerfilService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA5AAAAAAAAAA==",
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAIIAAAAAAAAAAAAjwJoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-24T23:33:22.768Z",
+              "WhenOpened": "2025-04-29T23:56:44.634Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DenunciasController.cs",
+              "DocumentMoniker": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Controllers\\DenunciasController.cs",
+              "RelativeDocumentMoniker": "Controllers\\DenunciasController.cs",
+              "ToolTip": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Controllers\\DenunciasController.cs",
+              "RelativeToolTip": "Controllers\\DenunciasController.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAADwvxgAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-26T00:18:14.15Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "DenunciasService.cs",
+              "DocumentMoniker": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Services\\DenunciasService.cs",
+              "RelativeDocumentMoniker": "Services\\DenunciasService.cs",
+              "ToolTip": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Services\\DenunciasService.cs",
+              "RelativeToolTip": "Services\\DenunciasService.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAzwDQAAABGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-26T00:05:53.776Z"
             }
           ]
         }

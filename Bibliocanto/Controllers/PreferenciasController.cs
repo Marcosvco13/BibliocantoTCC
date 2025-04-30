@@ -22,7 +22,7 @@ namespace Bibliocanto.Controllers
             _preferenciasService = preferenciasService;
         }
 
-        [HttpGet("{id:int}", Name = "GetById")]
+        [HttpGet("{id:int}")]
         public async Task<ActionResult<PreferenciasResource>> GetById(int id)
         {
 

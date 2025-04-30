@@ -11,6 +11,9 @@ import ResetPassword from '../screens/ResetPasswordScreen';
 import Lidos from '../screens/ReadScreen';
 import Relidos from '../screens/RereadScreen';
 import Resenhas from '../screens/ResenhaScreen';
+import OpcoesScreen from '../screens/OpcoesScreen';
+import SobreSite from '../screens/SobreSiteScreen';
+import PoliticaPrivacidade from '../screens/PoliticaPrivacidadeScreen';
 import { Image } from 'react-native';
 
 export type RootStackParamList = {
@@ -25,6 +28,9 @@ export type RootStackParamList = {
   ResetPassword: { email: string; code: string };
   Lidos: undefined;
   Relidos: undefined;
+  OpcoesScreen: undefined;
+  SobreSite: undefined;
+  PoliticaPrivacidade: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -56,6 +62,9 @@ export default function StackNavigator() {
       <Stack.Screen name="MyLibrary" component={MyLibrary} options={{ title: 'Seu Acervo', headerTitleAlign: 'center', headerBackVisible: false  }} />
       <Stack.Screen name="Lidos" component={Lidos} options={{ title: 'Seu Acervo', headerTitleAlign: 'center', headerBackVisible: false }} />
       <Stack.Screen name="Relidos" component={Relidos} options={{ title: 'Seu Acervo', headerTitleAlign: 'center', headerBackVisible: false }} />
+      <Stack.Screen name="OpcoesScreen" component={OpcoesScreen} options={{ title: 'Opções', headerBackVisible: false }} />
+      <Stack.Screen name="SobreSite" component={SobreSite} options={{ title: 'Sobre o bibliocanto', headerBackVisible: true }} />
+      <Stack.Screen name="PoliticaPrivacidade" component={PoliticaPrivacidade} options={{ title: 'Política de privacidade', headerBackVisible: true }} />
     </Stack.Navigator>
   );
 }

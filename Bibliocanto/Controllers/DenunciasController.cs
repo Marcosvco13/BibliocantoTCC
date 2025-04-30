@@ -21,8 +21,8 @@ namespace Bibliocanto.Controllers
             _mapper = mapper;
             _denunciasService = denunciasService;
         }
-
-        [HttpGet("{id:int}", Name = "GetById")]
+        
+        [HttpGet("{id:int}")]
         public async Task<ActionResult<DenunciasResource>> GetById(int id)
         {
 
