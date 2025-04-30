@@ -21,6 +21,11 @@ function PreCadastro() {
   const [generosSelecionados, setGenerosSelecionados] = useState([]);
 
   useEffect(() => {
+
+    // Limpar a chave 'autoresCriados' ao iniciar a página
+    localStorage.removeItem("autoresCriados");
+
+
     async function buscarGeneros() {
       try {
         const resposta = await api.getGeneros();
@@ -56,21 +61,30 @@ function PreCadastro() {
 
   const handleCadastrarAutores = async () => {
     try {
+      console.log("Iniciando processo de cadastro de autores...");
+      console.log("Autores do livro (da API):", autores);
+      console.log("Novos autores adicionados manualmente:", novosAutores);
+  
       const todosAutores = [...autores, ...novosAutores];
-
-      const autorIds = await api.cadastrarAutores(
-        todosAutores.map((nomeAutor) => ({ nomeAutor }))
-      );
-
-      const autoresCompletos = autorIds?.autorIds.map((id, index) => ({
+      console.log("Lista completa de autores a serem cadastrados (nomes):", todosAutores);
+  
+      const dadosParaAPI = todosAutores.map((nome) => ({ nome }));
+      console.log("Estrutura enviada para a API:", dadosParaAPI); // <- Aqui está o log detalhado
+  
+      const autorIds = await api.cadastrarAutores(dadosParaAPI);
+      console.log("Resposta da API com dados completos dos autores:", autorIds);
+  
+      const autoresCompletos = autorIds?.map((id, index) => ({
         id,
         nomeAutor: todosAutores[index],
-      }));      
-
+      }));
+  
       setAutorIdsCadastrados(autoresCompletos);
-
+      console.log("Autores cadastrados com sucesso:", autoresCompletos);
+  
       localStorage.setItem("autoresCriados", JSON.stringify(autoresCompletos));
-
+      console.log("Autores armazenados no localStorage.", autoresCompletos);
+      
       alert("Autores cadastrados com sucesso!");
     } catch (error) {
       console.error("Erro ao cadastrar autores:", error);
@@ -84,6 +98,7 @@ function PreCadastro() {
       return;
     }
     setNovosAutores([...novosAutores, novoAutor]);
+    console.log("Autor adicionado manualmente:", novoAutor);
     setNovoAutor("");
   };
 
@@ -215,7 +230,7 @@ function PreCadastro() {
 
 
               navigate(`/FinalizarCadastro`, {
-                state: {
+              state: {
                   livroData: { ...livro, id: livroId },
                 },
               });

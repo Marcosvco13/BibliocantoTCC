@@ -249,7 +249,7 @@ function CadastroLivro() {
           <Form.Control
             key={`author-${index}`}
             type="text"
-            defaultValue={author.nome}
+            defaultValue={author.nomeAutor}
             placeholder={`Author ${index + 1}`}
             className="mb-2"
             readOnly

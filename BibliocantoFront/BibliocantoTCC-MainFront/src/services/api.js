@@ -32,9 +32,26 @@ api.buscarLivroPorISBN = async function(isbn) {
 
 // Função para cadastrar um único autor
 api.cadastrarAutor = async (autor) => {
-    const response = await api.post("/Autores", autor);
-    return response.data; // Retorna o autor cadastrado com o ID
-  };
+    try {
+      console.log("Enviando dados para cadastrar autor:", autor);  // Log dos dados enviados
+      const response = await api.post(
+        "/api/Autores",
+        autor,
+        {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+            "Content-Type": "application/json"
+          }
+        }
+      );
+      console.log("Resposta da API ao cadastrar autor:", response.data);  // Log da resposta da API
+      return response.data; // Retorna o autor cadastrado com o ID
+    } catch (error) {
+      console.error("Erro ao cadastrar autor:", error);  // Log de erro, se houver
+      throw error;
+    }
+};
+
   
   // Função para cadastrar um único gênero
   api.cadastrarGenero = async (genero) => {
@@ -100,23 +117,29 @@ api.buscarGeneroPorNomeAjustado = async (nomeGenero) => {
 // Função para cadastrar múltiplos autores armazenados com verificação de duplicidade
 api.cadastrarAutores = async function(autoresArmazenados) {
     try {
+      console.log("Iniciando cadastro de autores...");
+      console.log("Autores recebidos para cadastro:", autoresArmazenados);  // Log para ver os dados recebidos
+  
       const autorIds = await Promise.all(autoresArmazenados.map(async (autor) => {
+        console.log(`Verificando autor: ${autor.nome}`);  // Log para cada autor
+  
         const autorExistente = await api.buscarAutorPorNomeAjustado(autor.nome);
         if (autorExistente) {
-          //console.log(`Autor já existe: ${autor.nome} com ID ${autorExistente.id}`);
-          return autorExistente.id; // Retorna o ID do autor existente
+          console.log(`Autor já existe: ${autor.nome} com ID ${autorExistente.id}`);  // Log caso o autor exista
+          return autorExistente.id;  // Retorna o ID do autor existente
         } else {
-          //console.log(`Cadastrando novo autor: ${autor.nome}`);
-          const novoAutor = await api.cadastrarAutor({ NomeAutor: autor.nome });
-          return novoAutor.id; // Retorna o ID do novo autor
+          console.log(`Cadastrando novo autor: ${autor.nome}`);  // Log caso o autor seja novo
+          const novoAutor = await api.cadastrarAutor({ nomeAutor: autor.nome });
+          console.log(`Novo autor cadastrado: ${autor.nome} com ID ${novoAutor.id}`);  // Log do novo autor
+          return novoAutor.id;  // Retorna o ID do novo autor
         }
       }));
   
-      console.log('Autores cadastrados com sucesso:', autorIds);
+      console.log('Autores cadastrados com sucesso:', autorIds);  // Log após o cadastro dos autores
       return autorIds;
   
     } catch (error) {
-      console.error('Erro ao cadastrar autores:', error);
+      console.error('Erro ao cadastrar autores:', error);  // Log para capturar erros
       throw error;
     }
   };  

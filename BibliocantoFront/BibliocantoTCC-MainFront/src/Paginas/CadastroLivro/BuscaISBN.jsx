@@ -120,7 +120,7 @@ export default function BuscaLivroIsbn() {
   };
 
   return (
-    <div className="divBuscaIsbn">
+    <div className={`divBuscaIsbn ${selectedLivro ? "divBuscaIsbnLivroSelecionado" : ""}`}>
       <div className="divTituloBuscaIsbn">
         {/* Título dinâmico baseado no estado do livro selecionado */}
         <h2 className="TituloBuscaIsbn">
@@ -132,7 +132,7 @@ export default function BuscaLivroIsbn() {
         </h2>
       </div>
 
-      <div className="formBuscaIsbn">
+      <div className={`formBuscaIsbn ${selectedLivro ? "divLivroSelecionado" : ""}`}>
         {/* Exibe o campo de entrada de ISBN enquanto nenhum livro foi selecionado */}
         {!selectedLivro && (
           <div className="divInputBuscaIsbn">
@@ -200,9 +200,11 @@ export default function BuscaLivroIsbn() {
                   <div className="modal-text">
                    <strong>Gênero:</strong>  {generos.join(", ") || "Gênero não disponível"}
                   </div>
+                  
                 )}
                 <div className="modal-text">
-                  <strong>Editora:</strong>{" "}
+                  <strong>Editora:</strong>
+                  {" "}
                   {isFromBrasilAPI
                     ? selectedLivro.publisher
                     : selectedLivro?.editoras?.nomeEditora ||
