@@ -33,7 +33,6 @@ api.buscarLivroPorISBN = async function(isbn) {
 // Função para cadastrar um único autor
 api.cadastrarAutor = async (autor) => {
     try {
-      console.log("Enviando dados para cadastrar autor:", autor);  // Log dos dados enviados
       const response = await api.post(
         "/api/Autores",
         autor,
@@ -44,20 +43,12 @@ api.cadastrarAutor = async (autor) => {
           }
         }
       );
-      console.log("Resposta da API ao cadastrar autor:", response.data);  // Log da resposta da API
       return response.data; // Retorna o autor cadastrado com o ID
     } catch (error) {
       console.error("Erro ao cadastrar autor:", error);  // Log de erro, se houver
       throw error;
     }
 };
-
-  
-  // Função para cadastrar um único gênero
-  api.cadastrarGenero = async (genero) => {
-    const response = await api.post("/Generos", genero);
-    return response.data; // Retorna o gênero cadastrado com o ID
-  };
   
 // Função para normalizar o nome (para autores e gêneros)
 function normalizarNome(nome) {
@@ -90,52 +81,22 @@ api.buscarAutorPorNomeAjustado = async (nomeAutor) => {
     throw error;
   }
 };
-
-// Função para buscar gênero existente com verificação robusta e token de autenticação
-api.buscarGeneroPorNomeAjustado = async (nomeGenero) => {
-    try {
-      const response = await api.get("/api/Generos", {
-        headers: {
-          Authorization: `Bearer ${getToken()}` // Inclui o token de autorização
-        }
-      });
-      const generos = response.data;
-      const nomeNormalizado = normalizarNome(nomeGenero);
-  
-      // Verifica se já existe um gênero com o nome normalizado
-      const generoExistente = generos.find(genero => 
-        normalizarNome(genero.nomegenero) === nomeNormalizado
-      );
-  
-      return generoExistente || null; // Retorna o gênero encontrado ou null
-    } catch (error) {
-      console.error("Erro ao buscar gênero:", error);
-      throw error;
-    }
-  };
   
 // Função para cadastrar múltiplos autores armazenados com verificação de duplicidade
 api.cadastrarAutores = async function(autoresArmazenados) {
     try {
-      console.log("Iniciando cadastro de autores...");
-      console.log("Autores recebidos para cadastro:", autoresArmazenados);  // Log para ver os dados recebidos
   
       const autorIds = await Promise.all(autoresArmazenados.map(async (autor) => {
-        console.log(`Verificando autor: ${autor.nome}`);  // Log para cada autor
   
         const autorExistente = await api.buscarAutorPorNomeAjustado(autor.nome);
         if (autorExistente) {
-          console.log(`Autor já existe: ${autor.nome} com ID ${autorExistente.id}`);  // Log caso o autor exista
           return autorExistente.id;  // Retorna o ID do autor existente
         } else {
-          console.log(`Cadastrando novo autor: ${autor.nome}`);  // Log caso o autor seja novo
           const novoAutor = await api.cadastrarAutor({ nomeAutor: autor.nome });
-          console.log(`Novo autor cadastrado: ${autor.nome} com ID ${novoAutor.id}`);  // Log do novo autor
           return novoAutor.id;  // Retorna o ID do novo autor
         }
       }));
-  
-      console.log('Autores cadastrados com sucesso:', autorIds);  // Log após o cadastro dos autores
+
       return autorIds;
   
     } catch (error) {
@@ -152,15 +113,11 @@ api.cadastrarAutores = async function(autoresArmazenados) {
             idAutor: Number(autorIdSingle),
         };
 
-        console.log('Dados enviados para a API:', autorLivroData); // Log para verificar os dados
-
         const response = await axios.post('https://localhost:44331/api/AutorLivro', autorLivroData, {
             headers: {
                 Authorization: `Bearer ${getToken()}` // Inclui o token de autorização
             }
         });
-
-        console.log('Livro / Autor cadastrada com sucesso:', response.data);
         return response.data.id; // Retorna o ID da associação, se necessário
     } catch (error) {
         console.error('Erro ao cadastrar Livro / Autor:', error);
@@ -176,15 +133,12 @@ api.cadastrarLivroGenero = async function (idLivro, generoIdSingle) {
             idGenero: Number(generoIdSingle),
         };
 
-        console.log('Dados enviados para a API:', generoLivroData); // Log para verificar os dados
-
         const response = await axios.post('https://localhost:44331/api/GenerosLivro', generoLivroData, {
             headers: {
                 Authorization: `Bearer ${getToken()}` // Inclui o token de autorização
             }
         });
 
-        console.log('Livro / Genero associado com sucesso:', response.data);
         return response.data.id; // Retorna o ID da associação, se necessário
     } catch (error) {
         console.error('Erro ao associar Livro / Genero:', error);
@@ -212,7 +166,6 @@ api.cadastrarEditora = async function (nomeEditora) {
 
         } catch (error) {
             if (error.response && error.response.status === 404) {
-                console.log(`Editora com o nome "${nomeEditora}" não encontrada, procedendo com o cadastro.`);
             } else {
                 console.error('Erro ao verificar editora:', error);
                 throw error;
@@ -221,7 +174,6 @@ api.cadastrarEditora = async function (nomeEditora) {
 
         // Se a editora já existe, retorna o ID
         if (editoraExistente) {
-            //console.log('Editora já existente:', editoraExistente);
             return editoraExistente.id;
         }
 
@@ -235,7 +187,6 @@ api.cadastrarEditora = async function (nomeEditora) {
                 }
             }
         );
-        //console.log('Editora cadastrada com sucesso:', response.data);
         return response.data.id;
 
     } catch (error) {
@@ -260,7 +211,6 @@ api.PreCadastroLivro = async function (titulo, isbn, editoraId) {
                 }
             }
         );
-        console.log('Livro pré-cadastrado com sucesso:', response.data);
         return response.data.id;
     } catch (error) {
         console.error('Erro ao pré-cadastrar livro:', error);
@@ -288,45 +238,45 @@ api.getLivrosByGenero = async function(generoId) {
 };
 
 // Método GET para buscar uma editora por ID
-api.getEditoraByID = async function(editoraid) {
-    try {
-        // Ajuste da URL para usar um endpoint com ID direto na URL
-        const response = await api.get(`/api/Editoras/${editoraid}`, {
-            headers: {
-                Authorization: `Bearer ${getToken()}` // Incluindo o token de autorização
-            }
-        });
+// api.getEditoraByID = async function(editoraid) {
+//     try {
+//         // Ajuste da URL para usar um endpoint com ID direto na URL
+//         const response = await api.get(`/api/Editoras/${editoraid}`, {
+//             headers: {
+//                 Authorization: `Bearer ${getToken()}` // Incluindo o token de autorização
+//             }
+//         });
         
-        // Verifica se a resposta contém dados
-        if (response && response.data) {
-            return response.data;
-        } else {
-            console.error("No data in response");
-        }
-    } catch (error) {
-        console.error("Erro ao buscar a editora com ID:", error);
-        throw error;
-    }
-};
+//         // Verifica se a resposta contém dados
+//         if (response && response.data) {
+//             return response.data;
+//         } else {
+//             console.error("No data in response");
+//         }
+//     } catch (error) {
+//         console.error("Erro ao buscar a editora com ID:", error);
+//         throw error;
+//     }
+// };
 
 // Método GET para buscar id generos de pelo nome
-api.getGeneroByName = async function(nameGenero) {
-    try {
-        const response = await api.get(`/api/Generos/GeneroByName?name=${nameGenero}`, {
-            headers: {
-                Authorization: `Bearer ${getToken()}`
-            }
-        });
-        if (response && response.data) {
-            return response.data;
-        } else {
-            console.error("No data in response");
-        }
-    } catch (error) {
-        console.error("Erro ao buscar o generos:", error);
-        throw error;
-    }
-};
+// api.getGeneroByName = async function(nameGenero) {
+//     try {
+//         const response = await api.get(`/api/Generos/GeneroByName?name=${nameGenero}`, {
+//             headers: {
+//                 Authorization: `Bearer ${getToken()}`
+//             }
+//         });
+//         if (response && response.data) {
+//             return response.data;
+//         } else {
+//             console.error("No data in response");
+//         }
+//     } catch (error) {
+//         console.error("Erro ao buscar o generos:", error);
+//         throw error;
+//     }
+// };
 
 //metodo get para buscar os autores do livro
 api.buscarAutoresPorLivro = async function(idLivro) {
@@ -412,7 +362,6 @@ api.getEditoraByName = async function(nameEditora) {
                 Authorization: `Bearer ${getToken()}`
             }
         });
-        //console.log("Resposta da API:", response.data); // Log da resposta da API
         if (response && response.data) {
             return response.data; // Presumindo que a resposta retorna o ID da editora
         } else {
@@ -425,23 +374,23 @@ api.getEditoraByName = async function(nameEditora) {
 };
 
 // Método GET para buscar id autor pelo nome
-api.getAutorByName = async function(nameAutor) {
-    try {
-        const response = await api.get(`/api/Autores/AutorByName?name=${nameAutor}`, {
-            headers: {
-                Authorization: `Bearer ${getToken()}`
-            }
-        });
-        if (response && response.data) {
-            return response.data;
-        } else {
-            console.error("No data in response");
-        }
-    } catch (error) {
-        console.error("Erro ao buscar o generos:", error);
-        throw error;
-    }
-};
+// api.getAutorByName = async function(nameAutor) {
+//     try {
+//         const response = await api.get(`/api/Autores/AutorByName?name=${nameAutor}`, {
+//             headers: {
+//                 Authorization: `Bearer ${getToken()}`
+//             }
+//         });
+//         if (response && response.data) {
+//             return response.data;
+//         } else {
+//             console.error("No data in response");
+//         }
+//     } catch (error) {
+//         console.error("Erro ao buscar o generos:", error);
+//         throw error;
+//     }
+// };
 
 // Métodos GET para detalhes do livro pelo nome
 api.getLivroByNomeLivro = async function(NomeLivro) {
@@ -516,41 +465,39 @@ api.getGeneros = async function() {
     }
 };
 
-api.getAutores = async function(setAutores) {
-    try {
-        const response = await api.get('/api/Autores', {
-            headers: {
-                Authorization: `Bearer ${getToken()}`
-            }
-        });
-        if (response && response.data) {
-            setAutores(response.data);
-            //console.log(response.data);
-        } else {
-            console.error("No data in response");
-        }
-    } catch (error) {
-        console.error("Erro ao buscar os autores:", error);
-    }
-};
+// api.getAutores = async function(setAutores) {
+//     try {
+//         const response = await api.get('/api/Autores', {
+//             headers: {
+//                 Authorization: `Bearer ${getToken()}`
+//             }
+//         });
+//         if (response && response.data) {
+//             setAutores(response.data);
+//         } else {
+//             console.error("No data in response");
+//         }
+//     } catch (error) {
+//         console.error("Erro ao buscar os autores:", error);
+//     }
+// };
 
-api.getEditoras = async function(setEditoras) {
-    try {
-        const response = await api.get('/api/Editoras', {
-            headers: {
-                Authorization: `Bearer ${getToken()}`
-            }
-        });
-        if (response && response.data) {
-            setEditoras(response.data);
-            //console.log(response.data);
-        } else {
-            console.error("No data in response");
-        }
-    } catch (error) {
-        console.error("Erro ao buscar os editoras:", error);
-    }
-};
+// api.getEditoras = async function(setEditoras) {
+//     try {
+//         const response = await api.get('/api/Editoras', {
+//             headers: {
+//                 Authorization: `Bearer ${getToken()}`
+//             }
+//         });
+//         if (response && response.data) {
+//             setEditoras(response.data);
+//         } else {
+//             console.error("No data in response");
+//         }
+//     } catch (error) {
+//         console.error("Erro ao buscar os editoras:", error);
+//     }
+// };
 
 // API para o email do usuario pelo id
 api.EmailUserByID = async function(idUser) {
@@ -574,7 +521,6 @@ api.cadastrarLivro = async function(livroData) {
                 Authorization: `Bearer ${getToken()}`
             }
         });
-        console.log('Livro cadastrado com sucesso:', response.data);
         return response.data;
     } catch (error) {
         console.error("Erro ao cadastrar o livro:", error);
@@ -590,11 +536,8 @@ api.putLivro = async function(id, livroData) {
         Authorization: `Bearer ${getToken()}`
       }
     };
-  
-    console.log("Dados enviados para atualização do livro:", livroData); // Log dos dados
     try {
       const response = await api.put(`/api/Livros/${id}`, livroData, config);
-      console.log("Livro atualizado com sucesso:", response.data);
       return response.data;
     } catch (error) {
       console.error("Erro ao atualizar o livro:", error);
@@ -614,7 +557,6 @@ api.cadastrarResenha = async function(resenhaData) {
                 Authorization: `Bearer ${getToken()}`
             }
         });
-        console.log('Resenha enviada com sucesso:', response.data);
         return response.data;
     } catch (error) {
         console.error("Erro ao enviar a resenha:", error);
@@ -639,23 +581,23 @@ api.putResenha = async function(idResenha, AtualizacaoResenhaData) {
   };  
 
 // Métodos GET para resenhas pelo id do livro e id do usuario
-api.getResenhaByUserLivro = async function(idUser, id) {
-    try {
-        const response = await api.get(`/api/Resenha/ResenhaByUserLivro?idUser=${idUser}&idLivro=${id}`, {
-            headers: {
-                Authorization: `Bearer ${getToken()}`
-            }
-        });
-        if (response && response.data) {
-            return response.data;
-        } else {
-            console.error("No data in response");
-        }
-    } catch (error) {
-        console.error("Erro ao buscar a resenha:", error);
-        throw error;
-    }
-};
+// api.getResenhaByUserLivro = async function(idUser, id) {
+//     try {
+//         const response = await api.get(`/api/Resenha/ResenhaByUserLivro?idUser=${idUser}&idLivro=${id}`, {
+//             headers: {
+//                 Authorization: `Bearer ${getToken()}`
+//             }
+//         });
+//         if (response && response.data) {
+//             return response.data;
+//         } else {
+//             console.error("No data in response");
+//         }
+//     } catch (error) {
+//         console.error("Erro ao buscar a resenha:", error);
+//         throw error;
+//     }
+// };
 
 // Métodos GET para resenhas pelo id do livro
 api.getResenhaByIdLivro = async function(id) {
@@ -682,20 +624,15 @@ api.DeleteResenha = async function (idResenha) {
         // Primeira confirmação antes de iniciar qualquer processo
         const confirmarInicial = window.confirm("Você tem certeza que deseja excluir esta resenha?");
         if (!confirmarInicial) {
-            console.log("Exclusão cancelada pelo usuário na primeira confirmação.");
             return; // Interrompe se o usuário cancelar
         }
-
-        console.log(`Iniciando exclusão da resenha com ID ${idResenha}`);
         
         // Verifica se há comentários para a resenha
         let comentarios = [];
         try {
             comentarios = await api.ComentarioByResenha(idResenha);
-            console.log('Comentários encontrados:', comentarios);
         } catch (error) {
             if (error.response && error.response.status === 404) {
-                console.log("Nenhum comentário encontrado para essa resenha. Prosseguindo com a exclusão.");
             } else {
                 console.error("Erro ao buscar comentários:", error);
                 throw error;
@@ -709,20 +646,17 @@ api.DeleteResenha = async function (idResenha) {
             );
 
             if (!confirmarComentarios) {
-                console.log("Exclusão cancelada pelo usuário após ver comentários.");
                 return; // Interrompe se o usuário cancelar
             }
 
             // Exclui os próprios comentários (os likes são tratados dentro da DeleteComentario)
             for (let comentario of comentarios) {
                 await api.DeleteComentario(comentario.id);
-                console.log(`Comentário ID ${comentario.id} excluído.`);
             }
         }
 
         // Verifica se há likes para a resenha
         const likesResenha = await api.LikeResenhaByResenha(idResenha);
-        console.log(`Likes encontrados para a resenha ID ${idResenha}:`, likesResenha);
 
         if (likesResenha && likesResenha.length > 0) {
             for (let likeResenha of likesResenha) {
@@ -731,14 +665,11 @@ api.DeleteResenha = async function (idResenha) {
         }
 
         // Prossegue com a exclusão da resenha
-        console.log(`Prosseguindo com a exclusão da resenha ID ${idResenha}`);
         const response = await api.delete(`/api/Resenha/${idResenha}`, {
             headers: {
                 Authorization: `Bearer ${getToken()}`
             }
         });
-
-        console.log("Resenha excluída com sucesso:", response.data);
         return response.data;
     } catch (error) {
         console.error("Erro ao excluir a resenha:", error);
@@ -756,7 +687,6 @@ api.cadastrarLikeResenha = async function(likeDataResenha) {
                 Authorization: `Bearer ${getToken()}`
             }
         });
-        console.log('Like na Resenha enviado com sucesso:', response.data);
         return response.data;
     } catch (error) {
         console.error("Erro ao enviar o like para a resenha:", error);
@@ -772,7 +702,6 @@ api.LikeResenhaByUserResenha = async function(idUser, idResenha) {
                 Authorization: `Bearer ${getToken()}`
             }
         });
-        console.log('Like do usuario na Resenha encontrado com sucesso:', response.data);
         return response.data;
     } catch (error) {
         console.error("Erro ao buscar o like do usuario na resenha:", error);
@@ -806,7 +735,6 @@ api.DeleteLikeResenha = async function(idLikeResenha) {
                 Authorization: `Bearer ${getToken()}`
             }
         });
-        console.log('Like na Resenha excluido com sucesso:', response.data);
         return response.data;
     } catch (error) {
         console.error("Erro ao excluir o like para a resenha:", error);
@@ -856,7 +784,6 @@ api.CadastrarComentario = async function(ComentarioData) {
                 Authorization: `Bearer ${getToken()}`
             }
         });
-        console.log('Comentário cadastrado com sucesso:', response.data);
         return response.data;
     } catch (error) {
         console.error("Erro ao cadastrar o comentário:", error);
@@ -867,17 +794,12 @@ api.CadastrarComentario = async function(ComentarioData) {
 // API para excluir um comentário de uma resenha
 api.DeleteComentario = async function(idComentario) {
     try {
-        console.log(`Iniciando exclusão do comentário com ID ${idComentario}`);
-
         // Verifica se há likes no comentário
         const likes = await api.LikeComentarioByComentario(idComentario);
-        console.log(`Likes encontrados para o comentário ID ${idComentario}:`, likes);
-
         // Se houver likes, exclui cada um deles
         if (likes && likes.length > 0) {
             for (let like of likes) {
                 await api.DeleteLikeComentario(like.id);
-                console.log(`Like ID ${like.id} excluído.`);
             }
         }
 
@@ -887,8 +809,6 @@ api.DeleteComentario = async function(idComentario) {
                 Authorization: `Bearer ${getToken()}`
             }
         });
-
-        console.log('Comentário excluído com sucesso:', response.data);
         return response.data;
 
     } catch (error) {
@@ -922,7 +842,6 @@ api.DeleteMeuLivro = async function(idBiblioteca) {
                 Authorization: `Bearer ${getToken()}`
             }
         });
-        //console.log('Livro na biblioteca excluido com sucesso:', response.data);
         return response.data;
     } catch (error) {
         console.error("Erro ao excluir o Livro na biblioteca:", error);
@@ -967,11 +886,8 @@ api.ConfirmaByUserLivro = async function (idUser, idLivro) {
         Authorization: `Bearer ${getToken()}`
       }
     };
-  
-    //console.log("Dados enviados para atualização do da biblioteca:", MeusLivrosLidoData); // Log dos dados
     try {
       const response = await api.put(`/api/MeusLivros/lido/${RegistroLivroNaBiblioteca}`, MeusLivrosLidoData, config);
-      //console.log("Livro da Biblioteca atualizado com sucesso:", response.data);
       return response.data;
     } catch (error) {
       console.error("Erro ao atualizar o livro da biblioteca:", error);
@@ -986,11 +902,8 @@ api.ConfirmaByUserLivro = async function (idUser, idLivro) {
         Authorization: `Bearer ${getToken()}`
       }
     };
-  
-    //console.log("Dados enviados para atualização do da biblioteca:", MeusLivrosRelidoData); // Log dos dados
     try {
       const response = await api.put(`/api/MeusLivros/relido/${RegistroLivroNaBiblioteca}`, MeusLivrosRelidoData, config);
-      //console.log("Livro da Biblioteca atualizado com sucesso:", response.data);
       return response.data;
     } catch (error) {
       console.error("Erro ao atualizar o livro da biblioteca:", error);
@@ -1008,7 +921,6 @@ api.cadastrarLikeComentario = async function(likeDataComentario) {
                 Authorization: `Bearer ${getToken()}`
             }
         });
-        console.log('Like no comentario enviado com sucesso:', response.data);
         return response.data;
     } catch (error) {
         console.error("Erro ao enviar o like para o comentario:", error);
@@ -1024,7 +936,6 @@ api.LikeComentarioByUserComentario = async function(idUser, idComentario) {
                 Authorization: `Bearer ${getToken()}`
             }
         });
-        console.log('Like do usuario na Comentario encontrado com sucesso:', response.data);
         return response.data;
     } catch (error) {
         console.error("Erro ao buscar o like do usuario no Comentario:", error);
@@ -1040,7 +951,6 @@ api.DeleteLikeComentario = async function(idLikeComentario) {
                 Authorization: `Bearer ${getToken()}`
             }
         });
-        console.log('Like no comentario excluido com sucesso:', response.data);
         return response.data;
     } catch (error) {
         console.error("Erro ao excluir o like para o comentario:", error);
@@ -1123,11 +1033,8 @@ api.PutAvaliacao = async function(idAvaliacao, AvaliacaoData) {
         Authorization: `Bearer ${getToken()}`
       }
     };
-  
-    //console.log("Dados enviados para atualização da avaliacao:", AvaliacaoData); // Log dos dados
     try {
       const response = await api.put(`/api/Avaliacao/${idAvaliacao}`, AvaliacaoData, config);
-      //console.log("avaliacao atualizado com sucesso:", response.data);
       return response.data;
     } catch (error) {
       console.error("Erro ao atualizar a avaliacao:", error);

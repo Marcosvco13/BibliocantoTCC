@@ -61,18 +61,12 @@ function PreCadastro() {
 
   const handleCadastrarAutores = async () => {
     try {
-      console.log("Iniciando processo de cadastro de autores...");
-      console.log("Autores do livro (da API):", autores);
-      console.log("Novos autores adicionados manualmente:", novosAutores);
   
       const todosAutores = [...autores, ...novosAutores];
-      console.log("Lista completa de autores a serem cadastrados (nomes):", todosAutores);
   
       const dadosParaAPI = todosAutores.map((nome) => ({ nome }));
-      console.log("Estrutura enviada para a API:", dadosParaAPI); // <- Aqui está o log detalhado
   
       const autorIds = await api.cadastrarAutores(dadosParaAPI);
-      console.log("Resposta da API com dados completos dos autores:", autorIds);
   
       const autoresCompletos = autorIds?.map((id, index) => ({
         id,
@@ -80,12 +74,9 @@ function PreCadastro() {
       }));
   
       setAutorIdsCadastrados(autoresCompletos);
-      console.log("Autores cadastrados com sucesso:", autoresCompletos);
   
       localStorage.setItem("autoresCriados", JSON.stringify(autoresCompletos));
-      console.log("Autores armazenados no localStorage.", autoresCompletos);
-      
-      alert("Autores cadastrados com sucesso!");
+
     } catch (error) {
       console.error("Erro ao cadastrar autores:", error);
       alert("Erro ao cadastrar autores.");
@@ -98,7 +89,6 @@ function PreCadastro() {
       return;
     }
     setNovosAutores([...novosAutores, novoAutor]);
-    console.log("Autor adicionado manualmente:", novoAutor);
     setNovoAutor("");
   };
 

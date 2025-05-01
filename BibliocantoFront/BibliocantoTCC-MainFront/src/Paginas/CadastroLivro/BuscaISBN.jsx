@@ -64,8 +64,6 @@ export default function BuscaLivroIsbn() {
       setIsFromBrasilAPI(true);
       setAutores(livroBrasilAPI.authors || []);
       setGeneros([]);
-
-      console.log(livroBrasilAPI);
     } catch (error) {
       alert(
         "Livro não encontrado nem no banco de dados local nem na BrasilAPI!"
@@ -94,7 +92,6 @@ export default function BuscaLivroIsbn() {
       }
 
       setGeneros(nomesGeneros); // Armazena os nomes dos gêneros no estado
-      console.log("Gêneros do livro:", nomesGeneros); // Log dos gêneros para depuração
     } catch (error) {
       console.error("Erro ao processar os gêneros do livro:", error);
     }
@@ -113,7 +110,6 @@ export default function BuscaLivroIsbn() {
       }
 
       setAutores(nomesAutores); // Armazena os nomes dos autores no estado
-      console.log("Autores do livro:", nomesAutores); // Log dos autores para depuração
     } catch (error) {
       console.error("Erro ao processar os autores do livro:", error);
     }

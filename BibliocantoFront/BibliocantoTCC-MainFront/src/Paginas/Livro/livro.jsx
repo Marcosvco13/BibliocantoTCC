@@ -286,7 +286,6 @@ function Livro() {
 
       // Envia o comentário para a API
       await api.CadastrarComentario(comentarioData);
-      alert("Comentário enviado com sucesso!");
 
       // Limpa o campo de comentário após o envio
       setComentarios((prev) => ({ ...prev, [idResenha]: "" }));

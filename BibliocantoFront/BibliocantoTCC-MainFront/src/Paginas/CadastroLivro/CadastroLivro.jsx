@@ -26,11 +26,9 @@ function CadastroLivro() {
   
   useEffect(() => {
     const autoresCriados = JSON.parse(localStorage.getItem("autoresCriados")) || [];
-    console.log("Autores recuperados do localStorage:", autoresCriados);
     setAutores(autoresCriados);
   
     const generosCriados = JSON.parse(localStorage.getItem("generosCriados")) || [];
-    console.log("Gêneros recuperados do localStorage:", generosCriados);
     setGeneros(generosCriados);
   }, []);
   
@@ -40,7 +38,6 @@ function CadastroLivro() {
       carregarDadosLivro();
       setDescricao(livro.synopsis || "");
       setCaminhoImagem(livro.cover_url || "");
-      //console.log("Dados do livro recebidos na página de cadastro:", livro);
     } else {
       console.error("Nenhum dado foi recebido para carregar o livro.");
     }
@@ -70,13 +67,11 @@ function CadastroLivro() {
   // Função para buscar o ID da editora pelo nome
   const RequisicaoEditora = async (editoraNome) => {
     try {
-      //console.log("Buscando editora com nome:", editoraNome);
       const editoraData = await api.getEditoraByName(editoraNome);
 
       if (editoraData && editoraData.length > 0) {
         const editora = editoraData[0];
         if (editora.id) {
-          //console.log("ID da Editora:", editora.id);
           return editora.id;
         } else {
           console.error("Editora não encontrada ou ID não disponível");
@@ -109,7 +104,6 @@ function CadastroLivro() {
       };
 
       const updatedBook = await api.putLivro(livro.id, livroData);
-      //console.log("Livro atualizado com sucesso:", updatedBook);
     } catch (error) {
       console.error("Erro ao atualizar o livro:", error);
     }
@@ -121,13 +115,9 @@ function CadastroLivro() {
 
       if (Array.isArray(autores) && autores.length > 0) {
 
-        //console.log("Lista de autores a serem associados:", autores); // Log para verificar os autores
-
         for (const autor of autores) {
-          //console.log("Enviando ID do autor:", autor.id);
           await api.cadastrarLivroAutor(idLivro, autor.id); // Usando o ID do autor
         }
-        alert("Todos os autores foram associados ao livro com sucesso!");
       } else {
         alert("Nenhum autor selecionado para associar ao livro.");
       }
@@ -146,10 +136,8 @@ function CadastroLivro() {
 
       if (Array.isArray(generos) && generos.length > 0) {
         for (const genero of generos) {
-          //console.log("Enviando ID do genero:", genero.id);
           await api.cadastrarLivroGenero(idLivro, genero.id); // Usando o ID do gênero
         }
-        alert("Todos os generos foram associados ao livro com sucesso!");
       } else {
         alert("Nenhum genero selecionado para associar ao livro.");
       }
