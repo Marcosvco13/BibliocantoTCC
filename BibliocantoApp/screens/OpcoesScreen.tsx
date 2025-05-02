@@ -42,10 +42,10 @@ export default function OpcoesScreen() {
                 const data = { idUser };
                 const response = await api.post('api/Perfil', data);
 
-                if (response.status === 200) {
+                if (response?.status === 200) {
                     navigation.navigate('Perfil');
                 } else {
-                    console.error('Erro ao criar perfil:', response.data);
+                    console.error('Erro ao criar perfil:', response?.data);
                     Alert.alert('Erro', 'Não foi possível criar o perfil. Tente novamente mais tarde.');
                 }
             }
