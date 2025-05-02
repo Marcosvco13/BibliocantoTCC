@@ -2476,6 +2476,32 @@
     ]
   },
   {
+    "ContainingType": "Bibliocanto.Controllers.PerfilController",
+    "Method": "GetByUserBoolean",
+    "RelativePath": "api/Perfil/GetByUserBoolean",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idUser",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "Bibliocanto.Controllers.PreferenciasController",
     "Method": "PostAsync",
     "RelativePath": "api/Preferencias",

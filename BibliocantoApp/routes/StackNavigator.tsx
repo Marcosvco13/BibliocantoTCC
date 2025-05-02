@@ -14,6 +14,7 @@ import Resenhas from '../screens/ResenhaScreen';
 import OpcoesScreen from '../screens/OpcoesScreen';
 import SobreSite from '../screens/SobreSiteScreen';
 import PoliticaPrivacidade from '../screens/PoliticaPrivacidadeScreen';
+import Perfil from '../screens/PerfilScreen';
 import { Image } from 'react-native';
 
 export type RootStackParamList = {
@@ -31,6 +32,7 @@ export type RootStackParamList = {
   OpcoesScreen: undefined;
   SobreSite: undefined;
   PoliticaPrivacidade: undefined;
+  Perfil: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -65,6 +67,7 @@ export default function StackNavigator() {
       <Stack.Screen name="OpcoesScreen" component={OpcoesScreen} options={{ title: 'Opções', headerBackVisible: false }} />
       <Stack.Screen name="SobreSite" component={SobreSite} options={{ title: 'Sobre o bibliocanto', headerBackVisible: true }} />
       <Stack.Screen name="PoliticaPrivacidade" component={PoliticaPrivacidade} options={{ title: 'Política de privacidade', headerBackVisible: true }} />
+      <Stack.Screen name="Perfil" component={Perfil} options={{ title: 'Dados do Perfil', headerBackVisible: true }} />
     </Stack.Navigator>
   );
 }

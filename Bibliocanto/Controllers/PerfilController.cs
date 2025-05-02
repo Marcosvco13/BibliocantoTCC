@@ -41,6 +41,20 @@ namespace Bibliocanto.Controllers
             }
         }
 
+        [HttpGet("GetByUserBoolean")]
+        public async Task<ActionResult<bool>> GetByUserBoolean(string idUser)
+        {
+            try
+            {
+                var perfilUser = await _perfilService.GetByUser(idUser);
+                return perfilUser != null;
+            }
+            catch
+            {
+                return BadRequest("Request inválido");
+            }
+        }
+
         [HttpGet("{id:int}")]
         public async Task<ActionResult<PerfilResource>> GetById(int id)
         {

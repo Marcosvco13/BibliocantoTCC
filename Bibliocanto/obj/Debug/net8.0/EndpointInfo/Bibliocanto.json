@@ -4071,6 +4071,44 @@
         }
       }
     },
+    "/api/Perfil/GetByUserBoolean": {
+      "get": {
+        "tags": [
+          "Perfil"
+        ],
+        "parameters": [
+          {
+            "name": "idUser",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Perfil/{id}": {
       "get": {
         "tags": [

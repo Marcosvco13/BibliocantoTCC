@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, TouchableOpacity, Text, Image, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Text, Image, StyleSheet, Alert } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
 import { RootStackParamList } from '../routes/StackNavigator';
 import api from '../services/api';
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { AxiosError } from 'axios';
 import NavBar from "../components/NavBar";
 
 export default function OpcoesScreen() {
@@ -29,6 +28,33 @@ export default function OpcoesScreen() {
         navigation.navigate('Login');
     };
 
+    const verificaPerfil = async () => {
+        const idUser = await SecureStore.getItemAsync('IdUser');
+
+        try {
+            const response = await api.get('api/Perfil/GetByUserBoolean', {
+                params: { idUser: idUser },
+            });
+
+            if (response.data === true) {
+                navigation.navigate('Perfil');
+            } else {
+                const data = { idUser };
+                const response = await api.post('api/Perfil', data);
+
+                if (response.status === 200) {
+                    navigation.navigate('Perfil');
+                } else {
+                    console.error('Erro ao criar perfil:', response.data);
+                    Alert.alert('Erro', 'Não foi possível criar o perfil. Tente novamente mais tarde.');
+                }
+            }
+        } catch (error) {
+            console.error('Erro inesperado:', error);
+            Alert.alert('Erro', 'Ocorreu um erro inesperado. Tente novamente mais tarde.');
+        }
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -40,7 +66,7 @@ export default function OpcoesScreen() {
             </View>
 
             <View style={styles.optionsContainer}>
-                <TouchableOpacity style={styles.button} onPress={() => console.log('Perfil')}>
+                <TouchableOpacity style={styles.button} onPress={verificaPerfil}>
                     <Icon name="person" style={styles.iconDefault} />
                     <Text style={styles.buttonText}>Perfil do usuário</Text>
                 </TouchableOpacity>
@@ -109,5 +135,5 @@ const styles = StyleSheet.create({
         fontSize: 24,
         color: '#333',
         marginRight: 10,
-      },
+    },
 });
