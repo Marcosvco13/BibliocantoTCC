@@ -237,47 +237,6 @@ api.getLivrosByGenero = async function(generoId) {
     }
 };
 
-// Método GET para buscar uma editora por ID
-// api.getEditoraByID = async function(editoraid) {
-//     try {
-//         // Ajuste da URL para usar um endpoint com ID direto na URL
-//         const response = await api.get(`/api/Editoras/${editoraid}`, {
-//             headers: {
-//                 Authorization: `Bearer ${getToken()}` // Incluindo o token de autorização
-//             }
-//         });
-        
-//         // Verifica se a resposta contém dados
-//         if (response && response.data) {
-//             return response.data;
-//         } else {
-//             console.error("No data in response");
-//         }
-//     } catch (error) {
-//         console.error("Erro ao buscar a editora com ID:", error);
-//         throw error;
-//     }
-// };
-
-// Método GET para buscar id generos de pelo nome
-// api.getGeneroByName = async function(nameGenero) {
-//     try {
-//         const response = await api.get(`/api/Generos/GeneroByName?name=${nameGenero}`, {
-//             headers: {
-//                 Authorization: `Bearer ${getToken()}`
-//             }
-//         });
-//         if (response && response.data) {
-//             return response.data;
-//         } else {
-//             console.error("No data in response");
-//         }
-//     } catch (error) {
-//         console.error("Erro ao buscar o generos:", error);
-//         throw error;
-//     }
-// };
-
 //metodo get para buscar os autores do livro
 api.buscarAutoresPorLivro = async function(idLivro) {
     try {
@@ -373,25 +332,6 @@ api.getEditoraByName = async function(nameEditora) {
     }
 };
 
-// Método GET para buscar id autor pelo nome
-// api.getAutorByName = async function(nameAutor) {
-//     try {
-//         const response = await api.get(`/api/Autores/AutorByName?name=${nameAutor}`, {
-//             headers: {
-//                 Authorization: `Bearer ${getToken()}`
-//             }
-//         });
-//         if (response && response.data) {
-//             return response.data;
-//         } else {
-//             console.error("No data in response");
-//         }
-//     } catch (error) {
-//         console.error("Erro ao buscar o generos:", error);
-//         throw error;
-//     }
-// };
-
 // Métodos GET para detalhes do livro pelo nome
 api.getLivroByNomeLivro = async function(NomeLivro) {
     try {
@@ -464,40 +404,6 @@ api.getGeneros = async function() {
         throw error;
     }
 };
-
-// api.getAutores = async function(setAutores) {
-//     try {
-//         const response = await api.get('/api/Autores', {
-//             headers: {
-//                 Authorization: `Bearer ${getToken()}`
-//             }
-//         });
-//         if (response && response.data) {
-//             setAutores(response.data);
-//         } else {
-//             console.error("No data in response");
-//         }
-//     } catch (error) {
-//         console.error("Erro ao buscar os autores:", error);
-//     }
-// };
-
-// api.getEditoras = async function(setEditoras) {
-//     try {
-//         const response = await api.get('/api/Editoras', {
-//             headers: {
-//                 Authorization: `Bearer ${getToken()}`
-//             }
-//         });
-//         if (response && response.data) {
-//             setEditoras(response.data);
-//         } else {
-//             console.error("No data in response");
-//         }
-//     } catch (error) {
-//         console.error("Erro ao buscar os editoras:", error);
-//     }
-// };
 
 // API para o email do usuario pelo id
 api.EmailUserByID = async function(idUser) {
@@ -579,25 +485,6 @@ api.putResenha = async function(idResenha, AtualizacaoResenhaData) {
       throw error;
     }
   };  
-
-// Métodos GET para resenhas pelo id do livro e id do usuario
-// api.getResenhaByUserLivro = async function(idUser, id) {
-//     try {
-//         const response = await api.get(`/api/Resenha/ResenhaByUserLivro?idUser=${idUser}&idLivro=${id}`, {
-//             headers: {
-//                 Authorization: `Bearer ${getToken()}`
-//             }
-//         });
-//         if (response && response.data) {
-//             return response.data;
-//         } else {
-//             console.error("No data in response");
-//         }
-//     } catch (error) {
-//         console.error("Erro ao buscar a resenha:", error);
-//         throw error;
-//     }
-// };
 
 // Métodos GET para resenhas pelo id do livro
 api.getResenhaByIdLivro = async function(id) {
