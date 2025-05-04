@@ -78,7 +78,14 @@ namespace Bibliocanto.Controllers
         public async Task<IActionResult> PostAsync([FromBody] SavePerfilResource resource)
         {
             if (!ModelState.IsValid)
-                return BadRequest(ModelState.GetErrorMessages());
+            {
+                var errors = ModelState.GetErrorMessages();
+                foreach (var error in errors)
+                {
+                    Console.WriteLine("Erro de validação: " + error);
+                }
+                return BadRequest(errors);
+            }
 
             var perfil = _mapper.Map<SavePerfilResource, Perfil>(resource);
             var result = await _perfilService.Create(perfil);

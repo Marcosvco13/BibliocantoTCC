@@ -56,18 +56,25 @@ namespace Bibliocanto.Services
             var perfilUser = await _perfilRepository.GetById(id);
 
             if (perfilUser == null)
-                return new PerfilResponse("Category not found.");
+                return new PerfilResponse("Perfil não encontrado."); // Mudei a mensagem para ser mais específica
 
             try
             {
-                _perfilRepository.Update(perfilUser);
+                // Atualiza as propriedades do perfil existente com os novos valores
+                perfilUser.Nome = perfil.Nome;
+                perfilUser.Apelido = perfil.Apelido;
+                perfilUser.Descricao = perfil.Descricao;
+                perfilUser.DataNasc = perfil.DataNasc;
+                // Adicione outras propriedades que precisam ser atualizadas
+
+                _perfilRepository.Update(perfilUser); // Agora sim está atualizando com os novos valores
                 await _unitOfWork.CompleteAsync();
 
                 return new PerfilResponse(perfilUser);
             }
             catch (Exception ex)
             {
-                return new PerfilResponse($"An error occurred when updating the category: {ex.Message}");
+                return new PerfilResponse($"Ocorreu um erro ao atualizar o perfil: {ex.Message}"); // Mensagem mais específica
             }
         }
 

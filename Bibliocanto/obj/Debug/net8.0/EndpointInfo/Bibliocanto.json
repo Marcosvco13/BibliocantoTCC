@@ -5405,15 +5405,13 @@
         "additionalProperties": false
       },
       "SavePerfilResource": {
-        "required": [
-          "idUser"
-        ],
         "type": "object",
         "properties": {
           "idUser": {
             "maxLength": 450,
             "minLength": 0,
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "nome": {
             "type": "string",
@@ -5429,7 +5427,8 @@
           },
           "dataNasc": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           },
           "fotoPerfil": {
             "type": "string",

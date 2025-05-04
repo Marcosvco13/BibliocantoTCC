@@ -54,8 +54,7 @@
               "RelativeToolTip": "Models\\Perfil.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-02T00:15:26.83Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-02T00:15:26.83Z"
             },
             {
               "$type": "Document",
@@ -67,8 +66,7 @@
               "RelativeToolTip": "Controllers\\PreferenciasController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-30T00:02:38.054Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-30T00:02:38.054Z"
             },
             {
               "$type": "Document",
@@ -78,7 +76,7 @@
               "RelativeDocumentMoniker": "Controllers\\PerfilController.cs",
               "ToolTip": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Controllers\\PerfilController.cs",
               "RelativeToolTip": "Controllers\\PerfilController.cs",
-              "ViewState": "AgIAADoAAAAAAAAAAAAswE0AAAAyAAAAAAAAAA==",
+              "ViewState": "AgIAABgAAAAAAAAAAAAkwFAAAABBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-30T00:02:23.737Z",
               "EditorCaption": ""
@@ -93,8 +91,7 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAAIIAAAAAAAAAAAAjwJoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-29T23:56:44.634Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-29T23:56:44.634Z"
             },
             {
               "$type": "Document",
@@ -106,8 +103,7 @@
               "RelativeToolTip": "Controllers\\DenunciasController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-26T00:18:14.15Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-26T00:18:14.15Z"
             },
             {
               "$type": "Document",
@@ -119,8 +115,7 @@
               "RelativeToolTip": "Services\\DenunciasService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAADQAAABGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-26T00:05:53.776Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-26T00:05:53.776Z"
             }
           ]
         }

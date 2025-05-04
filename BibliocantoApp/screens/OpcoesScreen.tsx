@@ -39,15 +39,28 @@ export default function OpcoesScreen() {
             if (response.data === true) {
                 navigation.navigate('Perfil');
             } else {
-                const data = { idUser };
-                const response = await api.post('api/Perfil', data);
+                try {
 
-                if (response?.status === 200) {
-                    navigation.navigate('Perfil');
-                } else {
-                    console.error('Erro ao criar perfil:', response?.data);
-                    Alert.alert('Erro', 'Não foi possível criar o perfil. Tente novamente mais tarde.');
+                    const data = {
+                        idUser,
+                        nome: "",
+                        apelido: "",
+                        descricao: "",
+                        dataNasc: null,
+                        fotoPerfil: ""
+                      };
+                
+                    const response = await api.post('api/Perfil', data);
+                
+                    if (response?.status === 200) {
+                        navigation.navigate('Perfil');
+                    } else {
+                        Alert.alert('Erro', 'Não foi possível criar o perfil. Tente novamente mais tarde.');
+                    }
+                } catch (error: any) {
+                    Alert.alert('Erro', 'Houve um erro ao tentar criar o perfil. Tente novamente mais tarde.');
                 }
+                
             }
         } catch (error) {
             console.error('Erro inesperado:', error);
@@ -77,6 +90,10 @@ export default function OpcoesScreen() {
                 <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('SobreSite')}>
                     <Icon name="info" style={styles.iconDefault} />
                     <Text style={styles.buttonText}>Sobre o bibliocanto</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={() => console.log('Preferências')}>
+                    <Icon name="settings" style={styles.iconDefault} />
+                    <Text style={styles.buttonText}>Preferências</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button} onPress={handleLogout}>
                     <Icon name="logout" style={styles.iconDefault} />

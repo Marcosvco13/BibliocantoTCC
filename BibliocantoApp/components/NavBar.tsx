@@ -3,19 +3,26 @@ import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { RootStackParamList } from '../routes/StackNavigator';
 import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function NavBar() {
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+    const insets = useSafeAreaInsets();
 
     return (
-        <View style={styles.navbar}>
+        <View style={[styles.navbar, { bottom: insets.bottom }]} >
+
             <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.button}>
                 <Icon name="home" size={24} color="black" />
                 <Text style={styles.text}>Início</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('MyLibrary')} style={styles.button}>
+            <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.button}>
                 <Icon name="book" size={24} color="black" />
-                <Text style={styles.text}>Seu Acervo</Text>
+                <Text style={styles.text}>Acervo</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('MyLibrary')} style={styles.button}>
+                <Icon name="bookmarks" size={24} color="black" />
+                <Text style={styles.text}>Meus Livros</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('OpcoesScreen')} style={styles.button}>
                 <Icon name="person" size={30} color="black" />
@@ -35,7 +42,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         paddingVertical: 10,
         paddingHorizontal: 'auto',
-        bottom: 0,
         left: 0,
         right: 0,
         height: 65,
