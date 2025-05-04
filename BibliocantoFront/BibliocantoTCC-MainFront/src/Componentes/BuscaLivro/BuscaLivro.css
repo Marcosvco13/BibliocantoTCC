@@ -1,10 +1,16 @@
 .busca-container {
   display: flex;
-  flex-direction: column; /* Organiza os elementos em coluna */
-  align-items: center; /* Centraliza horizontalmente */
-  justify-content: center; /* Centraliza verticalmente */
-  gap: 10px;
+  flex-direction: row;
+  align-items: center; 
+  justify-content: center;
+  gap: 10px; 
   margin-bottom: 40px;
+}
+
+.busca-input-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .busca-input {
@@ -13,8 +19,7 @@
   border-radius: 5px;
   font-size: 16px;
   text-align: center;
-  width: 250%;
-max-width: 600px;
+  width: 400px;
 }
 
 .busca-botao {
@@ -42,4 +47,50 @@ max-width: 600px;
   color: red;
   font-size: 14px;
   margin-top: 10px;
+}
+
+.filtro-input-group {
+  position: relative;
+}
+
+.FiltrarLivrosBtn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: #333;
+  transition: transform 0.2s ease-in-out;
+}
+
+.FiltrarLivrosBtn:hover {
+  color: #5a2a24;
+  transform: scale(1.1);
+  background-color: transparent;
+}
+
+.busca-status,
+.busca-erro {
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.filtro-opcoes {
+  position: absolute;
+  margin-top: 10px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  width: 200px;
+  z-index: 10;
+}
+
+.filtro-item {
+  position: relative;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.filtro-item:hover {
+  background-color: #f0f0f0;
 }

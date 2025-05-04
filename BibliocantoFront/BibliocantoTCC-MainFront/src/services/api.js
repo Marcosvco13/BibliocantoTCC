@@ -219,23 +219,23 @@ api.PreCadastroLivro = async function (titulo, isbn, editoraId) {
 };
 
 // Método GET para buscar livros de um gênero específico
-api.getLivrosByGenero = async function(generoId) {
-    try {
-        const response = await api.get(`https://localhost:44331/api/GenerosLivro/GetById?id=${generoId}`, {
-            headers: {
-                Authorization: `Bearer ${getToken()}`
-            }
-        });
-        if (response && response.data) {
-            return response.data;
-        } else {
-            console.error("No data in response");
-        }
-    } catch (error) {
-        console.error("Erro ao buscar os livros do gênero:", error);
-        throw error;
-    }
-};
+// api.getLivrosByGenero = async function(generoId) {
+//     try {
+//         const response = await api.get(`https://localhost:44331/api/GenerosLivro/GetById?id=${generoId}`, {
+//             headers: {
+//                 Authorization: `Bearer ${getToken()}`
+//             }
+//         });
+//         if (response && response.data) {
+//             return response.data;
+//         } else {
+//             console.error("No data in response");
+//         }
+//     } catch (error) {
+//         console.error("Erro ao buscar os livros do gênero:", error);
+//         throw error;
+//     }
+// };
 
 //metodo get para buscar os autores do livro
 api.buscarAutoresPorLivro = async function(idLivro) {
@@ -404,6 +404,24 @@ api.getGeneros = async function() {
         throw error;
     }
 };
+
+api.getTodosLivrosByGenero = async function (generoId) {
+    try {
+        const response = await api.get(
+            `https://localhost:44331/api/GenerosLivro/genero/${generoId}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${getToken()}`
+                }
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao buscar os livros do gênero:", error);
+        throw error;
+    }
+};
+
 
 // API para o email do usuario pelo id
 api.EmailUserByID = async function(idUser) {

@@ -1,7 +1,5 @@
 import "./App.css";
-import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import api from "./services/api";
 
 //componentes
 import Nav from "./Componentes/Nav/Nav";
@@ -23,6 +21,8 @@ import Relidos from "./Paginas/TagRelidos/Relidos";
 import RequestCode from "./Paginas/RequestCode";
 import CodeValidation from "./Paginas/CodeValidation"; 
 import ResetPassword from "./Paginas/ResetPassword";
+import LivrosPorGenero from "./Paginas/LivrosPorGenero/LivrosPorGenero"
+import LivrosPorEditora from "./Paginas/LivrosPorEditora/LivrosPorEditora";
 
 export default function App() {
 
@@ -47,7 +47,8 @@ export default function App() {
           <Route path="/RequestCode" element={<RequestCode />} />
           <Route path="/code-validation/:email" element={<CodeValidation />} />
           <Route path="/reset-password/:email/:code" element={<ResetPassword />} />
-
+          <Route path="/LivrosPorGenero" element={<LivrosPorGenero />} />
+          <Route path="/LivrosPorEditora" element={<LivrosPorEditora />} />
         </Routes>
       </BrowserRouter>
     </div>
