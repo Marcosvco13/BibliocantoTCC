@@ -120,6 +120,15 @@ builder.Services.AddScoped<ILikeComentarioService, LikeComentarioService>();
 builder.Services.AddScoped<IAvaliacaoRepository, AvaliacaoRepository>();
 builder.Services.AddScoped<IAvaliacaoService, AvaliacaoService>();
 
+builder.Services.AddScoped<IPerfilRepository, PerfilRepository>();
+builder.Services.AddScoped<IPerfilService, PerfilService>();
+
+builder.Services.AddScoped<IDenunciasRepository, DenunciasRepository>();
+builder.Services.AddScoped<IDenunciasService, DenunciasService>();
+
+builder.Services.AddScoped<IPreferenciasRepository, PreferenciasRepository>();
+builder.Services.AddScoped<IPreferenciasService, PreferenciasService>();
+
 builder.Services.AddScoped<IUnitOFWork, UnitOfWork>();
 
 var app = builder.Build();
