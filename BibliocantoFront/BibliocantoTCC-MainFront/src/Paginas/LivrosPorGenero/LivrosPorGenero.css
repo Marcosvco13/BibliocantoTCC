@@ -1,7 +1,14 @@
-.container-generos {
+.container-LivroPorGeneros {
   display: flex;
   flex-direction: column;
-  padding: 0 5px;
+  padding: 0 15px;
+}
+
+.carrossel-container-LivrosPorGenero {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .genero-bloco {
@@ -21,18 +28,24 @@
   letter-spacing: 2px;
 }
 
-.linha-livros {
+.linha-livrosPorGenero {
   display: flex;
-  flex-wrap: wrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
   gap: 25px;
-  width: 100%;
-  justify-content: left;
-  flex-wrap:wrap;
+  padding: 10px 0;
+  flex: 1; /* ocupa todo o espaço entre as setas */
+  flex-wrap: nowrap;
+}
+
+.linha-livrosPorGenero::-webkit-scrollbar {
+  display: none;
 }
 
 .LivrosPorGenero-livro-card {
-  width: 160px !important;
-  height: 230px !important;
+  width: 160px;
+  height: 230px;
   transition: transform 0.3s ease-in-out;
   cursor: pointer;
   border-top-left-radius: 3px;
@@ -40,7 +53,7 @@
   border: 1px solid #58888c; 
 }
 
-.livro-card {
+.card-livroPorGenero {
   position: relative;
   display: inline-block;
   transition: transform 0.3s ease-in-out;
@@ -49,7 +62,7 @@
   transform-origin: center bottom;
 }
 
-.livro-card:hover {
+.card-livroPorGenero:hover {
   transform: scale(1.3);
   z-index: 10;
 }
@@ -58,7 +71,7 @@
   position: absolute;
   top: 100% ;
   left: 0 ;
-  width: 100%; /* Largura completa do card */
+  width: 100%;
   max-width: 200px;
   background: #58888c;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
@@ -101,4 +114,26 @@
   color: white;
   font-size: 18px;
   cursor: pointer;
+}
+
+.seta-LivrosPorGenero {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1;
+  color: #47211c;
+  padding: 10px;
+}
+
+.seta-LivrosPorGenero:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.seta-LivrosPorGenero-esquerda {
+  margin-right: 15px;
+}
+
+.seta-LivrosPorGenero-direita {
+  margin-left: 15px;
 }

@@ -77,16 +77,17 @@ const LivrosPorGenero = () => {
   useEffect(() => {
     const fetchData = async () => {
       const idUser = localStorage.getItem("Id");
-
       try {
-        const LivrosBiblioteca = await api.BibliotecaByUser(idUser);
-        setLivrosBiblioteca(LivrosBiblioteca);
-      } catch (err) {}
+        const livros = await api.BibliotecaByUser(idUser);
+        setLivrosBiblioteca(livros);
+      } catch (err) {
+        console.error("Erro ao buscar biblioteca do usuário:", err);
+      }
     };
-
+  
     fetchData();
-  }, [livrosBiblioteca]);
-
+  }, []);
+  
   // Função para verificar se o livro já está na biblioteca
   const isLivroNaBiblioteca = (livroId) => {
     return livrosBiblioteca.some((livro) => livro.livros.id === livroId);
@@ -139,66 +140,90 @@ const LivrosPorGenero = () => {
   };
 
   return (
-    <div className="container-generos">
+    <div className="container-LivroPorGeneros">
       <BuscaLivro onResultado={(resultado) => {}} />
 
       {generosComLivros.map((genero) => (
         <div key={genero.id} className="genero-bloco">
           <h2>{genero.nomegenero}</h2>
-          <div className="linha-livros">
-            {genero.livros.map((livro) => (
-              <div
-                key={livro.id}
-                className="livro-card"
-                onMouseEnter={() => setHoveredLivro(livro.id)}
-                onMouseLeave={() => setHoveredLivro(null)}
-              >
-                <img
-                  src={livro.caminhoImagem}
-                  alt={livro.titulo}
-                  className={`LivrosPorGenero-livro-card ${
-                    hoveredLivro === livro.id ? "hover" : ""
-                  }`}
-                  onClick={() => navigate(`/Livro/${livro.id}`)}
-                />
-                {hoveredLivro === livro.id && (
-                  <div className="LivrosPorGenero-livro-overlay">
-                    <p>{livro.descricao}</p>
-                    <div className="LivrosPorGenero-livro-actions">
-                      {livro.linkCompra && (
-                        <button
-                          className="LivrosPorGenero-btnIcon"
-                          onClick={() =>
-                            window.open(livro.linkCompra, "_blank")
-                          }
-                          title="Comprar livro"
-                        >
-                          <FontAwesomeIcon icon={faCartShopping} />
-                        </button>
-                      )}
-                      {email &&
-                        (!isLivroNaBiblioteca(livro.id) ? (
+          <div className="carrossel-container-LivrosPorGenero">
+            <button
+              className="seta-LivrosPorGenero seta-LivrosPorGenero-esquerda"
+              onClick={() =>
+                (document.getElementById(
+                  `linha-${genero.id}`
+                ).scrollLeft -= 300)
+              }
+            >
+              &#10094;
+            </button>
+
+            <div className="linha-livrosPorGenero" id={`linha-${genero.id}`}>
+              {genero.livros.map((livro) => (
+                <div
+                  key={livro.id}
+                  className="card-livroPorGenero"
+                  onMouseEnter={() => setHoveredLivro(livro.id)}
+                  onMouseLeave={() => setHoveredLivro(null)}
+                >
+                  <img
+                    src={livro.caminhoImagem}
+                    alt={livro.titulo}
+                    className={`LivrosPorGenero-livro-card ${
+                      hoveredLivro === livro.id ? "hover" : ""
+                    }`}
+                    onClick={() => navigate(`/Livro/${livro.id}`)}
+                  />
+                  {hoveredLivro === livro.id && (
+                    <div className="LivrosPorGenero-livro-overlay">
+                      <p>{livro.descricao}</p>
+                      <div className="LivrosPorGenero-livro-actions">
+                        {livro.linkCompra && (
                           <button
                             className="LivrosPorGenero-btnIcon"
-                            onClick={() => handleAddMeuLivro(livro)}
-                            title="Adicionar à Biblioteca"
+                            onClick={() =>
+                              window.open(livro.linkCompra, "_blank")
+                            }
+                            title="Comprar livro"
                           >
-                            <i className="bi bi-bookmark-plus"></i>
+                            <FontAwesomeIcon icon={faCartShopping} />
                           </button>
-                        ) : (
-                          <button
-                            className="LivrosPorGenero-btnIcon"
-                            onClick={() => handleDeleteMeuLivro(livro.id)}
-                            title="Remover da Biblioteca"
-                          >
-                            <i className="bi bi-bookmark-x"></i>
-                          </button>
-                        ))}
+                        )}
+                        {email &&
+                          (!isLivroNaBiblioteca(livro.id) ? (
+                            <button
+                              className="LivrosPorGenero-btnIcon"
+                              onClick={() => handleAddMeuLivro(livro)}
+                              title="Adicionar à Biblioteca"
+                            >
+                              <i className="bi bi-bookmark-plus"></i>
+                            </button>
+                          ) : (
+                            <button
+                              className="LivrosPorGenero-btnIcon"
+                              onClick={() => handleDeleteMeuLivro(livro.id)}
+                              title="Remover da Biblioteca"
+                            >
+                              <i className="bi bi-bookmark-x"></i>
+                            </button>
+                          ))}
+                      </div>
                     </div>
-                  </div>
-                )}
-              </div>
-            ))}
+                  )}
+                </div>
+              ))}
+            </div>
+
+            <button
+              className="seta-LivrosPorGenero seta-LivrosPorGenero-direita"
+              onClick={() =>
+                (document.getElementById(
+                  `linha-${genero.id}`
+                ).scrollLeft += 300)
+              }
+            >
+              &#10095;
+            </button>
           </div>
         </div>
       ))}

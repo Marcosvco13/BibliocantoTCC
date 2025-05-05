@@ -34,7 +34,7 @@ export default function Nav() {
         <h5>Encontre seu livro</h5>
         <Link to="/" className={
           
-          ["/", "/PreCadastrar", "/LivrosPorGenero"].includes(
+          ["/", "/PreCadastrar", "/LivrosPorGenero", "/LivrosPorEditora"].includes(
             location.pathname
           )
             ? "active-link"
