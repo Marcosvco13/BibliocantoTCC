@@ -46,8 +46,7 @@
               "RelativeToolTip": "Context\\AppDbContext.cs",
               "ViewState": "AgIAALgAAAAAAAAAAADwv8IAAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-03T23:38:50.416Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-03T23:38:50.416Z"
             },
             {
               "$type": "Document",
@@ -57,7 +56,7 @@
               "RelativeDocumentMoniker": "Resources\\SavePerfilResource.cs",
               "ToolTip": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Resources\\SavePerfilResource.cs",
               "RelativeToolTip": "Resources\\SavePerfilResource.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAowAkAAAArAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAowAwAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-03T23:29:20.328Z",
               "EditorCaption": ""
@@ -85,8 +84,7 @@
               "RelativeToolTip": "Controllers\\PerfilController.cs",
               "ViewState": "AgIAAEgAAAAAAAAAAAAcwFsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-30T00:02:23.737Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-30T00:02:23.737Z"
             }
           ]
         }
