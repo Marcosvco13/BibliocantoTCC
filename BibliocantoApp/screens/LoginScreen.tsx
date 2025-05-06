@@ -38,22 +38,39 @@ export default function LoginScreen() {
 
       await SecureStore.setItemAsync('IdUser', responseId.data.id);
       setLoading(false);
-      navigation.navigate('Home');
+      navigation.navigate('NewHome');
 
-    }catch (error) {
+    } catch (error: any) {
       setLoading(false);
-      let errorMessage = 'Erro desconhecido. Tente novamente.';
       let responseBody = '';
-  
+      let errorMessage = 'Erro desconhecido.';
+      
       if (error instanceof AxiosError) {
-        responseBody = JSON.stringify(error.response?.data, null, 2);
-        errorMessage = error.response?.data?.message || 'Erro ao conectar com o servidor.';
+        const data = error.response?.data;
+      
+        if (data && typeof data === 'object') {
+          responseBody = JSON.stringify(data, null, 2);
+      
+          if ('title' in data && typeof data.title === 'string') {
+            errorMessage = data.title;
+          }
+      
+          if ('errors' in data && typeof data.errors === 'object') {
+            const errors = data.errors as Record<string, string[]>;
+            const detalhes = Object.entries(errors)
+              .map(([campo, mensagens]) => `${campo}: ${mensagens.join(', ')}`)
+              .join('\n');
+            errorMessage += `\n${detalhes}`;
+          }
+        } else {
+          responseBody = String(data || '');
+        }
       } else if (error instanceof Error) {
         errorMessage = error.message;
       }
-
-      Alert.alert('Atenção!', responseBody);
-  }
+      
+      Alert.alert('Atenção!', errorMessage);
+    }
   };
 
   const handleCreateUser = () => {
@@ -71,9 +88,9 @@ export default function LoginScreen() {
   return (
     <View style={styles.loginContainer}>
 
-      <Image 
-        source={require('../assets/BibliocantoTCC-mainlogo.png')} 
-        style={{ width: 100, height: 100, marginBottom: 15 }} 
+      <Image
+        source={require('../assets/BibliocantoTCC-mainlogo.png')}
+        style={{ width: 100, height: 100, marginBottom: 15 }}
       />
 
       <Text style={styles.projectName}>Bibliocanto</Text>
@@ -88,21 +105,21 @@ export default function LoginScreen() {
       </View>
 
       <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Senha"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry={!showPassword}
-          />
-          <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.eyeButton}>
-            <Icon name={showPassword ? "visibility" : "visibility-off"} size={24} color="gray" />
-          </TouchableOpacity>
+        <TextInput
+          style={styles.input}
+          placeholder="Senha"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry={!showPassword}
+        />
+        <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.eyeButton}>
+          <Icon name={showPassword ? "visibility" : "visibility-off"} size={24} color="gray" />
+        </TouchableOpacity>
       </View>
 
       <TouchableOpacity style={styles.loginButton} onPress={login}>
-        {isLoading ?  (
-        <ActivityIndicator size="small" color="#fff" />
+        {isLoading ? (
+          <ActivityIndicator size="small" color="#fff" />
         ) : (
           <Text style={styles.buttonText}>Entrar</Text>
         )}
@@ -111,7 +128,7 @@ export default function LoginScreen() {
       {/* <TouchableOpacity style={styles.googleButton} onPress={handleGoogleLogin}>
         <Text style={styles.buttonText}>Entrar com Google</Text>
       </TouchableOpacity> */}
-      
+
       <View style={styles.rowContainer}>
         <TouchableOpacity onPress={handleForgotPassword}>
           <Text style={styles.forgotPassword}>Esqueceu a senha?</Text>
@@ -120,7 +137,7 @@ export default function LoginScreen() {
         <Text style={styles.orText}>ou</Text>
 
         <TouchableOpacity onPress={handleCreateUser}>
-            <Text style={styles.forgotPassword}>Criar Usuário</Text>
+          <Text style={styles.forgotPassword}>Criar Usuário</Text>
         </TouchableOpacity>
       </View>
 

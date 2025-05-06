@@ -106,9 +106,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   livroCard: {
-    width: 100,
-    height: 150,
-    margin: 8,
+    width: 120,
+    height: 180,
+    margin: 5,
     borderColor: "black",
     borderWidth: 1,
     borderRadius: 8,

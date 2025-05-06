@@ -15,6 +15,7 @@ import OpcoesScreen from '../screens/OpcoesScreen';
 import SobreSite from '../screens/SobreSiteScreen';
 import PoliticaPrivacidade from '../screens/PoliticaPrivacidadeScreen';
 import Perfil from '../screens/PerfilScreen';
+import NewHome from '../screens/NewHomeScreen';
 import { Image } from 'react-native';
 
 export type RootStackParamList = {
@@ -24,7 +25,7 @@ export type RootStackParamList = {
   Book: { idLivro: number };
   Resenha: { idLivro: number };
   MyLibrary: undefined;
-  CodeRequest : undefined;
+  CodeRequest: undefined;
   CodeValidation: { email: string };
   ResetPassword: { email: string; code: string };
   Lidos: undefined;
@@ -33,38 +34,42 @@ export type RootStackParamList = {
   SobreSite: undefined;
   PoliticaPrivacidade: undefined;
   Perfil: undefined;
+  NewHome: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
+// #cdbda1
+
 export default function StackNavigator() {
   return (
     <Stack.Navigator initialRouteName="Login">
-      <Stack.Screen name="Register" component={RegisterScreen} options={{ title: 'Cadastro',}} />
+      <Stack.Screen name="Register" component={RegisterScreen} options={{ title: 'Cadastro'}} />
       <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'Login', headerBackVisible: false, headerShown: false }} />
-      <Stack.Screen 
-        name="Home" 
-        component={HomeScreen} 
-        options={{ 
-          title: 'Acervo', 
+      <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Acervo', headerTitleAlign: 'center' }} />
+      <Stack.Screen
+        name="NewHome"
+        component={NewHome}
+        options={{
+          title: 'Início',
           headerBackVisible: false,
           headerTitle: () => (
-            <Image 
-              source={require('../assets/BibliocantoTCC-mainlogo.png')} 
-              style={{ width: 35, height: 35 }} 
+            <Image
+              source={require('../assets/BibliocantoTCC-mainlogo.png')}
+              style={{ width: 35, height: 35 }}
             />
           ),
-        }} 
+        }}
       />
       <Stack.Screen name="Book" component={BookScreen} options={{ title: 'Detalhes do livro', headerTitleAlign: 'center', headerBackVisible: false }} />
       <Stack.Screen name="Resenha" component={Resenhas} options={{ title: 'Detalhes do livro', headerTitleAlign: 'center', headerBackVisible: false }} />
       <Stack.Screen name="CodeValidation" component={CodeValidation} options={{ title: 'Validar Código', headerBackVisible: true }} />
       <Stack.Screen name="ResetPassword" component={ResetPassword} options={{ title: 'Redefinir Senha', headerBackVisible: true }} />
       <Stack.Screen name="CodeRequest" component={CodeRequest} options={{ title: 'Recuperar Senha', headerBackVisible: true }} />
-      <Stack.Screen name="MyLibrary" component={MyLibrary} options={{ title: 'Seu Acervo', headerTitleAlign: 'center', headerBackVisible: false  }} />
-      <Stack.Screen name="Lidos" component={Lidos} options={{ title: 'Seu Acervo', headerTitleAlign: 'center', headerBackVisible: false }} />
-      <Stack.Screen name="Relidos" component={Relidos} options={{ title: 'Seu Acervo', headerTitleAlign: 'center', headerBackVisible: false }} />
-      <Stack.Screen name="OpcoesScreen" component={OpcoesScreen} options={{ title: 'Opções', headerBackVisible: false }} />
+      <Stack.Screen name="MyLibrary" component={MyLibrary} options={{ title: 'Seu Acervo', headerTitleAlign: 'center' }} />
+      <Stack.Screen name="Lidos" component={Lidos} options={{ title: 'Seu Acervo', headerTitleAlign: 'center' }} />
+      <Stack.Screen name="Relidos" component={Relidos} options={{ title: 'Seu Acervo', headerTitleAlign: 'center' }} />
+      <Stack.Screen name="OpcoesScreen" component={OpcoesScreen} options={{ title: 'Opções' }} />
       <Stack.Screen name="SobreSite" component={SobreSite} options={{ title: 'Sobre o bibliocanto', headerBackVisible: true }} />
       <Stack.Screen name="PoliticaPrivacidade" component={PoliticaPrivacidade} options={{ title: 'Política de privacidade', headerBackVisible: true }} />
       <Stack.Screen name="Perfil" component={Perfil} options={{ title: 'Dados do Perfil', headerBackVisible: true }} />

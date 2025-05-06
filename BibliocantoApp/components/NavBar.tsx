@@ -12,7 +12,7 @@ export default function NavBar() {
     return (
         <View style={[styles.navbar, { bottom: insets.bottom }]} >
 
-            <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.button}>
+            <TouchableOpacity onPress={() => navigation.navigate('NewHome')} style={styles.button}>
                 <Icon name="home" size={24} color="black" />
                 <Text style={styles.text}>Início</Text>
             </TouchableOpacity>
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'nowrap',
         display: 'flex',
-        justifyContent: 'space-evenly',
+        justifyContent: 'space-around',
         alignItems: 'center',
         backgroundColor: 'white',
         paddingVertical: 10,
@@ -55,8 +55,8 @@ const styles = StyleSheet.create({
         alignItems:'center',
     },
     text: {
-        fontSize: 16,
-        color: '#757575',
+        fontSize: 13,
+        color: 'black',
         fontWeight: '500',
     }
 
