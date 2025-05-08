@@ -35,6 +35,14 @@ namespace Bibliocanto.Controllers
             return recursos;
         }
 
+        [HttpGet("ByIdEditora")]
+        public async Task<IEnumerable<LivrosResource>> GetLivrosByIdEditora(int id)
+        {
+            var livros = await _livroService.GetLivrosByIdEditora(id);
+            var recursos = _mapper.Map<IEnumerable<Livros>, IEnumerable<LivrosResource>>(livros);
+            return recursos;
+        }
+
         [HttpGet("LivroByName")]
         public async Task<ActionResult<IEnumerable<LivrosResource>>> GetLivrosByName([FromQuery] string nome)
         {

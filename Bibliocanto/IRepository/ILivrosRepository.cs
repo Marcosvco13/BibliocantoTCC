@@ -6,6 +6,7 @@ namespace Bibliocanto.IRepository
     {
         Task<IEnumerable<Livros>> GetBaseLivros();
         Task<IEnumerable<Livros>> GetLivrosByNome(string nome);
+        Task<IEnumerable<Livros>> GetLivrosByIdEditora(int id);
         Task<Livros> GetLivroById(int id);
         Task<Livros> GetLivroByIsbn(string isbn);
         Task AddLivro(Livros livro);

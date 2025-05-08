@@ -35,6 +35,11 @@ namespace Bibliocanto.Repository
             return await _context.Livros.FirstOrDefaultAsync(l => l.Isbn == isbn);
         }
 
+        public async Task<IEnumerable<Livros>> GetLivrosByIdEditora(int id)
+        {
+            return await _context.Livros.Where(l => l.EditoraId == id).ToListAsync();
+        }
+
         public async Task AddLivro(Livros livro)
         {
             await _context.Livros.AddAsync(livro);
