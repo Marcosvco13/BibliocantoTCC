@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 import "./BuscaLivro.css";
 import api from "../../services/api";
 
@@ -11,7 +11,9 @@ const BuscaLivro = ({ onResultado }) => {
   const [mostrarFiltros, setMostrarFiltros] = useState(false);
 
   const [generos, setGeneros] = useState([]);
-  const [mostrarSubfiltro, setMostrarSubfiltro] = useState(false);
+  const [editoras, setEditoras] = useState([]);
+  const [mostrarSubfiltroGenero, setMostrarSubfiltroGenero] = useState(false);
+  const [mostrarSubfiltroEditora, setMostrarSubfiltroEditora] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -48,28 +50,43 @@ const BuscaLivro = ({ onResultado }) => {
     }
   };
 
+  const carregarEditoras = async () => {
+    try {
+      const lista = await api.getEditoras();
+      setEditoras(lista);
+    } catch (error) {
+      console.error("Erro ao carregar as editoras");
+    }
+  };
+
   const handleGeneroHover = () => {
-    setMostrarSubfiltro(true);
+    setMostrarSubfiltroGenero(true);
     if (generos.length === 0) {
       carregarGeneros();
     }
   };
 
+  const handleEditoraHover = () => {
+    setMostrarSubfiltroEditora(true);
+    if (editoras.length === 0) {
+      carregarEditoras();
+    }
+  };
+
   return (
     <div className="busca-container">
-
-      {location.pathname === '/' && (
-      <div className="busca-input-group">
-        <input
-          type="text"
-          className="busca-input"
-          placeholder="Buscar livro pelo nome"
-          value={termo}
-          onChange={(e) => setTermo(e.target.value)}
-        />
-        {carregando && <p className="busca-status">Buscando...</p>}
-        {erro && <p className="busca-erro">{erro}</p>}
-      </div>
+      {location.pathname === "/" && (
+        <div className="busca-input-group">
+          <input
+            type="text"
+            className="busca-input"
+            placeholder="Buscar livro pelo nome"
+            value={termo}
+            onChange={(e) => setTermo(e.target.value)}
+          />
+          {carregando && <p className="busca-status">Buscando...</p>}
+          {erro && <p className="busca-erro">{erro}</p>}
+        </div>
       )}
 
       <div className="filtro-input-group">
@@ -81,41 +98,69 @@ const BuscaLivro = ({ onResultado }) => {
         </button>
 
         {mostrarFiltros && (
-  <div className="filtro-opcoes">
-    
-    <div
-      className="genero-wrapper"
-      onMouseEnter={handleGeneroHover}
-      onMouseLeave={() => setMostrarSubfiltro(false)}
-    >
-      <div className="filtro-item genero-item">
-        Gêneros
-      </div>
-
-      {mostrarSubfiltro && (
-        <div className="subfiltro-generos">
-          {generos.map((genero) => (
+          <div className="filtro-opcoes">
             <div
-              key={genero.id}
-              className="subfiltro-item"
-              onClick={() => navigate(`/LivrosPorGenero/${genero.id}`)}
+              className="genero-wrapper"
+              onClick={() => {
+                setMostrarSubfiltroGenero((prev) => {
+                  const novoEstado = !prev;
+                  if (novoEstado) {
+                    setMostrarSubfiltroEditora(false);
+                    if (generos.length === 0) carregarGeneros();
+                  }
+                  return novoEstado;
+                });
+              }}
             >
-              {genero.nomegenero}
+              <div className="filtro-item genero-item">Gêneros</div>
+
+              {mostrarSubfiltroGenero && (
+                <div className="subfiltro-generos">
+                  {generos.map((genero) => (
+                    <div
+                      key={genero.id}
+                      className="subfiltro-item"
+                      onClick={() => navigate(`/LivrosPorGenero/${genero.id}`)}
+                    >
+                      {genero.nomegenero}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
-          ))}
-        </div>
-      )}
-    </div>
 
-    <div
-      className="filtro-item editora-item"
-      onClick={() => navigate("/LivrosPorEditora")}
-    >
-      Editoras
-    </div>
-  </div>
-)}
-
+            <div
+              className="editora-wrapper"
+              onClick={() => {
+                setMostrarSubfiltroEditora((prev) => {
+                  const novoEstado = !prev;
+                  if (novoEstado) {
+                    setMostrarSubfiltroGenero(false);
+                    if (editoras.length === 0) carregarEditoras();
+                  }
+                  return novoEstado;
+                });
+              }}
+            >
+              <div className="filtro-item editora-item">Editoras</div>
+              {mostrarSubfiltroEditora && (
+                <div className="subfiltro-editoras">
+                  {editoras.map((editora) => (
+                    <div
+                      key={editora.id}
+                      className="subfiltro-item"
+                      onClick={() =>
+                        navigate(`/LivrosPorEditora/${editora.id}`)
+                      }
+                    >
+                      {editora.nomeEditora}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

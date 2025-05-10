@@ -48,7 +48,7 @@ export default function App() {
           <Route path="/code-validation/:email" element={<CodeValidation />} />
           <Route path="/reset-password/:email/:code" element={<ResetPassword />} />
           <Route path="/LivrosPorGenero/:id" element={<LivrosPorGenero />} />
-          <Route path="/LivrosPorEditora" element={<LivrosPorEditora />} />
+          <Route path="/LivrosPorEditora/:id" element={<LivrosPorEditora />} />
         </Routes>
       </BrowserRouter>
     </div>

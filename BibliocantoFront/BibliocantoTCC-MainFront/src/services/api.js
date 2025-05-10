@@ -218,25 +218,6 @@ api.PreCadastroLivro = async function (titulo, isbn, editoraId) {
     }
 };
 
-// Método GET para buscar livros de um gênero específico
-// api.getLivrosByGenero = async function(generoId) {
-//     try {
-//         const response = await api.get(`https://localhost:44331/api/GenerosLivro/GetById?id=${generoId}`, {
-//             headers: {
-//                 Authorization: `Bearer ${getToken()}`
-//             }
-//         });
-//         if (response && response.data) {
-//             return response.data;
-//         } else {
-//             console.error("No data in response");
-//         }
-//     } catch (error) {
-//         console.error("Erro ao buscar os livros do gênero:", error);
-//         throw error;
-//     }
-// };
-
 //metodo get para buscar os autores do livro
 api.buscarAutoresPorLivro = async function(idLivro) {
     try {
@@ -384,6 +365,58 @@ api.getLivros = async function(setLivros) {
         }
     } catch (error) {
         console.error("Erro ao buscar os livros:", error);
+    }
+};
+
+api.getEditoras = async function() {
+    try {
+        const response = await api.get('/api/Editoras', {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        if (response && response.data) {
+            return response.data;
+        } else {
+            console.error("No data in response");
+        }
+    } catch (error) {
+        console.error("Erro ao buscar as editoras:", error);
+        throw error;
+    }
+};
+
+api.getEditoraById = async function (editoraId) {
+    try {
+        const response = await api.get(
+            `https://localhost:44331/api/Editoras/${editoraId}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${getToken()}`
+                }
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao buscar a editora:", error);
+        throw error;
+    }
+};
+
+api.getLivrosByIdEditora = async function (EditoraId) {
+    try {
+        const response = await api.get(
+            `https://localhost:44331/api/Livros/ByIdEditora?id=${EditoraId}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${getToken()}`
+                }
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao buscar os livros do gênero:", error);
+        throw error;
     }
 };
 

@@ -122,7 +122,7 @@ const LivrosPorGenero = () => {
       <BuscaLivro onResultado={(resultado) => {}} />
 
       <h2 className="TitulolivrosPorGenero">
-        {genero ? `Livros do gênero: ${genero.nomegenero}` : "Carregando..."}
+        {genero ? `${genero.nomegenero}` : "Carregando..."}
       </h2>
 
       <div className="livrosPorGenero-livros-container">
