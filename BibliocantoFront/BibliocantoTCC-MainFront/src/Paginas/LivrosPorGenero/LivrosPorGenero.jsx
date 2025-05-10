@@ -1,232 +1,188 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../../services/api";
-import BuscaLivro from "../../Componentes/BuscaLivro/BuscaLivro";
+import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import api from "../../services/api";
+import BuscaLivro from "../../Componentes/BuscaLivro/BuscaLivro";
 import "./LivrosPorGenero.css";
 
 const LivrosPorGenero = () => {
-  const [generosComLivros, setGenerosComLivros] = useState([]);
-  const [livrosBiblioteca, setLivrosBiblioteca] = useState([]);
-  const [email] = useState(localStorage.getItem("email") || null);
+  const { id } = useParams();
+  const [genero, setGenero] = useState(null);
+  const [livros, setLivros] = useState([]);
   const [hoveredLivro, setHoveredLivro] = useState(null);
+  const [livrosBiblioteca, setLivrosBiblioteca] = useState([]);
   const [idBiblioteca, setIdLivroBiblioteca] = useState([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const buscarGenerosELivros = async () => {
+    const fetchGeneroELivros = async () => {
       try {
-        const generos = await api.getGeneros();
+        const generoResponse = await api.get(`/api/Generos/${id}`);
+        setGenero(generoResponse.data);
 
-        const dadosComLivros = await Promise.all(
-          generos.map(async (genero) => {
+        const livrosIds = await api.getTodosLivrosByGenero(id);
+
+        const livrosDetalhados = await Promise.all(
+          livrosIds.map(async (livro) => {
             try {
-              const vinculos = await api.getTodosLivrosByGenero(genero.id);
-
-              const livrosDetalhados = await Promise.all(
-                vinculos.map(async (vinculo) => {
-                  try {
-                    const livro = await api.getLivroById(vinculo.idLivro);
-                    return livro;
-                  } catch (erroLivro) {
-                    console.error(
-                      `Erro ao buscar livro ID ${vinculo.idLivro}:`,
-                      erroLivro
-                    );
-                    return null;
-                  }
-                })
-              );
-
-              const livrosFiltrados = livrosDetalhados.filter(
-                (livro) => livro !== null
-              );
-
-              return {
-                ...genero,
-                livros: livrosFiltrados,
-              };
-            } catch (erroGenero) {
+              const livroCompleto = await api.getLivroById(livro.idLivro);
+              return livroCompleto;
+            } catch (error) {
               console.error(
-                `Erro ao buscar livros para o gênero ${genero.nomegenero}:`,
-                erroGenero
+                `Erro ao buscar dados do livro ID ${livro.id}:`,
+                error
               );
-              return {
-                ...genero,
-                livros: [],
-              };
+              return null; // Para que o Promise.all continue mesmo se uma requisição falhar
             }
           })
         );
 
-        const generosValidos = dadosComLivros.filter(
-          (g) => g.livros.length > 0
+        const livrosFiltrados = livrosDetalhados.filter(
+          (livro) => livro !== null
         );
-
-        setGenerosComLivros(generosValidos);
+        setLivros(livrosFiltrados);
       } catch (error) {
-        console.error("❌ Erro ao carregar dados:", error);
+        console.error("Erro ao buscar dados:", error);
       }
     };
 
-    buscarGenerosELivros();
-  }, []);
+    fetchGeneroELivros();
+  }, [id]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const idUser = localStorage.getItem("Id");
-      try {
-        const livros = await api.BibliotecaByUser(idUser);
-        setLivrosBiblioteca(livros);
-      } catch (err) {
-        console.error("Erro ao buscar biblioteca do usuário:", err);
-      }
-    };
+      const fetchData = async () => {
+        const idUser = localStorage.getItem("Id");
   
-    fetchData();
-  }, []);
+        try {
+          const LivrosBiblioteca = await api.BibliotecaByUser(idUser);
+          setLivrosBiblioteca(LivrosBiblioteca);
+        } catch (err) {}
+      };
   
+      fetchData();
+    }, [livrosBiblioteca]);
+
   // Função para verificar se o livro já está na biblioteca
   const isLivroNaBiblioteca = (livroId) => {
     return livrosBiblioteca.some((livro) => livro.livros.id === livroId);
   };
 
+  //funcao para adicionar o livro da biblioteca do usuario
   const handleAddMeuLivro = async (livro) => {
-    const idUser = localStorage.getItem("Id");
-
-    if (!idUser) {
-      alert("Usuário não encontrado");
-      return;
-    }
-
-    const idLivro = livro.id;
-
-    try {
-      const data = { idUser, idLivro };
-      await api.post("/api/MeusLivros", data);
-    } catch (error) {
-      console.error("Erro ao adicionar livro:", error);
-      alert("Falha ao salvar livro na biblioteca!: " + error.message);
-    }
-  };
+      const idUser = localStorage.getItem("Id");
+  
+      if (!idUser) {
+        alert("Usuário não encontrado");
+        return;
+      }
+  
+      const idLivro = livro.id;
+  
+      try {
+        const data = { idUser, idLivro };
+        await api.post("/api/MeusLivros", data);
+      } catch (error) {
+        console.error("Erro ao adicionar livro:", error);
+        alert("Falha ao salvar livro na biblioteca!: " + error.message);
+      }
+    };
 
   //funcao para remover o livro da biblioteca do usuario
-  const handleDeleteMeuLivro = async (idLivro) => {
-    const idUser = localStorage.getItem("Id");
-
-    try {
-      // Buscar o ID do livro na biblioteca do usuário
-      const livroBiblioteca = await api.GetMeuLivroByIdLivroIdUser(
-        idUser,
-        idLivro
-      );
-
-      const idBiblioteca = livroBiblioteca.id;
-      setIdLivroBiblioteca(idBiblioteca);
-
-      // Excluir o livro da biblioteca
-      await api.DeleteMeuLivro(idBiblioteca);
-
-      // Atualizar a lista removendo o livro excluído
-      setLivrosBiblioteca((prevLivros) =>
-        prevLivros.filter((livro) => livro.id !== idBiblioteca)
-      );
-    } catch (error) {
-      console.error("Erro ao excluir o livro da biblioteca:", error);
-      alert("Falha ao remover o livro da biblioteca.");
-    }
-  };
+    const handleDeleteMeuLivro = async (idLivro) => {
+      const idUser = localStorage.getItem("Id");
+  
+      try {
+        // Buscar o ID do livro na biblioteca do usuário
+        const livroBiblioteca = await api.GetMeuLivroByIdLivroIdUser(
+          idUser,
+          idLivro
+        );
+  
+        const idBiblioteca = livroBiblioteca.id;
+        setIdLivroBiblioteca(idBiblioteca);
+  
+        // Excluir o livro da biblioteca
+        await api.DeleteMeuLivro(idBiblioteca);
+  
+        // Atualizar a lista removendo o livro excluído
+        setLivrosBiblioteca((prevLivros) =>
+          prevLivros.filter((livro) => livro.id !== idBiblioteca)
+        );
+      } catch (error) {
+        console.error("Erro ao excluir o livro da biblioteca:", error);
+        alert("Falha ao remover o livro da biblioteca.");
+      }
+    };
 
   return (
-    <div className="container-LivroPorGeneros">
+    <div className="livrosPorGenero-linha-container">
       <BuscaLivro onResultado={(resultado) => {}} />
 
-      {generosComLivros.map((genero) => (
-        <div key={genero.id} className="genero-bloco">
-          <h2>{genero.nomegenero}</h2>
-          <div className="carrossel-container-LivrosPorGenero">
-            <button
-              className="seta-LivrosPorGenero seta-LivrosPorGenero-esquerda"
-              onClick={() =>
-                (document.getElementById(
-                  `linha-${genero.id}`
-                ).scrollLeft -= 300)
-              }
-            >
-              &#10094;
-            </button>
+      <h2 className="TitulolivrosPorGenero">
+        {genero ? `Livros do gênero: ${genero.nomegenero}` : "Carregando..."}
+      </h2>
 
-            <div className="linha-livrosPorGenero" id={`linha-${genero.id}`}>
-              {genero.livros.map((livro) => (
-                <div
-                  key={livro.id}
-                  className="card-livroPorGenero"
-                  onMouseEnter={() => setHoveredLivro(livro.id)}
-                  onMouseLeave={() => setHoveredLivro(null)}
-                >
-                  <img
-                    src={livro.caminhoImagem}
-                    alt={livro.titulo}
-                    className={`LivrosPorGenero-livro-card ${
-                      hoveredLivro === livro.id ? "hover" : ""
-                    }`}
-                    onClick={() => navigate(`/Livro/${livro.id}`)}
-                  />
-                  {hoveredLivro === livro.id && (
-                    <div className="LivrosPorGenero-livro-overlay">
-                      <p>{livro.descricao}</p>
-                      <div className="LivrosPorGenero-livro-actions">
-                        {livro.linkCompra && (
-                          <button
-                            className="LivrosPorGenero-btnIcon"
-                            onClick={() =>
-                              window.open(livro.linkCompra, "_blank")
-                            }
-                            title="Comprar livro"
-                          >
-                            <FontAwesomeIcon icon={faCartShopping} />
-                          </button>
-                        )}
-                        {email &&
-                          (!isLivroNaBiblioteca(livro.id) ? (
-                            <button
-                              className="LivrosPorGenero-btnIcon"
-                              onClick={() => handleAddMeuLivro(livro)}
-                              title="Adicionar à Biblioteca"
-                            >
-                              <i className="bi bi-bookmark-plus"></i>
-                            </button>
-                          ) : (
-                            <button
-                              className="LivrosPorGenero-btnIcon"
-                              onClick={() => handleDeleteMeuLivro(livro.id)}
-                              title="Remover da Biblioteca"
-                            >
-                              <i className="bi bi-bookmark-x"></i>
-                            </button>
-                          ))}
-                      </div>
-                    </div>
-                  )}
+      <div className="livrosPorGenero-livros-container">
+        {livros.length > 0 ? (
+          livros.map((livro) => (
+            <div
+              key={livro.id}
+              className="livrosPorGenero-livro-wrapper"
+              onMouseEnter={() => setHoveredLivro(livro.id)}
+              onMouseLeave={() => setHoveredLivro(null)}
+            >
+              <img
+                src={livro.caminhoImagem}
+                alt={livro.titulo}
+                className="livrosPorGenero-livro-card"
+                onClick={() => navigate(`/Livro/${livro.id}`)}
+              />
+              {hoveredLivro === livro.id && (
+                <div className="livrosPorGenero-livro-overlay">
+                  <p>{livro.descricao}</p>
+                  <div className="livrosPorGenero-livro-actions">
+                    {livro.linkCompra && (
+                      <button
+                        className="livrosPorGenero-btnIcon"
+                        onClick={() => window.open(livro.linkCompra, "_blank")}
+                        title="Comprar livro"
+                      >
+                        <FontAwesomeIcon icon={faCartShopping} />
+                      </button>
+                    )}
+
+                    {
+                      (!isLivroNaBiblioteca(livro.id) ? (
+                        <button
+                          className="livrosPorGenero-btnIcon"
+                          onClick={() => handleAddMeuLivro(livro)}
+                          title="Adicionar à Biblioteca"
+                        >
+                          <i className="bi bi-bookmark-plus"></i>
+                        </button>
+                      ) : (
+                        <button
+                          className="livrosPorGenero-btnIcon"
+                          onClick={() => handleDeleteMeuLivro(livro.id)}
+                          title="Remover da Biblioteca"
+                        >
+                          <i className="bi bi-bookmark-x"></i>
+                        </button>
+                      ))}
+                  </div>
                 </div>
-              ))}
+              )}
             </div>
-
-            <button
-              className="seta-LivrosPorGenero seta-LivrosPorGenero-direita"
-              onClick={() =>
-                (document.getElementById(
-                  `linha-${genero.id}`
-                ).scrollLeft += 300)
-              }
-            >
-              &#10095;
-            </button>
-          </div>
-        </div>
-      ))}
+          ))
+        ) : (
+          <p style={{ marginTop: "20px" }}>
+            Nenhum livro encontrado para este gênero.
+          </p>
+        )}
+      </div>
     </div>
   );
 };

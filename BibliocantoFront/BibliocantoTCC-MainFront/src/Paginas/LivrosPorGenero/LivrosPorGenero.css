@@ -1,139 +1,95 @@
-.container-LivroPorGeneros {
+.livrosPorGenero-linha-container {
   display: flex;
   flex-direction: column;
-  padding: 0 15px;
-}
-
-.carrossel-container-LivrosPorGenero {
-  position: relative;
-  width: 100%;
-  display: flex;
   align-items: center;
+  padding: 0 5px;
 }
 
-.genero-bloco {
+.livrosPorGenero-livros-container {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  justify-content: left;
+  flex-wrap: wrap;
+  gap: 25px;
+  width: 100%;
+  padding-right: 50px;
+  padding-left: 70px;
 }
 
-.genero-bloco h2 {
-  margin-bottom: 15px;
-  padding-bottom: 5px;
-  font-size: 1.9rem;
+.TitulolivrosPorGenero {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2.5rem;
   font-weight: bold;
-  color: #47211c;
+  color: #333;
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 2px;
 }
 
-.linha-livrosPorGenero {
-  display: flex;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-behavior: smooth;
-  gap: 25px;
-  padding: 10px 0;
-  flex: 1; /* ocupa todo o espaço entre as setas */
-  flex-wrap: nowrap;
+.TitulolivrosPorGenero::after {
+  content: "";
+  display: block;
+  width: 300px;
+  height: 4px;
+  background-color: #5a2a24;
+  margin: 10px auto;
+  margin-bottom: 40px;
 }
 
-.linha-livrosPorGenero::-webkit-scrollbar {
-  display: none;
+.livrosPorGenero-livro-wrapper {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
 }
 
-.LivrosPorGenero-livro-card {
+.livrosPorGenero-livro-card {
   width: 160px;
   height: 230px;
   transition: transform 0.3s ease-in-out;
   cursor: pointer;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
-  border: 1px solid #58888c; 
+  border: 1px solid #58888c;
 }
 
-.card-livroPorGenero {
-  position: relative;
-  display: inline-block;
-  transition: transform 0.3s ease-in-out;
-  text-align: center;
-  margin-bottom: 25px;
-  transform-origin: center bottom;
-}
-
-.card-livroPorGenero:hover {
+.livrosPorGenero-livro-wrapper:hover {
   transform: scale(1.3);
   z-index: 10;
 }
 
-.LivrosPorGenero-livro-overlay {
+.livrosPorGenero-livro-overlay {
   position: absolute;
-  top: 100% ;
-  left: 0 ;
+  top: 100%;
+  left: 0;
   width: 100%;
   max-width: 200px;
   background: #58888c;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
   padding: 10px;
   color: white;
-
-  /* Aplicar o border-radius apenas na parte inferior */
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 }
 
-.LivrosPorGenero-livro-overlay p {
+.livrosPorGenero-livro-overlay p {
   font-size: 10px;
-
-  display: -webkit-box; /* For WebKit browsers */
-  -webkit-line-clamp: 5; /* Limit the text to 4 lines in WebKit browsers */
-  -webkit-box-orient: vertical; /* For WebKit browsers */
-  overflow: hidden; /* Hide the text beyond the specified lines */
-  text-overflow: ellipsis; /* Add ellipsis (...) at the end */
-
-  /* Standard property for line clamping */
-  display: box; /* Standard box model */
-  line-clamp: 5; /* Limit the text to 4 lines in modern browsers */
-  box-orient: vertical; /* For non-WebKit browsers */
-
-  line-height: 1.5; /* Adjust the line height for better readability */
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: box;
+  line-clamp: 5;
+  box-orient: vertical;
+  line-height: 1.5;
 }
 
-.LivrosPorGenero-livro-actions {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.LivrosPorGenero-btnIcon,
+.livrosPorGenero-btnIcon,
 .biblioteca-btnIcon {
   background: none;
   border: none;
   color: white;
   font-size: 18px;
   cursor: pointer;
-}
-
-.seta-LivrosPorGenero {
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  z-index: 1;
-  color: #47211c;
-  padding: 10px;
-}
-
-.seta-LivrosPorGenero:hover {
-  background-color: rgba(0, 0, 0, 0.9);
-}
-
-.seta-LivrosPorGenero-esquerda {
-  margin-right: 15px;
-}
-
-.seta-LivrosPorGenero-direita {
-  margin-left: 15px;
 }

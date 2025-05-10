@@ -47,7 +47,7 @@ export default function App() {
           <Route path="/RequestCode" element={<RequestCode />} />
           <Route path="/code-validation/:email" element={<CodeValidation />} />
           <Route path="/reset-password/:email/:code" element={<ResetPassword />} />
-          <Route path="/LivrosPorGenero" element={<LivrosPorGenero />} />
+          <Route path="/LivrosPorGenero/:id" element={<LivrosPorGenero />} />
           <Route path="/LivrosPorEditora" element={<LivrosPorEditora />} />
         </Routes>
       </BrowserRouter>
