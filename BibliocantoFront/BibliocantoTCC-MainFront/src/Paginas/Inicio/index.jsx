@@ -15,7 +15,7 @@ function Inicio() {
   const [hoveredLivro, setHoveredLivro] = useState(null);
   const [idBiblioteca, setIdLivroBiblioteca] = useState([]);
 
-  const [livrosBuscados, setLivrosBuscados] = useState([]); // Estado para os livros buscados
+  const [livrosBuscados, setLivrosBuscados] = useState([]);
 
   const navigate = useNavigate();
 
