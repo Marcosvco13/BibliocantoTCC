@@ -136,7 +136,7 @@ const BuscaLivro = ({ onResultado }) => {
                 });
               }}
             >
-              <div className="filtro-item genero-item">Gêneros</div>
+              <div className="filtro-item"><span>Gêneros</span> <i class="bi bi-chevron-right"></i></div>
 
               {mostrarSubfiltroGenero && (
                 <div className="subfiltro-generos">
@@ -166,7 +166,8 @@ const BuscaLivro = ({ onResultado }) => {
                 });
               }}
             >
-              <div className="filtro-item editora-item">Editoras</div>
+              <div className="filtro-item"><span>Editoras</span> <i class="bi bi-chevron-right"></i></div> 
+
               {mostrarSubfiltroEditora && (
                 <div className="subfiltro-editoras">
                   {editoras.map((editora) => (
@@ -188,7 +189,7 @@ const BuscaLivro = ({ onResultado }) => {
                 className="filtro-item limpar-filtro"
                 onClick={() => navigate("/")}
               >
-                <LuFilterX className="icone-filtro" /> Limpar Filtro
+                Limpar Filtro <LuFilterX className="icone-filtro" />
               </div>
             )}
           </div>

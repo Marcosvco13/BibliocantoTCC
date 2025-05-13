@@ -75,7 +75,8 @@
 
 .filtro-opcoes {
   position: absolute;
-  margin-top: 10px;
+  top: 100%;
+  left: 5px;
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -88,6 +89,10 @@
   position: relative;
   padding: 8px 12px;
   cursor: pointer;
+  width: 175px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .filtro-item:hover {
