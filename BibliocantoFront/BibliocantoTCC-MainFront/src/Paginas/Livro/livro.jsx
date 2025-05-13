@@ -762,7 +762,7 @@ function Livro() {
         </Col>
 
         <Col xs={12} md={3} className="livro-coluna-extra">
-          <Recomendacao IdsLivroAutor={IdsLivroAutor} />
+          <Recomendacao idLivro={idLivro} />
         </Col>
       </Row>
     </Container>
