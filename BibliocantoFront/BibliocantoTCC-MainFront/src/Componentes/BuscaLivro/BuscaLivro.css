@@ -9,7 +9,6 @@
 
 .busca-input-group {
   display: flex;
-  align-items: center;
   gap: 10px;
 }
 
@@ -63,7 +62,7 @@
 }
 
 .FiltrarLivrosBtn:hover {
-  color: #5a2a24;
+  color: #58888c;;
   transform: scale(1.1);
   background-color: transparent;
 }
@@ -132,4 +131,24 @@
 
 .subfiltro-item:hover {
   background-color: #f0f0f0;
+}
+
+.busca-container-pag-filtrada {
+  margin-bottom: 0px;
+}
+
+.FiltrarLivrosBtn-pag-filtrada {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin-top: 4px;
+  font-size: 30px;
+  color: #58888c;
+  transition: transform 0.2s ease-in-out;
+}
+
+.FiltrarLivrosBtn-pag-filtrada:hover {
+  color: #3f6669;
+  transform: scale(1.1);
+  background-color: transparent;
 }

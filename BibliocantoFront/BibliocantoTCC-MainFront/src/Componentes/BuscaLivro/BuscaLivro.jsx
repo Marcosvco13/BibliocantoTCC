@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import "./BuscaLivro.css";
 import api from "../../services/api";
+import { LuFilterX } from "react-icons/lu";
 
 const BuscaLivro = ({ onResultado }) => {
   const [termo, setTermo] = useState("");
@@ -73,8 +74,19 @@ const BuscaLivro = ({ onResultado }) => {
     }
   };
 
+  const mostrarLimparFiltro =
+    location.pathname.startsWith("/LivrosPorGenero/") ||
+    location.pathname.startsWith("/LivrosPorEditora/");
+
   return (
-    <div className="busca-container">
+    <div
+      className={`busca-container ${
+        location.pathname.startsWith("/LivrosPorGenero/") ||
+        location.pathname.startsWith("/LivrosPorEditora/")
+          ? "busca-container-pag-filtrada"
+          : ""
+      }`}
+    >
       {location.pathname === "/" && (
         <div className="busca-input-group">
           <input
@@ -91,10 +103,22 @@ const BuscaLivro = ({ onResultado }) => {
 
       <div className="filtro-input-group">
         <button
-          className="FiltrarLivrosBtn"
+          className={`FiltrarLivrosBtn ${
+            location.pathname.startsWith("/LivrosPorGenero/") ||
+            location.pathname.startsWith("/LivrosPorEditora/")
+              ? "FiltrarLivrosBtn-pag-filtrada"
+              : ""
+          }`}
           onClick={() => setMostrarFiltros((prev) => !prev)}
         >
-          <i className="bi bi-funnel"></i>
+          <i
+            className={
+              location.pathname.startsWith("/LivrosPorGenero/") ||
+              location.pathname.startsWith("/LivrosPorEditora/")
+                ? "bi bi-funnel-fill"
+                : "bi bi-funnel"
+            }
+          ></i>
         </button>
 
         {mostrarFiltros && (
@@ -159,6 +183,14 @@ const BuscaLivro = ({ onResultado }) => {
                 </div>
               )}
             </div>
+            {mostrarLimparFiltro && (
+              <div
+                className="filtro-item limpar-filtro"
+                onClick={() => navigate("/")}
+              >
+                <LuFilterX className="icone-filtro" /> Limpar Filtro
+              </div>
+            )}
           </div>
         )}
       </div>

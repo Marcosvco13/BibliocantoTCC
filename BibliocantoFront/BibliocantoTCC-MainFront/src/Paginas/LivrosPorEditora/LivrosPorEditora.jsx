@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import api from "../../services/api";
 import BuscaLivro from "../../Componentes/BuscaLivro/BuscaLivro";
+import "./LivrosPorEditora.css";
 
 const LivrosPorEditora = () => {
   const { id } = useParams();
@@ -16,23 +17,22 @@ const LivrosPorEditora = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-  const fetchEditoraELivros = async () => {
-    try {
-      // Buscar editora
-      const editoraResponse = await api.getEditoraById(id);
-      setEditora(editoraResponse);
+    const fetchEditoraELivros = async () => {
+      try {
+        // Buscar editora
+        const editoraResponse = await api.getEditoraById(id);
+        setEditora(editoraResponse);
 
-      // Buscar livros da editora
-      const livrosResponse = await api.getLivrosByIdEditora(id);
-      setLivros(livrosResponse);
-    } catch (error) {
-      console.error("Erro ao buscar dados da editora ou livros:", error);
-    }
-  };
+        // Buscar livros da editora
+        const livrosResponse = await api.getLivrosByIdEditora(id);
+        setLivros(livrosResponse);
+      } catch (error) {
+        console.error("Erro ao buscar dados da editora ou livros:", error);
+      }
+    };
 
-  fetchEditoraELivros();
-}, [id]);
-
+    fetchEditoraELivros();
+  }, [id]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -74,7 +74,10 @@ const LivrosPorEditora = () => {
     const idUser = localStorage.getItem("Id");
 
     try {
-      const livroBiblioteca = await api.GetMeuLivroByIdLivroIdUser(idUser, idLivro);
+      const livroBiblioteca = await api.GetMeuLivroByIdLivroIdUser(
+        idUser,
+        idLivro
+      );
       const idBiblioteca = livroBiblioteca.id;
       setIdLivroBiblioteca(idBiblioteca);
 
@@ -91,11 +94,15 @@ const LivrosPorEditora = () => {
 
   return (
     <div className="LivrosPorEditora-linha-container">
-      <BuscaLivro onResultado={() => {}} />
 
-      <h2 className="TituloLivrosPorEditora">
-        {editora ? `${editora.nomeEditora}` : "Carregando..."}
-      </h2>
+      <div className="livrosPorEditora-header">
+        <h2 className="TituloLivrosPorEditora">
+          {editora ? `${editora.nomeEditora}` : "Carregando..."}
+        </h2>
+        <div className="componente-busca-livros-LivroPorEditora">
+          <BuscaLivro onResultado={() => {}} />
+        </div>
+      </div>
 
       <div className="LivrosPorEditora-livros-container">
         {livros.length > 0 ? (

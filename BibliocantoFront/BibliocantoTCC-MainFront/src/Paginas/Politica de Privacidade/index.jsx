@@ -92,7 +92,8 @@ export default function PoliticaPrivacidade() {
                     página regularmente para estar informado sobre nossas práticas de privacidade. Quaisquer alterações 
                     entrarão em vigor imediatamente após a publicação da política revisada.
                 </p>
-                {/*
+                {
+                /*
                 <h2>9. Contato</h2>
                 <p>
                     Se você tiver dúvidas ou preocupações sobre esta Política de Privacidade ou sobre o tratamento de suas 
@@ -103,7 +104,8 @@ export default function PoliticaPrivacidade() {
                     E-mail: **[inserir e-mail de contato]**  
                     Endereço: **[inserir endereço físico, se aplicável]**
                 </p>
-                */}
+                */
+                }
             </section>
         </div>
     );

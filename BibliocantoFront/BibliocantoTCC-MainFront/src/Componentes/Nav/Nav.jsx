@@ -31,7 +31,7 @@ export default function Nav() {
       </div>
 
       <div className="nav-links">
-        <h5>Encontre seu livro</h5>
+        <h5>Encontre seu Livro</h5>
         <Link to="/" className={
           
           ["/", "/PreCadastrar", "/LivrosPorGenero", "/LivrosPorEditora"].includes(

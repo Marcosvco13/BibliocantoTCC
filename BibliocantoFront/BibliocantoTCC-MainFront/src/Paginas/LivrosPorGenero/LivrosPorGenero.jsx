@@ -53,17 +53,17 @@ const LivrosPorGenero = () => {
   }, [id]);
 
   useEffect(() => {
-      const fetchData = async () => {
-        const idUser = localStorage.getItem("Id");
-  
-        try {
-          const LivrosBiblioteca = await api.BibliotecaByUser(idUser);
-          setLivrosBiblioteca(LivrosBiblioteca);
-        } catch (err) {}
-      };
-  
-      fetchData();
-    }, [livrosBiblioteca]);
+    const fetchData = async () => {
+      const idUser = localStorage.getItem("Id");
+
+      try {
+        const LivrosBiblioteca = await api.BibliotecaByUser(idUser);
+        setLivrosBiblioteca(LivrosBiblioteca);
+      } catch (err) {}
+    };
+
+    fetchData();
+  }, [livrosBiblioteca]);
 
   // Função para verificar se o livro já está na biblioteca
   const isLivroNaBiblioteca = (livroId) => {
@@ -72,58 +72,64 @@ const LivrosPorGenero = () => {
 
   //funcao para adicionar o livro da biblioteca do usuario
   const handleAddMeuLivro = async (livro) => {
-      const idUser = localStorage.getItem("Id");
-  
-      if (!idUser) {
-        alert("Usuário não encontrado");
-        return;
-      }
-  
-      const idLivro = livro.id;
-  
-      try {
-        const data = { idUser, idLivro };
-        await api.post("/api/MeusLivros", data);
-      } catch (error) {
-        console.error("Erro ao adicionar livro:", error);
-        alert("Falha ao salvar livro na biblioteca!: " + error.message);
-      }
-    };
+    const idUser = localStorage.getItem("Id");
+
+    if (!idUser) {
+      alert("Usuário não encontrado");
+      return;
+    }
+
+    const idLivro = livro.id;
+
+    try {
+      const data = { idUser, idLivro };
+      await api.post("/api/MeusLivros", data);
+    } catch (error) {
+      console.error("Erro ao adicionar livro:", error);
+      alert("Falha ao salvar livro na biblioteca!: " + error.message);
+    }
+  };
 
   //funcao para remover o livro da biblioteca do usuario
-    const handleDeleteMeuLivro = async (idLivro) => {
-      const idUser = localStorage.getItem("Id");
-  
-      try {
-        // Buscar o ID do livro na biblioteca do usuário
-        const livroBiblioteca = await api.GetMeuLivroByIdLivroIdUser(
-          idUser,
-          idLivro
-        );
-  
-        const idBiblioteca = livroBiblioteca.id;
-        setIdLivroBiblioteca(idBiblioteca);
-  
-        // Excluir o livro da biblioteca
-        await api.DeleteMeuLivro(idBiblioteca);
-  
-        // Atualizar a lista removendo o livro excluído
-        setLivrosBiblioteca((prevLivros) =>
-          prevLivros.filter((livro) => livro.id !== idBiblioteca)
-        );
-      } catch (error) {
-        console.error("Erro ao excluir o livro da biblioteca:", error);
-        alert("Falha ao remover o livro da biblioteca.");
-      }
-    };
+  const handleDeleteMeuLivro = async (idLivro) => {
+    const idUser = localStorage.getItem("Id");
+
+    try {
+      // Buscar o ID do livro na biblioteca do usuário
+      const livroBiblioteca = await api.GetMeuLivroByIdLivroIdUser(
+        idUser,
+        idLivro
+      );
+
+      const idBiblioteca = livroBiblioteca.id;
+      setIdLivroBiblioteca(idBiblioteca);
+
+      // Excluir o livro da biblioteca
+      await api.DeleteMeuLivro(idBiblioteca);
+
+      // Atualizar a lista removendo o livro excluído
+      setLivrosBiblioteca((prevLivros) =>
+        prevLivros.filter((livro) => livro.id !== idBiblioteca)
+      );
+    } catch (error) {
+      console.error("Erro ao excluir o livro da biblioteca:", error);
+      alert("Falha ao remover o livro da biblioteca.");
+    }
+  };
 
   return (
     <div className="livrosPorGenero-linha-container">
-      <BuscaLivro onResultado={(resultado) => {}} />
+      
+      <div className="livrosPorGenero-header">
+        
+        <h2 className="TitulolivrosPorGenero">
+          {genero ? `${genero.nomegenero}` : "Carregando..."}
+        </h2>
 
-      <h2 className="TitulolivrosPorGenero">
-        {genero ? `${genero.nomegenero}` : "Carregando..."}
-      </h2>
+        <div className="componente-busca-livros-LivroPorGenero">
+          <BuscaLivro onResultado={(resultado) => {}} />
+        </div>
+      </div>
 
       <div className="livrosPorGenero-livros-container">
         {livros.length > 0 ? (
@@ -154,24 +160,23 @@ const LivrosPorGenero = () => {
                       </button>
                     )}
 
-                    {
-                      (!isLivroNaBiblioteca(livro.id) ? (
-                        <button
-                          className="livrosPorGenero-btnIcon"
-                          onClick={() => handleAddMeuLivro(livro)}
-                          title="Adicionar à Biblioteca"
-                        >
-                          <i className="bi bi-bookmark-plus"></i>
-                        </button>
-                      ) : (
-                        <button
-                          className="livrosPorGenero-btnIcon"
-                          onClick={() => handleDeleteMeuLivro(livro.id)}
-                          title="Remover da Biblioteca"
-                        >
-                          <i className="bi bi-bookmark-x"></i>
-                        </button>
-                      ))}
+                    {!isLivroNaBiblioteca(livro.id) ? (
+                      <button
+                        className="livrosPorGenero-btnIcon"
+                        onClick={() => handleAddMeuLivro(livro)}
+                        title="Adicionar à Biblioteca"
+                      >
+                        <i className="bi bi-bookmark-plus"></i>
+                      </button>
+                    ) : (
+                      <button
+                        className="livrosPorGenero-btnIcon"
+                        onClick={() => handleDeleteMeuLivro(livro.id)}
+                        title="Remover da Biblioteca"
+                      >
+                        <i className="bi bi-bookmark-x"></i>
+                      </button>
+                    )}
                   </div>
                 </div>
               )}
