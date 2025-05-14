@@ -1,21 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import {
-    View,
-    Text,
-    Image,
-    TouchableOpacity,
-    ActivityIndicator,
-    StyleSheet,
-    FlatList,
-    Dimensions,
-    ScrollView,
-    Animated,
-
-} from "react-native";
+import { View, Text, Image, TouchableOpacity, ActivityIndicator, StyleSheet, FlatList, Dimensions, ScrollView, Animated } from "react-native";
 import { RootStackParamList } from '../routes/StackNavigator';
 import api from "../services/api";
 import NavBar from "../components/NavBar";
+import * as SecureStore from "expo-secure-store";
 
 interface Livro {
     id: number;
@@ -42,11 +31,11 @@ export default function HomeScreen() {
                 const allLivros = response.data;
                 setLivros(allLivros);
 
-                const livrosAleatorios = allLivros
-                    .sort(() => 0.5 - Math.random())
-                    .slice(0, 9); // Apenas 9 itens no carrossel
+                const idUser = await SecureStore.getItemAsync("IdUser");
+                const responseSugestao = await api.get("api/Livros/SugestaoParaUser" ,{ params: { idUser } });
+                const livrosSugestao = responseSugestao.data;
 
-                setCarrosselLivros(livrosAleatorios);
+                setCarrosselLivros(livrosSugestao);
 
                 // Aguarda renderização para posicionar no centro
                 setTimeout(() => {

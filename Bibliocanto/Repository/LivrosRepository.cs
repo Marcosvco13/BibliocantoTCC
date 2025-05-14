@@ -14,19 +14,16 @@ namespace Bibliocanto.Repository
 
         public async Task<IEnumerable<Livros>> GetBaseLivros()
         {
-            //return await _context.Livros.Include(p => p.Autores).Include(l => l.Generos).Include(d => d.Editoras).ToListAsync();
             return await _context.Livros.Include(d => d.Editoras).ToListAsync();
         }
 
         public async Task<IEnumerable<Livros>> GetLivrosByNome(string nome)
         {
-            //return await _context.Livros.Where(l => l.Titulo.Contains(nome)).Include(p => p.Autores).Include(l => l.Generos).Include(d => d.Editoras).ToListAsync();
             return await _context.Livros.Where(l => l.Titulo.Contains(nome)).Include(d => d.Editoras).ToListAsync();
         }
 
         public async Task<Livros> GetLivroById(int id)
         {
-            //return await _context.Livros.Include(p => p.Autores).Include(l => l.Generos).Include(d => d.Editoras).FirstOrDefaultAsync(l => l.Id == id);
             return await _context.Livros.Include(d => d.Editoras).FirstOrDefaultAsync(l => l.Id == id);
         }
 
@@ -34,6 +31,24 @@ namespace Bibliocanto.Repository
         {
             return await _context.Livros.FirstOrDefaultAsync(l => l.Isbn == isbn);
         }
+
+        public async Task<IEnumerable<Livros>> GetLivrosByIdUser(string idUser)
+        {
+            // 1. Buscar os gêneros preferidos do usuário
+            var generosPreferidos = await _context.Preferencias.Where(p => p.IdUser == idUser).Select(p => p.IdGenero).ToListAsync();
+
+            // 2. Buscar os livros que já estão na biblioteca do usuário
+            var livrosSalvos = await _context.MeusLivros.Where(b => b.IdUser == idUser).Select(b => b.IdLivro).ToListAsync();
+
+            // 3. Buscar os IDs de livros que pertencem aos gêneros preferidos e que ainda não estão na biblioteca
+            var buscarIdLivros = await _context.GeneroLivro.Where(gl => generosPreferidos.Contains(gl.IdGenero) && !livrosSalvos.Contains(gl.IdLivro)).OrderBy(x => Guid.NewGuid()).Select(gl => gl.IdLivro).Take(9).ToListAsync();
+
+            // 4. Buscar os livros correspondentes aos IDs filtrados
+            var livros = await _context.Livros.Where(l => buscarIdLivros.Contains(l.Id)).ToListAsync();
+
+            return livros;
+        }
+
 
         public async Task<IEnumerable<Livros>> GetLivrosByIdEditora(int id)
         {

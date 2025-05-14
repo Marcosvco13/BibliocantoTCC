@@ -2156,6 +2156,32 @@
     ]
   },
   {
+    "ContainingType": "Bibliocanto.Controllers.LivrosController",
+    "Method": "GetLivrosByIdUser",
+    "RelativePath": "api/Livros/SugestaoParaUser",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idUser",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Bibliocanto.Resources.LivrosResource, Bibliocanto, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "Bibliocanto.Controllers.MeusLivrosController",
     "Method": "PostAsync",
     "RelativePath": "api/MeusLivros",
@@ -2610,6 +2636,22 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "Bibliocanto.Controllers.PreferenciasController",
+    "Method": "DeleteByUser",
+    "RelativePath": "api/Preferencias/usuario/{idUser}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idUser",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "Bibliocanto.Controllers.ResenhaController",

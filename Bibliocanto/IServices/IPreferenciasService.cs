@@ -9,5 +9,6 @@ namespace Bibliocanto.IServices
         Task<Preferencias> GetById(int id);
         Task<PreferenciasResponse> Create(Preferencias preferencias);
         Task<PreferenciasResponse> Delete(int id);
+        Task<PreferenciasResponse> DeleteByUser(string idUser);
     }
 }

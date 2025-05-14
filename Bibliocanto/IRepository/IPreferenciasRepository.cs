@@ -8,5 +8,6 @@ namespace Bibliocanto.IRepository
         Task<Preferencias> GetById(int id);
         Task Create(Preferencias preferencias);
         void Delete(Preferencias preferencias);
+        void DeleteByUser(string idUser);
     }
 }

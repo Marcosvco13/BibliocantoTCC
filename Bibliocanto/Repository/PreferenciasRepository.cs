@@ -1,6 +1,7 @@
 ﻿using Bibliocanto.Context;
 using Bibliocanto.IRepository;
 using Bibliocanto.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bibliocanto.Repository
@@ -30,6 +31,14 @@ namespace Bibliocanto.Repository
         public void Delete(Preferencias preferencias)
         {
             _context.Preferencias.Remove(preferencias);
+        }
+
+        public void DeleteByUser(string idUser)
+        {
+            var preferenciasDoUsuario = _context.Preferencias.Where(p => p.IdUser == idUser).ToList();
+
+            _context.Preferencias.RemoveRange(preferenciasDoUsuario);
+            _context.SaveChanges();
         }
     }
 }
