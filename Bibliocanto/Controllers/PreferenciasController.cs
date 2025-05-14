@@ -54,7 +54,7 @@ namespace Bibliocanto.Controllers
 
                 if (recursos.Count() == 0)
                 {
-                    return NotFound($"Não foi encontrada preferências para os seus usuários.");
+                    return Ok($"Não foi encontrada preferências para os seus usuários.");
                 }
                 else
                 {
@@ -93,6 +93,24 @@ namespace Bibliocanto.Controllers
 
             var preferenciaResource = _mapper.Map<Preferencias, PreferenciasResource>(result.Preferencia);
             return Ok(preferenciaResource);
+        }
+
+        [HttpDelete("usuario/{idUser}")]
+        public async Task<IActionResult> DeleteByUser(string idUser)
+        {
+            var verifica = await _preferenciasService.GetByUser(idUser);
+
+            if (!verifica.Any())
+            {
+                return Ok(new { message = "Não há preferências para este usuário." });
+            }
+
+            var result = await _preferenciasService.DeleteByUser(idUser);
+
+            if (result.Message != "Preferências do usuário removidas com sucesso.")
+                return BadRequest(result.Message);
+
+            return Ok(new { message = result.Message });
         }
     }
 }

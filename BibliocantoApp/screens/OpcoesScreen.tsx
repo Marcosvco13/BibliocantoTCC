@@ -91,7 +91,7 @@ export default function OpcoesScreen() {
                     <Icon name="info" style={styles.iconDefault} />
                     <Text style={styles.buttonText}>Sobre o bibliocanto</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={() => console.log('Preferências')}>
+                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Preferencias')}>
                     <Icon name="settings" style={styles.iconDefault} />
                     <Text style={styles.buttonText}>Preferências</Text>
                 </TouchableOpacity>

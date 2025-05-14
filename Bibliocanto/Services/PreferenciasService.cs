@@ -3,6 +3,7 @@ using Bibliocanto.IRepository;
 using Bibliocanto.IServices;
 using Bibliocanto.Models;
 using Bibliocanto.Repository;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Bibliocanto.Services
 {
@@ -70,5 +71,21 @@ namespace Bibliocanto.Services
                 return new PreferenciasResponse($"An error occurred when deleting the category: {ex.Message}");
             }
         }
+
+        public async Task<PreferenciasResponse> DeleteByUser(string idUser)
+        {
+            try
+            {
+                _preferenciasRepository.DeleteByUser(idUser);
+                await _unitOfWork.CompleteAsync();
+
+                return new PreferenciasResponse("Preferências do usuário removidas com sucesso.");
+            }
+            catch (Exception ex)
+            {
+                return new PreferenciasResponse($"Ocorreu um erro ao deletar as preferências: {ex.Message}");
+            }
+        }
+
     }
 }
