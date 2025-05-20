@@ -23,6 +23,7 @@ import CodeValidation from "./Paginas/CodeValidation";
 import ResetPassword from "./Paginas/ResetPassword";
 import LivrosPorGenero from "./Paginas/LivrosPorGenero/LivrosPorGenero"
 import LivrosPorEditora from "./Paginas/LivrosPorEditora/LivrosPorEditora";
+import PerfilUsuario from "./Paginas/PerfilUsuario/PerfilUsuario";
 
 export default function App() {
 
@@ -49,6 +50,7 @@ export default function App() {
           <Route path="/reset-password/:email/:code" element={<ResetPassword />} />
           <Route path="/LivrosPorGenero/:id" element={<LivrosPorGenero />} />
           <Route path="/LivrosPorEditora/:id" element={<LivrosPorEditora />} />
+          <Route path="/PerfilUsuario" element={<PerfilUsuario />} />
         </Routes>
       </BrowserRouter>
     </div>

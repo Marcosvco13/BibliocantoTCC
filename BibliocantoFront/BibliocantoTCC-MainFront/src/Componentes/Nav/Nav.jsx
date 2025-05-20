@@ -32,15 +32,19 @@ export default function Nav() {
 
       <div className="nav-links">
         <h5>Encontre seu Livro</h5>
-        <Link to="/" className={
-          
-          ["/", "/PreCadastrar", "/LivrosPorGenero", "/LivrosPorEditora"].includes(
-            location.pathname
-          )
-            ? "active-link"
-            : ""
-        }
-          >
+        <Link
+          to="/"
+          className={
+            [
+              "/",
+              "/PreCadastrar",
+              "/LivrosPorGenero",
+              "/LivrosPorEditora",
+            ].includes(location.pathname)
+              ? "active-link"
+              : ""
+          }
+        >
           <i className="bi bi-house"></i> Acervo de Livros
         </Link>
         {email && (
@@ -107,6 +111,30 @@ export default function Nav() {
             className={location.pathname === "/about" ? "active-link" : ""}
           >
             <i className="bi bi-globe2"></i> Sobre o Site
+          </Link>
+        )}
+      </div>
+
+      <div className="nav-links">
+        <h5>Usuário</h5>
+        {email && (
+          <Link
+            to="/PerfilUsuario"
+            className={
+              location.pathname === "/PerfilUsuario" ? "active-link" : ""
+            }
+          >
+            <i className="bi bi-person"></i> Perfil do Usuário
+          </Link>
+        )}
+        {email && (
+          <Link
+            to="/PerfilUsuario"
+            className={
+              location.pathname === "/" ? "active-link" : ""
+            }
+          >
+            <i className="bi bi-star"></i> Preferências
           </Link>
         )}
       </div>
