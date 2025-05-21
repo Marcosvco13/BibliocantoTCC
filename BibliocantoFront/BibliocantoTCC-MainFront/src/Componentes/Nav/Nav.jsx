@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
-import { Link, useNavigate } from "react-router-dom";
+import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import api from "../../services/api";
 import "./Nav.css";
 
 export default function Nav() {
   const [email, setEmail] = useState(localStorage.getItem("email") || null);
+  const [perfil, setPerfil] = useState({ nome: "", apelido: "" });
+
+  const saudacao = perfil.apelido || perfil.nome || email;
+
   const location = useLocation();
   const history = useNavigate();
 
@@ -19,6 +25,37 @@ export default function Nav() {
     window.location.reload();
   };
 
+  const handleLogIn = () => {
+    history("/login");
+  };
+
+  useEffect(() => {
+    const fetchPerfil = async () => {
+      if (!email) {
+        return;
+      }
+
+      try {
+        const idUser = localStorage.getItem("Id");
+        if (!idUser) {
+          console.warn("ID do usuário não encontrado no localStorage.");
+          return;
+        }
+
+        const response = await api.GetPerfilByIdUser(idUser);
+
+        if (response && response.data) {
+          const { apelido, nome } = response.data;
+          setPerfil({ apelido, nome });
+        }
+      } catch (error) {
+        console.error("Erro ao buscar perfil do usuário:", error);
+      }
+    };
+
+    fetchPerfil();
+  }, [email]);
+
   return (
     <div className="nav-container">
       <div className="nav-titulo">
@@ -30,6 +67,11 @@ export default function Nav() {
         <h3>Bibliocanto</h3>
       </div>
 
+      {email && (
+        <div className="nav-subtitulo">
+          <label>Seja bem vindo, {saudacao}!</label>
+        </div>
+      )}
       <div className="nav-links">
         <h5>Encontre seu Livro</h5>
         <Link
@@ -37,7 +79,6 @@ export default function Nav() {
           className={
             [
               "/",
-              "/PreCadastrar",
               "/LivrosPorGenero",
               "/LivrosPorEditora",
             ].includes(location.pathname)
@@ -63,9 +104,9 @@ export default function Nav() {
         )}
       </div>
 
-      <div className="nav-links">
-        <h5>Seus Livros</h5>
-        {email && (
+      {email && (
+        <div className="nav-links">
+          <h5>Seus Livros</h5>
           <Link
             to="/MinhaBiblioteca"
             className={
@@ -74,83 +115,83 @@ export default function Nav() {
           >
             <i className="bi bi-book"></i> Minha Biblioteca
           </Link>
-        )}
-        {email && (
           <Link
             to="/Lidos"
             className={location.pathname === "/Lidos" ? "active-link" : ""}
           >
             <i className="bi bi-bookmark-star"></i> Lidos
           </Link>
-        )}
-        {email && (
           <Link
             to="/Relidos"
             className={location.pathname === "/Relidos" ? "active-link" : ""}
           >
             <i className="bi bi-bookmark-heart"></i> Relidos
           </Link>
-        )}
-      </div>
+        </div>
+      )}
 
       <div className="nav-links">
         <h5>Bibliocanto</h5>
-        {email && (
-          <Link
-            to="/privacy-policy"
-            className={
-              location.pathname === "/privacy-policy" ? "active-link" : ""
-            }
-          >
-            <i className="bi bi-info-circle"></i> Política de Privacidade
-          </Link>
-        )}
-        {email && (
-          <Link
-            to="/about"
-            className={location.pathname === "/about" ? "active-link" : ""}
-          >
-            <i className="bi bi-globe2"></i> Sobre o Site
-          </Link>
-        )}
+        <Link
+          to="/privacy-policy"
+          className={
+            location.pathname === "/privacy-policy" ? "active-link" : ""
+          }
+        >
+          <i className="bi bi-info-circle"></i> Política de Privacidade
+        </Link>
+        <Link
+          to="/about"
+          className={location.pathname === "/about" ? "active-link" : ""}
+        >
+          <i className="bi bi-globe2"></i> Sobre o Site
+        </Link>
       </div>
 
-      <div className="nav-links">
-        <h5>Usuário</h5>
-        {email && (
+      {email && (
+        <div className="nav-links">
+          <h5>Usuário</h5>
+
           <Link
             to="/PerfilUsuario"
             className={
               location.pathname === "/PerfilUsuario" ? "active-link" : ""
             }
           >
-            <i className="bi bi-person"></i> Perfil do Usuário
+            <i className="bi bi-person"></i> Meu Perfil
           </Link>
-        )}
-        {email && (
           <Link
-            to="/PerfilUsuario"
+            to="/PreferenciaDeGenero"
             className={
-              location.pathname === "/" ? "active-link" : ""
+              location.pathname === "/PreferenciaDeGenero" ? "active-link" : ""
             }
           >
             <i className="bi bi-star"></i> Preferências
           </Link>
-        )}
-      </div>
+        </div>
+      )}
+
+      {!email && (
+        <div className="aviso-restrito-login">
+          <label>
+            {" "}
+            ⚠️ Algumas funcionalidades estão disponíveis apenas para usuários
+            logados. Faça login ou crie uma conta para acessar!
+          </label>
+        </div>
+      )}
 
       <div className="nav-footer">
         {email ? (
-          <span className="user-info">
-            {email}
-            <FontAwesomeIcon
-              icon={faArrowRightFromBracket}
-              className="logout-icon"
-              onClick={handleLogout}
-            />
+          <span className="logout-icon" onClick={handleLogout}>
+            Sair
+            <FontAwesomeIcon icon={faRightFromBracket} />
           </span>
         ) : (
-          <Link to="/login">Entrar</Link>
+          <span className="login-icon" onClick={handleLogIn}>
+            Entrar
+            <FontAwesomeIcon icon={faRightToBracket} />
+          </span>
         )}
       </div>
     </div>

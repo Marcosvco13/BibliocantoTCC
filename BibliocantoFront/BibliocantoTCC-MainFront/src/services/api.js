@@ -1034,3 +1034,55 @@ api.putPerfilUsuario = async function(id, PerfilData) {
       throw error;
     }
   };  
+
+//preferencias
+
+// Método GET para buscar as preferencias do usuario pelo idUsuario
+api.GetPreferenciaByIdUser = async function(idUser) {
+    try {
+        const response = await api.get(`/api/Preferencias/PreferenciaByUser?idUser=${idUser}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        return response;
+    } catch (error) {
+        console.error("Erro ao buscar a preferencia:", error);
+        throw error;
+    }
+};
+
+// Função para cadastrar a preferencia do usuario
+api.cadastrarPreferenciaUsuario = async (preferencia) => {
+    try {
+      const response = await api.post(
+        "/api/Preferencias",
+        preferencia,
+        {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+            "Content-Type": "application/json"
+          }
+        }
+      );
+      return response.data; 
+    } catch (error) {
+      console.error("Erro ao cadastrar a preferencia:", error);
+      throw error;
+    }
+};
+
+// Método delete para excluir a preferencia do usuario
+api.DeletePreferenciaUsuario = async function(idPreferencia) {
+    try {
+        const response = await api.delete(`/api/Preferencias/${idPreferencia}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao excluir a preferencia do usuario:", error);
+        throw error;
+    }
+};

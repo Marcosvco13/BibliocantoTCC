@@ -77,14 +77,11 @@ function PerfilUsuario() {
   const handleSalvarEdicao = async (e) => {
     e.preventDefault();
 
-    console.log("Enviando edição do perfil para a API:", perfil);
-
     try {
       await api.putPerfilUsuario(perfil.id, perfil);
-      alert("Perfil atualizado com sucesso!");
+      window.location.reload();
       setEditando(false);
     } catch (error) {
-      console.error("Erro ao atualizar o perfil:", error);
       alert("Erro ao atualizar o perfil.");
     }
   };
@@ -94,7 +91,7 @@ function PerfilUsuario() {
   return (
     <div className="perfil-container">
       <section className='perfil-section'>
-      <h2>{perfilExistente ? "Meu Perfil" : "Cadastrar Perfil"}</h2>
+      <h2 className="titulo-perfil">{perfilExistente ? "Meu Perfil" : "Cadastrar Perfil"}</h2>
 
       <form onSubmit={perfilExistente && !editando ? undefined : perfilExistente ? handleSalvarEdicao : handleCadastrar}>
         <div className="form-group">
@@ -145,23 +142,25 @@ function PerfilUsuario() {
         </div>
 
         {/* Botões de ação */}
+        <div className="btn-pagina-perfil">
         {!perfilExistente && (
-          <button type="submit" className="btn-cadastrar">
+          <button type="submit" className="btn-perfil btn-cadastrar-perfil">
             Cadastrar Perfil
           </button>
         )}
 
         {perfilExistente && !editando && (
-          <button type="button" className="btn-editar" onClick={handleEditar}>
+          <button type="button" className="btn-perfil btn-editar-perfil" onClick={handleEditar}>
             Editar Perfil
           </button>
         )}
 
         {perfilExistente && editando && (
-          <button type="submit" className="btn-salvar">
+          <button type="submit" className="btn-perfil btn-salvar-perfil">
             Salvar Alterações
           </button>
         )}
+        </div>
       </form>
       </section>
     </div>
