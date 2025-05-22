@@ -1,0 +1,71 @@
+.generos-container {
+  padding: 40px;
+  min-height: 100vh;
+  text-align: center;
+}
+
+.titulo {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #47211c;
+  text-align: center;
+  letter-spacing: 2px;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+}
+
+.retangulos-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  width: 650px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.retangulo-genero {
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 2px solid #333;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.3s, transform 0.2s;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.retangulo-genero:hover {
+  background-color: #49b3d3;
+  transform: scale(1.05);
+}
+
+.retangulo-genero.selecionado {
+  background-color: #2ecc71;
+}
+
+.selecionados-info {
+  margin-top: 20px;
+  font-size: 1rem;
+  color: #333;
+}
+
+.btn-confirmar-preferencias{
+  background-color: #5a251d;
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+  letter-spacing: 1px;
+  margin-top: 25px;
+}
+
+.btn-confirmar-preferencias:hover {
+  background-color: #8a4d41;
+  transform: scale(1.05);
+}

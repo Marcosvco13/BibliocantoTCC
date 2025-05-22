@@ -15,6 +15,10 @@ import { Box, Rating } from "@mui/material";
 import Recomendacao from "../../Componentes/RecomendacaoLivro/recomendacao";
 
 function Livro() {
+  const [EmailUser, setEmailUser] = useState(
+    localStorage.getItem("email") || null
+  );
+
   const { id: idLivro } = useParams();
   const [livro, setLivro] = useState(null);
   const [idUser, setIdUser] = useState(null);
@@ -43,6 +47,7 @@ function Livro() {
   const [mostrarEnviarResenha, setMostrarEnviarResenha] = useState(false);
   const [mensagem, setMensagem] = useState("");
   const [refreshResenhas, setRefreshResenhas] = useState(false);
+  const [UsuarioJaResenhou, setUsuarioJaResenhou] = useState(false);
 
   const [IdsLivroAutor, setIdsLivroAutor] = useState([]);
 
@@ -162,7 +167,7 @@ function Livro() {
 
         // Verifica se o usuário já fez uma resenha
         if (response.some((res) => res.idUser === idUser)) {
-          setMensagem("Você já enviou uma resenha para este livro.");
+          setUsuarioJaResenhou(response.some((res) => res.idUser === idUser));
         }
 
         // Adiciona o email do usuário que escreveu a resenha
@@ -443,16 +448,16 @@ function Livro() {
       alert("É necessário estar logado para avaliar.");
       return;
     }
-  
+
     try {
       if (estrelas == null || isNaN(estrelas)) {
         console.error("Erro: Número de estrelas inválido!", estrelas);
         alert("Erro ao processar a avaliação. Número de estrelas inválido.");
         return;
       }
-  
+
       const estrelasNumerico = parseInt(estrelas);
-  
+
       if (avaliacaoExistente && avaliacaoExistente.id) {
         // Atualiza a avaliação existente (PUT)
         const DataAvaliacaoLivro = {
@@ -460,13 +465,13 @@ function Livro() {
           idUser: avaliacaoExistente.idUser,
           estrelas: estrelasNumerico,
         };
-  
+
         await api.PutAvaliacao(avaliacaoExistente.id, DataAvaliacaoLivro);
-  
+
         // Atualiza o estado com a nova nota
-        setAvaliacaoExistente(prev => ({
+        setAvaliacaoExistente((prev) => ({
           ...prev,
-          estrelas: estrelasNumerico
+          estrelas: estrelasNumerico,
         }));
       } else {
         // Cria uma nova avaliação (POST)
@@ -475,9 +480,9 @@ function Livro() {
           idUser,
           estrelas: estrelasNumerico,
         };
-  
+
         const novaAvaliacao = await api.AvaliarLivro(DataAvaliacaoLivro);
-  
+
         if (novaAvaliacao && novaAvaliacao.id) {
           setAvaliacaoExistente({
             id: novaAvaliacao.id,
@@ -495,15 +500,14 @@ function Livro() {
           });
         }
       }
-  
+
       setRatingValue(estrelasNumerico);
-      setAtualizarAvaliacoes(prev => !prev); // Força atualização da média
+      setAtualizarAvaliacoes((prev) => !prev); // Força atualização da média
     } catch (error) {
       console.error("Erro ao enviar a avaliação:", error);
       alert("Erro ao enviar a avaliação. Tente novamente.");
     }
   };
-  
 
   const TagLido = async (RegistroLivroNaBiblioteca, idLivro, idUser) => {
     try {
@@ -554,19 +558,54 @@ function Livro() {
   };
 
   const deleteResenha = async (idResenha) => {
-  
     try {
       // Chamada à API para excluir a resenha
       await api.DeleteResenha(idResenha);
-  
+
       // Remove a resenha excluída do estado local
-      setResenhas((prevResenhas) => prevResenhas.filter(resenha => resenha.idResenha !== idResenha));
+      setResenhas((prevResenhas) =>
+        prevResenhas.filter((resenha) => resenha.idResenha !== idResenha)
+      );
       setRefreshResenhas((prev) => !prev);
       // Mensagem de sucesso
       setMensagem("Resenha excluída com sucesso!");
     } catch (error) {
-      console.error("Erro ao excluir a resenha:", error.response?.data || error);
+      console.error(
+        "Erro ao excluir a resenha:",
+        error.response?.data || error
+      );
       setMensagem("Erro ao excluir a resenha. Tente novamente.");
+    }
+  };
+
+  const handleAddMeuLivro = async (livro) => {
+    const idUser = localStorage.getItem("Id");
+
+    const idLivro = livro.id;
+
+    try {
+      const data = { idUser, idLivro };
+      await api.post("/api/MeusLivros", data);
+      window.location.reload();
+    } catch (error) {
+      console.error("Erro ao adicionar livro:", error);
+      alert("Falha ao salvar livro na biblioteca!: " + error.message);
+    }
+  };
+
+  //funcao para remover o livro da biblioteca do usuario
+  const handleDeleteMeuLivro = async (livro) => {
+
+    try {
+
+      // Excluir o livro da biblioteca
+      await api.DeleteMeuLivro(RegistroLivroNaBiblioteca);
+
+      window.location.reload();
+
+    } catch (error) {
+      console.error("Erro ao excluir o livro da biblioteca:", error);
+      alert("Falha ao remover o livro da biblioteca.");
     }
   };
 
@@ -607,72 +646,110 @@ function Livro() {
                 )}
               </div>
 
-              <div className="opcoes-livro">
-                <div className="avaliacao-livro">
-                  {idUser && (
-                    <Box mt={2}>
-                      <Rating
-                        name="user-rating"
-                        value={ratingValue}
-                        onChange={(event, newValue) => {
-                          setRatingValue(newValue);
-                          enviarAvaliacao(newValue);
-                        }}
-                      />
-                      {totalAvaliacoes > 0 ? (
-                        <p>
-                          Média de estrelas: {mediaEstrelas} ({totalAvaliacoes}{" "}
-                          avaliações)
-                        </p>
-                      ) : (
-                        <p>Ainda não há avaliações para este livro.</p>
-                      )}
-                    </Box>
+              {EmailUser && (
+                <div className="opcoes-livro">
+                  <div className="avaliacao-livro">
+                    {idUser && (
+                      <Box mt={2}>
+                        <Rating
+                          name="user-rating"
+                          value={ratingValue}
+                          onChange={(event, newValue) => {
+                            setRatingValue(newValue);
+                            enviarAvaliacao(newValue);
+                          }}
+                        />
+                        {totalAvaliacoes > 0 ? (
+                          <p>
+                            Média de estrelas: {mediaEstrelas} (
+                            {totalAvaliacoes} avaliações)
+                          </p>
+                        ) : (
+                          <p>Ainda não há avaliações para este livro.</p>
+                        )}
+                      </Box>
+                    )}
+                  </div>
+
+                  <div className="icone-linkcompra-livro">
+                    {livro?.linkCompra && (
+                      <button
+                        className="livro-btnCompra"
+                        onClick={() => window.open(livro.linkCompra, "_blank")}
+                      >
+                        <FontAwesomeIcon icon={faCartShopping} /> Comprar Livro
+                      </button>
+                    )}
+                  </div>
+
+                  {!UsuarioJaResenhou && (
+                    <div className="escrever-resenha-livro">
+                      <button
+                        variant="contained"
+                        onClick={() => setMostrarEnviarResenha(true)}
+                      >
+                        <i className="bi bi-pencil"></i> Escrever Resenha
+                      </button>
+                    </div>
+                  )}
+
+                  {estaNaBiblioteca ? (
+                    <div className="tag-dellivrobiblioteca">
+                      <button
+                        className="botao-del-LivroBiblioteca"
+                        onClick={() => handleDeleteMeuLivro(livro)}
+                      >
+                        <i className="bi bi-bookmark-x"></i> Remover da
+                        Biblioteca
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="tag-addlivrobiblioteca">
+                      <button
+                        className="botao-add-LivroBiblioteca"
+                        onClick={() => handleAddMeuLivro(livro)}
+                      >
+                        <i className="bi bi-bookmark-plus"></i> Adicionar à
+                        Biblioteca
+                      </button>
+                    </div>
+                  )}
+
+                  {estaNaBiblioteca && (
+                    <>
+                      <div className="tag-lido-livro">
+                        <button
+                          className={`btn-tag-lido-livro ${
+                            Lido ? "ativo" : ""
+                          }`}
+                          onClick={() =>
+                            TagLido(RegistroLivroNaBiblioteca, idLivro, idUser)
+                          }
+                        >
+                          <i className={Lido ? "bi bi-bookmark-x" : "bi bi-bookmark-check"}></i> Lido
+                        </button>
+                      </div>
+
+                      <div className="tag-relido-livro">
+                        <button
+                          className={`btn-tag-relido-livro ${
+                            Relido ? "ativo" : ""
+                          }`}
+                          onClick={() =>
+                            TagRelido(
+                              RegistroLivroNaBiblioteca,
+                              idLivro,
+                              idUser
+                            )
+                          }
+                        >
+                          <i className={Relido ? "bi bi-bookmark-x" : "bi bi-bookmark-check"}></i> Relido
+                        </button>
+                      </div>
+                    </>
                   )}
                 </div>
-
-                <div className="icone-linkcompra-livro">
-                  {livro?.linkCompra && (
-                    <button
-                      className="livro-btnCompra"
-                      onClick={() => window.open(livro.linkCompra, "_blank")}
-                    >
-                      <FontAwesomeIcon icon={faCartShopping} /> Comprar Livro
-                    </button>
-                  )}
-                </div>
-
-                <div className="escrever-resenha-livro">
-                  <button
-                    variant="contained"
-                    onClick={() => setMostrarEnviarResenha(true)}
-                  >
-                    <i className="bi bi-pencil"></i> Escrever Resenha
-                  </button>
-                </div>
-
-                <div className="tag-lido-livro">
-                  <button
-                    className={`btn-tag-lido-livro ${Lido ? "ativo" : ""}`}
-                    onClick={() =>
-                      TagLido(RegistroLivroNaBiblioteca, idLivro, idUser)
-                    }
-                  >
-                    <i className="bi bi-bookmark-check"></i> Lido
-                  </button>
-                </div>
-
-                <div className="tag-relido-livro">
-                  <button
-                    className={`btn-tag-relido-livro ${Relido ? "ativo" : ""}`}
-                    onClick={() =>
-                      TagRelido(RegistroLivroNaBiblioteca, idLivro, idUser)
-                    }
-                  >
-                    <i className="bi bi-bookmark-check"></i> Relido
-                  </button>
-                </div>
-              </div>
+              )}
             </>
           ) : (
             <p>Carregando...</p>
@@ -703,21 +780,21 @@ function Livro() {
                       style={{ marginTop: "20px" }}
                     />
                     <div className="botoes-container">
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={enviarResenha}
-                    >
-                      Enviar Resenha
-                    </Button>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={enviarResenha}
+                      >
+                        Enviar Resenha
+                      </Button>
 
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => setMostrarEnviarResenha(false)}
-                    >
-                      Cancelar Resenha
-                    </Button>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => setMostrarEnviarResenha(false)}
+                      >
+                        Cancelar Resenha
+                      </Button>
                     </div>
                     {mensagem && (
                       <p style={{ marginTop: "10px", color: "red" }}>
