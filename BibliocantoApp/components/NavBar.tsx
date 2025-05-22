@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'space-around',
         alignItems: 'center',
-        backgroundColor: 'white',
+        backgroundColor: "#F0F2F5",
         paddingVertical: 10,
         paddingHorizontal: 'auto',
         left: 0,
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         position: "absolute",
         borderWidth: 0.2,
         borderRadius: 5,
-        elevation: 5,
+        //elevation: 5,
     },
     button: {
         padding: 10,

@@ -199,14 +199,14 @@ namespace Bibliocanto.Controllers
             if (string.IsNullOrEmpty(userInfo.Email) || string.IsNullOrEmpty(userInfo.Password))
             {
                 ModelState.AddModelError("LoginUser", "Email e senha são obrigatórios.");
-                return BadRequest(ModelState);
+                return BadRequest("Email e senha são obrigatórios.");
             }
 
             var user = await _authentication.FindUserByEmail(userInfo.Email);
             if (user == null)
             {
                 ModelState.AddModelError("LoginUser", "Usuário não encontrado.");
-                return BadRequest(ModelState);
+                return BadRequest("Usuário não encontrado.");
             }
 
             // Verificar se o e-mail está confirmado
@@ -222,7 +222,7 @@ namespace Bibliocanto.Controllers
             }
 
             ModelState.AddModelError("LoginUser", "Login inválido. Verifique suas credenciais.");
-            return BadRequest(ModelState);
+            return BadRequest("Login inválido. Verifique suas credenciais.");
         }
 
         [HttpPost("RequestPasswordResetCode")]

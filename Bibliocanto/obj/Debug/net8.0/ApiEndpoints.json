@@ -941,6 +941,48 @@
     ]
   },
   {
+    "ContainingType": "Bibliocanto.Controllers.DenunciasController",
+    "Method": "GetByIdComentarioAndIdUser",
+    "RelativePath": "api/Denuncias/GetByIdComentarioAndIdUser",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idComentario",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "idUser",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Bibliocanto.Controllers.DenunciasController",
+    "Method": "GetByIdResenhaAndIdUser",
+    "RelativePath": "api/Denuncias/GetByIdResenhaAndIdUser",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idResenha",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "idUser",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Bibliocanto.Controllers.DesDeslikeLivrosController",
     "Method": "PostAsync",
     "RelativePath": "api/DesDeslikeLivros",

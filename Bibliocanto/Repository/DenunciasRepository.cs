@@ -32,6 +32,16 @@ namespace Bibliocanto.Repository
             return await _context.Denuncias.FirstOrDefaultAsync(l => l.Id == id); ;
         }
 
+        public async Task<Denuncias> GetByIdResenhaAndIdUser(int idResenha, string idUser)
+        {
+            return await _context.Denuncias.FirstOrDefaultAsync(d => d.IdResenha == idResenha && d.IdUser == idUser);
+        }
+
+        public async Task<Denuncias> GetByIdComentarioAndIdUser(int idComentario, string idUser)
+        {
+            return await _context.Denuncias.FirstOrDefaultAsync(d => d.IdComentario == idComentario && d.IdUser == idUser);
+        }
+
         public async Task Create(Denuncias denuncias)
         {
             await _context.Denuncias.AddAsync(denuncias);

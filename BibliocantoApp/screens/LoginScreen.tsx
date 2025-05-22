@@ -44,10 +44,10 @@ export default function LoginScreen() {
       setLoading(false);
       let responseBody = '';
       let errorMessage = 'Erro desconhecido.';
-      
+
       if (error instanceof AxiosError) {
         const data = error.response?.data;
-      
+
         if (data && typeof data === 'object') {
           responseBody = JSON.stringify(data, null, 2);
       
@@ -63,7 +63,7 @@ export default function LoginScreen() {
             errorMessage += `\n${detalhes}`;
           }
         } else {
-          responseBody = String(data || '');
+          errorMessage = String(data || '');
         }
       } else if (error instanceof Error) {
         errorMessage = error.message;
@@ -80,10 +80,6 @@ export default function LoginScreen() {
   const handleForgotPassword = () => {
     navigation.navigate('CodeRequest');
   };
-
-  // const handleGoogleLogin = () => {
-  //   alert("Login com o Google ainda não implementado!");
-  // };
 
   return (
     <View style={styles.loginContainer}>

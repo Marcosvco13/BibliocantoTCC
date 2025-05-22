@@ -19,7 +19,8 @@ namespace Bibliocanto.Repository
 
         public async Task<IEnumerable<Comentarios>> GetByResenha(int idResenha)
         {
-            return await _context.Comentarios.Where(n => n.IdResenha.Equals(idResenha)).ToListAsync();
+            return await _context.Comentarios.Where(n => n.IdResenha.Equals(idResenha)).Where(n => _context.Denuncias.Count(d => d.IdComentario == n.Id) <= 3).ToListAsync();
+
         }
 
         public async Task<Comentarios> GetByResenhaUser(string idUser, int idResenha)

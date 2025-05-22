@@ -44,6 +44,46 @@ namespace Bibliocanto.Controllers
             }
         }
 
+        [HttpGet("GetByIdResenhaAndIdUser")]
+        public async Task<IActionResult> GetByIdResenhaAndIdUser(int idResenha, string idUser)
+        {
+            try
+            {
+                var denuncia = await _denunciasService.GetByIdResenhaAndIdUser(idResenha, idUser);
+
+                if (denuncia == null)
+                {
+                    return Ok(false);
+                }
+
+                return Ok(true);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Request inválido: {ex.Message}");
+            }
+        }
+
+        [HttpGet("GetByIdComentarioAndIdUser")]
+        public async Task<IActionResult> GetByIdComentarioAndIdUser(int idComentario, string idUser)
+        {
+            try
+            {
+                var denuncia = await _denunciasService.GetByIdComentarioAndIdUser(idComentario, idUser);
+
+                if (denuncia == null)
+                {
+                    return Ok(false);
+                }
+
+                return Ok(true);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Request inválido: {ex.Message}");
+            }
+        }
+
         [HttpGet("DenunciasByUser")]
         public async Task<ActionResult<IEnumerable<DenunciasResource>>> GetByUser([FromQuery] string idUser)
         {

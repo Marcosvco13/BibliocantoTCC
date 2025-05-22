@@ -32,18 +32,38 @@ export default function HomeScreen() {
                 setLivros(allLivros);
 
                 const idUser = await SecureStore.getItemAsync("IdUser");
-                const responseSugestao = await api.get("api/Livros/SugestaoParaUser" ,{ params: { idUser } });
+                const responseSugestao = await api.get("api/Livros/SugestaoParaUser", { params: { idUser } });
                 const livrosSugestao = responseSugestao.data;
 
-                setCarrosselLivros(livrosSugestao);
+                if (livrosSugestao.length > 0) {
+                    setCarrosselLivros(livrosSugestao);
 
-                // Aguarda renderização para posicionar no centro
-                setTimeout(() => {
-                    flatListRef.current?.scrollToOffset({
-                        offset: (ITEM_WIDTH + ITEM_SPACING) * 4, // Centraliza o item 4 (índice)
-                        animated: false,
-                    });
-                }, 100);
+                    setTimeout(() => {
+                        const middleIndex = Math.floor(livrosSugestao.length / 2);
+
+                        flatListRef.current?.scrollToOffset({
+                            offset: middleIndex * (ITEM_WIDTH + ITEM_SPACING),
+                            animated: false, // false para não animar no carregamento inicial
+                        });
+                    }, 100);
+
+                } else {
+                    const randomLivros = allLivros
+                        .map((livro: Livro) => ({ livro, sort: Math.random() }))
+                        .sort((a: { livro: Livro; sort: number }, b: { livro: Livro; sort: number }) => a.sort - b.sort)
+                        .slice(0, 9)
+                        .map(({ livro }: { livro: Livro; sort: number }) => livro);
+                    setCarrosselLivros(randomLivros);
+
+                    setTimeout(() => {
+                        const middleIndex = Math.floor(randomLivros.length / 2);
+
+                        flatListRef.current?.scrollToOffset({
+                            offset: middleIndex * (ITEM_WIDTH + ITEM_SPACING),
+                            animated: false, // false para não animar no carregamento inicial
+                        });
+                    }, 100);
+                }
             } catch (err) {
                 setError("Erro ao carregar os dados.");
                 console.error(err);

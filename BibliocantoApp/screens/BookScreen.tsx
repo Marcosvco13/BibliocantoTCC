@@ -467,6 +467,9 @@ export default function BookScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
         backgroundColor: "#F0F2F5",
     },
     header: {

@@ -5,6 +5,7 @@ import api from "../services/api";
 import NavBar from "../components/NavBar";
 import TabBarLivro from "../components/TabBarLivro";
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import MenuDenuncia from '../components/MenuDropDown';
 
 interface Resenha {
   id: number;
@@ -59,6 +60,11 @@ export default function HomeScreen() {
           numColumns={1}
           renderItem={({ item }) => (
             <View style={styles.resenhaContainer}>
+              <MenuDenuncia 
+                tipo="resenha" 
+                idResenha={item.id}
+                idComentario={0}
+              />
               <View style={styles.headerResenha}>
                 <Icon name="person" size={20} color="#333" style={styles.userIcon} />
                 <Text style={styles.userIdText}>{item.usuario.email}</Text>

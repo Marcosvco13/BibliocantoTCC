@@ -36,7 +36,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={{ flex: 1, marginBottom: 60 }}>
+      <View style={{ flex: 1, marginBottom: 115 }}>
         {error && <Text style={styles.error}>{error}</Text>}
 
         {livros.length > 0 ? (

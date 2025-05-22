@@ -22,6 +22,16 @@ namespace Bibliocanto.Services
             return await _denunciasRepository.GetById(id);
         }
 
+        public async Task<Denuncias> GetByIdResenhaAndIdUser(int idResenha, string idUser)
+        {
+            return await _denunciasRepository.GetByIdResenhaAndIdUser(idResenha, idUser);
+        }
+
+        public async Task<Denuncias> GetByIdComentarioAndIdUser(int idComentario, string idUser)
+        {
+            return await _denunciasRepository.GetByIdComentarioAndIdUser(idComentario, idUser);
+        }
+
         public async Task<IEnumerable<Denuncias>> GetAllByUser(string idUser)
         {
             IEnumerable<Denuncias> baseDenuncias;

@@ -123,11 +123,6 @@ D:\Projetos\BibliocantoTCC\Bibliocanto\obj\Debug\net8.0\Bibliocanto.MvcApplicati
 D:\Projetos\BibliocantoTCC\Bibliocanto\obj\Debug\net8.0\Bibliocanto.sourcelink.json
 D:\Projetos\BibliocantoTCC\Bibliocanto\obj\Debug\net8.0\staticwebassets.build.json
 D:\Projetos\BibliocantoTCC\Bibliocanto\obj\Debug\net8.0\staticwebassets.development.json
-D:\Projetos\BibliocantoTCC\Bibliocanto\obj\Debug\net8.0\staticwebassets\msbuild.Bibliocanto.Microsoft.AspNetCore.StaticWebAssets.props
-D:\Projetos\BibliocantoTCC\Bibliocanto\obj\Debug\net8.0\staticwebassets\msbuild.build.Bibliocanto.props
-D:\Projetos\BibliocantoTCC\Bibliocanto\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.Bibliocanto.props
-D:\Projetos\BibliocantoTCC\Bibliocanto\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.Bibliocanto.props
-D:\Projetos\BibliocantoTCC\Bibliocanto\obj\Debug\net8.0\staticwebassets.pack.json
 D:\Projetos\BibliocantoTCC\Bibliocanto\obj\Debug\net8.0\scopedcss\bundle\Bibliocanto.styles.css
 D:\Projetos\BibliocantoTCC\Bibliocanto\obj\Debug\net8.0\Biblioca.8A06B134.Up2Date
 D:\Projetos\BibliocantoTCC\Bibliocanto\obj\Debug\net8.0\Bibliocanto.dll
@@ -441,10 +436,10 @@ D:\Projetos\BibliocantoTCC\Bibliocanto\bin\Debug\net8.0\MimeKit.dll
 D:\Projetos\BibliocantoTCC\Bibliocanto\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
 D:\Projetos\BibliocantoTCC\Bibliocanto\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
 D:\Projetos\BibliocantoTCC\Bibliocanto\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-D:\Projetos\BibliocantoTCC\Bibliocanto\obj\Debug\net8.0\staticwebassets\msbuild.Bibliocanto.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
 D:\Projetos\BibliocantoTCC\Bibliocanto\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 D:\Sistemas de informação\TCC\BibliocantoTCC\Bibliocanto\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
 D:\Sistemas de informação\TCC\BibliocantoTCC\Bibliocanto\bin\Debug\net8.0\MailKit.dll
 D:\Sistemas de informação\TCC\BibliocantoTCC\Bibliocanto\bin\Debug\net8.0\MimeKit.dll
 D:\Sistemas de informação\TCC\BibliocantoTCC\Bibliocanto\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
 D:\Sistemas de informação\TCC\BibliocantoTCC\Bibliocanto\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+D:\Projetos\BibliocantoTCC\Bibliocanto\obj\Debug\net8.0\staticwebassets.build.json.cache

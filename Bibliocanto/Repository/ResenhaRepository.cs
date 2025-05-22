@@ -19,9 +19,12 @@ namespace Bibliocanto.Repository
 
         public async Task<IEnumerable<Resenha>> GetByLivro(int idLivro)
         {
-            return await _context.Resenha.Where(n => n.IdLivro == idLivro).Include(n => n.Usuario).ToListAsync();
+            return await _context.Resenha
+                .Where(n => n.IdLivro == idLivro)
+                .Include(n => n.Usuario)
+                .Where(n => _context.Denuncias.Count(d => d.IdResenha == n.Id) <= 3)
+                .ToListAsync();
         }
-
 
         public async Task<Resenha> GetByLivroUser(string idUser, int idLivro)
         {

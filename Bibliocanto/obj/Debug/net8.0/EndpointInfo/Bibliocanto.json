@@ -1434,6 +1434,64 @@
         }
       }
     },
+    "/api/Denuncias/GetByIdResenhaAndIdUser": {
+      "get": {
+        "tags": [
+          "Denuncias"
+        ],
+        "parameters": [
+          {
+            "name": "idResenha",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idUser",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Denuncias/GetByIdComentarioAndIdUser": {
+      "get": {
+        "tags": [
+          "Denuncias"
+        ],
+        "parameters": [
+          {
+            "name": "idComentario",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idUser",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Denuncias/DenunciasByUser": {
       "get": {
         "tags": [

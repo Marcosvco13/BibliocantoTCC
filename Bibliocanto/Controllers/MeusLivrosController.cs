@@ -35,7 +35,7 @@ namespace Bibliocanto.Controllers
 
                 if (recursos.Count() == 0)
                 {
-                    return NotFound($"Você não tem livros na biblioteca.");
+                    return NotFound($"Você ainda não tem nenhum livros na sua biblioteca.");
                 }
                 else
                 {
@@ -58,7 +58,7 @@ namespace Bibliocanto.Controllers
 
                 if (recursos.Count() == 0)
                 {
-                    return NotFound($"Você não tem livros na biblioteca.");
+                    return NotFound($"Você ainda não tem nenhum livro marcado como lido.");
                 }
                 else
                 {
@@ -81,7 +81,7 @@ namespace Bibliocanto.Controllers
 
                 if (recursos.Count() == 0)
                 {
-                    return NotFound($"Você não tem livros na biblioteca.");
+                    return NotFound($"Você ainda não tem nenhum livro marcado como relido.");
                 }
                 else
                 {

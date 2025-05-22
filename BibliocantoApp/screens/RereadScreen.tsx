@@ -39,9 +39,15 @@ export default function ReadScreen() {
         const response = await api.get("api/MeusLivros/RelidosByUser", { params: { idUser } });
         setLivros(response.data);
         
-      } catch (err) {
-        setError("Você não possui livros relidos ou houve um erro ao carregar os dados.");
-        console.error(err);
+      } catch (err:any) {
+        console.log(err.response.status);
+        if (err.response.status === 404) {
+          setError(err.response.data);
+        } else if (err.response.status === 500) {
+          setError("Erro interno do servidor.");
+        } else {
+          setError("Erro ao carregar os dados.");
+        }
       } finally {
         setLoading(false);
       }
@@ -61,7 +67,7 @@ export default function ReadScreen() {
         <TabBar currentScreen="Relidos"/>
       </View>
 
-      <View style={{ flex: 1, marginBottom: 60 }}>
+      <View style={{ flex: 1, marginBottom: 115 }}>
         {error && <Text style={styles.error}>{error}</Text>}
 
         {loading ? (
