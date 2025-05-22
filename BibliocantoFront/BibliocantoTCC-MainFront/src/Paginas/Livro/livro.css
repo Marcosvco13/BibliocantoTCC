@@ -57,12 +57,18 @@
   transform: scale(1.1);
 }
 
-.escrever-resenha-livro {
+.escrever-resenha-livro,
+.tag-dellivrobiblioteca,
+.tag-addlivrobiblioteca {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
   margin-bottom: 10px;
+  white-space: nowrap;
+  gap: 5px;
 }
+
 
 .escrever-resenha-livro button {
   border: none;
@@ -87,12 +93,28 @@
   letter-spacing: 1px;
 }
 
-.btn-tag-lido-livro{
+.btn-tag-lido-livro,
+.btn-tag-relido-livro{
   margin-bottom: 10px;
 }
 
-.btn-tag-relido-livro{
-  margin-bottom: 10px;
+.botao-del-LivroBiblioteca,
+.botao-add-LivroBiblioteca{
+border: none;
+  background-color: transparent;
+  color: #5a2a24;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: transform 0.2s ease-in-out;
+  letter-spacing: 1px;
+}
+
+.botao-del-LivroBiblioteca:hover,
+.botao-add-LivroBiblioteca:hover {
+  color: #5a2a24;
+  background-color:#ffffff00;
+  transform: scale(1.1);
 }
 
 .btn-tag-lido-livro,

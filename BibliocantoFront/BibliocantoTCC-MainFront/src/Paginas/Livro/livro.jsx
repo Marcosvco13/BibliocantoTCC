@@ -578,6 +578,37 @@ function Livro() {
     }
   };
 
+  const handleAddMeuLivro = async (livro) => {
+    const idUser = localStorage.getItem("Id");
+
+    const idLivro = livro.id;
+
+    try {
+      const data = { idUser, idLivro };
+      await api.post("/api/MeusLivros", data);
+      window.location.reload();
+    } catch (error) {
+      console.error("Erro ao adicionar livro:", error);
+      alert("Falha ao salvar livro na biblioteca!: " + error.message);
+    }
+  };
+
+  //funcao para remover o livro da biblioteca do usuario
+  const handleDeleteMeuLivro = async (livro) => {
+
+    try {
+
+      // Excluir o livro da biblioteca
+      await api.DeleteMeuLivro(RegistroLivroNaBiblioteca);
+
+      window.location.reload();
+
+    } catch (error) {
+      console.error("Erro ao excluir o livro da biblioteca:", error);
+      alert("Falha ao remover o livro da biblioteca.");
+    }
+  };
+
   return (
     <Container>
       {livro && <h1 className="titulo-livro">{livro.titulo}</h1>}
@@ -662,29 +693,61 @@ function Livro() {
                     </div>
                   )}
 
-                  <div className="tag-lido-livro">
-                    <button
-                      className={`btn-tag-lido-livro ${Lido ? "ativo" : ""}`}
-                      onClick={() =>
-                        TagLido(RegistroLivroNaBiblioteca, idLivro, idUser)
-                      }
-                    >
-                      <i className="bi bi-bookmark-check"></i> Lido
-                    </button>
-                  </div>
+                  {estaNaBiblioteca ? (
+                    <div className="tag-dellivrobiblioteca">
+                      <button
+                        className="botao-del-LivroBiblioteca"
+                        onClick={() => handleDeleteMeuLivro(livro)}
+                      >
+                        <i className="bi bi-bookmark-x"></i> Remover da
+                        Biblioteca
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="tag-addlivrobiblioteca">
+                      <button
+                        className="botao-add-LivroBiblioteca"
+                        onClick={() => handleAddMeuLivro(livro)}
+                      >
+                        <i className="bi bi-bookmark-plus"></i> Adicionar à
+                        Biblioteca
+                      </button>
+                    </div>
+                  )}
 
-                  <div className="tag-relido-livro">
-                    <button
-                      className={`btn-tag-relido-livro ${
-                        Relido ? "ativo" : ""
-                      }`}
-                      onClick={() =>
-                        TagRelido(RegistroLivroNaBiblioteca, idLivro, idUser)
-                      }
-                    >
-                      <i className="bi bi-bookmark-check"></i> Relido
-                    </button>
-                  </div>
+                  {estaNaBiblioteca && (
+                    <>
+                      <div className="tag-lido-livro">
+                        <button
+                          className={`btn-tag-lido-livro ${
+                            Lido ? "ativo" : ""
+                          }`}
+                          onClick={() =>
+                            TagLido(RegistroLivroNaBiblioteca, idLivro, idUser)
+                          }
+                        >
+                          <i className={Lido ? "bi bi-bookmark-x" : "bi bi-bookmark-check"}></i> Lido
+                        </button>
+                      </div>
+
+                      <div className="tag-relido-livro">
+                        <button
+                          className={`btn-tag-relido-livro ${
+                            Relido ? "ativo" : ""
+                          }`}
+                          onClick={() =>
+                            TagRelido(
+                              RegistroLivroNaBiblioteca,
+                              idLivro,
+                              idUser
+                            )
+                          }
+                        >
+                          <i className={Relido ? "bi bi-bookmark-x" : "bi bi-bookmark-check"}></i> Relido
+                        </button>
+                      </div>
+                    </>
+                  )}
                 </div>
               )}
             </>
