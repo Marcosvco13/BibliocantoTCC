@@ -1,10 +1,10 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\",
+  "WorkspaceRootPath": "D:\\Sistemas de informa\u00E7\u00E3o\\TCC\\BibliocantoTCC\\Bibliocanto\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\projetos\\bibliocantotcc\\bibliocanto\\controllers\\meuslivroscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:controllers\\meuslivroscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|d:\\sistemas de informa\u00E7\u00E3o\\tcc\\bibliocantotcc\\bibliocanto\\controllers\\editorascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E44C2857-F8FB-4B39-A0AC-3D51A28B2C15}|Bibliocanto.csproj|solutionrelative:controllers\\editorascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -27,14 +27,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "MeusLivrosController.cs",
-              "DocumentMoniker": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Controllers\\MeusLivrosController.cs",
-              "RelativeDocumentMoniker": "Controllers\\MeusLivrosController.cs",
-              "ToolTip": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Controllers\\MeusLivrosController.cs",
-              "RelativeToolTip": "Controllers\\MeusLivrosController.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAQwFcAAAAoAAAAAAAAAA==",
+              "Title": "EditorasController.cs",
+              "DocumentMoniker": "D:\\Sistemas de informa\u00E7\u00E3o\\TCC\\BibliocantoTCC\\Bibliocanto\\Controllers\\EditorasController.cs",
+              "RelativeDocumentMoniker": "Controllers\\EditorasController.cs",
+              "ToolTip": "D:\\Sistemas de informa\u00E7\u00E3o\\TCC\\BibliocantoTCC\\Bibliocanto\\Controllers\\EditorasController.cs",
+              "RelativeToolTip": "Controllers\\EditorasController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAATAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-22T00:51:12.83Z",
+              "WhenOpened": "2025-05-22T19:17:28.174Z",
               "EditorCaption": ""
             }
           ]

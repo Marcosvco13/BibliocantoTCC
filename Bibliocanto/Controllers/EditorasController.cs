@@ -12,7 +12,6 @@ namespace Bibliocanto.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class EditorasController : ControllerBase
     {
         private readonly IEditorasService _editorasService;
