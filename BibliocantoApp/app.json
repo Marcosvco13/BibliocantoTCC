@@ -12,6 +12,10 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "androidNavigationBar": {
+      "barStyle": "light",
+      "backgroundColor": "#000000"
+    },
     "ios": {
       "supportsTablet": true
     },

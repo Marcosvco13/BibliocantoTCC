@@ -5,15 +5,8 @@ import StackNavigator from './routes/StackNavigator';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { SafeAreaView } from 'react-native';
-import * as SystemUI from 'expo-system-ui';
 
 export default function App() {
-
-  useEffect(() => {
-    // Define a cor da barra de navegação inferior (Android)
-    SystemUI.setBackgroundColorAsync('#F0F2F5'); // mesma cor que a StatusBar
-  }, []);
-
   return (
     <SafeAreaProvider>
       <StatusBar style="dark" backgroundColor="#808080" />
