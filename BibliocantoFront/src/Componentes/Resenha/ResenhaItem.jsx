@@ -4,6 +4,7 @@ import { TextField } from "@mui/material";
 import api from "../../services/api";
 import { useCallback } from "react";
 import "./ResenhaItem.css";
+import MenuDenuncia from "../MenuDenuncia/MenuDenuncia";
 
 const ResenhaItem = ({
   res,
@@ -212,6 +213,14 @@ const ResenhaItem = ({
               </div>
             </div>
           </div>
+          {
+            idUser !== res.idUser && (
+              <MenuDenuncia
+                idResenha={res.id}
+                tipo={"resenha"}
+              />
+            )
+          }
         </div>
       </li>
 
@@ -247,7 +256,9 @@ const ResenhaItem = ({
                     <i
                       className="bi bi-heart icone-like"
                       onClick={() => handleLikeComentario(comentario.id)}
-                    ></i>
+                    >
+                    </i>
+
                     <span>{likesComentarios[comentario.id] || 0}</span>
                     <div className="icones-direita">
                       {idUser === comentario.idUser && (
@@ -266,6 +277,14 @@ const ResenhaItem = ({
                         </>
                       )}
                     </div>
+                    {
+                      idUser !== comentario.idUser && (
+                        <MenuDenuncia
+                          idComentario={comentario.id}
+                          tipo={"comentario"}
+                        />
+                      )
+                    }
                   </div>
                 </li>
               ))}
