@@ -71,7 +71,7 @@ export default function NewUser() {
         </button>
         
         <img
-          src="/src/assets/BibliocantoTCC-mainlogo.png"
+          src="/assets/BibliocantoTCC-mainlogo.png"
           alt="Logo Bibliocanto"
           className="logoBibliocantoCriarUser"
         />

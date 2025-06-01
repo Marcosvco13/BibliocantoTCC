@@ -4681,19 +4681,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\OTÁVIOAUGUSTOSOUZADA\\.nuget\\packages\\": {}
+    "C:\\Users\\marco\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Sistemas de informação\\TCC\\BibliocantoTCC\\Bibliocanto\\Bibliocanto.csproj",
+      "projectUniqueName": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Bibliocanto.csproj",
       "projectName": "Bibliocanto",
-      "projectPath": "D:\\Sistemas de informação\\TCC\\BibliocantoTCC\\Bibliocanto\\Bibliocanto.csproj",
-      "packagesPath": "C:\\Users\\OTÁVIOAUGUSTOSOUZADA\\.nuget\\packages\\",
-      "outputPath": "D:\\Sistemas de informação\\TCC\\BibliocantoTCC\\Bibliocanto\\obj\\",
+      "projectPath": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\Bibliocanto.csproj",
+      "packagesPath": "C:\\Users\\marco\\.nuget\\packages\\",
+      "outputPath": "D:\\Projetos\\BibliocantoTCC\\Bibliocanto\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\OTÁVIOAUGUSTOSOUZADA\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\marco\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4719,7 +4724,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net8.0": {
@@ -4775,7 +4781,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.410/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
