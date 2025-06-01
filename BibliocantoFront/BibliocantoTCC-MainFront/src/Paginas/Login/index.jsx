@@ -72,7 +72,7 @@ export default function Login() {
     return (
         <div className='login-container'>
           <section className='form'>
-          <img src="/src/assets/BibliocantoTCC-mainlogo.png" alt="Logo Bibliocanto" className="logoBibliocanto"/>
+          <img src="/assets/BibliocantoTCC-mainlogo.png" alt="Logo Bibliocanto" className="logoBibliocanto"/>
             <h1 className='h1MensagemLogin'>Seja bem-vindo ao Bibliocanto !</h1>
             <p className='h2MensagemLogin'>Para continuar, digite seu e-mail e senha.</p>
             <form onSubmit={login}>

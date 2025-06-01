@@ -61,7 +61,7 @@ export default function Nav() {
       <div className="nav-titulo">
         <img
           className="nav-logo"
-          src="src/assets/BibliocantoTCC-mainlogo.png"
+          src="/assets/BibliocantoTCC-mainlogo.png"
           alt="Bibliocanto"
         />
         <h3>Bibliocanto</h3>
@@ -76,6 +76,7 @@ export default function Nav() {
         <h5>Encontre seu Livro</h5>
         <Link
           to="/"
+          title="Acervo de Livros"
           className={
             [
               "/",
@@ -91,6 +92,7 @@ export default function Nav() {
         {email && (
           <Link
             to="/BuscaISBN"
+            title="Cadastrar Livro"
             className={
               ["/BuscaISBN", "/PreCadastrar", "/FinalizarCadastro"].includes(
                 location.pathname
@@ -109,6 +111,7 @@ export default function Nav() {
           <h5>Seus Livros</h5>
           <Link
             to="/MinhaBiblioteca"
+            title="Minha Biblioteca"
             className={
               location.pathname === "/MinhaBiblioteca" ? "active-link" : ""
             }
@@ -117,12 +120,14 @@ export default function Nav() {
           </Link>
           <Link
             to="/Lidos"
+            title="Livros Lidos"
             className={location.pathname === "/Lidos" ? "active-link" : ""}
           >
             <i className="bi bi-bookmark-star"></i> Lidos
           </Link>
           <Link
             to="/Relidos"
+            title="Livros Relidos"
             className={location.pathname === "/Relidos" ? "active-link" : ""}
           >
             <i className="bi bi-bookmark-heart"></i> Relidos
@@ -134,6 +139,7 @@ export default function Nav() {
         <h5>Bibliocanto</h5>
         <Link
           to="/privacy-policy"
+          title="Política de Privacidade"
           className={
             location.pathname === "/privacy-policy" ? "active-link" : ""
           }
@@ -142,6 +148,7 @@ export default function Nav() {
         </Link>
         <Link
           to="/about"
+          title="Sobre o Site"
           className={location.pathname === "/about" ? "active-link" : ""}
         >
           <i className="bi bi-globe2"></i> Sobre o Site
@@ -154,6 +161,7 @@ export default function Nav() {
 
           <Link
             to="/PerfilUsuario"
+            title="Meu Perfil"
             className={
               location.pathname === "/PerfilUsuario" ? "active-link" : ""
             }
@@ -162,6 +170,7 @@ export default function Nav() {
           </Link>
           <Link
             to="/PreferenciaDeGenero"
+            title="Preferências"
             className={
               location.pathname === "/PreferenciaDeGenero" ? "active-link" : ""
             }
@@ -184,13 +193,13 @@ export default function Nav() {
       <div className="nav-footer">
         {email ? (
           <span className="logout-icon" onClick={handleLogout}>
-            Sair
-            <FontAwesomeIcon icon={faRightFromBracket} />
+           <span className="logout-text">Sair</span>
+            <FontAwesomeIcon icon={faRightFromBracket} title="Sair"/>
           </span>
         ) : (
           <span className="login-icon" onClick={handleLogIn}>
-            Entrar
-            <FontAwesomeIcon icon={faRightToBracket} />
+            <span className="login-text">Entrar</span>
+            <FontAwesomeIcon icon={faRightToBracket} title="Entrar"/>
           </span>
         )}
       </div>
