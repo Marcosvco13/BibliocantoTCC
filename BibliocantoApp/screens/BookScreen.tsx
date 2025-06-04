@@ -511,6 +511,7 @@ const styles = StyleSheet.create({
     text: {
         marginBottom: 5,
         textAlign: "justify",
+        color: "#444",
     },
     textUltimo: {
         marginBottom: 50,

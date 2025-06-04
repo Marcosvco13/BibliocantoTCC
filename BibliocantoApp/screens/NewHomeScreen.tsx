@@ -5,7 +5,7 @@ import { RootStackParamList } from '../routes/StackNavigator';
 import api from "../services/api";
 import NavBar from "../components/NavBar";
 import * as SecureStore from "expo-secure-store";
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { MaterialIcons } from '@expo/vector-icons';
 
 // Constants
 const ITEM_WIDTH = 120;
@@ -53,15 +53,11 @@ export default function HomeScreen() {
             setError(null);
 
             // Fetch all books
-            const [livrosResponse, livroMaisLidoResponse, resenhaResponse] = await Promise.all([
+            const [livrosResponse] = await Promise.all([
                 api.get("api/Livros"),
-                api.get("api/Livros/GetLivroMaisLido"),
-                api.get("api/Resenha/GetResenhaMaisCurtida")
             ]);
 
             setLivros(livrosResponse.data);
-            setLivroMaisLido(livroMaisLidoResponse.data);
-            setResenhaMaisCurtida(resenhaResponse.data);
 
             // Fetch personalized suggestions
             try {
@@ -94,8 +90,36 @@ export default function HomeScreen() {
         }
     }, []);
 
+    const carregaTopLivros = useCallback(async () => {
+        try {
+            const [livroMaisLidoResponse] = await Promise.all([
+                api.get("api/Livros/GetLivroMaisLido"),
+            ]);
+            setLivroMaisLido(livroMaisLidoResponse.data);
+
+        } catch (error) {
+            console.error("Erro ao carregar o livro mais lido:", error);
+        }
+    }, []);
+
+    const topResenha = useCallback(async () => {
+        try {
+            const [resenhaResponse] = await Promise.all([
+                api.get("api/Resenha/GetResenhaMaisCurtida"),
+            ]);
+
+            console.log("Resenha mais curtida:", resenhaResponse.data);
+            setResenhaMaisCurtida(resenhaResponse.data);
+
+        } catch (error) {
+            console.error("Erro ao carregar o resenha mais curtida:", error);
+        }
+    }, []);
+
     useEffect(() => {
         fetchData();
+        carregaTopLivros();
+        topResenha();
     }, [fetchData]);
 
     useEffect(() => {
@@ -250,7 +274,7 @@ export default function HomeScreen() {
                             >
                                 <View style={styles.resenhaContainer}>
                                     <View style={styles.headerResenha}>
-                                        <Icon name="person" size={20} color="#333" style={styles.userIcon} />
+                                        <MaterialIcons name="person" size={20} color="#333" style={styles.userIcon} />
                                         <Text style={styles.userIdText}>{resenhaMaisCurtida.usuario.email}</Text>
                                     </View>
                                     <View style={styles.separator} />
@@ -259,6 +283,7 @@ export default function HomeScreen() {
                             </TouchableOpacity>
                         </>
                     )}
+
                 </ScrollView>
             </View>
             <NavBar />

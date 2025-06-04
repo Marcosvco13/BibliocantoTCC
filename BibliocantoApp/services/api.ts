@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "https://d257-2804-56c-c254-6700-1ccc-9860-4d2-f87f.ngrok-free.app" + "/",
+    baseURL: "https://bibliocantobackend-ejdcdghpamcydde8.brazilsouth-01.azurewebsites.net/",
 });
 
 export default api;
