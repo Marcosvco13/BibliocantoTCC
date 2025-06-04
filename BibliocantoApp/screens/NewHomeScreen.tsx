@@ -433,9 +433,10 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         marginBottom: 5,
+        color: "#333",
     },
     mostReadDescription: {
         fontSize: 14,
-        color: '#666',
+        color: "#444",
     },
 });

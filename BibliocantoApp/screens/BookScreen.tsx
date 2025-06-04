@@ -483,6 +483,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 22,
+        color: "#333",
         fontWeight: "bold",
     },
     body: {

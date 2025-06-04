@@ -63,7 +63,7 @@ export default function LoginScreen() {
             errorMessage += `\n${detalhes}`;
           }
         } else {
-          errorMessage = String(data || '');
+          errorMessage = String(data || 'Houve um erro ao processar a solicitação. Tente novamente mais tarde.');
         }
       } else if (error instanceof Error) {
         errorMessage = error.message;
