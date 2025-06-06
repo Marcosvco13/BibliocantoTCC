@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { RootStackParamList } from '../routes/StackNavigator';
-import { View, Text, Image, TouchableOpacity, ActivityIndicator, StyleSheet, FlatList } from "react-native";
+import { View, Text, Image, TouchableOpacity, ActivityIndicator, StyleSheet, FlatList, useWindowDimensions } from "react-native";
 import api from "../services/api";
 import NavBar from "../components/NavBar";
 
@@ -15,6 +15,12 @@ export default function HomeScreen() {
   const [livros, setLivros] = useState<Livro[]>([]);
   const [error, setError] = useState<string | null>(null);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
+  const { width } = useWindowDimensions();
+  const numColumns = 3;
+  const cardMargin = 10;
+  const cardWidth = (width - cardMargin * (numColumns + 1)) / numColumns;
+  const cardHeight = cardWidth * 1.5;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,7 +42,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={{ flexGrow: 1, marginBottom: 75 }}>
+      <View style={{ flexGrow: 1, paddingHorizontal: 10 }}>
         {error && <Text style={styles.error}>{error}</Text>}
 
         {livros.length > 0 ? (
@@ -46,10 +52,30 @@ export default function HomeScreen() {
             numColumns={3}
             renderItem={({ item }) => (
               <TouchableOpacity onPress={() => handleImageClick(item)}>
-                <Image source={{ uri: item.caminhoImagem }} style={styles.livroCard} />
+                <View style={{
+                  width: cardWidth,
+                  height: cardHeight,
+                  margin: cardMargin / 3,
+                  borderColor: "black",
+                  borderWidth: 1,
+                  borderRadius: 8,
+                  overflow: 'hidden',
+                }}>
+                  <Image
+                    source={{ uri: item.caminhoImagem }}
+                    resizeMode="cover"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                    }}
+                  />
+                </View>
               </TouchableOpacity>
             )}
-            contentContainerStyle={styles.livrosContainer}
+            contentContainerStyle={[
+              styles.livrosContainer,
+              { paddingBottom: 200, paddingTop: 10 }
+            ]}
             showsVerticalScrollIndicator={false}
           />
         ) : (
@@ -60,7 +86,7 @@ export default function HomeScreen() {
         )}
 
       </View>
-      <NavBar/>
+      <NavBar />
     </View>
   );
 }
@@ -81,14 +107,6 @@ const styles = StyleSheet.create({
   },
   livrosContainer: {
     justifyContent: "center",
-  },
-  livroCard: {
-    width: 120,
-    height: 180,
-    margin: 5,
-    borderColor: 'black',
-    borderWidth: 1,
-    borderRadius: 8,
   },
   loadingContainer: {
     flex: 1,

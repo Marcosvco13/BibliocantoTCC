@@ -11,7 +11,7 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 export default function App() {
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1 }} edges={[ 'left', 'right', 'top' ]}>
         <StatusBar backgroundColor="#fff" style="dark"/>
         <NavigationContainer>
           <StackNavigator />

@@ -372,7 +372,7 @@ export default function BookScreen() {
             </View>
 
             <ScrollView
-                contentContainerStyle={{ flexGrow: 10, paddingBottom: 80 }}
+                contentContainerStyle={{ flexGrow: 10, paddingBottom: 80, paddingHorizontal: 10, }}
                 keyboardShouldPersistTaps="handled"
                 showsVerticalScrollIndicator={false}
             >
@@ -483,7 +483,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 22,
-        color: "#333",
+        color: "black",
         fontWeight: "bold",
     },
     body: {
@@ -517,6 +517,7 @@ const styles = StyleSheet.create({
     textUltimo: {
         marginBottom: 50,
         textAlign: "justify",
+        color: "#444",
     },
     footer: {
         position: "relative", // Alterado para não ficar fixo na parte inferior

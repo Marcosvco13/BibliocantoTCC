@@ -220,6 +220,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 15,
+        color: 'black',
     },
     textInput: {
         height: 100,
@@ -229,6 +230,7 @@ const styles = StyleSheet.create({
         padding: 10,
         marginBottom: 20,
         textAlignVertical: 'top',
+        color: 'black',
     },
     modalButtons: {
         flexDirection: 'row',

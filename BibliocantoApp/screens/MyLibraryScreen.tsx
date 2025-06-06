@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { RootStackParamList } from "../routes/StackNavigator";
-import { View, Text, Image, TouchableOpacity, ActivityIndicator, StyleSheet, FlatList } from "react-native";
+import { View, Text, Image, TouchableOpacity, ActivityIndicator, StyleSheet, FlatList, useWindowDimensions } from "react-native";
 import api from "../services/api";
 import NavBar from "../components/NavBar";
 import * as SecureStore from "expo-secure-store";
@@ -26,7 +26,12 @@ export default function MyLibraryScreen() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const [filtro, setFiltro] = useState('Todos');
+
+  const { width } = useWindowDimensions();
+  const numColumns = 3;
+  const cardMargin = 10;
+  const cardWidth = (width - cardMargin * (numColumns + 1)) / numColumns;
+  const cardHeight = cardWidth * 1.5;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,7 +44,7 @@ export default function MyLibraryScreen() {
 
         const response = await api.get("api/MeusLivros/BibliotecaByUser", { params: { idUser } });
         setLivros(response.data);
-      } catch (err:any) {
+      } catch (err: any) {
         console.log(err.response.status);
         if (err.response.status === 404) {
           setError(err.response.data);
@@ -62,33 +67,57 @@ export default function MyLibraryScreen() {
 
   return (
     <View style={styles.container}>
-        <View style={{ width: "100%"}}>
-          <TabBar currentScreen="Todos"/>
-        </View>
-        <View style={{ flex: 1, marginBottom: 75 }}>
-          {error && <Text style={styles.error}>{error}</Text>}
 
-          {loading ? (
-            <View style={styles.loadingContainer}>
-              <ActivityIndicator size="large" color="#0000ff" />
-              <Text style={styles.loadingText}>Carregando os livros...</Text>
-            </View>
-          ) : (
-            <FlatList
-              data={livros}
-              keyExtractor={(item) => item.id.toString()}
-              numColumns={3}
-              renderItem={({ item }) => (
-                <TouchableOpacity onPress={() => handleImageClick(item.livros)}>
-                  <Image source={{ uri: item.livros.caminhoImagem }} style={styles.livroCard} />
-                </TouchableOpacity>
-              )}
-              contentContainerStyle={styles.livrosContainer}
-              showsVerticalScrollIndicator={false}
-            />
-          )}
-        </View>
-        <NavBar />
+      <View style={{ width: "100%" }}>
+        <TabBar currentScreen="Todos" />
+      </View>
+
+      <View style={{ flexGrow: 1, paddingHorizontal: 10 }}>
+        {error && <Text style={styles.error}>{error}</Text>}
+
+        {loading ? (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#0000ff" />
+            <Text style={styles.loadingText}>Carregando os livros...</Text>
+          </View>
+        ) : (
+          <FlatList
+            data={livros}
+            keyExtractor={(item) => item.id.toString()}
+            numColumns={3}
+            renderItem={({ item }) => (
+              <TouchableOpacity onPress={() => handleImageClick(item.livros)}>
+                <View style={{
+                  width: cardWidth,
+                  height: cardHeight,
+                  margin: cardMargin / 3,
+                  borderColor: "black",
+                  borderWidth: 1,
+                  borderRadius: 8,
+                  overflow: 'hidden',
+                }}>
+                  <Image
+                    source={{ uri: item.livros.caminhoImagem }}
+                    resizeMode="cover"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                    }}
+                  />
+                </View>
+              </TouchableOpacity>
+            )}
+            contentContainerStyle={[
+              styles.livrosContainer,
+              { paddingBottom: 200, paddingTop: 10}
+            ]}
+            showsVerticalScrollIndicator={false}
+          />
+        )}
+      </View>
+
+      <NavBar />
+
     </View>
   );
 }
@@ -96,8 +125,6 @@ export default function MyLibraryScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
     backgroundColor: "#F0F2F5",
   },
   error: {
@@ -109,14 +136,7 @@ const styles = StyleSheet.create({
   livrosContainer: {
     justifyContent: "center",
     width: "100%",
-  },
-  livroCard: {
-    width: 120,
-    height: 180,
-    margin: 5,
-    borderColor: "black",
-    borderWidth: 1,
-    borderRadius: 8,
+    paddingHorizontal: 5,
   },
   loadingContainer: {
     flex: 1,

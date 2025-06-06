@@ -52,14 +52,12 @@ export default function HomeScreen() {
             setRefreshing(true);
             setError(null);
 
-            // Fetch all books
             const [livrosResponse] = await Promise.all([
                 api.get("api/Livros"),
             ]);
 
             setLivros(livrosResponse.data);
 
-            // Fetch personalized suggestions
             try {
                 const idUser = await SecureStore.getItemAsync("IdUser");
                 const responseSugestao = await api.get("api/Livros/SugestaoParaUser", { params: { idUser } });
@@ -68,7 +66,6 @@ export default function HomeScreen() {
                 if (livrosSugestao.length > 0) {
                     setCarrosselLivros(livrosSugestao);
                 } else {
-                    // Fallback to random books if no suggestions
                     const randomLivros = [...livrosResponse.data]
                         .sort(() => 0.5 - Math.random())
                         .slice(0, 9);
@@ -76,7 +73,6 @@ export default function HomeScreen() {
                 }
             } catch (suggestionError) {
                 console.error("Suggestion error:", suggestionError);
-                // Fallback to random books if suggestion fails
                 const randomLivros = [...livrosResponse.data]
                     .sort(() => 0.5 - Math.random())
                     .slice(0, 9);
@@ -96,7 +92,6 @@ export default function HomeScreen() {
                 api.get("api/Livros/GetLivroMaisLido"),
             ]);
             setLivroMaisLido(livroMaisLidoResponse.data);
-
         } catch (error) {
             console.error("Erro ao carregar o livro mais lido:", error);
         }
@@ -107,10 +102,7 @@ export default function HomeScreen() {
             const [resenhaResponse] = await Promise.all([
                 api.get("api/Resenha/GetResenhaMaisCurtida"),
             ]);
-
-            console.log("Resenha mais curtida:", resenhaResponse.data);
             setResenhaMaisCurtida(resenhaResponse.data);
-
         } catch (error) {
             console.error("Erro ao carregar o resenha mais curtida:", error);
         }
@@ -238,7 +230,7 @@ export default function HomeScreen() {
                         keyExtractor={(livro) => livro.id.toString()}
                         numColumns={3}
                         renderItem={renderBookItem}
-                        contentContainerStyle={styles.livrosContainer}
+                        contentContainerStyle={[styles.livrosContainer, { alignSelf: 'center' }]}
                         scrollEnabled={false}
                     />
 
@@ -292,18 +284,19 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
+    error: {
+        color: "red",
+        fontSize: 16,
+        textAlign: "center",
+        marginVertical: 10,
+    },
     container: {
         flex: 1,
         backgroundColor: "#F0F2F5",
     },
     scrollContainer: {
         paddingBottom: 60,
-    },
-    error: {
-        color: "red",
-        fontSize: 16,
-        textAlign: "center",
-        marginVertical: 10,
+        paddingHorizontal: 10, // Adiciona padding lateral para evitar estouro
     },
     carouselContainer: {
         paddingHorizontal: (SCREEN_WIDTH - ITEM_WIDTH) / 2,
@@ -311,9 +304,8 @@ const styles = StyleSheet.create({
     carouselItem: {
         width: ITEM_WIDTH,
         alignItems: 'center',
-        justifyContent: 'space-evenly',
+        justifyContent: 'center',
         marginRight: ITEM_SPACING,
-        marginTop: 10,
     },
     carouselImage: {
         width: '100%',
@@ -325,46 +317,36 @@ const styles = StyleSheet.create({
     carouselTitle: {
         marginTop: 8,
         fontSize: 12,
-        textAlign: 'center',
-        width: '100%',
-    },
-    acervoTitulo: {
-        fontSize: 15,
+        color:'black',
         fontWeight: 'bold',
-        color: 'grey',
-        textAlign: 'left',
-        marginTop: 35,
-        marginLeft: 10,
-        textDecorationLine: 'underline',
+        textAlign: 'center',
+        width: ITEM_WIDTH,
     },
     livrosContainer: {
         marginTop: 5,
-        alignItems: "center",
         justifyContent: "center",
-        paddingHorizontal: 10,
     },
     livroCard: {
-        width: 120,
-        height: 180,
+        width: (SCREEN_WIDTH - 60) / 3, // Garante que 3 cabem na tela
+        height: 160,
         margin: 5,
         borderColor: 'black',
         borderWidth: 1,
         borderRadius: 8,
     },
-    loadingContainer: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: 50,
-    },
-    loadingText: {
-        marginTop: 10,
-        fontSize: 16,
+    acervoTitulo: {
+        fontSize: 15,
+        fontWeight: 'bold',
+        color: 'black',
+        textAlign: 'left',
+        marginTop: 20,
+        marginLeft: 10,
+        textDecorationLine: 'underline',
     },
     Titulo: {
         fontSize: 20,
         fontWeight: 'bold',
-        color: 'Black',
+        color: 'black',
         textAlign: 'left',
         marginTop: 10,
         marginLeft: 10,
@@ -372,20 +354,52 @@ const styles = StyleSheet.create({
     sectionTitle: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: 'Black',
+        color: 'black',
         marginTop: 20,
         marginLeft: 10,
         marginBottom: 5,
     },
+    mostReadContainer: {
+        marginTop: 10,
+        marginHorizontal: 10,
+    },
+    mostReadBook: {
+        flexDirection: 'row',
+        backgroundColor: 'white',
+        borderRadius: 8,
+        padding: 10,
+        borderWidth: 1,
+        borderColor: '#ddd',
+        alignItems: 'center',
+    },
+    mostReadImage: {
+        width: 80,
+        height: 120,
+        borderRadius: 4,
+    },
+    mostReadDetails: {
+        flex: 1,
+        marginLeft: 10,
+    },
+    mostReadTitle: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        marginBottom: 5,
+        color: 'black',
+    },
+    mostReadDescription: {
+        fontSize: 14,
+        color: 'black',
+    },
     resenhaContainer: {
         backgroundColor: "white",
-        marginTop: 1,
+        marginTop: 10,
         padding: 12,
         borderRadius: 8,
         borderColor: "#ccc",
         borderWidth: 1,
         marginHorizontal: 10,
-        marginBottom: 100
+        marginBottom: 100,
     },
     headerResenha: {
         flexDirection: "row",
@@ -408,35 +422,14 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: "#444",
     },
-    mostReadContainer: {
-        marginHorizontal: 10,
-    },
-    mostReadBook: {
-        flexDirection: 'row',
-        backgroundColor: 'white',
-        borderRadius: 8,
-        padding: 10,
-        borderWidth: 1,
-        borderColor: '#ddd',
-    },
-    mostReadImage: {
-        width: 80,
-        height: 120,
-        borderRadius: 4,
-    },
-    mostReadDetails: {
+    loadingContainer: {
         flex: 1,
-        marginLeft: 10,
-        justifyContent: 'center',
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 50,
     },
-    mostReadTitle: {
+    loadingText: {
+        marginTop: 10,
         fontSize: 16,
-        fontWeight: 'bold',
-        marginBottom: 5,
-        color: "#333",
-    },
-    mostReadDescription: {
-        fontSize: 14,
-        color: "#444",
     },
 });
