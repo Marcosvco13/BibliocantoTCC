@@ -200,6 +200,27 @@ function PreCadastro() {
           type="submit"
           onClick={async (event) => {
             event.preventDefault();
+
+            const todosAutores = [...autores, ...novosAutores];
+  const titulo = livro.title || livro.titulo;
+  const editora = livro.publisher;
+
+  // Validações:
+  if (!isbn || !titulo || !editora) {
+    alert("Todos os campos principais (ISBN, Título, Editora) devem estar preenchidos.");
+    return;
+  }
+
+  if (todosAutores.length === 0) {
+    alert("Adicione ao menos um autor.");
+    return;
+  }
+
+  if (generosSelecionados.length === 0) {
+    alert("Selecione ao menos um gênero.");
+    return;
+  }
+
             try {
               const editoraId = await api.cadastrarEditora(livro.publisher);
               const titulo = livro.title || livro.titulo;

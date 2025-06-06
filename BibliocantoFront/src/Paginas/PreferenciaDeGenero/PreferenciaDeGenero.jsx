@@ -82,6 +82,7 @@ const PreferenciaDeGenero = () => {
       }
     }
     setReloadTrigger((prev) => prev + 1);
+    alert("Preferências atualizadas com sucesso!");
   };
 
   return (

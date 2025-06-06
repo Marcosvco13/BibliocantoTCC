@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaEllipsisV, FaExclamationTriangle } from 'react-icons/fa';
 import api from "../../services/api";
+import './MenuDenuncia.css';
 
 export default function MenuDenuncia({ tipo, idResenha, idComentario }) {
     const [menuDropDown, setMenuDropDown] = useState(false);
@@ -92,15 +93,15 @@ export default function MenuDenuncia({ tipo, idResenha, idComentario }) {
 
     return (
         <div style={{ position: 'relative', display: 'inline-block' }}>
-            <button onClick={handleMenuDropDown} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleMenuDropDown} className="botoesdenuncia">
                 <FaEllipsisV size={18} />
             </button>
 
             {menuDropDown && (
                 <div style={styles.menuDrop}>
                     <button onClick={fazerDenuncia} style={styles.menuItem}>
-                        <FaExclamationTriangle size={14} />
-                        <span style={{ marginLeft: 8 }}>Fazer Denúncia</span>
+                        <FaExclamationTriangle size={14} className="opcaodenuncia"/>
+                        <span className="opcaodenuncia">Fazer Denúncia</span>
                     </button>
                 </div>
             )}
@@ -150,7 +151,7 @@ const styles = {
         border: 'none',
         padding: '6px 8px',
         cursor: 'pointer',
-        width: '100%',
+        width: '175px',
         textAlign: 'left',
     },
     modalOverlay: {
