@@ -153,6 +153,20 @@ function CadastroLivro() {
   const handleClick = async (event) => {
     event.preventDefault();
 
+    // Verificação de campos obrigatórios
+  if (
+    !titulo.trim() ||
+    !isbn.trim() ||
+    !descricao.trim() ||
+    !caminhoImagem.trim() ||
+    !idEditora ||
+    !Array.isArray(autores) || autores.length === 0 ||
+    !Array.isArray(generos) || generos.length === 0
+  ) {
+    alert("Por favor, preencha todos os campos obrigatórios antes de finalizar o cadastro.");
+    return; // Impede o envio
+  }
+
     await atualizarLivro();
     await cadastrarAutoresLivro();
     await cadastrarGenerosLivro();
@@ -195,6 +209,7 @@ function CadastroLivro() {
           rows={2}
           className="sinopse-textarea"
           value={descricao} // Usando o estado descricao
+          required
           placeholder="Enter Sinopse"
           onChange={(e) => setDescricao(e.target.value)} // Atualiza o estado descricao
         />
@@ -216,6 +231,7 @@ function CadastroLivro() {
           type="text"
           value={caminhoImagem}
           placeholder="Enter cover url"
+          required
           onChange={(e) => setCaminhoImagem(e.target.value)}
         />
       </Form.Group>
