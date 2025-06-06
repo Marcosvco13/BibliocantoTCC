@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const api = axios.create({
     baseURL: 'https://localhost:44331'
+    //baseURL: 'https://bibliocantobackend-ejdcdghpamcydde8.brazilsouth-01.azurewebsites.net'
 });
 
 api.validarToken = async () => {
