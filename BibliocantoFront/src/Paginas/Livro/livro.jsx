@@ -15,6 +15,8 @@ import { Box, Rating } from "@mui/material";
 import Recomendacao from "../../Componentes/RecomendacaoLivro/recomendacao";
 
 function Livro() {
+  const [loading, setLoading] = useState(true);
+
   const [EmailUser, setEmailUser] = useState(
     localStorage.getItem("email") || null
   );
@@ -61,6 +63,8 @@ function Livro() {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true); // início do carregamento
+
       try {
         // Busca os dados do livro
         const data = await api.getLivroById(idLivro);
@@ -125,6 +129,8 @@ function Livro() {
           "Erro ao buscar dados do livro:",
           error.response?.data || error.message
         );
+      } finally {
+        setLoading(false); // fim do carregamento
       }
     };
 
@@ -595,21 +601,22 @@ function Livro() {
 
   //funcao para remover o livro da biblioteca do usuario
   const handleDeleteMeuLivro = async (livro) => {
-
     try {
-
       // Excluir o livro da biblioteca
       await api.DeleteMeuLivro(RegistroLivroNaBiblioteca);
 
       window.location.reload();
-
     } catch (error) {
       console.error("Erro ao excluir o livro da biblioteca:", error);
       alert("Falha ao remover o livro da biblioteca.");
     }
   };
 
-  return (
+  return loading ? (
+    <Container>
+      <p>Carregando dados do livro...</p>
+    </Container>
+  ) : (
     <Container>
       {livro && <h1 className="titulo-livro">{livro.titulo}</h1>}
       <Row>
@@ -726,7 +733,12 @@ function Livro() {
                             TagLido(RegistroLivroNaBiblioteca, idLivro, idUser)
                           }
                         >
-                          <i className={Lido ? "bi bi-bookmark-x" : "bi bi-bookmark-check"}></i> Lido
+                          <i
+                            className={
+                              Lido ? "bi bi-bookmark-x" : "bi bi-bookmark-check"
+                            }
+                          ></i>{" "}
+                          Lido
                         </button>
                       </div>
 
@@ -743,7 +755,14 @@ function Livro() {
                             )
                           }
                         >
-                          <i className={Relido ? "bi bi-bookmark-x" : "bi bi-bookmark-check"}></i> Relido
+                          <i
+                            className={
+                              Relido
+                                ? "bi bi-bookmark-x"
+                                : "bi bi-bookmark-check"
+                            }
+                          ></i>{" "}
+                          Relido
                         </button>
                       </div>
                     </>

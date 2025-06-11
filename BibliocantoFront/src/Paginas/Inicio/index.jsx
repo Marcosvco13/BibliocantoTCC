@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import api from "../../services/api";
 import BuscaLivro from "../../Componentes/BuscaLivro/BuscaLivro";
-import CarrosselLivros from '../../Componentes/CarrosselLivros/CarrosselLivros';
+import CarrosselLivros from "../../Componentes/CarrosselLivros/CarrosselLivros";
 import "./style.css";
 
 function Inicio() {
@@ -98,7 +98,6 @@ function Inicio() {
 
   return (
     <div className="inicio-linha-container">
-
       {/* Componente de busca */}
       <BuscaLivro onResultado={setLivrosBuscados} />
 
